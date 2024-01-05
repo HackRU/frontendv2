@@ -21,9 +21,6 @@ jobs:
     - name: Install dependencies
       run: pnpm install
 
-    - name: Install Dependencies
-      run: npm install
-
     - name: TypeScript Compilation
       run: npm run tsc
 
