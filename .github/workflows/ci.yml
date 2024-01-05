@@ -21,17 +21,11 @@ jobs:
     - name: Install dependencies
       run: pnpm install
 
-    - name: Install Dependencies
-      run: pnpm install
-
     - name: TypeScript Compilation
-      run: pnpm run tsc
+      run: npm run tsc
 
     - name: Check Formatting
-      run: pnpm run format
+      run: npm run format
 
     - name: Run Linting
       run: npm run lint
-
-    - name: Build
-      run: pnpm run build
