@@ -7,6 +7,7 @@ Then, you can run the following on your terminal.
 ```
 git clone git@github.com:HackRU/frontendv2.git
 cd frontendv2
+git branch dev
 pnpm i
 ```
 In the project folder, you will find a `.env.example` file. Rename this file to `.env` (this must never be pushed to GitHub).
@@ -22,3 +23,4 @@ We are in the beginning stages of development.
 
 `localhost:3000/dashboard`: This is the dashboard route. This is mapped to `/app/dashboard/(overview)/page.tsx`.
 
+## Making Changes
