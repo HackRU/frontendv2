@@ -7,7 +7,8 @@
     "prettier": "prettier --write --ignore-unknown . --max-warnings=0",
     "prettier:check": "prettier --check --ignore-unknown . --max-warnings=0",
     "seed": "node -r dotenv/config ./scripts/seed.js",
-    "start": "next start"
+    "start": "next start",
+    "tsc": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
