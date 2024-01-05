@@ -24,3 +24,9 @@ We are in the beginning stages of development.
 `localhost:3000/dashboard`: This is the dashboard route. This is mapped to `/app/dashboard/(overview)/page.tsx`.
 
 ## Making Changes
+If you are a part of the frontend team, do not fork the project. Instead, use `git clone`, create a branch *from* the `dev` branch by typing
+```
+git checkout dev
+git branch <your-feature-name>
+```
+Then, you can submit changes via a pull request so that it can be merged to the `dev` branch.
