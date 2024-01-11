@@ -236,3 +236,46 @@ export async function getUser(email: string) {
     throw new Error('Failed to fetch user.');
   }
 }
+
+
+export async function getSelf() {
+  return  {
+    "email": "testemail@gmail.com",
+    "role": {
+      "hacker": true,
+      "volunteer": false,
+      "judge": false,
+      "sponsor": false,
+      "mentor": false,
+      "organizer": false,
+      "director": false
+    },
+    "votes": 0,
+    "github": "testgithub",
+    "major": "Computer Science",
+    "short_answer": "Things",
+    "shirt_size": "Unisex M",
+    "first_name": "Test",
+    "last_name": "User",
+    "dietary_restrictions": "",
+    "special_needs": "No",
+    "date_of_birth": "2000-01-01",
+    "school": "Rutgers, The State University of New Jersey\"",
+    "grad_year": "2026",
+    "gender": "Prefer not to say",
+    "registration_status": "unregistered",
+    "level_of_study": "University (Undergraduate)",
+    "day_of": {
+      "checkIn": false
+    },
+    "token": [
+      "faketoken"
+    ],
+    "country_of_residence": "US",
+    "ethnicity": "Prefer not to say",
+    "hackathon_count": "1",
+    "phone_number": "1234567890",
+    "how_you_heard_about_hackru": "Mailing List",
+    "reasons": "Learn new skills"
+  };
+}
