@@ -1,11 +1,11 @@
-export default function Sponsors() {
+export default function About() {
   return (
     <div
-      className="bg-gray-100 w-full h-[100vh] max-h-[1300px]
+      className="bg-gray-200 w-full h-[100vh] max-h-[1300px]
       flex flex-col justify-center items-center"
     >
       <h1 className="font-extrabold text-5xl">
-        Sponsors
+        About
       </h1>
     </div>
   );
