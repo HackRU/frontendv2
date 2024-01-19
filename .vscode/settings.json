@@ -1,0 +1,7 @@
+{
+  "cSpell.words": ["CODECRAFT", "tailwindcss"],
+  "prettier.configPath": "./prettier.config.js",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
