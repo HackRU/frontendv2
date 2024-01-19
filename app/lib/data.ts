@@ -320,4 +320,110 @@ export async function getSelf() {
     "how_you_heard_about_hackru": "Mailing List",
     "reasons": "Learn new skills"
   };
+
+
+
+}
+
+
+export async function getUsers(){
+  const Users: Record<string, object> = {"testemail@gmail.com":{"role": {
+    "hacker": true,
+    "volunteer": false,
+    "judge": false,
+    "sponsor": false,
+    "mentor": false,
+    "organizer": false,
+    "director": false
+  },
+  "votes": 0,
+  "github": "testgithub",
+  "major": "Computer Science",
+  "short_answer": "Things",
+  "shirt_size": "Unisex M",
+  "first_name": "Test",
+  "last_name": "User",
+  "dietary_restrictions": "",
+  "special_needs": "No",
+  "date_of_birth": "2000-01-01",
+  "school": "Rutgers, The State University of New Jersey",
+  "grad_year": "2026",
+  "gender": "Prefer not to say",
+  "registration_status": "unregistered",
+  "level_of_study": "University (Undergraduate)",
+  "day_of": {
+    "checkIn": false
+  },
+  "token": [
+    "faketoken"
+  ],
+  "country_of_residence": "US",
+  "ethnicity": "Prefer not to say",
+  "hackathon_count": "1",
+  "phone_number": "1234567890",
+  "how_you_heard_about_hackru": "Mailing List",
+  "reasons": "Learn new skills"
+  }};
+
+  const Names = ["Lauryn", "Underwood",
+  "Darius", "Peters",
+  "Eduardo", "Eaton",
+  "Jeremy", "Pitts",
+  "Trevor", "Valenzuela",
+  "Erica", "Mathews",
+  "Valentino", "Bowman",
+  "Hillary", "Hanson",
+  "Kody", "Shelton",
+  "Ariana", "Collins",
+  "Lina", "Fitzpatrick",
+  "Eve", "Flores"];
+
+  const registration_states = ["unregistered", "registered", "confirmation", "coming", "not_coming","waitlist", "confirmed", "rejected", "checked_in", "registered"]
+
+
+  for (let i = 0; i < 10; i++) {
+    const Random = Math.floor(Math.random() * 23);
+    const email = i.toString() + "@gmail.com";
+    Users[email] = {"role": {
+      "hacker": true,
+      "volunteer": false,
+      "judge": false,
+      "sponsor": false,
+      "mentor": false,
+      "organizer": false,
+      "director": false
+    },
+    "votes": 0,
+    "github": Names[Random] + "_Github",
+    "major": "Computer Science",
+    "short_answer": "Things",
+    "shirt_size": "Unisex M",
+    "first_name": Names[Random],
+    "last_name": Names[Random+1],
+    "dietary_restrictions": "",
+    "special_needs": "No",
+    "date_of_birth": "20"+ Random.toString() +"-01-" + Random.toString(),
+    "school": "Rutgers, The State University of New Jersey",
+    "grad_year": "20" + (Random + 20).toString() ,
+    "gender": "Prefer not to say",
+    "registration_status": registration_states[i%10],
+    "level_of_study": "University (Undergraduate)",
+    "day_of": {
+      "checkIn": false
+    },
+    "token": [
+      "faketoken"
+    ],
+    "country_of_residence": "US",
+    "ethnicity": "Prefer not to say",
+    "hackathon_count": "1",
+    "phone_number": "1234567890",
+    "how_you_heard_about_hackru": "Mailing List",
+    "reasons": "Learn new skills"
+    };
+  }
+
+  return Users;
+ 
+
 }

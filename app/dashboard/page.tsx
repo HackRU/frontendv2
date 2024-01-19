@@ -2,7 +2,7 @@
 
 import AcmeLogo from '@/app/ui/acme-logo';
 import LoginForm from '@/app/ui/login-form';
-import { getSelf } from '@/app/lib/data';
+import { getSelf, getUsers } from '@/app/lib/data';
 import { useState, useEffect } from 'react';
 import { AvatarImage, AvatarInitials, Avatar } from "@/app/dashboard/components/avatar"
 import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/app/dashboard/components/card"
@@ -63,6 +63,7 @@ export default function Dashboard() {
         async function fetchUser() {
             try {
               const data = await getSelf();
+              console.log(getUsers());
               setUserData(data);
             //   setLoading(false);
             } catch (error) {
