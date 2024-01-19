@@ -302,7 +302,7 @@ export async function getSelf() {
     "dietary_restrictions": "",
     "special_needs": "No",
     "date_of_birth": "2000-01-01",
-    "school": "Rutgers, The State University of New Jersey\"",
+    "school": "Rutgers, The State University of New Jersey",
     "grad_year": "2026",
     "gender": "Prefer not to say",
     "registration_status": "unregistered",

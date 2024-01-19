@@ -10,9 +10,54 @@ import { Label } from "@/app/dashboard/components/label"
 import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 
+
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+
 export default function Dashboard() {
 
-    const [userData, setUserData] = useState<any>(null)
+    const [userData, setUserData] = useState<any>(null);
+
+    const UserUpdateSchema = z.object({
+      email: z.string().email(),
+      role: z.string(),
+      registration_status: z.string(),
+    
+      first_name: z.string(),
+      last_name: z.string(),
+    
+      github: z.string(),
+      major: z.string(),
+      short_answer: z.string(),
+      shirt_size: z.string(),
+      hackathon_count: z.string(),
+      dietary_restrictions: z.string(),
+      special_needs: z.string(),
+      date_of_birth: z.string(),
+      school: z.string(),
+      grad_year: z.string(),
+      gender: z.string(),
+      level_of_study: z.string(),
+      country_of_residence: z.string(),
+      ethnicity: z.string(),
+      phone_number: z.string(),
+      how_you_heard_about_hackru: z.string(),
+      reasons: z.string(),
+    
+    });
+
+    type UserUpdate = z.infer<typeof UserUpdateSchema>;
+
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<UserUpdate>({
+      resolver: zodResolver(UserUpdateSchema),
+    });
+  
+    const onSubmit: SubmitHandler<UserUpdate> = (data) => console.log(data);
 
     useEffect(() => {
         async function fetchUser() {
@@ -27,10 +72,9 @@ export default function Dashboard() {
           }
       
         fetchUser();
-    }, [])
+    }, []);
 
   return (
-
     <main className="flex flex-col items-center justify-center p-4 space-y-8">
       <div className="w-full max-w-2xl flex flex-col md:flex-row items-center justify-center space-y-8 md:space-x-16">
         <div className="flex flex-col items-center gap-3">
@@ -57,6 +101,7 @@ export default function Dashboard() {
         </Card>
       </div>
       <Card className="w-full max-w-2xl">
+        <form onSubmit={handleSubmit(onSubmit)}>
         <CardHeader>
           <CardTitle>Profile</CardTitle>
           <CardDescription>Update your profile information.</CardDescription>
@@ -64,31 +109,40 @@ export default function Dashboard() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="first_name">First Name</Label>
-            <Input id="first_name" value={userData?.first_name} onChange={(e) => setUserData({...userData, first_name: e.target.value})}/>
+            <Input id="first_name" value={userData?.first_name} {...register("first_name")} onChange={(e) => setUserData({...userData, first_name: e.target.value})}/>
+            {errors.first_name && (<p className="text-xs italic text-red-500 mt-2">{errors.first_name?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="last_name">Last Name</Label>
-            <Input id="last_name" value={userData?.last_name} onChange={(e) => setUserData({...userData, last_name: e.target.value})}/>
+            <Input id="last_name" value={userData?.last_name} {...register("last_name")} onChange={(e) => setUserData({...userData, last_name: e.target.value})}/>
+            {errors.last_name && (<p className="text-xs italic text-red-500 mt-2">{errors.last_name?.message}</p>)}
           </div>
+          
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" value={userData?.email} onChange={(e) => setUserData({...userData, email: e.target.value})}/>
+            <Input id="email" value={userData?.email} {...register("email")} onChange={(e) => setUserData({...userData, email: e.target.value})}/>
+            {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="github">Github</Label>
-            <Input id="github" value={userData?.github} onChange={(e) => setUserData({...userData, github: e.target.value})}/>
+            <Input id="github" value={userData?.github} {...register("github")} onChange={(e) => setUserData({...userData, github: e.target.value})}/>
+            {errors.github && (<p className="text-xs italic text-red-500 mt-2">{errors.github?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="major">Major</Label>
-            <Input id="major" value={userData?.major} onChange={(e) => setUserData({...userData, major: e.target.value})}/>
+            <Input id="major" value={userData?.major} {...register("major")} onChange={(e) => setUserData({...userData, major: e.target.value})}/>
+            {errors.major && (<p className="text-xs italic text-red-500 mt-2">{errors.major?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="short-answer">Short Answer</Label>
             <textarea className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300" 
               id="short-answer" 
               value={userData?.short_answer} 
+              {...register("short_answer")} 
               onChange={(e) => setUserData({...userData, short_answer: e.target.value})}
-            />
+              
+            />            
+            {errors.short_answer && (<p className="text-xs italic text-red-500 mt-2">{errors.short_answer?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="shirt-size">Shirt Size</Label>
@@ -96,32 +150,39 @@ export default function Dashboard() {
               className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
               id="shirt-size" 
               value={userData?.shirt_size} 
+              {...register("shirt_size")} 
               onChange={(e) => setUserData({...userData, shirt_size: e.target.value})}
             >
               <option value="Unisex S">Unisex S</option>
               <option value="Unisex M">Unisex M</option>
               <option value="Unisex L">Unisex L</option>
             </select>
+            {errors.shirt_size && (<p className="text-xs italic text-red-500 mt-2">{errors.shirt_size?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="dietary-restrictions">Dietary Restrictions</Label>
-            <Input id="dietary-restrictions" value={userData?.dietary_restrictions} onChange={(e) => setUserData({...userData, dietary_restrictions: e.target.value})}/>
+            <Input id="dietary-restrictions" value={userData?.dietary_restrictions} {...register("dietary_restrictions")} onChange={(e) => setUserData({...userData, dietary_restrictions: e.target.value})}/>
+            {errors.dietary_restrictions && (<p className="text-xs italic text-red-500 mt-2">{errors.dietary_restrictions?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="special-needs">Special Needs</Label>
-            <Input id="special-needs" value={userData?.special_needs} onChange={(e) => setUserData({...userData, special_needs: e.target.value})} />
+            <Input id="special-needs" value={userData?.special_needs} {...register("special_needs")} onChange={(e) => setUserData({...userData, special_needs: e.target.value})} />
+            {errors.special_needs && (<p className="text-xs italic text-red-500 mt-2">{errors.special_needs?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="dob">Date of Birth</Label>
-            <Input type="date" max="2024-01-01" id="dob" value={userData?.date_of_birth} onChange={(e) => setUserData({...userData, date_of_birth: e.target.value})} />
+            <Input type="date" max="2024-01-01" id="dob" value={userData?.date_of_birth} {...register("date_of_birth")} onChange={(e) => setUserData({...userData, date_of_birth: e.target.value})} />
+            {errors.date_of_birth && (<p className="text-xs italic text-red-500 mt-2">{errors.date_of_birth?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="school">School</Label>
-            <Input id="school" value={userData?.school} onChange={(e) => setUserData({...userData, school: e.target.value})}/>
+            <Input id="school" value={userData?.school} {...register("school")} onChange={(e) => setUserData({...userData, school: e.target.value})}/>
+            {errors.school && (<p className="text-xs italic text-red-500 mt-2">{errors.school?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="grad-year">Grad Year</Label>
-            <Input type="number" id="grad-year" value={userData?.grad_year} onChange={(e) => setUserData({...userData, grad_year: e.target.value})}/>
+            <Input type="number" id="grad-year" value={userData?.grad_year} {...register("grad_year")} onChange={(e) => setUserData({...userData, grad_year: e.target.value})}/>
+            {errors.grad_year && (<p className="text-xs italic text-red-500 mt-2">{errors.grad_year?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="gender">Gender</Label>
@@ -129,6 +190,7 @@ export default function Dashboard() {
               className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
               id="shirt-size" 
               value={userData?.gender} 
+              {...register("gender")}
               onChange={(e) => setUserData({...userData, gender: e.target.value})}
             >
               <option value="Male">Male</option>
@@ -136,14 +198,17 @@ export default function Dashboard() {
               <option value="Prefer not to say">Prefer not to say</option>
               <option value="Other">Other</option>
             </select>
+            {errors.gender && (<p className="text-xs italic text-red-500 mt-2">{errors.gender?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="level-of-study">Level of Study</Label>
-            <Input id="level-of-study" value={userData?.level_of_study} onChange={(e) => setUserData({...userData, level_of_study: e.target.value})}/>
+            <Input id="level-of-study" value={userData?.level_of_study} {...register("level_of_study")} onChange={(e) => setUserData({...userData, level_of_study: e.target.value})}/>
+            {errors.level_of_study && (<p className="text-xs italic text-red-500 mt-2">{errors.level_of_study?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="country-of-residence">Country of Residence</Label>
-            <Input id="country-of-residence" value={userData?.country_of_residence} onChange={(e) => setUserData({...userData, country_of_residence: e.target.value})}/>
+            <Input id="country-of-residence" value={userData?.country_of_residence} {...register("country_of_residence")} onChange={(e) => setUserData({...userData, country_of_residence: e.target.value})}/>
+            {errors.country_of_residence && (<p className="text-xs italic text-red-500 mt-2">{errors.country_of_residence?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="ethnicity">Ethnicity</Label>
@@ -151,6 +216,7 @@ export default function Dashboard() {
               className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
               id="shirt-size" 
               value={userData?.ethnicity} 
+              {...register("ethnicity")}
               onChange={(e) => setUserData({...userData, ethnicity: e.target.value})}
             >
               <option value="American Indian/Alaska Native">American Indian/Alaska Native</option>
@@ -161,31 +227,38 @@ export default function Dashboard() {
               <option value="Prefer not to say">Prefer not to say</option>
               <option value="Other">Other</option>
             </select>
+            {errors.ethnicity && (<p className="text-xs italic text-red-500 mt-2">{errors.ethnicity?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="hackathon-count">Hackathon Count</Label>
-            <Input type="number" id="hackathon-count" value={userData?.hackathon_count} onChange={(e) => setUserData({...userData, hackathon_count: e.target.value})}/>
+            <Input type="number" id="hackathon-count" value={userData?.hackathon_count} {...register("hackathon_count")} onChange={(e) => setUserData({...userData, hackathon_count: e.target.value})}/>
+            {errors.hackathon_count && (<p className="text-xs italic text-red-500 mt-2">{errors.hackathon_count?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone-number">Phone #</Label>
-            <Input type="number" id="phone-number" value={userData?.phone_number} onChange={(e) => setUserData({...userData, phone_number: e.target.value})}/>
+            <Input type="number" id="phone-number" value={userData?.phone_number} {...register("phone_number")}  onChange={(e) => setUserData({...userData, phone_number: e.target.value})}/>
+            {errors.phone_number && (<p className="text-xs italic text-red-500 mt-2">{errors.phone_number?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="how-heard">How you heard about hackru</Label>
-            <Input id="how-heard" value={userData?.how_you_heard_about_hackru} onChange={(e) => setUserData({...userData, how_you_heard_about_hackru: e.target.value})}/>
+            <Input id="how-heard" value={userData?.how_you_heard_about_hackru} {...register("how_you_heard_about_hackru")} onChange={(e) => setUserData({...userData, how_you_heard_about_hackru: e.target.value})}/>
+            {errors.how_you_heard_about_hackru && (<p className="text-xs italic text-red-500 mt-2">{errors.how_you_heard_about_hackru?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="reasons">Reasons</Label>
             <textarea className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300" 
               id="reasons" 
               value={userData?.reasons} 
+              {...register("reasons")}
               onChange={(e) => setUserData({...userData, reasons: e.target.value})}
             />
+            {errors.reasons && (<p className="text-xs italic text-red-500 mt-2">{errors.reasons?.message}</p>)}
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="ml-auto" onClick={()=>console.log("save button clicked")}>Save</Button>
+          <Button type = "submit" className="ml-auto" onClick={()=>console.log("submit button")}>Save</Button>
         </CardFooter>
+        </form>
       </Card>
       
     </main>
