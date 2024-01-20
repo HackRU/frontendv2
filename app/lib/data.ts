@@ -16,38 +16,40 @@ export async function getSchedule() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const schedule: Schedule = {
-    "Saturday": {
-      "day": "Saturday",
-      "times": [
-        { "time": "10:00 AM", "event": "Check-in starts" },
-        { "time": "11:00 AM", "event": "Opening Ceremony", },
-        { "time": "12:00 PM", "event": "Team Building Event" },
-        { "time": "12:00 PM", "event": "Hacking Starts" },
-        { "time": "12:30 PM", "event": "Lunch" },
-        { "time": "1:30 PM", "event": "NJ TRANSIT API Demo" },
-        { "time": "2:00 PM", "event": "Algorithms in Society Workshop by Ethitech" },
-        { "time": "2:30 PM", "event": "MLH Mini Event" },
-        { "time": "5:30 PM", "event": "Tech Talk by NJ TRANSIT" },
-        { "time": "8:00 PM", "event": "Dinner" },
-
+    Saturday: {
+      day: 'Saturday',
+      times: [
+        { time: '10:00 AM', event: 'Check-in starts' },
+        { time: '11:00 AM', event: 'Opening Ceremony' },
+        { time: '12:00 PM', event: 'Team Building Event' },
+        { time: '12:00 PM', event: 'Hacking Starts' },
+        { time: '12:30 PM', event: 'Lunch' },
+        { time: '1:30 PM', event: 'NJ TRANSIT API Demo' },
+        {
+          time: '2:00 PM',
+          event: 'Algorithms in Society Workshop by Ethitech',
+        },
+        { time: '2:30 PM', event: 'MLH Mini Event' },
+        { time: '5:30 PM', event: 'Tech Talk by NJ TRANSIT' },
+        { time: '8:00 PM', event: 'Dinner' },
       ],
     },
 
-    "Sunday": {
-      "day": "Sunday",
-      "times": [
-        { "time": "12:00 AM", "event": "Midnight Surprise" },
-        { "time": "8:00 AM", "event": "Breakfast", },
+    Sunday: {
+      day: 'Sunday',
+      times: [
+        { time: '12:00 AM', event: 'Midnight Surprise' },
+        { time: '8:00 AM', event: 'Breakfast' },
         // { "time": "11:00 AM", "event": "Event" },
-        { "time": "12:00 PM", "event": "Submissions Due" },
-        { "time": "12:30 PM", "event": "Lunch", },
-        { "time": "1:00 PM", "event": "Judging Begins" },
-        { "time": "3:00 PM", "event": "Judging Ends" },
-        { "time": "3:30 PM", "event": "Closing Ceremony", },
+        { time: '12:00 PM', event: 'Submissions Due' },
+        { time: '12:30 PM', event: 'Lunch' },
+        { time: '1:00 PM', event: 'Judging Begins' },
+        { time: '3:00 PM', event: 'Judging Ends' },
+        { time: '3:30 PM', event: 'Closing Ceremony' },
         // { "time": "7:00 PM", "event": "Dinner", "reactIcon": <FaUtensils /> },
         // { "time": "9:00 PM", "event": "Venue closes" },
       ],
-    }
+    },
   };
 
   return schedule;
