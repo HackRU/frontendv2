@@ -1,18 +1,18 @@
 'use client';
 
-import React from "react";
-import { MdOutlineMenu } from "react-icons/md";
-import { Fragment } from "react";
+import React from 'react';
+import { MdOutlineMenu } from 'react-icons/md';
+import { Fragment } from 'react';
 // import { scrollToSectionName } from "./utilities";
-import { usePathname, useRouter } from "next/navigation";
-import { Menu, Transition } from "@headlessui/react";
-import Image from "next/image";
-import Link from "next/link";
+import { usePathname, useRouter } from 'next/navigation';
+import { Menu, Transition } from '@headlessui/react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function scrollToSectionName(sectionName: string) {
   const section = document.getElementById(sectionName);
   if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
+    section.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
@@ -22,7 +22,9 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? "bg-f23-lightGreen text-white" : "text-gray-900"}
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -38,18 +40,17 @@ function OtherPageMenuItem(props: { sectionName: string }) {
   return (
     <Menu.Item>
       {({ active }) => (
-
         <button
-          className={`${active ? "bg-f23-lightGreen text-white" : "text-gray-900"}
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
-            history.push("/contact");
+            history.push('/contact');
           }}
         >
           {sectionName}
         </button>
-
-
       )}
     </Menu.Item>
   );
@@ -57,17 +58,11 @@ function OtherPageMenuItem(props: { sectionName: string }) {
 
 function CollapsedMenu() {
   return (
-    <div className="text-right bg-f23-mediumGreen rounded-md z-40 md:hidden absolute right-28 top-4 ">
-      <Menu
-        as="div"
-        className="relative inline-block text-left"
-      >
+    <div className="bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden ">
+      <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full justify-center rounded-md hover:bg-black hover:bg-opacity-20 px-2 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            <MdOutlineMenu
-              color="white"
-              size={40}
-            />
+          <Menu.Button className="inline-flex w-full justify-center rounded-md px-2 py-2 text-sm font-medium text-white hover:bg-black hover:bg-opacity-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <MdOutlineMenu color="white" size={40} />
           </Menu.Button>
         </div>
         <Transition
@@ -101,18 +96,18 @@ function CollapsedMenu() {
 
 function Navbar() {
   const pathname = usePathname();
-  const isContactPage = pathname === "/contact";
-  const sections = ["Home", "About", "Schedule", "FAQ"];
+  const isContactPage = pathname === '/contact';
+  const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
-    <div className="flex md:fixed justify-end z-40 w-full">
+    <div className="z-40 flex w-full justify-end md:fixed">
       <Image
         width={0}
         height={0}
-        sizes={"100vw"}
+        sizes={'100vw'}
         src="/landing/yellow_hackru.png"
         alt="yellow hackru logo"
-        className="w-24 absolute top-0 left-4 z-50"
+        className="absolute left-4 top-0 z-50 w-24"
       />
 
       <a
@@ -120,11 +115,10 @@ function Navbar() {
         target="_blank"
         rel="noopener noreferrer"
       >
-
         <Image
           width={0}
           height={0}
-          className="w-24 absolute top-0 right-0 z-50"
+          className="absolute right-0 top-0 z-50 w-24"
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
         />
@@ -132,46 +126,40 @@ function Navbar() {
 
       <CollapsedMenu />
       <div
-        className="absolute top-0 font-light text-text hidden md:flex
-                text-lg pt-8 pr-20 z-40 bg-gradient-to-b from-f23-lightGreen  w-[100%] justify-end"
+        className="text-text from-f23-lightGreen absolute top-0 z-40 hidden
+                w-[100%] justify-end bg-gradient-to-b pr-20 pt-8 text-lg  font-light md:flex"
       >
-
-        {!isContactPage && (<>
-          {
-            sections.map((section) => {
+        {!isContactPage && (
+          <>
+            {sections.map((section) => {
               return (
                 <button
-                  className="glow-center font-medium uppercase mr-5"
+                  className="glow-center mr-5 font-medium uppercase"
                   onClick={() => scrollToSectionName(section)}
                   key={section}
                 >
                   {section}
                 </button>
               );
-            })
-          }
-          <Link href="/contact">
-            <button className="glow-center font-medium uppercase mr-5">
-              Contact
-            </button>
-          </Link>
-        </>)
-        }
-
-        {
-          isContactPage && (
-            <Link href="/">
-              <button className="glow-center font-medium uppercase mr-5">
-                Home
+            })}
+            <Link href="/contact">
+              <button className="glow-center mr-5 font-medium uppercase">
+                Contact
               </button>
             </Link>
-          )
-        }
-      </div>
+          </>
+        )}
 
+        {isContactPage && (
+          <Link href="/">
+            <button className="glow-center mr-5 font-medium uppercase">
+              Home
+            </button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
-
 
 export default Navbar;

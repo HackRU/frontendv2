@@ -3,9 +3,9 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
     "format": "prettier --write --ignore-unknown . --max-warnings=0",
     "format:check": "prettier --check --ignore-unknown . --max-warnings=0",
+    "lint": "next lint",
     "seed": "node -r dotenv/config ./scripts/seed.js",
     "start": "next start",
     "tsc": "tsc -p tsconfig.json --noEmit"

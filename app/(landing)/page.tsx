@@ -16,13 +16,11 @@ export default function Page() {
       <div>
         <Hero />
         <About />
-        {
-          /**
-           * We are using Suspense because Schedule and Sponsors will eventually
-           * pull from the backend. Also, we will need to replace the fallback
-           * component to a relevant loading component.
-           */
-        }
+        {/**
+         * We are using Suspense because Schedule and Sponsors will eventually
+         * pull from the backend. Also, we will need to replace the fallback
+         * component to a relevant loading component.
+         */}
         <Suspense fallback={<>Loading Schedule!</>}>
           <Schedule />
         </Suspense>
