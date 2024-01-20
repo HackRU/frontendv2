@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Navbar from './Navbar';
 
 export default function Hero() {
   return (
@@ -6,6 +7,7 @@ export default function Hero() {
       className="bg-gray-100 w-full h-[100vh] max-h-[1300px]
       flex flex-col-reverse justify-center items-center"
     >
+      <Navbar />
       <Image
         src="/landing/fire.png"
         width="0"

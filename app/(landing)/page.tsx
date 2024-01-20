@@ -3,7 +3,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
-import Hero from './sections/Hero';
+import Hero from './sections/Hero/Hero';
 import Schedule from './sections/Schedule';
 import { Suspense } from 'react';
 import Sponsors from './sections/Sponsors';
