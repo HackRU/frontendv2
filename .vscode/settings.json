@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["CODECRAFT", "headlessui", "tailwindcss"],
+  "cSpell.words": ["clsx", "CODECRAFT", "headlessui", "tailwindcss"],
   "prettier.configPath": "./prettier.config.js",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
