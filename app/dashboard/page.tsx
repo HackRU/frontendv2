@@ -1,8 +1,6 @@
 "use client"
 
-import AcmeLogo from '@/app/ui/acme-logo';
-import LoginForm from '@/app/ui/login-form';
-import { getSelf, getUsers } from '@/app/lib/data';
+import { UpdateSelf, getSelf, getUsers } from '@/app/lib/data';
 import { useState, useEffect } from 'react';
 import { AvatarImage, AvatarInitials, Avatar } from "@/app/dashboard/components/avatar"
 import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/app/dashboard/components/card"
@@ -11,7 +9,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 
@@ -21,8 +19,6 @@ export default function Dashboard() {
 
     const UserUpdateSchema = z.object({
       email: z.string().email(),
-      role: z.string(),
-      registration_status: z.string(),
     
       first_name: z.string(),
       last_name: z.string(),
@@ -31,7 +27,7 @@ export default function Dashboard() {
       major: z.string(),
       short_answer: z.string(),
       shirt_size: z.string(),
-      hackathon_count: z.string(),
+      hackathon_count: z.number(),
       dietary_restrictions: z.string(),
       special_needs: z.string(),
       date_of_birth: z.string(),
@@ -41,7 +37,9 @@ export default function Dashboard() {
       level_of_study: z.string(),
       country_of_residence: z.string(),
       ethnicity: z.string(),
-      phone_number: z.string(),
+      phone_number: z.number({
+        invalid_type_error: "Enter Phone Number in the format 1234567890",
+      }).min(1000000000).max(9999999999),
       how_you_heard_about_hackru: z.string(),
       reasons: z.string(),
     
@@ -49,30 +47,32 @@ export default function Dashboard() {
 
     type UserUpdate = z.infer<typeof UserUpdateSchema>;
 
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm<UserUpdate>({
-      resolver: zodResolver(UserUpdateSchema),
-    });
-  
-    const onSubmit: SubmitHandler<UserUpdate> = (data) => console.log(data);
+
+
+
+    const {register,handleSubmit,reset, formState: { errors },} = useForm<UserUpdate>({resolver: zodResolver(UserUpdateSchema),defaultValues: userData,});
+
+    const onSubmit = (data: UserUpdate) => {
+      console.log("Hi");
+      UpdateSelf(data);
+    }
 
     useEffect(() => {
-        async function fetchUser() {
-            try {
-              const data = await getSelf();
-              console.log(getUsers());
-              setUserData(data);
-            //   setLoading(false);
-            } catch (error) {
-              console.log(error);
-            //   setLoading(false);
-            }
+      async function fetchUser() {
+          try {
+            const data = await getSelf();
+            setUserData(data);
+            console.log(userData);
+          //   setLoading(false);
+          } catch (error) {
+            console.log(error);
+          //   setLoading(false);
           }
-      
-        fetchUser();
+        }
+        
+      fetchUser();
+      reset()
+    
     }, []);
 
   return (
@@ -232,12 +232,12 @@ export default function Dashboard() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="hackathon-count">Hackathon Count</Label>
-            <Input type="number" id="hackathon-count" value={userData?.hackathon_count} {...register("hackathon_count")} onChange={(e) => setUserData({...userData, hackathon_count: e.target.value})}/>
+            <Input type="number" id="hackathon-count" value={userData?.hackathon_count} {...register("hackathon_count", { valueAsNumber: true })} onChange={(e) => setUserData({...userData, hackathon_count: e.target.value})}/>
             {errors.hackathon_count && (<p className="text-xs italic text-red-500 mt-2">{errors.hackathon_count?.message}</p>)}
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone-number">Phone #</Label>
-            <Input type="number" id="phone-number" value={userData?.phone_number} {...register("phone_number")}  onChange={(e) => setUserData({...userData, phone_number: e.target.value})}/>
+            <Input type="number" id="phone-number" value={userData?.phone_number} {...register("phone_number", { valueAsNumber: true })}  onChange={(e) => setUserData({...userData, phone_number: e.target.value})}/>
             {errors.phone_number && (<p className="text-xs italic text-red-500 mt-2">{errors.phone_number?.message}</p>)}
           </div>
           <div className="space-y-2">
@@ -257,7 +257,7 @@ export default function Dashboard() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type = "submit" className="ml-auto" onClick={()=>console.log("submit button")}>Save</Button>
+          <Button type = "submit" className="ml-auto" onClick={()=>console.log(errors)}>Save</Button>
         </CardFooter>
         </form>
       </Card>
