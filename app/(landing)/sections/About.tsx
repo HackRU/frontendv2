@@ -111,7 +111,6 @@ export default function About() {
           imperdiet, nibh nec dictum consectetur, lorem nisi
         </p>
       </AboutInfo>
-
     </div>
   );
 }
