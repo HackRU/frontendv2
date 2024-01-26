@@ -427,3 +427,14 @@ export async function getUsers(){
  
 
 }
+
+export async function UpdateSelf(data:any){
+  console.log(data);
+  console.log("updating self");
+}
+
+export async function UpdateUser(){
+  //double check that the whoever is logged in and is sending this request is an admin 
+  console.log("updaing a user");
+}
+
