@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import { Disclosure } from "@headlessui/react";
@@ -9,21 +9,21 @@ import { hackRUFAQ } from "@/app/lib/constants";
  * TODO: make it so that only one question can be open at a time.
  */
 
-function Question(props: { question: string, answer: string }) {
+function Question(props: { question: string; answer: string }) {
   const { question, answer } = props;
   return (
     <Disclosure>
       {({ open }) => (
         <div className="flex flex-col border-b-white border-b-2 hover:bg-f23-mediumGreen rounded-t-lg">
-          <Disclosure.Button
-            className="flex w-full justify-between
+          <Disclosure.Button className="flex w-full justify-between
             p-4 text-left text-md text-textSubtitle
             focus:outline-none focus-visible:ring
-            focus-visible:ring-opacity-75"
-          >
+            focus-visible:ring-opacity-75">
             <span>{question}</span>
             <GoChevronDown
-              className={`${open ? "rotate-180 transform" : ""} h-5 w-5 text-text`}
+              className={`${
+                open ? "rotate-180 transform" : ""
+              } h-5 w-5 text-text`}
             />
           </Disclosure.Button>
           <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-white w-full">
@@ -36,7 +36,6 @@ function Question(props: { question: string, answer: string }) {
 }
 
 function QuestionContainer() {
-
   const {
     whatIsHackRUAnswer,
     whatIsApplicationAnswer,
@@ -102,7 +101,7 @@ export default function FAQ() {
     <div
       id="FAQ"
       className="w-full flex h-fit
-relative overflow-visible items-center bg-gray-500
+relative overflow-visible items-center 
 flex-col justify-start min-h-[600px]"
     >
       <div className="w-full h-full max-w-7xl relative flex flex-col items-center pb-[24rem]">
