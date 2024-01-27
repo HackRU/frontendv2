@@ -1,5 +1,5 @@
-import { getSchedule } from "@/app/lib/data";
-import SectionTitle from "./SectionTitle";
+import { getSchedule } from '@/app/lib/data';
+import SectionTitle from './SectionTitle';
 
 function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
   const { dayInfo } = props;
@@ -35,11 +35,13 @@ export default async function Schedule() {
       id="Schedule"
     >
       <div className="flex h-fit w-full max-w-7xl flex-col items-center">
-        <div className="transparent-black-background text-text relative flex
-                              w-full flex-col items-center rounded-3xl md:flex-row md:items-start">
-          <ScheduleOfTheDay dayInfo={schedule["Saturday"]} />
+        <div
+          className="transparent-black-background text-text relative flex
+                              w-full flex-col items-center rounded-3xl md:flex-row md:items-start"
+        >
+          <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
-          <ScheduleOfTheDay dayInfo={schedule["Sunday"]} />
+          <ScheduleOfTheDay dayInfo={schedule['Sunday']} />
         </div>
       </div>
     </div>

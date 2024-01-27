@@ -1,7 +1,13 @@
-import Image from "next/image";
-import clsx from "clsx";
+import Image from 'next/image';
+import clsx from 'clsx';
 
-function AboutInfo({ children, title, imageSrc, alt, reverse }: {
+function AboutInfo({
+  children,
+  title,
+  imageSrc,
+  alt,
+  reverse,
+}: {
   children: React.ReactNode;
   title: string;
   imageSrc: string;
@@ -12,15 +18,13 @@ function AboutInfo({ children, title, imageSrc, alt, reverse }: {
     return (
       <div
         className={clsx(
-          "bg-red-100 w-full md:w-1/2 md:grow md:justify-end h-fit p-20",
+          'h-fit w-full bg-red-100 p-20 md:w-1/2 md:grow md:justify-end',
           {
-            "text-end": reverse,
+            'text-end': reverse,
           },
         )}
       >
-        <h1 className="font-extrabold bg-red-100 text-5xl">
-          {title}
-        </h1>
+        <h1 className="bg-red-100 text-5xl font-extrabold">{title}</h1>
         {children}
       </div>
     );
@@ -30,20 +34,14 @@ function AboutInfo({ children, title, imageSrc, alt, reverse }: {
     return (
       <div
         className={clsx(
-          "bg-red-200 w-full md:w-1/2 h-fit flex justify-center",
+          'flex h-fit w-full justify-center bg-red-200 md:w-1/2',
           {
-            "md:justify-start": !reverse,
-            "md:justify-end": reverse,
+            'md:justify-start': !reverse,
+            'md:justify-end': reverse,
           },
         )}
       >
-        <Image
-          src={imageSrc}
-          width="400"
-          height="400"
-          alt={alt}
-          priority
-        />
+        <Image src={imageSrc} width="400" height="400" alt={alt} priority />
       </div>
     );
   }
@@ -67,8 +65,10 @@ function AboutInfo({ children, title, imageSrc, alt, reverse }: {
 
 export default function About() {
   return (
-    <div className="bg-gray-200 w-full h-fit
-      flex flex-col md:flex-row flex-wrap">
+    <div
+      className="flex h-fit w-full
+      flex-col flex-wrap bg-gray-200 md:flex-row"
+    >
       <AboutInfo title="WHAT" imageSrc="/landing/python.png" alt="Python">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
