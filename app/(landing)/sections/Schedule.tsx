@@ -1,4 +1,5 @@
 import { getSchedule } from '@/app/lib/data';
+import SectionTitle from './SectionTitle';
 
 function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
   const { dayInfo } = props;
