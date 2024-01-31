@@ -8,7 +8,7 @@ import Schedule from './sections/Schedule';
 import { Suspense } from 'react';
 import Sponsors from './sections/Sponsors';
 import About from './sections/About';
-import FAQ from './sections/FAQ';
+import FAQ from './sections/FAQ/FAQ';
 
 export default function Page() {
   return (
