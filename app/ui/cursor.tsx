@@ -1,7 +1,30 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from 'next/image'
+import Image from 'next/image';
+import LugeReact from "./luge";
+
+/**
+ *
+ * Documentation: https://luge.cool/docs/custom-cursor/
+ * Compatibility with Next.js Discussion: https://github.com/AntoineW/luge/discussions/9
+ *
+ * The day that Luge becomes deprecated or starts to break, cause problems, etc., it must be removed.
+ *
+ * 1. pnpm uninstall @waaark/luge
+ * 2. Delete the TrailEffect component
+ * 3. Delete all instances of data-lg-[...] in global.css
+ */
+const TrailEffect = () => {
+  return (
+    <>
+      <LugeReact />
+      <div data-lg-cursor data-lg-cursor-hide>
+        <div data-lg-cursor-trail data-lg-cursor-trail-length="20" data-lg-cursor-inertia="0.4"></div>
+      </div>
+    </>
+  );
+}
 
 const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -16,6 +39,7 @@ const Cursor = () => {
     setIsPointer(
       window.getComputedStyle(target).getPropertyValue("cursor") === "pointer"
     );
+    // target.style.cursor = "none";
 
     e.stopPropagation();
   };
@@ -26,26 +50,33 @@ const Cursor = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const YSize = isPointer ? 0 : 100;
-  const XSize = isPointer ? 0 : 20;
+  const YSize = isPointer ? -100 : 100;
+  const XSize = isPointer ? -100 : 20;
   const rotationAngle = isPointer ? 0 : 315;
-  var topPos = position.y - YSize / 2;
-  
-  const cursorStyle = isPointer ? { display: "none" } : { transform: `rotate(${rotationAngle}deg)`, cursor: "none"};
+  const topPos = (position.y - YSize / 4) + 10;
+  const leftPos = (position.x - XSize / 4) + 30;
+
+  const hasNotMoved = position.x === 0 && position.y === 0;
 
   return (
-    <Image
-      src={"/landing/wand.png"}
-      alt="Custom Cursor"
-      width = {XSize}
-      height = {YSize}
-      style={{
-        ...cursorStyle,
-        position: "fixed",
-        left: `${position.x - XSize / 2}px`,
-        top:`${topPos}px`,
-      }}
-    />
+    <>
+      <TrailEffect />
+      <Image
+        src={"/landing/wand.png"}
+        alt="Custom Cursor"
+        width={XSize}
+        height={YSize}
+        className="select-none z-50"
+        style={{
+          display: hasNotMoved ? "none" : "block",
+          transform: `rotate(${rotationAngle}deg)`,
+          position: "fixed",
+          left: `${leftPos}px`,
+          top: `${topPos}px`,
+          pointerEvents: "none",
+        }}
+      />
+    </>
   );
 };
 
