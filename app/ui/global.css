@@ -16,3 +16,23 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.lg-cursor-pointer:before {
+  margin: -5px 0 0 -5px;
+  width: 10px;
+  height: 10px;
+
+  background-color: cyan;
+  border-radius: 50%;
+}
+
+.lg-cursor-trail path {
+  stroke: cyan;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 12px;
+}
+.lg-cursor--hover .lg-cursor-pointer:before {
+  background-color: red;
+  transform: scale(2);
+}

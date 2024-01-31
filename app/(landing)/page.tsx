@@ -9,10 +9,14 @@ import { Suspense } from 'react';
 import Sponsors from './sections/Sponsors';
 import About from './sections/About';
 import FAQ from './sections/FAQ/FAQ';
+import Cursor from '@/app/ui/cursor';
 
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col">
+      <Suspense>
+        <Cursor />
+      </Suspense>
       <div>
         <Hero />
         <About />
