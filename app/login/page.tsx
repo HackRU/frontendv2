@@ -2,19 +2,39 @@
 
 import { Button } from '@/app/ui/button';
 
-import { useFormState } from 'react-dom';
+
 
 import { authenticate, authUser } from '../lib/actions';
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
 
 
 export default function LoginPage() {
 
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+
+  const LoginSchema = z.object({
+    email: z.string().email(),
+    password: z.string(),
+  });
+
+  type Login = z.infer<typeof LoginSchema>;
+
+
+
+  const {register,handleSubmit,reset, formState: { errors },} = useForm<Login>({resolver: zodResolver(LoginSchema)});
+
+  const onSubmit = (data: Login) => {
+    console.log("Hi");
+    authenticate(data.email, data.password);
+  }
+
 
 
   return (
     <main className="flex items-center justify-center md:h-screen">
-        <form action={dispatch} >
+        <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           <div>
             <label
@@ -25,6 +45,7 @@ export default function LoginPage() {
             </label>
             <div className="relative">
               <input
+                {...register("email")}
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
@@ -33,6 +54,7 @@ export default function LoginPage() {
                 required
               />
             </div>
+            {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
           </div>
           <div className="mt-4">
             <label
@@ -43,6 +65,7 @@ export default function LoginPage() {
             </label>
             <div className="relative">
               <input
+                {...register("password")}
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 type="password"
@@ -50,6 +73,7 @@ export default function LoginPage() {
                 placeholder="Enter password"
                 required
               />
+              {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
         </div>
