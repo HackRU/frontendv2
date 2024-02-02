@@ -284,12 +284,12 @@ export async function getSelf() {
   return  {
     "email": "testemail@gmail.com",
     "role": {
-      "hacker": false,
+      "hacker": true,
       "volunteer": false,
       "judge": false,
       "sponsor": false,
       "mentor": false,
-      "organizer": true,
+      "organizer": false,
       "director": false
     },
     "votes": 0,

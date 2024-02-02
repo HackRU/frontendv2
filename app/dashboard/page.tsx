@@ -97,10 +97,27 @@ export default function Dashboard() {
                 <CardDescription>Check your registration status.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                {(userData.registration_status == "unregistered") &&
+                <>
                 <div className="flex flex-row items-center justify-center">
-                  <CardTitle>{userData ? userData?.registration_status : "unregistered"}</CardTitle>
+                  <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Waiver</a>
+                  <input className="ml-auto mr-0" type="file" accept=".pdf"></input>
+                </div>
+                <div className="flex flex-row items-center justify-center">
+                  <CardTitle>unregistered</CardTitle>
                   <Button className="ml-auto" onClick={()=>console.log("register button clicked")}>Register</Button>
                 </div>
+                </>
+                }
+                {(userData.registration_status == "confirmation") &&
+                <>
+                <div className="flex flex-row items-center justify-center">
+                  <CardTitle>confirmation</CardTitle>
+                  <Button className="ml-auto" onClick={()=>console.log("confirm button clicked")}>Coming</Button>
+                  <Button className="ml-auto" onClick={()=>console.log("confirm button clicked")}>Not Coming</Button>
+                </div>
+                </>
+                }
               </CardContent>
             </Card>
           </div>
