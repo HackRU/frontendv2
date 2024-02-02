@@ -3,10 +3,10 @@ import Image from 'next/image';
 import Navbar from './Navbar';
 import React, { useState, useEffect } from "react";
 
-const FIRE_IMG = [
-  "/landing/fire1.webp",
-  "/landing/fire2.webp",
-  "/landing/fire3.webp",
+const FIRE = [
+  "/landing/fireOne.webp",
+  "/landing/fireTwo.webp",
+  "/landing/fireThree.webp",
  
 ];
 
@@ -15,7 +15,7 @@ export default function Hero() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMG.length);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE.length);
     }, 218);
 
     return () => clearInterval(intervalId);
@@ -49,7 +49,7 @@ export default function Hero() {
         </div>
 
         <Image
-          src= {FIRE_IMG[currentImageIndex]}
+          src= {FIRE[currentImageIndex]}
           width="0"
           height="0"
           sizes="100vw"
