@@ -1,10 +1,29 @@
+"use client";
 import Image from 'next/image';
 import Navbar from './Navbar';
+import React, { useState, useEffect } from "react";
+
+const FIRE_IMAGES = [
+  "/landing/fire1.webp",
+  "/landing/fire2.webp",
+  "/landing/fire3.webp",
+ 
+];
 
 export default function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMAGES.length);
+    }, 218);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <>
-      <Navbar />
+     <Navbar />
       <div
         className="flex w-full
         flex-col items-center justify-center bg-gray-100
@@ -30,13 +49,13 @@ export default function Hero() {
         </div>
 
         <Image
-          src="/landing/fire.png"
+          src= {FIRE_IMAGES[currentImageIndex]}
           width="0"
           height="0"
           sizes="100vw"
           alt="Fire"
           // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-          className="h-auto w-[790px] pl-8 md:w-[550px] lg:w-[650px]"
+          className="h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]"
           priority
         />
       </div>
