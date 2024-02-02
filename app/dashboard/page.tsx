@@ -1,5 +1,6 @@
 "use client"
 
+
 import { UpdateSelf, getSelf, getUsers } from '@/app/lib/data';
 import { useState, useEffect } from 'react';
 import { AvatarImage, AvatarInitials, Avatar } from "@/app/dashboard/components/avatar"
@@ -20,7 +21,6 @@ export default function Dashboard() {
     const [userData, setUserData] = useState<any>(null);
 
     const UserUpdateSchema = z.object({
-      email: z.string().email(),
     
       first_name: z.string(),
       last_name: z.string(),
@@ -55,7 +55,7 @@ export default function Dashboard() {
     const {register,handleSubmit,reset, formState: { errors },} = useForm<UserUpdate>({resolver: zodResolver(UserUpdateSchema),defaultValues: userData,});
 
     const onSubmit = (data: UserUpdate) => {
-      console.log("Hi");
+      console.log(data);
       UpdateSelf(data);
     }
 
@@ -64,7 +64,6 @@ export default function Dashboard() {
           try {
             const data = await getSelf();
             setUserData(data);
-            console.log(userData);
           //   setLoading(false);
           } catch (error) {
             console.log(error);
@@ -286,7 +285,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button type = "submit" className="ml-auto" onClick={()=>console.log(errors)}>Save</Button>
+              <Button type = "submit" className="ml-auto" onClick={()=>console.log("errors")}>Save</Button>
             </CardFooter>
             </form>
           </Card>

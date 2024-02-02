@@ -10,6 +10,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 
+import { useState } from "react";
+
 
 export default function LoginPage() {
 
@@ -21,13 +23,16 @@ export default function LoginPage() {
 
   type Login = z.infer<typeof LoginSchema>;
 
+  const [submit_errors, setErrors] = useState("");
+
 
 
   const {register,handleSubmit,reset, formState: { errors },} = useForm<Login>({resolver: zodResolver(LoginSchema)});
 
-  const onSubmit = (data: Login) => {
+  const onSubmit = async (data: Login) => {
     console.log("Hi");
-    authenticate(data.email, data.password);
+    const resp = await authenticate(data.email, data.password);
+    setErrors(resp);
   }
 
 
@@ -36,6 +41,7 @@ export default function LoginPage() {
     <main className="flex items-center justify-center md:h-screen">
         <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
+        {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"

@@ -27,10 +27,19 @@ export async function authenticate(email:string, password:string) {
     const session = await auth();
     console.log(session);
     await signIn('credentials', {email:email, password:password});
+    return "Login";
   } catch (error) {
       console.log("ERROR");
       console.log(error);
-      return "Invalid Login"
+      if (error instanceof AuthError){
+        switch (error.type) {
+            case 'CredentialsSignin':
+              return 'Invalid credentials.';
+            default:
+              return 'Something went wrong.';
+          }
+      }
+      return "Something went wrong. ";
   }
 }
 
@@ -183,3 +192,88 @@ export async function SignUp(firstname:string, lastname:string, email:string, pa
   return resp;
 }
 
+export async function GetUser(email:string) {
+    let resp = {
+        error: "",
+        response: "",
+    };
+  
+    const session = await auth();
+  
+    if (session?.user) {
+        await fetch("https://api.hackru.org/dev/read", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                email: session.user.email,
+                token: session.user.name,
+                query: {
+                    email: email,
+                },
+            }),
+        })
+            .then(async (res) => {
+                let res_json = await res.json();
+                if (res_json.statusCode === 200) {
+                    resp.response = res_json.body[0];
+                } else {
+                    if (res_json.body) {
+                        resp.response = res_json.body;
+                    } else {
+                        resp.error = "Unexpected Error";
+                    }
+                }
+            })
+            .catch((error) => {
+                resp.error = error + "An error occured retrieving data";
+            });
+    } else {
+        resp.error = "Please log in";
+    }
+    return resp;
+  }
+
+  export async function SetUser(data:any, user_email_to_update:string) {
+    let resp = {
+        error: "",
+        response: "",
+    };
+
+    const session = await auth();
+
+    if (session?.user) {
+        await fetch("https://api.hackru.org/dev/update", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                updates: {
+                    $set: data,
+                },
+                user_email: user_email_to_update,
+                auth_email: session.user.email,
+                token: session.user.name,
+            }),
+        })
+            .then(async (res) => {
+                let resJSON = await res.json();
+                if (resJSON.statusCode !== 200) {
+                    if (resJSON.body) {
+                        resp.error = resJSON.body;
+                    } else {
+                        resp.error = "Unexpected Error";
+                    }
+                }
+            })
+            .catch((error) => {
+                resp.error = error + "; An error occured retrieving data";
+            });
+    } else {
+        resp.error = "Please log in";
+    }
+
+    return resp;
+}

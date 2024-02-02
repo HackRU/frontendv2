@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 
+import { useState } from "react";
+
 export default function SignupPage() {
 
   const SignUpSchema = z.object({
@@ -28,14 +30,16 @@ export default function SignupPage() {
   type SignUp = z.infer<typeof SignUpSchema>;
 
 
-
   const {register,handleSubmit,reset, formState: { errors },} = useForm<SignUp>({resolver: zodResolver(SignUpSchema)});
 
-  const onSubmit = (data: SignUp) => {
+  const [submit_errors, setErrors] = useState("");
+
+  const onSubmit = async (data: SignUp) => {
     console.log("SENDING SIGNUP");
     console.log(data);
-    const resp = SignUp(data.first_name, data.last_name, data.email, data.password, data.confirm_password);
+    const resp = await SignUp(data.first_name, data.last_name, data.email, data.password, data.confirm_password);
     console.log(resp);
+    setErrors(resp.error);
   }
 
 
@@ -43,6 +47,7 @@ export default function SignupPage() {
     <main className="flex items-center justify-center md:h-screen">
         <form  onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
+          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
