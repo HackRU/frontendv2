@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from 'next/image';
 import LugeReact from "./luge";
 
@@ -26,8 +26,15 @@ const TrailEffect = () => {
   );
 }
 
+function detectIfTouchDevice() {
+  return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.maxTouchPoints > 0));
+}
+
 const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   const [isPointer, setIsPointer] = useState(false);
 
@@ -46,6 +53,8 @@ const Cursor = () => {
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
+
+    setIsTouchDevice(detectIfTouchDevice());
 
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
@@ -68,7 +77,7 @@ const Cursor = () => {
         height={YSize}
         className="select-none z-50"
         style={{
-          display: hasNotMoved ? "none" : "block",
+          display: hasNotMoved || isTouchDevice ? "none" : "block",
           transform: `rotate(${rotationAngle}deg)`,
           position: "fixed",
           left: `${leftPos}px`,
