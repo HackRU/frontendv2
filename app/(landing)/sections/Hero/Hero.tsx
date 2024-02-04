@@ -14,14 +14,24 @@ const animationTime = 700;
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [completelyLoadedImages, setCompletedLoadedImages] = useState(0);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMG.length);
-    }, animationTime);
+    let intervalId: NodeJS.Timeout | undefined;
 
-    return () => clearInterval(intervalId);
-  }, []);
+    if (completelyLoadedImages >= 3) {
+      intervalId = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMG.length);
+      }, animationTime);
+    }
+
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [completelyLoadedImages]);
 
   return (
     <>
@@ -62,6 +72,9 @@ export default function Hero() {
             "opacity-0 absolute": currentImageIndex !== 0,
           })}
           priority
+          onLoad={() => {
+            setCompletedLoadedImages((prev) => prev + 1);
+          }}
         />
         <Image
           src={FIRE_IMG[1]}
@@ -74,7 +87,9 @@ export default function Hero() {
             "opacity-100": currentImageIndex === 1,
             "opacity-0 absolute ": currentImageIndex !== 1,
           })}
-          priority
+          onLoad={() => {
+            setCompletedLoadedImages((prev) => prev + 1);
+          }}
         />
         <Image
           src={FIRE_IMG[2]}
@@ -87,7 +102,9 @@ export default function Hero() {
             "opacity-100": currentImageIndex === 2,
             "opacity-0 absolute ": currentImageIndex !== 2,
           })}
-          priority
+          onLoad={() => {
+            setCompletedLoadedImages((prev) => prev + 1);
+          }}
         />
       </div>
     </>
