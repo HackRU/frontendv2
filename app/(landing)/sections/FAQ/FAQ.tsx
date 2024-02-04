@@ -13,7 +13,6 @@ function QuestionContainer() {
           answer={Object.values(hackRUFAQ)[i]}
         />
       ))}
-      <hr />
     </div>
   );
 }
@@ -24,7 +23,7 @@ export default function FAQ() {
       id="FAQ"
       className="relative flex w-full flex-col items-center justify-start overflow-visible"
     >
-      <div className="relative flex w-full max-w-7xl flex-col items-center pb-[24rem]">
+      <div className="relative flex w-full px-[10vw] xl:px-[15vw] flex-col items-center pb-[10rem]">
         <QuestionContainer />
       </div>
     </div>

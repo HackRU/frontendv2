@@ -9,15 +9,14 @@ export default function Accordion(props: propType) {
   const [accordionOpen, setAccordionOpen] = useState(false);
 
   return (
-    <div className="py-2">
-      <hr />
+    <div>
       <button
         onClick={() => setAccordionOpen(!accordionOpen)}
-        className="flex w-full justify-between"
+        className="flex w-full justify-between items-center pt-5"
       >
-        <span className="">{props.question}</span>
+        <span className="text-3xl text-orange-100 text-left font-bold">{props.question}</span>
         <svg
-          className="ml-8 shrink-0 fill-indigo-500"
+          className="ml-8 shrink-0 fill-orange-100"
           width="16"
           height="16"
           xmlns="http://www.w3.org/2000/svg"
@@ -43,14 +42,15 @@ export default function Accordion(props: propType) {
         </svg>
       </button>
       <div
-        className={`grid overflow-hidden text-sm text-slate-600 transition-all duration-300 ease-in-out ${
+        className={`pb-3 grid overflow-hidden text-sm text-orange-100 transition-all duration-300 ease-in-out ${
           accordionOpen
             ? 'grid-rows-[1fr] opacity-100'
             : 'grid-rows-[0fr] opacity-0'
         }`}
       >
-        <div className="overflow-hidden">{props.answer}</div>
+        <div className="overflow-hidden text-left text-lg">{props.answer}</div>
       </div>
+      <hr />
     </div>
   );
 }
