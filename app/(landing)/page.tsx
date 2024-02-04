@@ -28,12 +28,16 @@ export default function Page() {
            * component to a relevant loading component.
            */
         }
+        
         <GenericSection title="Schedule">
+
           <Suspense fallback={<>Loading Schedule!</>}>
             <Schedule />
           </Suspense>
         </GenericSection>
+
         <GenericSection title="Sponsors">
+
           <Suspense fallback={<>Loading Sponsors!</>}>
             <Sponsors />
           </Suspense>

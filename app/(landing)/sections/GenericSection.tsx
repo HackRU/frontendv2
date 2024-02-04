@@ -10,6 +10,9 @@ type GenericSectionProps = {
 export default function GenericSection(props: GenericSectionProps) {
   const defaultColor = 'bg-blue-100';
   const bgColorNew = props.color ? `${props.color}` : defaultColor;
+};
+
+export default function GenericSection(props: GenericSectionProps) {
   return (
     <div
       id={props.title}
