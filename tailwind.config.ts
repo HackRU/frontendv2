@@ -7,6 +7,14 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      xx: '0px',
+      xs: '320px',
+      sm: '576px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+    },
     extend: {
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',
@@ -14,10 +22,10 @@ const config: Config = {
       colors: {
         blue: {
           100: '#203437',
-          200: '#1B1F23'
         },
         orange: {
-          100: '#FFB464'
+          100: '#FFB464',
+          200: '#1B1F23'
         }
       },
     },
