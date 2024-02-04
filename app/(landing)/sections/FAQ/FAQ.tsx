@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { hackRUFAQ } from '@/app/lib/constants';
-import Accordian from './Accordian';
+import Accordian from './Accordion';
 
 function QuestionContainer() {
   return (
