@@ -1,7 +1,28 @@
+"use client";
 import Image from 'next/image';
 import Navbar from './Navbar';
+import React, { useState, useEffect } from "react";
+import clsx from 'clsx';
+
+const FIRE_IMG = [
+  "/landing/fire3.png",
+  "/landing/fire1.png",
+  "/landing/fire2.png",
+];
+
+const animationTime = 700;
 
 export default function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMG.length);
+    }, animationTime);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -30,13 +51,42 @@ export default function Hero() {
         </div>
 
         <Image
-          src="/landing/fire.png"
+          src={FIRE_IMG[0]}
           width="0"
           height="0"
           sizes="100vw"
           alt="Fire"
           // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-          className="h-auto w-[790px] pl-8 md:w-[550px] lg:w-[650px]"
+          className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
+            "opacity-100": currentImageIndex === 0,
+            "opacity-0 absolute": currentImageIndex !== 0,
+          })}
+          priority
+        />
+        <Image
+          src={FIRE_IMG[1]}
+          width="0"
+          height="0"
+          sizes="100vw"
+          alt="Fire"
+          // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
+          className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
+            "opacity-100": currentImageIndex === 1,
+            "opacity-0 absolute ": currentImageIndex !== 1,
+          })}
+          priority
+        />
+        <Image
+          src={FIRE_IMG[2]}
+          width="0"
+          height="0"
+          sizes="100vw"
+          alt="Fire"
+          // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
+          className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
+            "opacity-100": currentImageIndex === 2,
+            "opacity-0 absolute ": currentImageIndex !== 2,
+          })}
           priority
         />
       </div>
