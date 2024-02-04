@@ -22,11 +22,11 @@ const config: Config = {
       colors: {
         blue: {
           100: '#203437',
-          200: '#1B1F23',
         },
         orange: {
           100: '#FFB464',
-        },
+          200: '#1B1F23'
+        }
       },
     },
     keyframes: {
