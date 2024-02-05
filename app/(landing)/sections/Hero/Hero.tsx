@@ -5,21 +5,24 @@ import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 
 const FIRE_IMG = [
-  "/landing/fire-3.png",
   "/landing/fire-1.png",
   "/landing/fire-2.png",
+  "/landing/fire-3.png",
 ];
 
-const animationTime = 700;
+const animationTime = 300;
+const fireImageQuality = 10;
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [completelyLoadedImages, setCompletedLoadedImages] = useState(0);
+  const [imgArray, setImgArray] = useState(FIRE_IMG); //to load the fire animation faster
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined;
+    const minimumToStart = 2;
 
-    if (completelyLoadedImages >= 3) {
+    if (completelyLoadedImages >= minimumToStart) {
       intervalId = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMG.length);
       }, animationTime);
@@ -62,6 +65,7 @@ export default function Hero() {
 
         <Image
           src={FIRE_IMG[0]}
+          quality={fireImageQuality}
           width="0"
           height="0"
           sizes="100vw"
@@ -74,10 +78,14 @@ export default function Hero() {
           priority
           onLoad={() => {
             setCompletedLoadedImages((prev) => prev + 1);
+            setImgArray((prev) => {
+              return [...prev, "/landing/fire-1.png"];
+            });
           }}
         />
         <Image
           src={FIRE_IMG[1]}
+          quality={fireImageQuality}
           width="0"
           height="0"
           sizes="100vw"
@@ -89,10 +97,14 @@ export default function Hero() {
           })}
           onLoad={() => {
             setCompletedLoadedImages((prev) => prev + 1);
+            setImgArray((prev) => {
+              return [...prev, "/landing/fire-2.png"];
+            });
           }}
         />
         <Image
           src={FIRE_IMG[2]}
+          quality={fireImageQuality}
           width="0"
           height="0"
           sizes="100vw"
@@ -104,6 +116,9 @@ export default function Hero() {
           })}
           onLoad={() => {
             setCompletedLoadedImages((prev) => prev + 1);
+            setImgArray((prev) => {
+              return [...prev, "/landing/fire-3.png"];
+            });
           }}
         />
       </div>
