@@ -41,17 +41,17 @@ export default function Page() {
         <GenericSection title="FAQ" color="bg-gray-900">
           <FAQ />
           <Image
-                  src="/landing/wand-cats-combined.png"
-                  alt="bottom image"
-                  layout="responsive"
-                  object-fit= "cover"
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                  }}
-                  width={500}
-                  height={300}
-                  />
+            src="/landing/wand-cats-combined.png"
+            alt="bottom image"
+            layout="responsive"
+            object-fit="cover"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            width={500}
+            height={300}
+          />
         </GenericSection>
       </div>
     </main>
