@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image';
 import Navbar from './Navbar';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import clsx from 'clsx';
 
 const FIRE_IMG = [
@@ -10,31 +10,50 @@ const FIRE_IMG = [
   "/landing/fire-3.png",
 ];
 
-const animationTime = 300;
+const animationTime = 800;
 const fireImageQuality = 10;
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [completelyLoadedImages, setCompletedLoadedImages] = useState(0);
-  const [imgArray, setImgArray] = useState(FIRE_IMG); //to load the fire animation faster
+  const [animationComplete, setAnimationComplete] = useState(true);
+  const animationPromise = useRef(null);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
-    const minimumToStart = 2;
+    const waitForAnimation = () => {
+      return new Promise(resolve => {
+        if (animationComplete) {
+          resolve(undefined);
+        } else {
+          const checkComplete = setInterval(() => {
+            if (animationComplete) {
+              clearInterval(checkComplete);
+              resolve(undefined);
+            }
+          }, 100);
+        }
+      });
+    };
 
-    if (completelyLoadedImages >= minimumToStart) {
-      intervalId = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % FIRE_IMG.length);
-      }, animationTime);
-    }
+    const animate = async () => {
+      while (true) {
+        await waitForAnimation();
+        setAnimationComplete(false);
 
+        setCurrentImageIndex(prevIndex => (prevIndex + 1) % FIRE_IMG.length);
 
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+        await new Promise(resolve => setTimeout(resolve, animationTime));
+
+        setAnimationComplete(true);
       }
     };
-  }, [completelyLoadedImages]);
+
+    animate();
+
+    return () => {
+      animationPromise.current = null;
+    };
+  }, []);
+
 
   return (
     <>
@@ -64,7 +83,7 @@ export default function Hero() {
         </div>
 
         <Image
-          src={FIRE_IMG[0]}
+          src={FIRE_IMG[currentImageIndex]}
           quality={fireImageQuality}
           width="0"
           height="0"
@@ -72,55 +91,18 @@ export default function Hero() {
           alt="Fire"
           // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
           className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
-            "opacity-100": currentImageIndex === 0,
-            "opacity-0 absolute": currentImageIndex !== 0,
+            // "opacity-100": currentImageIndex === 0,
+            // "opacity-0 absolute": currentImageIndex !== 0,
           })}
           priority
           onLoad={() => {
-            setCompletedLoadedImages((prev) => prev + 1);
-            setImgArray((prev) => {
-              return [...prev, "/landing/fire-1.png"];
-            });
+            // setCompletedLoadedImages((prev) => prev + 1);
+            // setImgArray((prev) => {
+            //   return [...prev, "/landing/fire-1.png"];
+            // });
           }}
         />
-        <Image
-          src={FIRE_IMG[1]}
-          quality={fireImageQuality}
-          width="0"
-          height="0"
-          sizes="100vw"
-          alt="Fire"
-          // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-          className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
-            "opacity-100": currentImageIndex === 1,
-            "opacity-0 absolute ": currentImageIndex !== 1,
-          })}
-          onLoad={() => {
-            setCompletedLoadedImages((prev) => prev + 1);
-            setImgArray((prev) => {
-              return [...prev, "/landing/fire-2.png"];
-            });
-          }}
-        />
-        <Image
-          src={FIRE_IMG[2]}
-          quality={fireImageQuality}
-          width="0"
-          height="0"
-          sizes="100vw"
-          alt="Fire"
-          // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-          className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
-            "opacity-100": currentImageIndex === 2,
-            "opacity-0 absolute ": currentImageIndex !== 2,
-          })}
-          onLoad={() => {
-            setCompletedLoadedImages((prev) => prev + 1);
-            setImgArray((prev) => {
-              return [...prev, "/landing/fire-3.png"];
-            });
-          }}
-        />
+
       </div>
     </>
   );

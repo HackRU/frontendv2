@@ -17,6 +17,27 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.triangle-orange-star {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 10px solid #ffb464;
+}
+
+.triangle-blue-star {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 10px solid #208594;
+  /* background: white; */
+}
+
 .lg-cursor-pointer:before {
   margin: -5px 0 0 -5px;
   width: 10px;

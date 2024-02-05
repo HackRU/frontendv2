@@ -5,16 +5,21 @@ import { lusitana } from "@/app/ui/fonts";
 import Image from "next/image";
 import Hero from "./sections/Hero/Hero";
 import Schedule from "./sections/Schedule";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Sponsors from "./sections/Sponsors";
 import About from "./sections/About";
 import FAQ from "./sections/FAQ/FAQ";
 import GenericSection from "./sections/GenericSection";
 import Cursor from '@/app/ui/cursor';
+import { initStars } from '@/app/(landing)/misc/stars';
+import { StarryBackground } from "./misc/StarsBackground";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex flex-col h-fit relative">
+      <Suspense>
+        <StarryBackground numberOfStars={150} />
+      </Suspense>
       <Suspense>
         <Cursor />
       </Suspense>

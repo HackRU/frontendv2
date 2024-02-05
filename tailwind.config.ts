@@ -25,8 +25,8 @@ const config: Config = {
         },
         orange: {
           100: '#FFB464',
-          200: '#1B1F23'
-        }
+          200: '#1B1F23',
+        },
       },
     },
     keyframes: {
