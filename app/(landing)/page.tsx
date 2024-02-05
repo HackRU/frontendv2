@@ -18,9 +18,6 @@ export default function Page() {
   return (
     <main className="flex flex-col h-fit relative">
       <Suspense>
-        <StarryBackground numberOfStars={150} />
-      </Suspense>
-      <Suspense>
         <Cursor />
       </Suspense>
       <div>
@@ -59,6 +56,9 @@ export default function Page() {
           />
         </GenericSection>
       </div>
+      <Suspense>
+        <StarryBackground numberOfStars={150} />
+      </Suspense>
     </main>
   );
 }

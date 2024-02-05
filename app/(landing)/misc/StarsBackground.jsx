@@ -19,15 +19,15 @@ const ClientOnly = ({ children, ...delegated }) => {
 const Star = ({ style, onAnimateComplete }) => {
   const ref = useRef(null);
 
-  // useEffect(() => {
-  //   const animate = () => {
-  //     TweenMax.to(ref.current, Math.random() * 0.5 + 0.5, {
-  //       opacity: Math.random(),
-  //       onComplete: animate,
-  //     });
-  //   };
-  //   animate();
-  // }, [onAnimateComplete]);
+  useEffect(() => {
+    const animate = () => {
+      TweenMax.to(ref.current, Math.random() * 0.5 + 0.5, {
+        opacity: Math.random(),
+        onComplete: animate,
+      });
+    };
+    animate();
+  }, [onAnimateComplete]);
 
   return <div ref={ref} style={style} className={style.className} />;
 };
