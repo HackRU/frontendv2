@@ -5,9 +5,9 @@ import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 
 const FIRE_IMG = [
-  "/landing/fire3.png",
-  "/landing/fire1.png",
-  "/landing/fire2.png",
+  "/landing/fire-3.png",
+  "/landing/fire-1.png",
+  "/landing/fire-2.png",
 ];
 
 const animationTime = 700;
