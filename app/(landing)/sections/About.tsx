@@ -1,5 +1,9 @@
+"use client";
 import Image from 'next/image';
 import clsx from 'clsx';
+import { useWindowSize } from '@/app/lib/useWindowSize';
+
+const animalQuality = 50;
 
 function AboutInfo({
   children,
@@ -14,6 +18,10 @@ function AboutInfo({
   alt: string;
   reverse?: boolean;
 }) {
+  const size = useWindowSize();
+  /* Defined in tailwind.config.ts file. Probably better to have some common area for constants. */
+  const TAILWIND_MD_SIZE_DEFINE____REPLACE___LATER____ = 768;
+
   function AboutInfoContent() {
     return (
       <div
@@ -41,12 +49,21 @@ function AboutInfo({
           },
         )}
       >
-        <Image src={imageSrc} width="400" height="400" alt={alt} priority />
+        <Image src={imageSrc} width="600" height="600" alt={alt} quality={animalQuality} />
       </div>
     );
   }
 
   if (reverse) {
+    return (
+      <>
+        <AboutImage />
+        <AboutInfoContent />
+      </>
+    );
+  }
+
+  if (size.width && size.width < TAILWIND_MD_SIZE_DEFINE____REPLACE___LATER____) {
     return (
       <>
         <AboutImage />
@@ -69,7 +86,7 @@ export default function About() {
       className="flex h-fit w-full
       flex-col flex-wrap bg-gray-200 md:flex-row"
     >
-      <AboutInfo title="WHAT" imageSrc="/landing/python.png" alt="Python">
+      <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
           imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
@@ -82,7 +99,7 @@ export default function About() {
 
       <AboutInfo
         title="TRACKS"
-        imageSrc="/landing/python.png"
+        imageSrc="/landing/bitsprout.png"
         alt="Python"
         reverse
       >
@@ -97,7 +114,7 @@ export default function About() {
         </p>
       </AboutInfo>
 
-      <AboutInfo title="JOIN US" imageSrc="/landing/python.png" alt="Python">
+      <AboutInfo title="JOIN US" imageSrc="/landing/pseudoclaw.png" alt="Python">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
           imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
