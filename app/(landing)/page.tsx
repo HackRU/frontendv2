@@ -28,18 +28,30 @@ export default function Page() {
            * component to a relevant loading component.
            */
         }
-        <GenericSection title="Schedule" color="white">
+        <GenericSection title="Schedule">
           <Suspense fallback={<>Loading Schedule!</>}>
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors" color="gray-100">
+        <GenericSection title="Sponsors">
           <Suspense fallback={<>Loading Sponsors!</>}>
             <Sponsors />
           </Suspense>
         </GenericSection>
-        <GenericSection title="FAQ" color="gray-500">
+        <GenericSection title="FAQ" color="bg-gray-900">
           <FAQ />
+          <Image
+            src="/landing/wand-cats-combined.png"
+            alt="bottom image"
+            layout="responsive"
+            object-fit="cover"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            width={500}
+            height={300}
+          />
         </GenericSection>
       </div>
     </main>

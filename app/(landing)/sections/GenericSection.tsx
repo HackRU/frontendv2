@@ -4,10 +4,12 @@ import { ReactNode } from 'react';
 type GenericSectionProps = {
   children: ReactNode;
   title: string;
-  color: string;
+  color?: string;
 };
 
 export default function GenericSection(props: GenericSectionProps) {
+  const defaultColor = 'bg-blue-100';
+  const bgColorNew = props.color ? `${props.color}` : defaultColor;
   return (
     <div
       id={props.title}
@@ -15,7 +17,7 @@ export default function GenericSection(props: GenericSectionProps) {
     >
       <SectionTitle title={props.title} />
       {props.children}
-      <div className='h-[15vh] w-full bg-blue-100'></div>
+      <div className={`h-[15vh] w-full ${bgColorNew}`}></div>
     </div>
   );
 }
