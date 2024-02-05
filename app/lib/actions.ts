@@ -6,6 +6,8 @@ import { AuthError } from 'next-auth';
 
 import { auth } from "../../auth"
 
+import { redirect } from 'next/navigation'
+
 const FormSchema = z.object({
   id: z.string(),
   customerId: z.string({
@@ -26,7 +28,7 @@ export async function authenticate(email:string, password:string) {
     console.log("FORM");
     const session = await auth();
     console.log(session);
-    await signIn('credentials', {email:email, password:password});
+    await signIn('credentials',{email:email, password:password, redirectTo:"/dashboard"});
     return "Login";
   } catch (error) {
       console.log("ERROR");
@@ -39,6 +41,7 @@ export async function authenticate(email:string, password:string) {
               return 'Something went wrong.';
           }
       }
+      redirect('/dashboard');
       return "Something went wrong. ";
   }
 }
@@ -88,7 +91,14 @@ export async function SignUp(firstname:string, lastname:string, email:string, pa
   console.log(email);
   console.log(password);
   console.log(confirmpassword);
-      if (!firstname) {
+
+  const session = await auth();
+
+    if (session?.user) {
+    resp.error = "User is already logged in";
+    return resp;
+    }
+      else if (!firstname) {
           resp.error = "Invalid first name";
           return resp;
       } else if (!lastname) {
@@ -273,6 +283,100 @@ export async function GetUser(email:string) {
             });
     } else {
         resp.error = "Please log in";
+    }
+
+    return resp;
+}
+export async function Forgot(email:string) {
+    let resp = {
+        error: "",
+        response: "",
+    };
+
+    const session = await auth();
+
+    if (session?.user) {
+        resp.error = "User is already logged in";
+        return resp;
+    } else {
+        if (!email) {
+            resp.error = "Invalid email";
+            return resp;
+        } else {
+            await fetch("https://api.hackru.org/dev/createmagiclink", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    forgot: true,
+                }),
+            })
+                .then(async (res) => {
+                    let resJSON = await res.json();
+                    if (resJSON.statusCode === 200) {
+                        return resp;
+                    } else {
+                        if (resJSON.body) {
+                            resp.error = resJSON.body;
+                        } else {
+                            resp.error = "Unexpected Error";
+                        }
+                    }
+                })
+                .catch((error) => {
+                    resp.error =
+                        error +
+                        "An error occured when attempting to general url";
+                });
+        }
+        return resp;
+    }
+}
+export async function Reset(email:string, password:string, conpassword:string, magic:string) {
+    let resp = {
+        error: "",
+        response: "",
+    };
+
+    if (!password) {
+        resp.error = "Input a new password";
+    } else if (!conpassword) {
+        resp.error = "Confirm your new password";
+    } else if (password !== conpassword) {
+        resp.error = "Passwords don't match!";
+    } else {
+        await fetch("https://api.hackru.org/dev/consume", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                forgot: true,
+                password: password,
+                link: magic,
+            }),
+        })
+            .then(async (res) => {
+                let resJSON = await res.json();
+                if (resJSON.statusCode !== 200) {
+                    if (resJSON.body) {
+                        resp.error = resJSON.body;
+                    } else {
+                        resp.error = "Unexpected Error";
+                    }
+                }
+                else{
+                    resp.response = "Password Reset"
+                }
+            })
+            .catch((error) => {
+                resp.error =
+                    error +
+                    "; An error occured when attempting to reset password";
+            });
     }
 
     return resp;

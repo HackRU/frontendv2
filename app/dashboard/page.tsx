@@ -50,8 +50,6 @@ export default function Dashboard() {
     type UserUpdate = z.infer<typeof UserUpdateSchema>;
 
 
-
-
     const {register,handleSubmit,reset, formState: { errors },} = useForm<UserUpdate>({resolver: zodResolver(UserUpdateSchema),defaultValues: userData,});
 
     const onSubmit = (data: UserUpdate) => {
