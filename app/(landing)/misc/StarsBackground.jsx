@@ -46,7 +46,7 @@ export function StarryBackground({ numberOfStars }) {
 
   return (
     <ClientOnly>
-      <div className="absolute left-0 top-0 h-full w-full">
+      <div className="absolute left-0 top-0 z-0 h-full w-full">
         {stars.map((style, index) => (
           <Star key={index} style={style} />
         ))}

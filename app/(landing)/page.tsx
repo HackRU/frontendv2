@@ -45,7 +45,6 @@ export default function Page() {
           <Image
             src="/landing/wand-cats-combined.png"
             alt="bottom image"
-            layout="responsive"
             object-fit="cover"
             style={{
               width: '100%',

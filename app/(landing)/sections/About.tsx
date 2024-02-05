@@ -26,7 +26,7 @@ function AboutInfo({
     return (
       <div
         className={clsx(
-          'h-fit w-full bg-red-100 p-20 md:w-1/2 md:grow md:justify-end',
+          'h-fit w-full bg-red-100 p-20 md:w-1/2 md:grow md:justify-end z-10',
           {
             'text-end': reverse,
           },

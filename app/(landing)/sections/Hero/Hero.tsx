@@ -85,22 +85,12 @@ export default function Hero() {
         <Image
           src={FIRE_IMG[currentImageIndex]}
           quality={fireImageQuality}
-          width="0"
-          height="0"
-          sizes="100vw"
+          width="900"
+          height="900"
           alt="Fire"
           // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-          className={clsx("h-auto w-[790px] pl-8 md:w-[800px] lg:w-[800px]", {
-            // "opacity-100": currentImageIndex === 0,
-            // "opacity-0 absolute": currentImageIndex !== 0,
-          })}
+          className={"h-auto w-[790px] pl-8 md:w-[500px] lg:w-[600px] xl:w-[650px] mb-32 xl:mb-10"}
           priority
-          onLoad={() => {
-            // setCompletedLoadedImages((prev) => prev + 1);
-            // setImgArray((prev) => {
-            //   return [...prev, "/landing/fire-1.png"];
-            // });
-          }}
         />
 
       </div>

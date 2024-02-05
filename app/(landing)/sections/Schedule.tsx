@@ -31,7 +31,7 @@ export default async function Schedule() {
 
   return (
     <div
-      className="relative mb-20 flex w-full justify-center px-4"
+      className="relative mb-20 flex w-full justify-center px-4 z-10"
       id="Schedule"
     >
       <div className="flex h-fit w-full max-w-7xl flex-col items-center">
