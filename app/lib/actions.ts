@@ -381,3 +381,43 @@ export async function Reset(email:string, password:string, conpassword:string, m
 
     return resp;
 }
+
+
+export async function GetWaiverInfo(){
+    console.log('getwaiverinfo is called');
+    const session = await auth();
+    if(session?.user){
+        const resp = await fetch("https://api.hackru.org/dev/waiver", {
+            method: "POST",
+            headers:{
+                "content-type":"application/json",
+            },
+            body: JSON.stringify({
+                email: session.user.email,
+                token: session.user.name,
+            })
+        });
+        if (!resp.ok) {
+            throw new Error("did not successfully retrieve waiver info");
+        }
+
+        const json = await resp.json();
+        return json.body;
+    }
+    else {
+        throw new Error("user session not found")
+    }
+
+}
+
+export async function UploadWaiver(file: File){
+    console.log("UploadWaiver function called");
+    const info = await GetWaiverInfo();
+    return await fetch(info.upload, {
+        method: "PUT",
+        headers: {
+            "content-type": "application/pdf",
+        },
+        body: file,
+    });
+}

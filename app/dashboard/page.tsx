@@ -10,7 +10,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-
+import { UploadWaiver } from '../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,21 +51,43 @@ export default function Dashboard() {
 
 
     const {register,handleSubmit,reset, formState: { errors },} = useForm<UserUpdate>({resolver: zodResolver(UserUpdateSchema),defaultValues: userData,});
-
-    const onSubmit = (data: UserUpdate) => {
+    const [waiverFile, setWaiverFile] =useState<File | null>(null)
+    const onSubmit = async (data: UserUpdate) => {
       console.log(data);
       UpdateSelf(data);
     }
-
+    const onWaiverSubmit = async () => {
+      console.log("the file is below: ")
+      console.log(waiverFile);
+      if (waiverFile){ //works
+        try{
+          await UploadWaiver(waiverFile as File);
+        } catch (error) {
+          console.error("Error uploading waiver:", error);
+          alert("Error uploading waiver");
+        }
+      } else {
+        console.error("No waiver file selected");//works
+        alert("Please select a waiver file");
+      }
+    }
+    const handleChangingFile = (event: React.ChangeEvent<HTMLInputElement>) =>{ 
+      if (event.target.files && event.target.files.length > 0) {
+        const selectedFile = event.target.files[0];
+        if (selectedFile.type === 'application/pdf') {
+          setWaiverFile(selectedFile);
+          console.log("Selected file:", selectedFile);
+        } else {
+          console.error("Invalid file format. Please select a PDF file.");
+        } };
+    }
     useEffect(() => {
       async function fetchUser() {
           try {
             const data = await getSelf();
             setUserData(data);
-          //   setLoading(false);
           } catch (error) {
             console.log(error);
-          //   setLoading(false);
           }
         }
         
@@ -89,6 +111,7 @@ export default function Dashboard() {
               </div>
             </div>
             <Card className="w-full max-w-2xl">
+              <form onSubmit = {handleSubmit(onWaiverSubmit)}>
               <CardHeader>
                 <CardTitle>Registration</CardTitle>
                 <CardDescription>Check your registration status.</CardDescription>
@@ -98,11 +121,11 @@ export default function Dashboard() {
                 <>
                 <div className="flex flex-row items-center justify-center">
                   <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Waiver</a>
-                  <input className="ml-auto mr-0" type="file" accept=".pdf"></input>
+                  <input className="ml-auto mr-0" type="file" accept=".pdf" onChange={handleChangingFile} required></input>
                 </div>
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>unregistered</CardTitle>
-                  <Button className="ml-auto" onClick={()=>console.log("register button clicked")}>Register</Button>
+                  <Button type="submit" className="ml-auto" onClick={()=>console.log("register button clicked")}>Register</Button>
                 </div>
                 </>
                 }
@@ -116,6 +139,7 @@ export default function Dashboard() {
                 </>
                 }
               </CardContent>
+              </form>
             </Card>
           </div>
           <Card className="w-full max-w-2xl">
