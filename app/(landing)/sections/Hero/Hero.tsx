@@ -96,14 +96,17 @@ export default function Hero() {
           <div>
             <button
               className="absolute 
-                         items-center justify-center bg-black
+                         items-center justify-center bg-black rounded-lg
+                         border-solid border-y-2 border-x-4 border-brown-200
+                         bg-gradient-to-b from-blue-300 to-brown-100
+                         text-blue-200
                          xs:left-[103px] xs:top-[285px] xs:h-[26px] xs:w-[99px] 
                          sm:left-[185px] sm:top-[513px] sm:h-[45px] sm:w-[179px] 
                          md:left-[183px] md:top-[417px] md:h-[37px] md:w-[145px] 
                          lg:left-[208px] lg:top-[485px] lg:h-[42px] lg:w-[168px]
                          xl:left-[208px] xl:top-[485px] xl:h-[42px] xl:w-[168px]
                          "
-            />
+            >LOG IN</button>
           </div>
         </div>
       </div>
