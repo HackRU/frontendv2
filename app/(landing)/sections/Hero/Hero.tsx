@@ -98,7 +98,7 @@ export default function Hero() {
               className="absolute 
                          items-center justify-center bg-black rounded-lg
                          border-solid border-y-2 border-x-4 border-brown-200
-                         bg-gradient-to-b from-blue-300 to-brown-100
+                         bg-gradient-to-t from-blue-300 to-brown-100
                          text-blue-200
                          xs:left-[103px] xs:top-[285px] xs:h-[26px] xs:w-[99px] 
                          sm:left-[185px] sm:top-[513px] sm:h-[45px] sm:w-[179px] 
