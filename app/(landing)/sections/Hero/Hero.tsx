@@ -66,7 +66,7 @@ export default function Hero() {
         {/* <div className="w-full h-[75vh] bg-red-100" />
         <div className="w-full h-10 bg-red-500" /> */}
 
-        <div className="relative h-[40vh] w-full pt-10 text-center md:pt-0 md:w-2/5">
+        <div className="relative h-[40vh] w-full pt-10 text-center md:w-2/5 md:pt-0">
           <div
             className="flex h-[40vh] w-full flex-col justify-center space-y-4 text-5xl
                        md:absolute md:-left-16 md:min-w-fit md:space-y-7 md:text-4xl
@@ -88,18 +88,20 @@ export default function Hero() {
             height="900"
             alt="Fire"
             // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-            className={
-              'mb-32 h-auto w-[790px] pl-8 md:w-[500px] md:min-w-[500px] lg:w-[600px] xl:mb-10 xl:w-[650px]'
-            }
+            className="mb-32 h-auto w-[790px] xs:max-w-[320px] sm:max-w-[576px]
+                       md:w-[500px] md:min-w-[500px] md:pl-8 lg:w-[600px] 
+                       xl:mb-10 xl:w-[650px]"
             priority
           />
           <div>
             <button
-              className="absolute items-center justify-center bg-black 
-                         xl:left-[232px] xl:top-[550px] xl:h-[49px] xl:w-[191px]
-                         lg:left-[215px] lg:top-[506px] lg:h-[45px] lg:w-[176px]
-                         md:left-[183px] md:top-[417px] md:h-[37px] md:w-[145px]
-                         top-0 bottom-0 left-0 right-0
+              className="absolute 
+                         items-center justify-center bg-black
+                         xs:left-[103px] xs:top-[285px] xs:h-[26px] xs:w-[99px] 
+                         sm:left-[185px] sm:top-[513px] sm:h-[45px] sm:w-[179px] 
+                         md:left-[183px] md:top-[417px] md:h-[37px] md:w-[145px] 
+                         lg:left-[208px] lg:top-[485px] lg:h-[42px] lg:w-[168px]
+                         xl:left-[208px] xl:top-[485px] xl:h-[42px] xl:w-[168px]
                          "
             />
           </div>
