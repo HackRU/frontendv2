@@ -10,7 +10,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-import { UploadWaiver } from '../lib/actions';
+import { UploadWaiver, GetWaiverInfo } from '../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,12 +56,16 @@ export default function Dashboard() {
       console.log(data);
       UpdateSelf(data);
     }
-    const onWaiverSubmit = async () => {
+    const onWaiverSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
       console.log("the file is below: ")
+      console.log(GetWaiverInfo());
       console.log(waiverFile);
       if (waiverFile){ //works
         try{
-          await UploadWaiver(waiverFile as File);
+          const data = new FormData();
+          data.set('file', waiverFile);
+          await UploadWaiver(data);
         } catch (error) {
           console.error("Error uploading waiver:", error);
           alert("Error uploading waiver");
@@ -111,7 +115,7 @@ export default function Dashboard() {
               </div>
             </div>
             <Card className="w-full max-w-2xl">
-              <form onSubmit = {handleSubmit(onWaiverSubmit)}>
+              <form onSubmit = {(onWaiverSubmit)}>
               <CardHeader>
                 <CardTitle>Registration</CardTitle>
                 <CardDescription>Check your registration status.</CardDescription>
