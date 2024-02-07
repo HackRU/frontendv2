@@ -8,26 +8,40 @@ import { auth } from "../../auth"
 
 import { redirect } from 'next/navigation'
 
-const FormSchema = z.object({
-  id: z.string(),
-  customerId: z.string({
-    invalid_type_error: 'Please select a customer.',
-  }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an invoice status.',
-  }),
-  date: z.string(),
-});
+const BASE = "https://api.hackru.org/dev"
+
+const ENDPOINTS = {
+  login: BASE + "/authorize",
+  /**
+   * Default signup url, expects
+   */
+  signup: BASE + "/create",
+  /**
+   * Default logout url, expects
+   */
+  userData: BASE + "/read",
+  /**
+   * Default user update information, expects
+   */
+  update: BASE + "/update",
+  /**
+   * Create forgot magic link to reset password
+   */
+  forgot: BASE + "/createmagiclink",
+  /**
+   * Reset password from magic link to reset password
+   */
+  resetpassword: BASE + "/consume",
+  /**
+   * Digest magic links
+   */
+  waiver: BASE + "/waiver"
+};
 
 
 export async function authenticate(email:string, password:string) {
   try {
-    console.log("FORM");
     const session = await auth();
-    console.log(session);
     await signIn('credentials',{email:email, password:password, redirectTo:"/dashboard"});
     return "Login";
   } catch (error) {
@@ -52,7 +66,7 @@ export async function authUser(email: string, password:string){
     response: "",
   };
 
-  await fetch("https://api.hackru.org/dev/authorize", {
+  await fetch(ENDPOINTS.login, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -86,11 +100,6 @@ export async function SignUp(firstname:string, lastname:string, email:string, pa
       error: "",
       response: "",
   };
-  console.log(firstname);
-  console.log(lastname);
-  console.log(email);
-  console.log(password);
-  console.log(confirmpassword);
 
   const session = await auth();
 
@@ -118,7 +127,7 @@ export async function SignUp(firstname:string, lastname:string, email:string, pa
           return resp;
       } else {
 
-          await fetch("https://api.hackru.org/dev/create", {
+          await fetch(ENDPOINTS.signup, {
               method: "POST",
               headers: {
                   "content-type": "application/json",
@@ -211,7 +220,7 @@ export async function GetUser(email:string) {
     const session = await auth();
   
     if (session?.user) {
-        await fetch("https://api.hackru.org/dev/read", {
+        await fetch(ENDPOINTS.userData, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -254,7 +263,7 @@ export async function GetUser(email:string) {
     const session = await auth();
 
     if (session?.user) {
-        await fetch("https://api.hackru.org/dev/update", {
+        await fetch(ENDPOINTS.update, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -303,7 +312,7 @@ export async function Forgot(email:string) {
             resp.error = "Invalid email";
             return resp;
         } else {
-            await fetch("https://api.hackru.org/dev/createmagiclink", {
+            await fetch(ENDPOINTS.forgot, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -347,7 +356,7 @@ export async function Reset(email:string, password:string, conpassword:string, m
     } else if (password !== conpassword) {
         resp.error = "Passwords don't match!";
     } else {
-        await fetch("https://api.hackru.org/dev/consume", {
+        await fetch(ENDPOINTS.resetpassword, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -413,7 +422,7 @@ export async function GetWaiverInfo(){
 export async function GetWaiverInfo() {
     const session = await auth();
     if(session?.user){
-    const json = await fetch("https://api.hackru.org/prod/waiver", {
+    const json = await fetch(ENDPOINTS.waiver, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

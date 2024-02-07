@@ -12,14 +12,16 @@ import { z } from 'zod';
 
 import { useState } from "react";
 
+import Image from 'next/image';
+
+
 
 export default function LoginPage() {
 
 
   const LoginSchema = z.object({
-    // email: z.string().email(),
-    email: z.string(),
-    
+    email: z.string().email(),
+    //email :z.string(),
     password: z.string(),
   });
 
@@ -40,11 +42,23 @@ export default function LoginPage() {
 
 
   return (
-    <main className="flex items-center justify-center md:h-screen">
+    <main className="flex items-center justify-center md:h-screen " >
+          <Image
+          src={('/textbannerBROWN.png')}
+          width="900"
+          height="900"
+          alt="Scroll"
+          className={"h-auto w-[650px] md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
+          priority
+          style={{
+            objectFit: 'cover',
+            zIndex: -1
+          }}
+        />
         <form onSubmit={handleSubmit(onSubmit)} >
-        <div className="w-full">
+        <div  className="w-full grid gap-0 items-center">
         {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
-          <div>
+          <div >
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
@@ -64,7 +78,7 @@ export default function LoginPage() {
             </div>
             {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
           </div>
-          <div className="mt-4">
+          <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="password"
@@ -84,9 +98,9 @@ export default function LoginPage() {
               {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
+          <Button className = "mt-4 justify-center" type = "submit">Log in</Button>
         </div>
-        <Button type = "submit">Log in</Button>
         </form>
-    </main>
+      </main>
   );
 }

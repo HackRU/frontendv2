@@ -11,6 +11,8 @@ import { z } from 'zod';
 
 import { useState } from "react";
 
+import Image from 'next/image';
+
 export default function SignupPage() {
 
   const SignUpSchema = z.object({
@@ -45,8 +47,20 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen">
+                <Image
+          src={('/textbannerBROWN.png')}
+          width="900"
+          height="900"
+          alt="Scroll"
+          className={"h-auto w-[750px] md:w-[750px] lg:w-[750px] xl:w-[750px] absolute"}
+          priority
+          style={{
+            objectFit: 'cover',
+            zIndex: -1
+          }}
+        />
         <form  onSubmit={handleSubmit(onSubmit)} >
-        <div className="w-full">
+        <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
             <label
@@ -69,7 +83,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className="mt-4">
+          <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="first_name"
@@ -89,7 +103,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className="mt-4">
+          <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="first"
@@ -109,7 +123,7 @@ export default function SignupPage() {
             </div>
           </div>
           
-          <div className="mt-4">
+          <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="password"
@@ -128,7 +142,7 @@ export default function SignupPage() {
                 {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
-          <div className="mt-4">
+          <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="confirm_password"
@@ -149,7 +163,7 @@ export default function SignupPage() {
           </div>
           
         </div>
-        <Button type = "submit">Sign Up</Button>
+        <Button type = "submit" className = "mt-4 justify-self-stretch">Sign Up</Button>
         </form>
     </main>
   );

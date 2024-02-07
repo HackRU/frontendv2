@@ -58,6 +58,8 @@ export async function getSelf() {
   if(session?.user && session?.user?.email){
 
     const resp = await GetUser(session.user.email);
+    console.log("READ")
+    console.log(resp)
 
     if(resp.error === ""){
       return resp.response;

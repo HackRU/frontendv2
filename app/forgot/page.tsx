@@ -30,10 +30,7 @@ export default function SignupPage() {
   const [success, setSuccess] = useState("");
 
   const onSubmit = async (data: SignUp) => {
-    console.log("SENDING SIGNUP");
-    console.log(data);
     const resp = await Forgot( data.email);
-    console.log(resp);
     setSuccess(resp.response);
     setErrors(resp.error);
   }
