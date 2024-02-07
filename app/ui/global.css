@@ -24,7 +24,7 @@ input[type='number']::-webkit-outer-spin-button {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
 
-  border-bottom: 10px solid #ffb464;
+  border-bottom: 10px solid #FFB464;
 }
 
 .triangle-blue-star {
@@ -56,4 +56,12 @@ input[type='number']::-webkit-outer-spin-button {
 .lg-cursor--hover .lg-cursor-pointer:before {
   background-color: red;
   transform: scale(2);
+}
+
+
+.bigelow-font {
+  font-family: 'Bigelow Rules', cursive;
+}
+body {
+  color: #51F4FF;
 }
