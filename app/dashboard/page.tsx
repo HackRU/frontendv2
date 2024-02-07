@@ -90,6 +90,8 @@ export default function Dashboard() {
           try {
             const data = await getSelf();
             setUserData(data);
+            console.log(data)
+          //   setLoading(false);
           } catch (error) {
             console.log(error);
           }
@@ -100,7 +102,14 @@ export default function Dashboard() {
     
     }, []);
 
-    if (userData?.role.hacker){
+
+    if (userData?.role.organizer){
+      return(<OrganizerView userData={userData} />)
+    }
+    else if (userData?.role.director){
+      return(<DirectorView userData={userData} />)
+    }
+    else if (userData?.role.hacker){
       return (
         <main className="flex flex-col items-center justify-center p-4 space-y-8">
           <div className="w-full max-w-2xl flex flex-col md:flex-row items-center justify-center space-y-8 md:space-x-16">
@@ -318,12 +327,6 @@ export default function Dashboard() {
           
         </main>
       );
-    }
-    else if (userData?.role.organizer){
-      return(<OrganizerView userData={userData} />)
-    }
-    else if (userData?.role.director){
-      return(<DirectorView userData={userData} />)
     }
   
 }

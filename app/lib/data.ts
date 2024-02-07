@@ -148,7 +148,7 @@ export async function getUsers(){
   const registration_states = ["unregistered", "registered", "confirmation", "coming", "not_coming","waitlist", "confirmed", "rejected", "checked_in", "registered"]
 
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 100; i++) {
     const Random = Math.floor(Math.random() * 23);
     const email = i.toString() + "@gmail.com";
     Users[email] = {"role": {
