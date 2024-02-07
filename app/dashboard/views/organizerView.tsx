@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import Image from 'next/image';
 import Pagination from '@/app/dashboard/components/pagination';
@@ -6,27 +8,31 @@ import Table from '@/app/dashboard/components/table';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import Link from 'next/link';
 
 import { Suspense } from 'react';
 
 import { getSelf, getUsers } from '@/app/lib/data';
+import { generatePagination } from '@/app/lib/utils';
 import { useState, useEffect } from 'react';
-
 function OrganizerView(userData : any) {
 
+    const [allUsers, setAllUsers] = useState<any>(null);
     const [users, setUsers] = useState<any>(null);
     const [query, setQuery] = useState<String>("");
     const [currentPage, setPage] = useState<number>(1);
     const [totalPages, setTotal] = useState<number>(1);
-
+  
     useEffect(() => {
         async function fetchUsers() {
             try {
               const data = await getUsers()
-              console.log(data)
-
+              // console.log(data)
+              setAllUsers(data);
               setUsers(data);
+              setTotal(Math.ceil(Object.keys(data).length / 10))
             //   setLoading(false);
             } catch (error) {
               console.log(error);
@@ -36,7 +42,26 @@ function OrganizerView(userData : any) {
       
         fetchUsers();
     }, []);
-
+  
+    useEffect(() => {
+      if (query != "") { 
+        const filteredUsers = Object.keys(allUsers)
+          .filter(email => 
+            (allUsers[email].first_name.toLowerCase().includes(query.toLowerCase()) 
+            || allUsers[email].last_name.toLowerCase().includes(query.toLowerCase())
+            || email.toLowerCase().includes(query.toLowerCase())) 
+            )
+            .reduce((res: Record<string, typeof allUsers[keyof typeof allUsers]>, email) => (res[email] = allUsers[email], res), {})
+  
+        setUsers(filteredUsers);
+        // console.log(filteredUsers)
+        setTotal(Math.ceil(Object.keys(filteredUsers).length / 10))
+        setPage(1)
+      }
+    }, [query])
+  
+    const allPages = generatePagination(currentPage, totalPages);
+  
   return (
     <div className="flex w-full items-center justify-center">
     <div className="w-full max-w-2xl justify-between">
@@ -45,7 +70,7 @@ function OrganizerView(userData : any) {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         
-
+  
       <div className="relative flex flex-1 flex-shrink-0">
         <label htmlFor="search" className="sr-only">
             Search
@@ -54,17 +79,17 @@ function OrganizerView(userData : any) {
             className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
             placeholder="Search hackers..."
             onChange={(e) => {
-            setQuery(e.target.value);
+              setQuery(e.target.value);
             }}
         />
         <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
       </div>
-
+  
         {/* <CreateInvoice /> */}
       </div>
         
-
-
+  
+  
       <div className="mt-6 flow-root">
         <div className="inline-block min-w-full align-middle">
             <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
@@ -96,22 +121,22 @@ function OrganizerView(userData : any) {
                         {users[email].registration_status}
                         </p>
                     </div>
-                    <div className="flex justify-end gap-2">
+                    {/* <div className="flex justify-end gap-2">
                         <Link
                             href={`/dashboard`}
                             className="rounded-md border p-2 hover:bg-gray-100"
                             >
                             <PencilIcon className="w-5" />
                         </Link>
-
+  
                         <form action={undefined}>
                             <button className="rounded-md border p-2 hover:bg-gray-100">
                                 <span className="sr-only">Delete</span>
                                 <TrashIcon className="w-5" />
                             </button>
                         </form>
-
-                    </div>
+  
+                    </div> */}
                     </div>
                 </div>
                 ))}
@@ -134,13 +159,13 @@ function OrganizerView(userData : any) {
                     <th scope="col" className="px-3 py-5 font-medium">
                     Registration Status
                     </th>
-                    <th scope="col" className="relative py-3 pl-6 pr-3">
+                    {/* <th scope="col" className="relative py-3 pl-6 pr-3">
                     <span className="sr-only">Edit</span>
-                    </th>
+                    </th> */}
                 </tr>
                 </thead>
                 <tbody className="bg-white">
-                {users && Object.keys(users).map((email : any) => (
+                {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email : string) => (
                     <tr
                     key={email}
                     className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -169,7 +194,7 @@ function OrganizerView(userData : any) {
                     <td className="whitespace-nowrap px-3 py-3">
                         <InvoiceStatus status={invoice.status} />
                     </td> */}
-                    <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                    {/* <td className="whitespace-nowrap py-3 pl-6 pr-3">
                         <div className="flex justify-end gap-3">
                             <Link
                                 href={`/dashboard`}
@@ -177,7 +202,7 @@ function OrganizerView(userData : any) {
                                 >
                                 <PencilIcon className="w-5" />
                             </Link>
-
+  
                             <form action={undefined}>
                                 <button className="rounded-md border p-2 hover:bg-gray-100">
                                     <span className="sr-only">Delete</span>
@@ -185,7 +210,7 @@ function OrganizerView(userData : any) {
                                 </button>
                             </form>
                         </div>
-                    </td>
+                    </td> */}
                     </tr>
                 ))}
                 </tbody>
@@ -193,14 +218,109 @@ function OrganizerView(userData : any) {
             </div>
         </div>
         </div>
-
-
+  
+  
       <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
+      <div className="inline-flex">
+        <PaginationArrow
+          direction="left"
+          // href={createPageURL(currentPage - 1)}
+          isDisabled={currentPage <= 1}
+        />
+  
+        <div className="flex -space-x-px">
+          {allPages.map((page, index) => {
+            let position: 'first' | 'last' | 'single' | 'middle' | undefined;
+  
+            if (index === 0) position = 'first';
+            if (index === allPages.length - 1) position = 'last';
+            if (allPages.length === 1) position = 'single';
+            if (page === '...') position = 'middle';
+  
+            return (
+              <PaginationNumber
+                key={index}
+                // href={createPageURL(page)}
+                page={page}
+                position={position}
+                isActive={currentPage === page}
+              />
+            );
+          })}
+        </div>
+  
+        <PaginationArrow
+          direction="right"
+          // href={createPageURL(currentPage + 1)}
+          isDisabled={currentPage >= totalPages}
+        />
+      </div>
       </div>
     </div>
     </div>
   )
-}
+  
+  function PaginationNumber({
+    page,
+    isActive,
+    position,
+  }: {
+    page: number | string;
+    position?: 'first' | 'last' | 'middle' | 'single';
+    isActive: boolean;
+  }) {
+    const className = clsx(
+      'flex h-10 w-10 items-center justify-center text-sm border',
+      {
+        'rounded-l-md': position === 'first' || position === 'single',
+        'rounded-r-md': position === 'last' || position === 'single',
+        'z-10 bg-blue-600 border-blue-600 text-white': isActive,
+        'hover:bg-gray-100': !isActive && position !== 'middle',
+        'text-gray-300': position === 'middle',
+      },
+    );
+  
+    return isActive || position === 'middle' ? (
+      <div className={className}>{page}</div>
+    ) : (
+      <div onClick={()=>{setPage(Number(page))}} className={className}>
+        {page}
+      </div>
+    );
+  }
+  
+  function PaginationArrow({
+    direction,
+    isDisabled,
+  }: {
+    direction: 'left' | 'right';
+    isDisabled?: boolean;
+  }) {
+    const className = clsx(
+      'flex h-10 w-10 items-center justify-center rounded-md border',
+      {
+        'pointer-events-none text-gray-300': isDisabled,
+        'hover:bg-gray-100': !isDisabled,
+        'mr-2 md:mr-4': direction === 'left',
+        'ml-2 md:ml-4': direction === 'right',
+      },
+    );
+  
+    const icon =
+      direction === 'left' ? (
+        <ArrowLeftIcon className="w-4" />
+      ) : (
+        <ArrowRightIcon className="w-4" />
+      );
+  
+    return isDisabled ? (
+      <div className={className}>{icon}</div>
+    ) : (
+      <div onClick={()=>{direction === 'left' ? setPage(currentPage-1) : setPage(currentPage+1)}} className={className}>
+        {icon}
+      </div>
+    );
+  }
+  }
 
 export default OrganizerView

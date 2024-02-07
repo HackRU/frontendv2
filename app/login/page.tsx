@@ -17,7 +17,9 @@ export default function LoginPage() {
 
 
   const LoginSchema = z.object({
-    email: z.string().email(),
+    // email: z.string().email(),
+    email: z.string(),
+    
     password: z.string(),
   });
 
