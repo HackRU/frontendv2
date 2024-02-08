@@ -1,7 +1,7 @@
 "use client"
 
 
-import { UpdateSelf, getSelf, getUsers } from '@/app/lib/data';
+import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
 import { useState, useEffect } from 'react';
 import { AvatarImage, AvatarInitials, Avatar } from "@/app/dashboard/components/avatar"
 import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/app/dashboard/components/card"
@@ -19,6 +19,8 @@ import { z } from 'zod';
 export default function Dashboard() {
 
     const [userData, setUserData] = useState<any>(null);
+
+    const [waiverState, setWaiverState] = useState<any>(null);
 
     const UserUpdateSchema = z.object({
     
@@ -50,22 +52,27 @@ export default function Dashboard() {
     type UserUpdate = z.infer<typeof UserUpdateSchema>;
 
 
-    const {register,handleSubmit,reset, formState: { errors },} = useForm<UserUpdate>({resolver: zodResolver(UserUpdateSchema),defaultValues: userData,});
-    const [waiverFile, setWaiverFile] =useState<File | null>(null)
+    const {register,handleSubmit,reset, trigger, formState: { errors },} = useForm<UserUpdate>({resolver: zodResolver(UserUpdateSchema),defaultValues: userData,});
+    const [waiverFile, setWaiverFile] =useState<File | null>(null);
+
     const onSubmit = async (data: UserUpdate) => {
       console.log(data);
       UpdateSelf(data);
     }
     const onWaiverSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log("the file is below: ")
-      console.log(GetWaiverInfo());
-      console.log(waiverFile);
       if (waiverFile){ //works
         try{
+          console.log(errors);
           const data = new FormData();
           data.set('file', waiverFile);
           await UploadWaiver(data);
+
+          trigger('phone_number', {shouldFocus:true});
+          if(Object.keys(errors).length === 0){
+            RegisterSelf();
+          }
+
         } catch (error) {
           console.error("Error uploading waiver:", error);
           alert("Error uploading waiver");
@@ -90,6 +97,8 @@ export default function Dashboard() {
           try {
             const data = await getSelf();
             setUserData(data);
+            const haswaiver = await GetWaiverInfo();
+            setWaiverState(haswaiver.exists);
             console.log(data)
           //   setLoading(false);
           } catch (error) {
@@ -132,6 +141,7 @@ export default function Dashboard() {
               <CardContent className="space-y-4">
                 {(userData.registration_status == "unregistered") &&
                 <>
+                {waiverState && (<p className="text-xs italic text-green-500 mt-2">{"Waiver Uploaded"}</p>)}
                 <div className="flex flex-row items-center justify-center">
                   <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Waiver</a>
                   <input className="ml-auto mr-0" type="file" accept=".pdf" onChange={handleChangingFile} required></input>
@@ -139,6 +149,13 @@ export default function Dashboard() {
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>unregistered</CardTitle>
                   <Button type="submit" className="ml-auto" onClick={()=>console.log("register button clicked")}>Register</Button>
+                </div>
+                </>
+                }
+                {(userData.registration_status == "registered") &&
+                <>
+                <div className="flex flex-row items-center justify-center">
+                  <CardTitle>registered, waiting for approval</CardTitle>
                 </div>
                 </>
                 }

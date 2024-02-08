@@ -95,6 +95,24 @@ export async function UpdateSelf(data:any){
 
 }
 
+export async function RegisterSelf(){
+  const session = await auth();
+  console.log("Register Self");
+  if(session?.user && session?.user?.email){
+
+    const resp = await SetUser({registration_status: 'registered'}, session.user.email);
+
+    if(resp.error === ""){
+      return resp.response;
+    }
+    return resp.error;
+  }
+
+  return  {
+    error:"Something went wrong"
+  }
+}
+
 export async function getUsers(){
   const Users: Record<string, object> = {"testemail@gmail.com":{"role": {
     "hacker": true,

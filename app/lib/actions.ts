@@ -440,14 +440,28 @@ export async function GetWaiverInfo() {
 
 export async function UploadWaiver(file:FormData,
     ){
+    let resp = {
+        error: "",
+        response: "",
+    };
     console.log("UploadWaiver function called");
     const info = await GetWaiverInfo();
     console.log(info);
-    return await fetch(info.upload, {
+    await fetch(info.upload, {
         method: "PUT",
         headers: {
             "content-type": "application/pdf",
         },
         body: file.get('file'),
+    }).then(async (res) => {
+        console.log(res.status);
+        if (res.status !== 200) {
+            resp.error = "Error Uploading Waiver";
+            
+        }
+        else{
+            resp.response = "Waiver Uploaded"
+        }
     });
+    return resp;
 }
