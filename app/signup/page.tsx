@@ -12,6 +12,8 @@ import { z } from 'zod';
 import { useState } from "react";
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation'
+
 
 export default function SignupPage() {
 
@@ -36,12 +38,15 @@ export default function SignupPage() {
 
   const [submit_errors, setErrors] = useState("");
 
+  const router = useRouter();
+
   const onSubmit = async (data: SignUp) => {
     console.log("SENDING SIGNUP");
     console.log(data);
     const resp = await SignUp(data.first_name, data.last_name, data.email, data.password, data.confirm_password);
-    console.log(resp);
-    setErrors(resp.error);
+    if(resp){
+      setErrors(resp.error);
+    }
   }
 
 
@@ -52,7 +57,7 @@ export default function SignupPage() {
           width="900"
           height="900"
           alt="Scroll"
-          className={"h-auto w-[750px] md:w-[750px] lg:w-[750px] xl:w-[750px] absolute"}
+          className={"h-auto w-[800px] md:w-[800px] lg:w-[800px] xl:w-[800px] absolute"}
           priority
           style={{
             objectFit: 'cover',
@@ -136,6 +141,7 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 name="password"
+                type = "password"
                 placeholder="Enter password"
                 required
               />
@@ -155,6 +161,7 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="confirm_password"
                 name="confirm_password"
+                type = "password"
                 placeholder="Enter password again" 
                 required
               />
@@ -164,6 +171,7 @@ export default function SignupPage() {
           
         </div>
         <Button type = "submit" className = "mt-4 justify-self-stretch">Sign Up</Button>
+        <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"  onClick={() => router.push('/login')}>Already a member? Log In!</p>
         </form>
     </main>
   );

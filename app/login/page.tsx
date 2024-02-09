@@ -2,8 +2,6 @@
 
 import { Button } from '@/app/ui/button';
 
-
-
 import { authenticate, authUser } from '../lib/actions';
 
 import { useForm } from "react-hook-form";
@@ -13,7 +11,7 @@ import { z } from 'zod';
 import { useState } from "react";
 
 import Image from 'next/image';
-
+import { useRouter } from 'next/navigation'
 
 
 export default function LoginPage() {
@@ -29,6 +27,7 @@ export default function LoginPage() {
 
   const [submit_errors, setErrors] = useState("");
 
+  const router = useRouter();
 
 
   const {register,handleSubmit,reset, formState: { errors },} = useForm<Login>({resolver: zodResolver(LoginSchema)});
@@ -99,6 +98,7 @@ export default function LoginPage() {
             </div>
           </div>
           <Button className = "mt-4 justify-center" type = "submit">Log in</Button>
+          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"  onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
         </div>
         </form>
       </main>

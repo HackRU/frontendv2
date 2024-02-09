@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 
+
 export default function Dashboard() {
 
     const [userData, setUserData] = useState<any>(null);
@@ -145,6 +146,27 @@ export default function Dashboard() {
                 <div className="flex flex-row items-center justify-center">
                   <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Waiver</a>
                   <input className="ml-auto mr-0" type="file" accept=".pdf" onChange={handleChangingFile} required></input>
+                </div>
+                <div className="flex flex-row items-center justify-left">
+                  <input type="checkbox" className="rounded text-pink-500 mr-3" required/>
+                  <p>I have read and agree to the 
+                  <a className = "text-blue-300 hover:text-blue-500"href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" rel="noopener noreferrer"target="_blank"> MLH Code of Conduct</a></p>
+                </div>
+                <div className="flex flex-row items-center justify-left">
+                  <input type="checkbox" className="rounded text-pink-500 mr-3" required/>
+                  <p>I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the{" "} 
+                    <a className = "text-blue-300 hover:text-blue-500"href="https://mlh.io/privacy" rel="noopener noreferrer"target="_blank">MLH Privacy Policy</a>
+                  </p>
+                </div>
+                <div className="flex flex-row items-center justify-left">
+                  <input type="checkbox" className="rounded text-pink-500 mr-3" required/>
+                  <p> Further, I agree to the terms of both the{" "}
+                    <a className = "text-blue-300 hover:text-blue-500" href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" 
+                        rel="noopener noreferrer"
+                        target="_blank">MLH Contest Terms and Conditions</a> and the{" "} 
+                    <a className = "text-blue-300 hover:text-blue-500" href="https://mlh.io/privacy"
+                        rel="noopener noreferrer"
+                        target="_blank">MLH Privacy Policy</a></p>
                 </div>
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>unregistered</CardTitle>

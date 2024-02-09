@@ -168,8 +168,9 @@ export async function SignUp(firstname:string, lastname:string, email:string, pa
                           .then(async (res) => {
                               let res_json = await res.json();
                               if (res_json.statusCode === 200) {
+                                resp.response = "200";
                                 try {
-                                  await signIn('credentials', {email:email, password:password});
+                                  await signIn('credentials', {email:email, password:password, redirectTo:"/dashboard"});
                                 } catch (error) {
                                     if (error instanceof AuthError) {
                                       switch (error.type) {
@@ -206,6 +207,9 @@ export async function SignUp(firstname:string, lastname:string, email:string, pa
                       error +
                       "; An error occured when attempting signup. Failed at 1/2";
               });
+  }
+  if (resp.response === "200"){
+    redirect("/dashboard");
   }
 
   return resp;
