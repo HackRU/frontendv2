@@ -2,7 +2,6 @@
 import { auth } from "../../auth"
 
 import { GetUser, SetUser } from "./actions"
-
 export async function getSchedule() {
   //a fake delay to simulate a real api call
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -44,13 +43,6 @@ export async function getSchedule() {
 
   return schedule;
 }
-
-
-
-
-
-
-
 
 export async function getSelf() {
   const session = await auth();

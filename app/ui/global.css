@@ -16,3 +16,44 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.triangle-orange-star {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 10px solid #ffb464;
+}
+
+.triangle-blue-star {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 10px solid #208594;
+  /* background: white; */
+}
+
+.lg-cursor-pointer:before {
+  margin: -5px 0 0 -5px;
+  width: 10px;
+  height: 10px;
+
+  background-color: cyan;
+  border-radius: 50%;
+}
+
+.lg-cursor-trail path {
+  stroke: cyan;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 12px;
+}
+.lg-cursor--hover .lg-cursor-pointer:before {
+  background-color: red;
+  transform: scale(2);
+}

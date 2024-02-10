@@ -1,18 +1,25 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
-import Image from 'next/image';
-import Hero from './sections/Hero';
-import Schedule from './sections/Schedule';
-import { Suspense } from 'react';
-import Sponsors from './sections/Sponsors';
-import About from './sections/About';
-import FAQ from './sections/FAQ';
+import AcmeLogo from "@/app/ui/acme-logo";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { lusitana } from "@/app/ui/fonts";
+import Image from "next/image";
+import Hero from "./sections/Hero/Hero";
+import Schedule from "./sections/Schedule";
+import { Suspense, useEffect } from "react";
+import Sponsors from "./sections/Sponsors";
+import About from "./sections/About";
+import FAQ from "./sections/FAQ/FAQ";
+import GenericSection from "./sections/GenericSection";
+import Cursor from '@/app/ui/cursor';
+import { initStars } from '@/app/(landing)/misc/stars';
+import { StarryBackground } from "./misc/StarsBackground";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex flex-col h-fit relative">
+      <Suspense>
+        <Cursor />
+      </Suspense>
       <div>
         <Hero />
         <About />
@@ -31,6 +38,34 @@ export default function Page() {
         </Suspense>
         <FAQ />
       </div>
+        <GenericSection title="Schedule">
+          <Suspense fallback={<>Loading Schedule!</>}>
+            <Schedule />
+          </Suspense>
+        </GenericSection>
+        <GenericSection title="Sponsors">
+          <Suspense fallback={<>Loading Sponsors!</>}>
+            <Sponsors />
+          </Suspense>
+        </GenericSection>
+        <GenericSection title="FAQ" color="bg-gray-900">
+          <FAQ />
+          <Image
+            src="/landing/wand-cats-combined.png"
+            alt="bottom image"
+            object-fit="cover"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            width={500}
+            height={300}
+          />
+        </GenericSection>
+      </div>
+      <Suspense>
+        <StarryBackground numberOfStars={150} />
+      </Suspense>
     </main>
   );
 }
