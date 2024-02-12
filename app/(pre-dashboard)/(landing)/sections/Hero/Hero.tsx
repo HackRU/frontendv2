@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { getSelf } from '@/app/lib/data';
 
 const FIRE_IMG = [
   '/landing/fire-1.png',
@@ -14,11 +15,34 @@ const FIRE_IMG = [
 const animationTime = 800;
 const fireImageQuality = 10;
 
+async function fetchUser(cb: (isLogged: boolean) => void) {
+  console.log("FETCHING USER IN HERO!")
+  try {
+    const data = await getSelf();
+    console.log(data);
+
+    if (data && typeof data === 'object' && "error" in data) {
+      cb(false);
+    }
+
+    if (data) {
+      cb(true);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
   const animationPromise = useRef(null);
   const router = useRouter();
+
+  useEffect(() => {
+    fetchUser(setIsLogged);
+  }, []);
 
   useEffect(() => {
     const waitForAnimation = () => {
@@ -110,10 +134,14 @@ export default function Hero() {
                          z-30
                          "
               onClick={() => {
-                console.log('test');
-                router.push('/login');
+                if (isLogged) {
+                  router.push('/dashboard');
+                } else {
+                  router.push('/login');
+                }
               }}
-            >LOG IN
+            >
+              {!isLogged ? "LOG IN" : "DASHBOARD"}
             </button>
           </div>
         </div>
