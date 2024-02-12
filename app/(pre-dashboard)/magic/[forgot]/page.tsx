@@ -3,7 +3,7 @@
 import { Button } from '@/app/ui/button';
 
 
-import { Reset } from '../../lib/actions';
+import { Reset } from '../../../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,10 +18,10 @@ export default function SignupPage() {
   const SignUpSchema = z.object({
     email: z.string().email(),
 
-  
+
     password: z.string(),
     confirm_password: z.string()
-  
+
   }).refine((data) => data.password === data.confirm_password, {
     message: "Passwords don't match",
     path: ["confirm_password"], // path of error
@@ -30,7 +30,7 @@ export default function SignupPage() {
   type SignUp = z.infer<typeof SignUpSchema>;
 
 
-  const {register,handleSubmit,reset, formState: { errors },} = useForm<SignUp>({resolver: zodResolver(SignUpSchema)});
+  const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
   const [submit_errors, setErrors] = useState("");
   const [success, setSuccess] = useState("");
@@ -52,7 +52,7 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen">
-        <form  onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
@@ -73,10 +73,10 @@ export default function SignupPage() {
                 placeholder="Enter your email address"
                 required
               />
-            {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
+              {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
             </div>
           </div>
-          
+
           <div className="mt-4">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -93,7 +93,7 @@ export default function SignupPage() {
                 placeholder="Enter password"
                 required
               />
-                {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
+              {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
           <div className="mt-4">
@@ -109,16 +109,16 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="confirm_password"
                 name="confirm_password"
-                placeholder="Enter password again" 
+                placeholder="Enter password again"
                 required
               />
-                {errors.confirm_password && (<p className="text-xs italic text-red-500 mt-2">{errors.confirm_password?.message}</p>)}
+              {errors.confirm_password && (<p className="text-xs italic text-red-500 mt-2">{errors.confirm_password?.message}</p>)}
             </div>
           </div>
-          
+
         </div>
-        <Button type = "submit">Reset Password</Button>
-        </form>
+        <Button type="submit">Reset Password</Button>
+      </form>
     </main>
   );
 }

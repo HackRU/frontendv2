@@ -3,7 +3,7 @@
 import { Button } from '@/app/ui/button';
 
 
-import { Forgot } from '../lib/actions';
+import { Forgot } from '../../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,22 +15,22 @@ export default function SignupPage() {
 
   const SignUpSchema = z.object({
     email: z.string().email(),
-  
 
-  
+
+
   });
 
   type SignUp = z.infer<typeof SignUpSchema>;
 
 
 
-  const {register,handleSubmit,reset, formState: { errors },} = useForm<SignUp>({resolver: zodResolver(SignUpSchema)});
+  const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
   const [submit_errors, setErrors] = useState("");
   const [success, setSuccess] = useState("");
 
   const onSubmit = async (data: SignUp) => {
-    const resp = await Forgot( data.email);
+    const resp = await Forgot(data.email);
     setSuccess(resp.response);
     setErrors(resp.error);
   }
@@ -38,9 +38,9 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen">
-        <form  onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
-        {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
+          {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
             <label
@@ -59,14 +59,14 @@ export default function SignupPage() {
                 placeholder="Enter your email address"
                 required
               />
-            {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
+              {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
             </div>
           </div>
 
-          
+
         </div>
-        <Button type = "submit">Send Reset Link</Button>
-        </form>
+        <Button type="submit">Send Reset Link</Button>
+      </form>
     </main>
   );
 }

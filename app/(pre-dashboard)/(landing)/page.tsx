@@ -11,15 +11,11 @@ import About from "./sections/About";
 import FAQ from "./sections/FAQ/FAQ";
 import GenericSection from "./sections/GenericSection";
 import Cursor from '@/app/ui/cursor';
-import { initStars } from '@/app/(landing)/misc/stars';
 import { StarryBackground } from "./misc/StarsBackground";
 
 export default function Page() {
   return (
     <main className="flex flex-col h-fit relative">
-      <Suspense>
-        <Cursor />
-      </Suspense>
       <div>
         <Hero />
         <About />
@@ -37,7 +33,7 @@ export default function Page() {
           <Sponsors />
         </Suspense>
         <FAQ />
-      </div>
+
         <GenericSection title="Schedule">
           <Suspense fallback={<>Loading Schedule!</>}>
             <Schedule />

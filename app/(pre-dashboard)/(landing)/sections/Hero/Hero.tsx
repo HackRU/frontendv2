@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Navbar from './Navbar';
 import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 const FIRE_IMG = [
   '/landing/fire-1.png',
@@ -17,6 +18,7 @@ export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(true);
   const animationPromise = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const waitForAnimation = () => {
@@ -89,24 +91,30 @@ export default function Hero() {
             alt="Fire"
             // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
             className="mb-32 h-auto w-[790px] xs:max-w-[320px] sm:max-w-[576px]
-                       md:w-[500px] md:min-w-[500px] md:pl-8 lg:w-[600px] 
+                       md:w-[500px] md:min-w-[500px] md:pl-8 lg:w-[600px]
                        xl:mb-10 xl:w-[650px]"
             priority
           />
           <div>
             <button
-              className="absolute 
+              className="absolute
                          items-center justify-center bg-black rounded-lg
                          border-solid border-y-2 border-x-4 border-brown-200
                          bg-gradient-to-t from-blue-300 to-brown-100
                          text-blue-200
-                         xs:left-[103px] xs:top-[285px] xs:h-[26px] xs:w-[99px] 
-                         sm:left-[185px] sm:top-[513px] sm:h-[45px] sm:w-[179px] 
-                         md:left-[183px] md:top-[417px] md:h-[37px] md:w-[145px] 
+                         xs:left-[103px] xs:top-[285px] xs:h-[26px] xs:w-[99px]
+                         sm:left-[185px] sm:top-[513px] sm:h-[45px] sm:w-[179px]
+                         md:left-[183px] md:top-[417px] md:h-[37px] md:w-[145px]
                          lg:left-[208px] lg:top-[485px] lg:h-[42px] lg:w-[168px]
                          xl:left-[208px] xl:top-[485px] xl:h-[42px] xl:w-[168px]
+                         z-30
                          "
-            >LOG IN</button>
+              onClick={() => {
+                console.log('test');
+                router.push('/login');
+              }}
+            >LOG IN
+            </button>
           </div>
         </div>
       </div>

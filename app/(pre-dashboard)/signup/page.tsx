@@ -3,7 +3,7 @@
 import { Button } from '@/app/ui/button';
 
 
-import { SignUp } from '../lib/actions';
+import { SignUp } from '../../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,13 +19,13 @@ export default function SignupPage() {
 
   const SignUpSchema = z.object({
     email: z.string().email(),
-  
+
     first_name: z.string(),
     last_name: z.string(),
-  
+
     password: z.string(),
     confirm_password: z.string()
-  
+
   }).refine((data) => data.password === data.confirm_password, {
     message: "Passwords don't match",
     path: ["confirm_password"], // path of error
@@ -34,7 +34,7 @@ export default function SignupPage() {
   type SignUp = z.infer<typeof SignUpSchema>;
 
 
-  const {register,handleSubmit,reset, formState: { errors },} = useForm<SignUp>({resolver: zodResolver(SignUpSchema)});
+  const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
   const [submit_errors, setErrors] = useState("");
 
@@ -44,7 +44,7 @@ export default function SignupPage() {
     console.log("SENDING SIGNUP");
     console.log(data);
     const resp = await SignUp(data.first_name, data.last_name, data.email, data.password, data.confirm_password);
-    if(resp){
+    if (resp) {
       setErrors(resp.error);
     }
   }
@@ -52,19 +52,19 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen">
-                <Image
-          src={('/textbannerBROWN.png')}
-          width="900"
-          height="900"
-          alt="Scroll"
-          className={"h-auto w-[800px] md:w-[800px] lg:w-[800px] xl:w-[800px] absolute"}
-          priority
-          style={{
-            objectFit: 'cover',
-            zIndex: -1
-          }}
-        />
-        <form  onSubmit={handleSubmit(onSubmit)} >
+      <Image
+        src={('/textbannerBROWN.png')}
+        width="900"
+        height="900"
+        alt="Scroll"
+        className={"h-auto w-[800px] md:w-[800px] lg:w-[800px] xl:w-[800px] absolute"}
+        priority
+        style={{
+          objectFit: 'cover',
+          zIndex: -1
+        }}
+      />
+      <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
@@ -84,7 +84,7 @@ export default function SignupPage() {
                 placeholder="Enter your email address"
                 required
               />
-            {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
+              {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
             </div>
           </div>
 
@@ -104,7 +104,7 @@ export default function SignupPage() {
                 placeholder="First"
                 required
               />
-                {errors.first_name && (<p className="text-xs italic text-red-500 mt-2">{errors.first_name?.message}</p>)}
+              {errors.first_name && (<p className="text-xs italic text-red-500 mt-2">{errors.first_name?.message}</p>)}
             </div>
           </div>
 
@@ -124,10 +124,10 @@ export default function SignupPage() {
                 placeholder="Last"
                 required
               />
-                {errors.last_name && (<p className="text-xs italic text-red-500 mt-2">{errors.last_name?.message}</p>)}
+              {errors.last_name && (<p className="text-xs italic text-red-500 mt-2">{errors.last_name?.message}</p>)}
             </div>
           </div>
-          
+
           <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -141,11 +141,11 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 name="password"
-                type = "password"
+                type="password"
                 placeholder="Enter password"
                 required
               />
-                {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
+              {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
           <div className="">
@@ -161,18 +161,18 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="confirm_password"
                 name="confirm_password"
-                type = "password"
-                placeholder="Enter password again" 
+                type="password"
+                placeholder="Enter password again"
                 required
               />
-                {errors.confirm_password && (<p className="text-xs italic text-red-500 mt-2">{errors.confirm_password?.message}</p>)}
+              {errors.confirm_password && (<p className="text-xs italic text-red-500 mt-2">{errors.confirm_password?.message}</p>)}
             </div>
           </div>
-          
+
         </div>
-        <Button type = "submit" className = "mt-4 justify-self-stretch">Sign Up</Button>
-        <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"  onClick={() => router.push('/login')}>Already a member? Log In!</p>
-        </form>
+        <Button type="submit" className="mt-4 justify-self-stretch">Sign Up</Button>
+        <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>Already a member? Log In!</p>
+      </form>
     </main>
   );
 }

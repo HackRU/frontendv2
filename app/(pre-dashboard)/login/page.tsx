@@ -2,16 +2,17 @@
 
 import { Button } from '@/app/ui/button';
 
-import { authenticate, authUser } from '../lib/actions';
+import { authenticate, authUser } from '../../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
+import Cursor from '../../ui/cursor';
 
 
 export default function LoginPage() {
@@ -30,7 +31,7 @@ export default function LoginPage() {
   const router = useRouter();
 
 
-  const {register,handleSubmit,reset, formState: { errors },} = useForm<Login>({resolver: zodResolver(LoginSchema)});
+  const { register, handleSubmit, reset, formState: { errors }, } = useForm<Login>({ resolver: zodResolver(LoginSchema) });
 
   const onSubmit = async (data: Login) => {
     console.log("Hi");
@@ -41,22 +42,22 @@ export default function LoginPage() {
 
 
   return (
-    <main className="flex items-center justify-center md:h-screen " >
-          <Image
-          src={('/textbannerBROWN.png')}
-          width="900"
-          height="900"
-          alt="Scroll"
-          className={"h-auto w-[650px] md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
-          priority
-          style={{
-            objectFit: 'cover',
-            zIndex: -1
-          }}
-        />
-        <form onSubmit={handleSubmit(onSubmit)} >
-        <div  className="w-full grid gap-0 items-center">
-        {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
+    <main className="flex items-center justify-center md:h-screen ">
+      <Image
+        src={('/textbannerBROWN.png')}
+        width="900"
+        height="900"
+        alt="Scroll"
+        className={"h-auto w-[650px] md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
+        priority
+        style={{
+          objectFit: 'cover',
+          zIndex: -1
+        }}
+      />
+      <form onSubmit={handleSubmit(onSubmit)} >
+        <div className="w-full grid gap-0 items-center">
+          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div >
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -97,10 +98,10 @@ export default function LoginPage() {
               {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
-          <Button className = "mt-4 justify-center" type = "submit">Log in</Button>
-          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"  onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
+          <Button className="mt-4 justify-center" type="submit">Log in</Button>
+          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
         </div>
-        </form>
-      </main>
+      </form>
+    </main>
   );
 }

@@ -22,9 +22,8 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${
-            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-          }
+          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+            }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -41,9 +40,8 @@ function OtherPageMenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${
-            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-          }
+          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+            }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
             history.push('/contact');
@@ -96,7 +94,7 @@ function CollapsedMenu() {
 
 function Navbar() {
   const pathname = usePathname();
-  const isContactPage = pathname === '/contact';
+  const isHomePage = pathname === '/';
   const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
@@ -129,7 +127,7 @@ function Navbar() {
         className="text-text from-f23-lightGreen absolute top-0 z-40 hidden
                 w-[100%] justify-end bg-gradient-to-b pr-20 pt-8 text-lg  font-light md:flex"
       >
-        {!isContactPage && (
+        {isHomePage && (
           <>
             {sections.map((section) => {
               return (
@@ -150,7 +148,7 @@ function Navbar() {
           </>
         )}
 
-        {isContactPage && (
+        {!isHomePage && (
           <Link href="/">
             <button className="glow-center mr-5 font-medium uppercase">
               Home
