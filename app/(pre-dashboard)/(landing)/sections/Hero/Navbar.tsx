@@ -125,7 +125,7 @@ function Navbar() {
       <CollapsedMenu />
       <div
         className="text-text from-f23-lightGreen absolute top-0 z-40 hidden
-                w-[100%] justify-end bg-gradient-to-b pr-20 pt-8 text-lg  font-light md:flex"
+                w-[100%] justify-end bg-gradient-to-b pr-20 pt-8 text-lg font-light md:flex"
       >
         {isHomePage && (
           <>

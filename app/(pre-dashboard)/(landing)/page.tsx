@@ -10,8 +10,6 @@ import Sponsors from "./sections/Sponsors";
 import About from "./sections/About";
 import FAQ from "./sections/FAQ/FAQ";
 import GenericSection from "./sections/GenericSection";
-import Cursor from '@/app/ui/cursor';
-import { StarryBackground } from "./misc/StarsBackground";
 
 export default function Page() {
   return (
@@ -59,9 +57,6 @@ export default function Page() {
           />
         </GenericSection>
       </div>
-      <Suspense>
-        <StarryBackground numberOfStars={150} />
-      </Suspense>
     </main>
   );
 }

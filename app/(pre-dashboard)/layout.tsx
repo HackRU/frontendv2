@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Cursor from "../ui/cursor";
 import Navbar from "./(landing)/sections/Hero/Navbar";
+import { StarryBackground } from "./(landing)/misc/StarsBackground";
 
 export default function Layout({ children
 }: {
@@ -8,12 +9,15 @@ export default function Layout({ children
 }) {
   return (
     <>
-      <main>
+      <main className="w-fit h-fit relative">
         <Navbar />
         <Suspense>
           <Cursor />
         </Suspense>
         {children}
+        <Suspense>
+          <StarryBackground numberOfStars={150} />
+        </Suspense>
       </main>
     </>
   )

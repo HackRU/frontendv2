@@ -51,7 +51,7 @@ export default function SignupPage() {
 
 
   return (
-    <main className="flex items-center justify-center md:h-screen">
+    <main className="flex items-center justify-center w-screen h-screen">
       <Image
         src={('/textbannerBROWN.png')}
         width="900"

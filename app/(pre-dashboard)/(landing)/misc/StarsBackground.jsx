@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useMemo } from 'react';
 import { TweenMax } from 'gsap/TweenMax';
+import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 const possibleColors = ['triangle-orange-star', 'triangle-blue-star'];
 
 const ClientOnly = ({ children, ...delegated }) => {
@@ -40,13 +42,18 @@ const createStarStyle = () => ({
 });
 
 export function StarryBackground({ numberOfStars }) {
+  const pathname = usePathname();
   const stars = useMemo(() => {
     return Array.from({ length: numberOfStars }, createStarStyle);
   }, [numberOfStars]);
 
   return (
     <ClientOnly>
-      <div className="absolute left-0 top-0 z-0 h-full w-full">
+      <div
+        className={clsx('absolute left-0 top-0 h-full w-full', {
+          '-z-10': pathname !== '/',
+        })}
+      >
         {stars.map((style, index) => (
           <Star key={index} style={style} />
         ))}

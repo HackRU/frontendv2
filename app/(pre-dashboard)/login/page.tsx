@@ -30,19 +30,15 @@ export default function LoginPage() {
 
   const router = useRouter();
 
-
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<Login>({ resolver: zodResolver(LoginSchema) });
 
   const onSubmit = async (data: Login) => {
-    console.log("Hi");
     const resp = await authenticate(data.email, data.password);
     setErrors(resp);
   }
 
-
-
   return (
-    <main className="flex items-center justify-center md:h-screen ">
+    <main className="flex items-center justify-center md:h-screen w-screen h-screen">
       <Image
         src={('/textbannerBROWN.png')}
         width="900"
@@ -58,7 +54,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
-          <div >
+          <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
