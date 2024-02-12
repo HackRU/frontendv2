@@ -33,7 +33,6 @@ export default function SignupPage() {
 
   type SignUp = z.infer<typeof SignUpSchema>;
 
-
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
   const [submit_errors, setErrors] = useState("");
@@ -64,7 +63,7 @@ export default function SignupPage() {
           zIndex: -1
         }}
       />
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)} className="h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden ">
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
