@@ -1,4 +1,4 @@
-import { getSchedule } from '@/app/lib/data';
+import { googleCalendarToSchedule } from '@/app/lib/data';
 import SectionTitle from './SectionTitle';
 
 
@@ -28,8 +28,8 @@ function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
 }
 
 export default async function Schedule() {
-  const schedule = await getSchedule();
-
+  const schedule = await googleCalendarToSchedule();
+  
   return (
     <div
       className="relative mb-20 flex w-full justify-center px-4 z-10"
