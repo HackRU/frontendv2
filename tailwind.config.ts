@@ -25,6 +25,7 @@ const config: Config = {
           200: '#51F4FF',
           300: '#4D6F6C',
         },
+        dark_blue_figma: '#1B1F23',
         orange: {
           100: '#FFB464',
           200: '#1B1F23',

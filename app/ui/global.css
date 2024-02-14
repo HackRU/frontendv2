@@ -57,3 +57,25 @@ input[type='number']::-webkit-outer-spin-button {
   background-color: red;
   transform: scale(2);
 }
+
+#hero {
+  /* radial gradient */
+  background: radial-gradient(
+    circle at 50% 0,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+}
+
+#hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; /* Aligns the semicircle to the bottom */
+  left: 50%; /* Centers the semicircle */
+  width: 150%; /* Ensures the semicircle covers the full width of the div */
+  height: 50%; /* Adjust the height to control the curvature of the semicircle */
+  background-color: #1b1f23; /* Your semicircle color */
+  border-radius: 50%;
+  transform: translateX(-50%) translateY(50%); /* Adjusts position and shape */
+  z-index: 0;
+}
