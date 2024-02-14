@@ -23,6 +23,7 @@ async function fetchUser(cb: (isLogged: boolean) => void) {
 
     if (data.error !== '') {
       cb(false);
+      return;
     }
 
     cb(true);

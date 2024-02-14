@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/ui/button';
 
-import { authenticate, authUser } from '../../lib/actions';
+import { authenticate, authUser } from '../../../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,7 @@ import { Suspense, useState } from "react";
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
-import Cursor from '../../ui/cursor';
+import Cursor from '../../../ui/cursor';
 
 
 export default function LoginPage() {

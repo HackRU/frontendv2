@@ -55,6 +55,15 @@ export async function getSelf(): Promise<{
   if (session?.user && session?.user?.email) {
     const resp = await GetUser(session.user.email);
 
+    if (typeof resp.response === 'string') {
+      if (resp.response.includes('error')) {
+        return {
+          error: 'Something went wrong',
+          response: {},
+        };
+      }
+    }
+
     if (resp.error === '') {
       return {
         response: resp.response as unknown as Record<any, any>,

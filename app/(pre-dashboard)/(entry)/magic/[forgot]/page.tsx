@@ -3,7 +3,7 @@
 import { Button } from '@/app/ui/button';
 
 
-import { Reset } from '../../../lib/actions';
+import { Reset } from '../../../../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

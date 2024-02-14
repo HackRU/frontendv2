@@ -63,6 +63,10 @@ input[type='number']::-webkit-outer-spin-button {
   background-image: radial-gradient(circle, #396a66, #284e4e, #1b1f23);
 }
 
+#entry-radial {
+  background-image: radial-gradient(circle, #284e4e, #1b1f23);
+}
+
 #hero::after {
   content: '';
   position: absolute;

@@ -16,7 +16,7 @@ export default function Layout({ children
         </Suspense>
         {children}
         <Suspense>
-          <StarryBackground numberOfStars={150} />
+          <StarryBackground />
         </Suspense>
       </main>
     </>

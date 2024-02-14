@@ -41,8 +41,13 @@ const createStarStyle = () => ({
   className: possibleColors[Math.floor(Math.random() * possibleColors.length)],
 });
 
-export function StarryBackground({ numberOfStars }) {
+const LANDING_PAGE_STAR_COUNT = 150;
+const NOT_LANDING_PAGE_STAR_COUNT = 50;
+
+export function StarryBackground() {
   const pathname = usePathname();
+  const numberOfStars =
+    pathname === '/' ? LANDING_PAGE_STAR_COUNT : NOT_LANDING_PAGE_STAR_COUNT;
   const stars = useMemo(() => {
     return Array.from({ length: numberOfStars }, createStarStyle);
   }, [numberOfStars]);
