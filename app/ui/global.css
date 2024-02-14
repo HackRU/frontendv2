@@ -60,22 +60,18 @@ input[type='number']::-webkit-outer-spin-button {
 
 #hero {
   /* radial gradient */
-  background: radial-gradient(
-    circle at 50% 0,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  background-image: radial-gradient(circle, #396a66, #284e4e, #1b1f23);
 }
 
 #hero::after {
   content: '';
   position: absolute;
-  bottom: 0; /* Aligns the semicircle to the bottom */
-  left: 50%; /* Centers the semicircle */
-  width: 150%; /* Ensures the semicircle covers the full width of the div */
-  height: 50%; /* Adjust the height to control the curvature of the semicircle */
-  background-color: #1b1f23; /* Your semicircle color */
+  bottom: 0;
+  left: 50%;
+  width: 150%;
+  height: 50%;
+  background-color: #1b1f23;
   border-radius: 50%;
-  transform: translateX(-50%) translateY(50%); /* Adjusts position and shape */
+  transform: translateX(-50%) translateY(50%);
   z-index: 0;
 }

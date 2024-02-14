@@ -86,7 +86,7 @@ export default function Hero() {
         className="flex w-full
         flex-col items-center justify-center
         md:flex md:h-[100vh] md:flex-row-reverse
-        relative overflow-hidden"
+        relative overflow-hidden "
         id="hero"
       >
         {/* <div className="w-full h-[75vh] bg-red-100" />

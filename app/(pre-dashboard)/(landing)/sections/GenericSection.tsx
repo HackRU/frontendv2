@@ -13,7 +13,7 @@ export default function GenericSection(props: GenericSectionProps) {
   return (
     <div
       id={props.title}
-      className={'flex w-full flex-col items-center bg-blue-200'}
+      className={'flex w-full flex-col items-center bg-dark_blue_figma'}
     >
       <SectionTitle title={props.title} />
       {props.children}

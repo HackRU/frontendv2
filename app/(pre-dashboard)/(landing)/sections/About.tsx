@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
+import GenericSection from './GenericSection';
+import SectionTitle from './SectionTitle';
 
 const animalQuality = 50;
 
@@ -82,51 +84,53 @@ function AboutInfo({
 
 export default function About() {
   return (
-    <div
-      className="flex h-fit w-full
-      flex-col flex-wrap
-      from-dark_blue_figma from-5% to-[#213537] bg-gradient-to-b
-      md:flex-row"
-    >
-      <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
-          sit amet, consectetur adipiscing elit. Sed imperdiet, nibh nec dictum
-          consectetur, lorem nisi Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Sed imperdiet, nibh nec dictum consectetur, lorem
-          nisi
-        </p>
-      </AboutInfo>
-
-      <AboutInfo
-        title="TRACKS"
-        imageSrc="/landing/bitsprout.png"
-        alt="Python"
-        reverse
+    <>
+      <div
+        className="flex h-fit w-full
+        flex-col flex-wrap
+        from-dark_blue_figma from-5% to-[#213537] bg-gradient-to-b
+        md:flex-row"
       >
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
-          sit amet, consectetur adipiscing elit. Sed imperdiet, nibh nec dictum
-          consectetur, lorem nisi Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Sed imperdiet, nibh nec dictum consectetur, lorem
-          nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          imperdiet, nibh nec dictum consectetur, lorem nisi
-        </p>
-      </AboutInfo>
+        <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Sed imperdiet, nibh nec dictum
+            consectetur, lorem nisi Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Sed imperdiet, nibh nec dictum consectetur, lorem
+            nisi
+          </p>
+        </AboutInfo>
 
-      <AboutInfo title="JOIN US" imageSrc="/landing/pseudoclaw.png" alt="Python">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
-          sit amet, consectetur adipiscing elit. Sed imperdiet, nibh nec dictum
-          consectetur, lorem nisi Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Sed imperdiet, nibh nec dictum consectetur, lorem
-          nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          imperdiet, nibh nec dictum consectetur, lorem nisi
-        </p>
-      </AboutInfo>
-    </div>
+        <AboutInfo
+          title="TRACKS"
+          imageSrc="/landing/bitsprout.png"
+          alt="Python"
+          reverse
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Sed imperdiet, nibh nec dictum
+            consectetur, lorem nisi Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Sed imperdiet, nibh nec dictum consectetur, lorem
+            nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            imperdiet, nibh nec dictum consectetur, lorem nisi
+          </p>
+        </AboutInfo>
+
+        <AboutInfo title="JOIN US" imageSrc="/landing/pseudoclaw.png" alt="Python">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            imperdiet, nibh nec dictum consectetur, lorem nisi Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Sed imperdiet, nibh nec dictum
+            consectetur, lorem nisi Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Sed imperdiet, nibh nec dictum consectetur, lorem
+            nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            imperdiet, nibh nec dictum consectetur, lorem nisi
+          </p>
+        </AboutInfo>
+      </div>
+    </>
   );
 }
