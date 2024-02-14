@@ -46,22 +46,26 @@ export async function getSchedule() {
   return schedule;
 }
 
-export async function getSelf() {
+export async function getSelf(): Promise<{
+  error: string;
+  response: Record<string, any>;
+}> {
   const session = await auth();
 
   if (session?.user && session?.user?.email) {
     const resp = await GetUser(session.user.email);
-    console.log('READ');
-    console.log(resp);
 
     if (resp.error === '') {
-      return resp.response;
+      return {
+        response: resp.response as unknown as Record<any, any>,
+        error: '',
+      };
     }
-    return resp.error;
   }
 
   return {
     error: 'Something went wrong',
+    response: {},
   };
 }
 

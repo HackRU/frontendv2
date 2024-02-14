@@ -16,18 +16,16 @@ const animationTime = 800;
 const fireImageQuality = 10;
 
 async function fetchUser(cb: (isLogged: boolean) => void) {
-  console.log("FETCHING USER IN HERO!")
   try {
     const data = await getSelf();
-    console.log(data);
 
-    if (data && typeof data === 'object' && "error" in data) {
+    console.log(data)
+
+    if (data.error !== '') {
       cb(false);
     }
 
-    if (data) {
-      cb(true);
-    }
+    cb(true);
   } catch (error) {
     console.log(error);
   }
@@ -41,6 +39,7 @@ export default function Hero() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('fetching user')
     fetchUser(setIsLogged);
   }, []);
 
@@ -85,9 +84,10 @@ export default function Hero() {
       <Navbar />
       <div
         className="flex w-full
-        flex-col items-center justify-center bg-gray-100
+        flex-col items-center justify-center
         md:flex md:h-[100vh] md:flex-row-reverse
-        "
+        relative overflow-hidden"
+        id="hero"
       >
         {/* <div className="w-full h-[75vh] bg-red-100" />
         <div className="w-full h-10 bg-red-500" /> */}
@@ -106,7 +106,7 @@ export default function Hero() {
             <div>CIRCUITRY!</div>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative z-10">
           <Image
             src={FIRE_IMG[currentImageIndex]}
             quality={fireImageQuality}
