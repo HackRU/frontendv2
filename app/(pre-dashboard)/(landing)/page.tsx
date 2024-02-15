@@ -44,7 +44,7 @@ export default function Page() {
               width: '100%',
               height: 'auto',
             }}
-            width={500}
+            width={400}
             height={300}
           />
         </GenericSection>

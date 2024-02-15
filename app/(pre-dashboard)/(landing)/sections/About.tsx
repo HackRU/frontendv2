@@ -51,7 +51,10 @@ function AboutInfo({
           },
         )}
       >
-        <Image src={imageSrc} width="600" height="600" alt={alt} quality={animalQuality} />
+        <Image src={imageSrc} width="400" height="400"className="-auto w-[400px] 
+                        lg:w-[600px]
+                       " alt={alt} quality={animalQuality} 
+        />
       </div>
     );
   }

@@ -7,7 +7,7 @@ export default function SectionTitle(props: { title: string }) {
         <div className="w-[5px]" />
         <div className="h-[17px] w-[17px] rotate-45 bg-orange-100" />
       </div>
-      <div className="text-orange-100 justify-content flex-grow text-center text-8xl">
+      <div className="text-orange-100 justify-content flex-grow text-center text-5xl md:text-8xl">
         {props.title} 
       </div>
       <div className="flex w-1/4 items-center">

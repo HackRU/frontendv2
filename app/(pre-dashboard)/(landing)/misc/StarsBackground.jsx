@@ -37,7 +37,7 @@ const Star = ({ style, onAnimateComplete }) => {
 const createStarStyle = () => ({
   position: 'absolute',
   top: `${98 * Math.random()}%`,
-  left: `${100 * Math.random()}%`,
+  left: `${98 * Math.random()}%`,
   className: possibleColors[Math.floor(Math.random() * possibleColors.length)],
 });
 
