@@ -94,9 +94,10 @@ export default function About() {
     <>
       <div
         className="flex h-fit w-full pr-8 pb-20 md:px-4
-        flex-col flex-wrap
+        flex-col flex-wrap relative
         from-dark_blue_figma from-5% to-[#213537] bg-gradient-to-b
         md:flex-row text-base md:text-lg xl:text-xl 2xl:text-2xl "
+        id="about-section"
       >
 
         <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">

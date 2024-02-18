@@ -14,7 +14,7 @@ import GenericSection from "./sections/GenericSection";
 export default function Page() {
   return (
     <main className={`flex flex-col h-fit relative ${bizUdg.className} text-orange-100`}>
-      <div className="overflow-y-hidden">
+      <div className="overflow-y-hidden overflow-x-hidden">
         <Hero />
         <About />
         {
@@ -34,8 +34,10 @@ export default function Page() {
             <Sponsors />
           </Suspense>
         </GenericSection>
-        <GenericSection title="FAQ" color="bg-gray-900">
+        <GenericSection title="FAQ" color="from-dark_blue_figma">
           <FAQ />
+        </GenericSection>
+        <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
           <Image
             src="/landing/wand-cats-combined.png"
             alt="bottom image"
@@ -47,7 +49,7 @@ export default function Page() {
             width={400}
             height={300}
           />
-        </GenericSection>
+        </div>
       </div>
     </main>
   );
