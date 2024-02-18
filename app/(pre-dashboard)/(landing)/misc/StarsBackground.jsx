@@ -22,13 +22,18 @@ const Star = ({ style, onAnimateComplete }) => {
   const ref = useRef(null);
 
   useEffect(() => {
+    var tween;
     const animate = () => {
-      TweenMax.to(ref.current, Math.random() * 0.5 + 0.5, {
+      tween = TweenMax.to(ref.current, Math.random() * 0.5 + 0.5, {
         opacity: Math.random(),
         onComplete: animate,
       });
     };
     animate();
+
+    return () => {
+      tween.kill();
+    };
   }, [onAnimateComplete]);
 
   return <div ref={ref} style={style} className={style.className} />;

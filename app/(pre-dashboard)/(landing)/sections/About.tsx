@@ -44,7 +44,7 @@ function AboutInfo({
     return (
       <div
         className={clsx(
-          'flex h-fit w-full justify-center md:w-1/2',
+          'flex h-fit w-full justify-center md:w-1/2 z-10',
           {
             'md:justify-start': !reverse,
             'md:justify-end': reverse,
