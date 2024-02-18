@@ -21,7 +21,7 @@ export default function FAQ() {
   return (
     <div
       id="FAQ"
-      className="relative flex w-full flex-col items-center justify-start overflow-visible z-10 h-[70vh]"
+      className="relative flex w-full flex-col items-center justify-start overflow-visible z-10 h-fit"
     >
       <div className="relative flex w-full px-[10vw] xl:px-[15vw] flex-col items-center pb-[10rem]">
         <QuestionContainer />
