@@ -92,9 +92,7 @@ export default function Hero() {
         relative "
         id="hero"
       >
-        {/* <div className="w-full h-[75vh] bg-red-100" />
-        <div className="w-full h-10 bg-red-500" /> */}
-
+        <Image src="/landing/blobs.svg" fill objectFit='cover' objectPosition='center' alt="Blobs" className="z-0" />
         <div
           className="relative w-full md:h-[26rem] z-10 pt-10 text-center md:w-2/5 md:pt-0"
         >
