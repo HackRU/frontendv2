@@ -3,7 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import { sql } from '@vercel/postgres';
 import { z } from 'zod';
-import { authConfig} from './auth.config';
+import { authConfig } from './auth.config';
 
 import { authUser } from './app/lib/actions';
 
@@ -25,9 +25,8 @@ export const { auth, signIn, signOut } = NextAuth({
 
           const resp = await authUser(email, password);
           let user = null;
-          if(resp.response != "")
-          user = {email:email, id:email, name:resp.response}
-       
+          if (resp.response != '')
+            user = { email: email, id: email, name: resp.response };
 
           return user;
         }
