@@ -16,6 +16,12 @@ const config: Config = {
       xl: '1280px',
     },
     extend: {
+      dropShadow: {
+        glow: [
+          '0 0px 20px rgba(255,255, 255, 0.35)',
+          '0 0px 65px rgba(255, 255,255, 0.2)',
+        ],
+      },
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',
       },

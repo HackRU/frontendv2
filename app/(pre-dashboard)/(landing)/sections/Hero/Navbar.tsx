@@ -3,11 +3,11 @@
 import React from 'react';
 import { MdOutlineMenu } from 'react-icons/md';
 import { Fragment } from 'react';
-// import { scrollToSectionName } from "./utilities";
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { bizUdg } from '@/app/ui/fonts';
 
 function scrollToSectionName(sectionName: string) {
   const section = document.getElementById(sectionName);
@@ -98,7 +98,7 @@ function Navbar() {
   const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
-    <div className="z-40 flex w-full justify-end md:fixed">
+    <div className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`}>
       <Image
         width={0}
         height={0}
@@ -125,14 +125,14 @@ function Navbar() {
       <CollapsedMenu />
       <div
         className="text-text from-f23-lightGreen absolute top-0 z-40 hidden
-                w-[100%] justify-end bg-gradient-to-b pr-20 pt-8 text-lg font-light md:flex"
+                w-[100%] justify-end bg-gradient-to-b pr-32 pt-8 text-lg font-light md:flex"
       >
         {isHomePage && (
           <>
             {sections.map((section) => {
               return (
                 <button
-                  className="glow-center mr-5 font-medium uppercase"
+                  className="glow-center mr-5 font-medium uppercase hover:drop-shadow-glow transition-shadow"
                   onClick={() => scrollToSectionName(section)}
                   key={section}
                 >

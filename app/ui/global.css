@@ -5,9 +5,6 @@
 html,
 body {
   overflow-x: hidden;
-  min-width: 320px;
-  width: auto !important;
-  height: auto !important;
 }
 
 input[type='number'] {

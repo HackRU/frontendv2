@@ -1,7 +1,7 @@
 import AcmeLogo from "@/app/ui/acme-logo";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { lusitana } from "@/app/ui/fonts";
+import { bigelowRules, bizUdg } from "@/app/ui/fonts";
 import Image from "next/image";
 import Hero from "./sections/Hero/Hero";
 import Schedule from "./sections/Schedule";
@@ -13,8 +13,8 @@ import GenericSection from "./sections/GenericSection";
 
 export default function Page() {
   return (
-    <main className="flex flex-col h-fit relative">
-      <div>
+    <main className={`flex flex-col h-fit relative ${bizUdg.className} text-orange-100`}>
+      <div className="overflow-y-hidden">
         <Hero />
         <About />
         {
