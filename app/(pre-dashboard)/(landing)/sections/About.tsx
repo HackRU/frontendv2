@@ -28,13 +28,13 @@ function AboutInfo({
     return (
       <div
         className={clsx(
-          'h-fit w-full p-20 md:w-1/2 md:grow md:justify-end z-10',
+          'h-fit w-full p-5 md:p-20 md:w-1/2 md:grow md:justify-end z-10',
           {
             'text-end': reverse,
           },
         )}
       >
-        <h1 className="text-5xl font-extrabold">{title}</h1>
+        <h1 className="text-3xl md:text-5xl font-extrabold">{title}</h1>
         {children}
       </div>
     );
@@ -51,7 +51,14 @@ function AboutInfo({
           },
         )}
       >
-        <Image src={imageSrc} width="600" height="600" alt={alt} quality={animalQuality} />
+        <Image
+          src={imageSrc}
+          width="400"
+          height="400"
+          className="w-[400px] lg:w-[600px]"
+          alt={alt}
+          quality={animalQuality}
+        />
       </div>
     );
   }
@@ -86,7 +93,7 @@ export default function About() {
   return (
     <>
       <div
-        className="flex h-fit w-full
+        className="flex h-fit w-full pr-8 pb-20 md:px-4
         flex-col flex-wrap
         from-dark_blue_figma from-5% to-[#213537] bg-gradient-to-b
         md:flex-row text-base md:text-lg xl:text-xl 2xl:text-2xl "
