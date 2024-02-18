@@ -28,13 +28,13 @@ function AboutInfo({
     return (
       <div
         className={clsx(
-          'h-fit w-full p-20 md:w-1/2 md:grow md:justify-end z-10',
+          'h-fit w-full p-5 md:p-20 md:w-1/2 md:grow md:justify-end z-10',
           {
             'text-end': reverse,
           },
         )}
       >
-        <h1 className="text-5xl font-extrabold">{title}</h1>
+        <h1 className="text-3xl md:text-5xl font-extrabold">{title}</h1>
         {children}
       </div>
     );
@@ -51,10 +51,14 @@ function AboutInfo({
           },
         )}
       >
-        <Image src={imageSrc} width="400" height="400"className="-auto w-[400px] 
-                        lg:w-[600px]
-                       " alt={alt} quality={animalQuality} 
-        />
+        {/* <Image
+          src={imageSrc}
+          width="400"
+          height="400"
+          className="w-[100px] lg:w-[600px]"
+          alt={alt}
+          quality={animalQuality}
+        /> */}
       </div>
     );
   }
