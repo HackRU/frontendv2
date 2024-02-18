@@ -87,7 +87,7 @@ export default function Hero() {
         className="flex w-full
         flex-col items-center justify-center
         md:flex md:h-[100vh] md:flex-row-reverse
-        relative overflow-hidden "
+        relative overflow-hidden"
         id="hero"
       >
         {/* <div className="w-full h-[75vh] bg-red-100" />
@@ -95,11 +95,13 @@ export default function Hero() {
 
         <div className="relative h-[40vh] w-full pt-10 text-center md:w-2/5 md:pt-0">
           <div
-            className="flex h-[40vh] w-full flex-col justify-center space-y-4 text-5xl
+            className="flex h-[40vh] w-full flex-col justify-center space-y-4
+                       pr-3 md:pr-0
+                       text-4xl sm:text-5xl
                        md:absolute md:-left-16 md:min-w-fit md:space-y-7 md:text-4xl
                        lg:-left-10 lg:text-5xl xl:space-y-8 xl:text-6xl"
           >
-            <div className="mb-2 text-xl md:mb-0 lg:text-3xl xl:text-4xl">
+            <div className="mb-2 text-lg sm:text-xl md:mb-0 lg:text-3xl xl:text-4xl">
               WELCOME TO OUR
             </div>
             <div>SCHOOL OF</div>
@@ -126,7 +128,7 @@ export default function Hero() {
                          items-center justify-center bg-black rounded-lg
                          border-solid border-y-2 border-x-4 border-brown-200
                          bg-gradient-to-t from-blue-300 to-brown-100
-                         text-blue-200
+                         text-blue-200 text-sm sm:text-lg
                          xs:left-[103px] xs:top-[285px] xs:h-[26px] xs:w-[99px]
                          sm:left-[185px] sm:top-[513px] sm:h-[45px] sm:w-[179px]
                          md:left-[183px] md:top-[417px] md:h-[37px] md:w-[145px]

@@ -56,7 +56,7 @@ function OtherPageMenuItem(props: { sectionName: string }) {
 
 function CollapsedMenu() {
   return (
-    <div className="bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden ">
+    <div className="bg-f23-mediumGreen absolute right-32 xs:right-36 top-4 z-40 rounded-md text-right md:hidden ">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full justify-center rounded-md px-2 py-2 text-sm font-medium text-white hover:bg-black hover:bg-opacity-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -116,7 +116,7 @@ function Navbar() {
         <Image
           width={0}
           height={0}
-          className="absolute right-0 top-0 z-50 w-24"
+          className="absolute right-9 top-0 z-50 w-24"
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
         />

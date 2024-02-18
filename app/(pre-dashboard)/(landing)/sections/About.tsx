@@ -51,14 +51,14 @@ function AboutInfo({
           },
         )}
       >
-        {/* <Image
+        <Image
           src={imageSrc}
           width="400"
           height="400"
-          className="w-[100px] lg:w-[600px]"
+          className="w-[400px] lg:w-[600px]"
           alt={alt}
           quality={animalQuality}
-        /> */}
+        />
       </div>
     );
   }
@@ -93,7 +93,7 @@ export default function About() {
   return (
     <>
       <div
-        className="flex h-fit w-full
+        className="flex h-fit w-full pr-8 pb-20 md:px-4
         flex-col flex-wrap
         from-dark_blue_figma from-5% to-[#213537] bg-gradient-to-b
         md:flex-row"
