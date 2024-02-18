@@ -1,8 +1,7 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
-import { Suspense } from 'react';
-import Cursor from './ui/cursor';
+
 
 export const metadata: Metadata = {
   title: {

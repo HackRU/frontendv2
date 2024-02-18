@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { getSelf } from '@/app/lib/data';
+import { bigelowRules, bizUdg } from '@/app/ui/fonts';
 
 const FIRE_IMG = [
   '/landing/fire-1.png',
@@ -86,22 +87,29 @@ export default function Hero() {
       <div
         className="flex w-full
         flex-col items-center justify-center
-        md:flex md:h-[100vh] md:flex-row-reverse
-        relative overflow-hidden"
+        md:flex md:h-[100vh]
+        md:flex-row-reverse
+        relative "
         id="hero"
       >
         {/* <div className="w-full h-[75vh] bg-red-100" />
         <div className="w-full h-10 bg-red-500" /> */}
 
-        <div className="relative h-[40vh] w-full pt-10 text-center md:w-2/5 md:pt-0">
+        <div
+          className="relative w-full md:h-[26rem] z-10 pt-10 text-center md:w-2/5 md:pt-0"
+        >
           <div
-            className="flex h-[40vh] w-full flex-col justify-center space-y-4
-                       pr-3 md:pr-0
-                       text-4xl sm:text-5xl
-                       md:absolute md:-left-16 md:min-w-fit md:space-y-7 md:text-4xl
-                       lg:-left-10 lg:text-5xl xl:space-y-8 xl:text-6xl"
+            className={`flex h-[40vh] w-full flex-col justify-center space-y-4
+                      drop-shadow-glow
+                       pr-3 md:pr-0 ${bigelowRules.className} pt-[10rem] md:pt-0 h-fit
+                       text-7xl sm:text-[5.5rem] xl:text-[7rem]
+                       xl:space-y-8
+                       md:absolute md:-left-16 md:min-w-fit md:space-y-7
+                       lg:-left-10
+                       bg-gradient-to-b from-[#51F4FF] to-[#FFB464] inline-block text-transparent bg-clip-text
+                       `}
           >
-            <div className="mb-2 text-lg sm:text-xl md:mb-0 lg:text-3xl xl:text-4xl">
+            <div className={`mb-2 ${bizUdg.className} text-2xl xs:text-3xl md:mb-0 lg:text-3xl xl:text-4xl`}>
               WELCOME TO OUR
             </div>
             <div>SCHOOL OF</div>
@@ -124,7 +132,7 @@ export default function Hero() {
           />
           <div>
             <button
-              className="absolute
+              className="absolute hover:drop-shadow-glow transition-all duration-100
                          items-center justify-center bg-black rounded-lg
                          border-solid border-y-2 border-x-4 border-brown-200
                          bg-gradient-to-t from-blue-300 to-brown-100
@@ -148,7 +156,7 @@ export default function Hero() {
             </button>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }
