@@ -3,11 +3,12 @@
 import React from 'react';
 import { MdOutlineMenu } from 'react-icons/md';
 import { Fragment } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { bizUdg } from '@/app/ui/fonts';
+import clsx from 'clsx';
 
 function scrollToSectionName(sectionName: string) {
   const section = document.getElementById(sectionName);
@@ -55,8 +56,15 @@ function OtherPageMenuItem(props: { sectionName: string }) {
 }
 
 function CollapsedMenu() {
+  const pathname = usePathname();
   return (
-    <div className="bg-f23-mediumGreen absolute right-32 xs:right-36 top-4 z-40 rounded-md text-right md:hidden ">
+    <div
+      className={clsx("bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden",
+        {
+          "hidden": pathname !== '/'
+        }
+      )}
+    >
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full justify-center rounded-md px-2 py-2 text-sm font-medium text-white hover:bg-black hover:bg-opacity-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -94,19 +102,26 @@ function CollapsedMenu() {
 
 function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === '/';
   const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
     <div className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`}>
-      <Image
-        width={0}
-        height={0}
-        sizes={'100vw'}
-        src="/landing/yellow_hackru.png"
-        alt="yellow hackru logo"
+      <div
         className="absolute left-4 top-0 z-50 w-24"
-      />
+        onClick={() => {
+          router.push('/');
+        }}
+      >
+        <Image
+          width={200}
+          height={200}
+          // sizes={'100vw'}
+          src="/landing/yellow_hackru.png"
+          alt="yellow hackru logo"
+        />
+      </div>
 
       <a
         href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2024-season&utm_content=white"
@@ -116,7 +131,7 @@ function Navbar() {
         <Image
           width={0}
           height={0}
-          className="absolute right-9 top-0 z-50 w-24"
+          className="absolute right-2 top-0 z-50 w-24"
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
         />
@@ -146,14 +161,6 @@ function Navbar() {
               </button>
             </Link>
           </>
-        )}
-
-        {!isHomePage && (
-          <Link href="/">
-            <button className="glow-center mr-5 font-medium uppercase">
-              Home
-            </button>
-          </Link>
         )}
       </div>
     </div>
