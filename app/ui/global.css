@@ -74,6 +74,22 @@ input[type='number']::-webkit-outer-spin-button {
   background-image: radial-gradient(circle, #284e4e, #1b1f23);
 }
 
+@keyframes twinkling {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.twinkling-star {
+  animation: twinkling 1s infinite;
+}
+
 #hero::after {
   content: '';
   position: absolute;

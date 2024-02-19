@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
-import { TweenMax } from 'gsap/TweenMax';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 const possibleColors = ['triangle-orange-star', 'triangle-blue-star'];
@@ -18,25 +17,8 @@ const ClientOnly = ({ children, ...delegated }) => {
   return <React.Fragment {...delegated}>{children}</React.Fragment>;
 };
 
-const Star = ({ style, onAnimateComplete }) => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    var tween;
-    const animate = () => {
-      tween = TweenMax.to(ref.current, Math.random() * 0.5 + 0.5, {
-        opacity: Math.random(),
-        onComplete: animate,
-      });
-    };
-    animate();
-
-    return () => {
-      tween.kill();
-    };
-  }, [onAnimateComplete]);
-
-  return <div ref={ref} style={style} className={style.className} />;
+const Star = ({ style }) => {
+  return <div style={style} className={style.className} />;
 };
 
 const createStarStyle = () => ({
@@ -44,6 +26,7 @@ const createStarStyle = () => ({
   top: `${98 * Math.random()}%`,
   left: `${98 * Math.random()}%`,
   className: possibleColors[Math.floor(Math.random() * possibleColors.length)],
+  animation: `twinkling ${Math.random() * 2 + 1}s infinite`,
 });
 
 const LANDING_PAGE_STAR_COUNT = 150;

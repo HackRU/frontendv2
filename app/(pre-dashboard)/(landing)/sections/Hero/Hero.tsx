@@ -15,6 +15,13 @@ const FIRE_IMG = [
 
 const animationTime = 800;
 const fireImageQuality = 10;
+/**
+ * Gives time to load the images. There must be a better way to do this...
+ * If the images aren't loaded yet, they flash a bit when the animation first starts.
+ * This will probably not get fixed. And it will be destroyed by next hackathon.
+ * There isn't time to find a better solution. :(
+ */
+const initialWaitTime = 1500;
 
 async function fetchUser(cb: (isLogged: boolean) => void) {
   try {
@@ -46,6 +53,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
+
     const waitForAnimation = () => {
       return new Promise((resolve) => {
         if (animationComplete) {
@@ -62,6 +70,8 @@ export default function Hero() {
     };
 
     const animate = async () => {
+      await new Promise((resolve) => setTimeout(resolve, initialWaitTime));
+
       while (true) {
         await waitForAnimation();
         setAnimationComplete(false);
@@ -89,7 +99,9 @@ export default function Hero() {
         flex-col items-center justify-center
         md:flex md:h-[100vh]
         md:flex-row-reverse
-        relative "
+        relative
+        overflow-hidden
+        "
         id="hero"
       >
         <Image src="/landing/blobs.svg" fill objectFit='cover' objectPosition='center' alt="Blobs" className="z-0" />
