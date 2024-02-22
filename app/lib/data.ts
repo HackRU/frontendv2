@@ -51,8 +51,7 @@ export async function getSponsors(): Promise<string[]> {
   const res = await fetch(BASE + '/sponsors');
   const sponsors = await res.json();
 
-  // return sponsors['photos'].map((url: any) => url);
-  return [];
+  return sponsors['photos'].map((url: any) => url);
 }
 
 export async function getSelf(): Promise<{
