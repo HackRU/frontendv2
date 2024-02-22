@@ -7,8 +7,7 @@ import { AuthError } from 'next-auth';
 import { auth } from '../../auth';
 
 import { redirect } from 'next/navigation';
-
-const BASE = 'https://api.hackru.org/dev';
+import { BASE } from './definitions';
 
 const ENDPOINTS = {
   login: BASE + '/authorize',
