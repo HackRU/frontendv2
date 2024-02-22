@@ -2,6 +2,7 @@
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
+import { BASE } from './definitions';
 export async function getSchedule() {
   //a fake delay to simulate a real api call
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -44,6 +45,14 @@ export async function getSchedule() {
   };
 
   return schedule;
+}
+
+export async function getSponsors(): Promise<string[]> {
+  const res = await fetch(BASE + '/sponsors');
+  const sponsors = await res.json();
+
+  // return sponsors['photos'].map((url: any) => url);
+  return [];
 }
 
 export async function getSelf(): Promise<{

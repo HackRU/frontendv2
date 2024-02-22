@@ -1,3 +1,5 @@
+export const BASE = 'https://api.hackru.org/dev';
+
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
