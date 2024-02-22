@@ -107,7 +107,7 @@ function Navbar() {
   const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
-    <div className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`}>
+    <div className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`} id="navbar">
       <div
         className="absolute left-4 top-0 z-50 w-24"
         onClick={() => {
@@ -155,11 +155,11 @@ function Navbar() {
                 </button>
               );
             })}
-            <Link href="/contact">
+            {/* <Link href="/contact">
               <button className="glow-center mr-5 font-medium uppercase">
                 Contact
               </button>
-            </Link>
+            </Link> */}
           </>
         )}
       </div>

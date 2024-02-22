@@ -102,7 +102,7 @@ export default function Hero() {
         relative
         overflow-hidden
         "
-        id="hero"
+        id="Home"
       >
         <Image src="/landing/blobs.svg" fill objectFit='cover' objectPosition='center' alt="Blobs" className="z-0" />
         <div
