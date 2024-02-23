@@ -97,7 +97,7 @@ export default function About() {
         flex-col flex-wrap relative
         from-dark_blue_figma from-5% to-[#213537] bg-gradient-to-b
         md:flex-row text-base md:text-lg xl:text-xl 2xl:text-2xl "
-        id="about-section"
+        id="About"
       >
 
         <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">

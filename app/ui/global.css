@@ -65,7 +65,7 @@ input[type='number']::-webkit-outer-spin-button {
   transform: scale(2);
 }
 
-#hero {
+#Home {
   /* radial gradient */
   background-image: radial-gradient(circle, #396a66, #284e4e, #1b1f23);
 }
@@ -90,7 +90,7 @@ input[type='number']::-webkit-outer-spin-button {
   animation: twinkling 1s infinite;
 }
 
-#hero::after {
+#Home::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -111,4 +111,8 @@ input[type='number']::-webkit-outer-spin-button {
   /* height: 100%; */
   background-color: #1b1f23;
   z-index: 1;
+}
+
+#navbar {
+  z-index: 10000;
 }
