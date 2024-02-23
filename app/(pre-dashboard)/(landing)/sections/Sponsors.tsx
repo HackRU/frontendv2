@@ -17,3 +17,4 @@ export default async function Sponsors() {
       </div>
     </div>
   );
+}
