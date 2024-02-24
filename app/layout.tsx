@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <main className="w-screen min-w-min">
+        <main>
           {children}
         </main>
       </body>

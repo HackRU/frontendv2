@@ -1,3 +1,5 @@
+import Navbar from "../(pre-dashboard)/(landing)/sections/Hero/Navbar";
+
 // Loading animation
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
@@ -56,6 +58,23 @@ export function InvoiceSkeleton() {
       </div>
       <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
     </div>
+  );
+}
+
+export function HackerDashboardSkeleton() {
+  return (
+    <div className={`w-screen h-screen  ${shimmer} relative`} >
+      <div className="flex flex-col items-center pt-[10rem] ">
+        <div className="h-[10rem] w-[10rem] rounded-full bg-gray-600 opacity-40" />
+        <div className="flex flex-col items-center gap-3 w-full h-fit mt-20">
+          <div className="w-[25rem] h-[10rem] rounded bg-gray-600 opacity-40" />
+          <div className="w-[25rem] h-[30rem] rounded bg-gray-600 opacity-40" />
+        </div>
+      </div>
+      {/* <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton /> */}
+    </div >
   );
 }
 
