@@ -50,6 +50,7 @@ export default function Dashboard() {
     how_you_heard_about_hackru: z.string(),
     reasons: z.string(),
 
+
   });
 
   type UserUpdate = z.infer<typeof UserUpdateSchema>;
@@ -202,6 +203,12 @@ export default function Dashboard() {
                 {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
               </div> */}
 
+                {/* Add a resume upload here */}
+                <div className="space-y-2">
+                  <Label htmlFor="resume">Resume</Label>
+                  <Input type="file" id="resume" />
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="github">Github</Label>
                   <Input id="github" value={userData?.github} {...register("github")} onChange={(e) => setUserData({ ...userData, github: e.target.value })} />
@@ -213,7 +220,7 @@ export default function Dashboard() {
                   {errors.major && (<p className="text-xs italic text-red-500 mt-2">{errors.major?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="short-answer">Short Answer</Label>
+                  <Label htmlFor="short-answer">What are you hoping to experience at HackRU?</Label>
                   <textarea
                     className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="short-answer"
@@ -245,7 +252,7 @@ export default function Dashboard() {
                   {errors.dietary_restrictions && (<p className="text-xs italic text-red-500 mt-2">{errors.dietary_restrictions?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="special-needs">Special Needs</Label>
+                  <Label htmlFor="special-needs">Anything we should account for?</Label>
                   <Input id="special-needs" value={userData?.special_needs} {...register("special_needs")} onChange={(e) => setUserData({ ...userData, special_needs: e.target.value })} />
                   {errors.special_needs && (<p className="text-xs italic text-red-500 mt-2">{errors.special_needs?.message}</p>)}
                 </div>
@@ -325,7 +332,7 @@ export default function Dashboard() {
                   {errors.how_you_heard_about_hackru && (<p className="text-xs italic text-red-500 mt-2">{errors.how_you_heard_about_hackru?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="reasons">Reasons for joining HackRU</Label>
+                  <Label htmlFor="reasons">What are your reasons for joining HackRU</Label>
                   <textarea
                     className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="reasons"
@@ -337,7 +344,7 @@ export default function Dashboard() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="ml-auto" onClick={() => console.log("errors")}>Save</Button>
+                <Button type="submit" className="ml-auto">Save</Button>
               </CardFooter>
             </form>
           </Card>
