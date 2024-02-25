@@ -194,7 +194,7 @@ export default function Dashboard() {
                       handleChangingFile(e, "application/pdf");
                     }}
                   />
-                  <a className="text-sm text-red-50">Resumes may be considered for potential internships and employment!</a>
+                  <a className="text-sm text-blue-200 underline">Resumes may be considered for potential internships and employment!</a>
                 </div>
 
                 {/* <div className="space-y-2">
