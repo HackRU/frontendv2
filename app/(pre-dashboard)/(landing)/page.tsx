@@ -11,9 +11,10 @@ import About from "./sections/About";
 import FAQ from "./sections/FAQ/FAQ";
 import GenericSection from "./sections/GenericSection";
 import { BASE } from "@/app/lib/definitions";
+import { getSponsors } from "@/app/lib/data";
 
-export default function Page() {
-  console.log(BASE);;
+export default async function Page() {
+
   return (
     <main className={`flex flex-col h-fit relative ${bizUdg.className} text-orange-100`}>
       <div className="overflow-y-hidden overflow-x-hidden">
@@ -31,11 +32,13 @@ export default function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">
-          <Suspense fallback={<>Loading Sponsors!</>}>
-            <Sponsors />
-          </Suspense>
-        </GenericSection>
+        {/* {sponsors &&
+          <GenericSection title="Sponsors">
+            <Suspense fallback={<>Loading Sponsors!</>}>
+              <Sponsors sponsors={sponsors} />
+            </Suspense>
+          </GenericSection>
+        } */}
         <GenericSection title="FAQ" color="from-dark_blue_figma">
           <FAQ />
         </GenericSection>
