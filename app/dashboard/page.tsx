@@ -10,7 +10,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-import { UploadWaiver, GetWaiverInfo } from '../lib/actions';
+import { UploadWaiver, GetWaiverInfo, UploadResume, GetResume } from '../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +19,6 @@ import Cursor from '../ui/cursor';
 import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
-
 
 export default function Dashboard() {
   const [userData, setUserData] = useState<any>(null);
@@ -30,7 +29,7 @@ export default function Dashboard() {
 
     first_name: z.string(),
     last_name: z.string(),
-
+    resume: z.any(),
     github: z.string(),
     major: z.string(),
     short_answer: z.string(),
@@ -58,11 +57,18 @@ export default function Dashboard() {
 
   const { register, handleSubmit, reset, trigger, formState: { errors }, } = useForm<UserUpdate>({ resolver: zodResolver(UserUpdateSchema), defaultValues: userData, });
   const [waiverFile, setWaiverFile] = useState<File | null>(null);
+  const [resume, setResume] = useState<File | null>(null);
 
   const onSubmit = async (data: UserUpdate) => {
-    console.log(data);
-    UpdateSelf(data);
+    const { resume, ...otherData } = data;
+    await UpdateSelf(otherData);
+
+    const resumeData = new FormData();
+    resumeData.set('file', resume as File);
+
+    await UploadResume(resumeData);
   }
+
   const onWaiverSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (waiverFile) { //works
@@ -86,14 +92,14 @@ export default function Dashboard() {
       alert("Please select a waiver file");
     }
   }
-  const handleChangingFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangingFile = (event: React.ChangeEvent<HTMLInputElement>, acceptedFormats: string) => {
     if (event.target.files && event.target.files.length > 0) {
       const selectedFile = event.target.files[0];
-      if (selectedFile.type === 'application/pdf') {
+      if (selectedFile.type === acceptedFormats) {
         setWaiverFile(selectedFile);
         console.log("Selected file:", selectedFile);
       } else {
-        console.error("Invalid file format. Please select a PDF file.");
+        alert("Invalid file format. Please select a PDF file.");
       }
     };
   }
@@ -102,6 +108,16 @@ export default function Dashboard() {
       try {
         const data = await getSelf();
         setUserData(data.response);
+        const resumeInfo = await GetResume();
+        console.log(resumeInfo);
+        if (resumeInfo.exists) {
+          const downloadURL = resumeInfo.download;
+          const response = await fetch(downloadURL);
+          const blob = await response.blob();
+          const file = new File([blob], "resume.pdf", { type: "application/pdf" });
+          setResume(file);
+        }
+
         const haswaiver = await GetWaiverInfo();
         setWaiverState(haswaiver.exists);
         //   setLoading(false);
@@ -166,6 +182,22 @@ export default function Dashboard() {
                   <Label htmlFor="last_name">Last Name</Label>
                   <Input id="last_name" value={userData?.last_name} {...register("last_name")} onChange={(e) => setUserData({ ...userData, last_name: e.target.value })} />
                   {errors.last_name && (<p className="text-xs italic text-red-500 mt-2">{errors.last_name?.message}</p>)}
+                </div>
+
+                {/* Add resume upload file here */}
+                <div className="space-y-2">
+                  <Label htmlFor="resume">Resume</Label>
+                  <Input
+                    type="file"
+                    id="resume"
+                    accept="application/pdf"
+                    {...register("resume")}
+                    onChange={(e) => {
+                      setUserData({ ...userData, resume: e.target.value });
+                      handleChangingFile(e, "application/pdf");
+                    }}
+                  />
+                  {/* {errors.resume && (<p className="text-xs italic text-red-500 mt-2">{errors.resume?.message}</p>)} */}
                 </div>
 
                 {/* <div className="space-y-2">

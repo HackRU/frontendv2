@@ -35,6 +35,10 @@ const ENDPOINTS = {
    * Digest magic links
    */
   waiver: BASE + '/waiver',
+  /**
+   * Upload resume
+   */
+  resume: BASE + '/resume',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -463,6 +467,50 @@ export async function UploadWaiver(file: FormData) {
   console.log('UploadWaiver function called');
   const info = await GetWaiverInfo();
   console.log(info);
+
+  await fetch(info.upload, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/pdf',
+    },
+    body: file.get('file'),
+  }).then(async (res) => {
+    console.log(res.status);
+    if (res.status !== 200) {
+      resp.error = 'Error Uploading Waiver';
+    } else {
+      resp.response = 'Waiver Uploaded';
+    }
+  });
+  return resp;
+}
+
+export async function GetResume() {
+  const session = await auth();
+  if (session?.user) {
+    const json = await fetch(ENDPOINTS.resume, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        token: session.user.name,
+      }),
+    }).then((res) => res.json());
+    return json.body;
+  }
+}
+
+export async function UploadResume(file: FormData) {
+  let resp = {
+    error: '',
+    response: '',
+  };
+  console.log('UploadWaiver function called');
+  const info = await GetResume();
+
   await fetch(info.upload, {
     method: 'PUT',
     headers: {
