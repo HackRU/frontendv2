@@ -57,7 +57,7 @@ export default function Dashboard() {
 
   const { register, handleSubmit, reset, trigger, formState: { errors }, } = useForm<UserUpdate>({ resolver: zodResolver(UserUpdateSchema), defaultValues: userData, });
   const [waiverFile, setWaiverFile] = useState<File | null>(null);
-  const [resume, setResume] = useState<File | null>(null);
+  const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const onSubmit = async (data: UserUpdate) => {
     const { resume, ...otherData } = data;
@@ -111,11 +111,7 @@ export default function Dashboard() {
         const resumeInfo = await GetResume();
         console.log(resumeInfo);
         if (resumeInfo.exists) {
-          const downloadURL = resumeInfo.download;
-          const response = await fetch(downloadURL);
-          const blob = await response.blob();
-          const file = new File([blob], "resume.pdf", { type: "application/pdf" });
-          setResume(file);
+          setResumeExists(true);
         }
 
         const haswaiver = await GetWaiverInfo();
@@ -186,7 +182,7 @@ export default function Dashboard() {
 
                 {/* Add resume upload file here */}
                 <div className="space-y-2">
-                  <Label htmlFor="resume">Resume</Label>
+                  <Label htmlFor="resume">{resumeExists ? "Resume (Already Uploaded)" : "Resume"}</Label>
                   <Input
                     type="file"
                     id="resume"
@@ -197,7 +193,7 @@ export default function Dashboard() {
                       handleChangingFile(e, "application/pdf");
                     }}
                   />
-                  {/* {errors.resume && (<p className="text-xs italic text-red-500 mt-2">{errors.resume?.message}</p>)} */}
+                  <a className="text-sm text-red-50">Resumes may be considered for potential internships and employment!</a>
                 </div>
 
                 {/* <div className="space-y-2">
