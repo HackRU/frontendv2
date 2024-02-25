@@ -102,7 +102,7 @@ export default function About() {
 
         <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">
           <div className='pt-6'>
-            <p className='inline'>
+            <p className='inline'>fi
               HackRU is a
             </p>
             <p className='inline font-bold'> 24-hour hackathon</p>

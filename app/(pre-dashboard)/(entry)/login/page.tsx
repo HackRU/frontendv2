@@ -44,7 +44,7 @@ export default function LoginPage() {
         width="900"
         height="900"
         alt="Scroll"
-        className={"h-auto w-[650px] md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
+        className={"h-[500px] w-[650px] sm:h-auto md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
         priority
         style={{
           objectFit: 'cover',

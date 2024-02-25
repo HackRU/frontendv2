@@ -48,7 +48,7 @@ export async function getSponsors(): Promise<string[]> {
   const res = await fetch(BASE + '/sponsors');
   const sponsors = await res.json();
 
-  if (!sponsors['photos']) {
+  if (!sponsors || !sponsors['photos']) {
     return [];
   }
 

@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 import { auth } from '../../auth';
@@ -57,6 +57,15 @@ export async function authenticate(email: string, password: string) {
     }
     redirect('/dashboard');
     return 'Something went wrong. ';
+  }
+}
+
+export async function handleSignOut() {
+  try {
+    await signOut();
+  } catch (error) {
+    console.log(error);
+    return 'Something went wrong';
   }
 }
 

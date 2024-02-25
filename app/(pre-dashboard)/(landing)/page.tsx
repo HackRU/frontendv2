@@ -10,8 +10,10 @@ import Sponsors from "./sections/Sponsors";
 import About from "./sections/About";
 import FAQ from "./sections/FAQ/FAQ";
 import GenericSection from "./sections/GenericSection";
+import { BASE } from "@/app/lib/definitions";
 
 export default function Page() {
+  console.log(BASE);;
   return (
     <main className={`flex flex-col h-fit relative ${bizUdg.className} text-orange-100`}>
       <div className="overflow-y-hidden overflow-x-hidden">
