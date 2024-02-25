@@ -16,7 +16,7 @@ const FIRE_IMG = [
 
 const animationTime = 800;
 const fireImageQuality = 10;
-/**
+/*
  * Gives time to load the images. There must be a better way to do this...
  * If the images aren't loaded yet, they flash a bit when the animation first starts.
  * This will probably not get fixed. And it will be destroyed by next hackathon.
@@ -64,7 +64,7 @@ export default function Hero() {
       clearTimeout(timeout);
       clearInterval(interval);
     };
-  }, [FIRE_IMG.length]);
+  }, []);
 
   return (
     <>
@@ -110,18 +110,69 @@ export default function Hero() {
           </div>
         </div>
         <div className="relative z-10">
-          <Image
-            src={FIRE_IMG[currentImageIndex]}
-            quality={fireImageQuality}
-            width="900"
-            height="900"
-            alt="Fire"
-            // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
-            className="xs:max-w-[320px] mb-32 h-auto w-[790px] sm:max-w-[576px]
-                       md:w-[500px] md:min-w-[500px] md:pl-8 lg:w-[600px]
-                       xl:mb-10 xl:w-[650px]"
-            priority
-          />
+          <div
+            className="xs:max-w-[320px] relative left-0 top-0 mb-32 h-auto
+                       w-[790px] sm:max-w-[576px] md:w-[500px] md:min-w-[500px]
+                       md:pl-8 lg:w-[600px] xl:mb-10 xl:w-[650px]"
+          >
+            <Image
+              src={FIRE_IMG[0]}
+              quality={fireImageQuality}
+              width="900"
+              height="900"
+              alt="Fire"
+              // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
+              className={
+                currentImageIndex === 0
+                  ? 'relative opacity-100'
+                  : 'absolute left-0 top-0 opacity-0'
+              }
+              priority
+            />
+            <Image
+              src={FIRE_IMG[1]}
+              quality={fireImageQuality}
+              width="900"
+              height="900"
+              alt="Fire"
+              className={
+                currentImageIndex === 1
+                  ? 'relative opacity-100'
+                  : 'absolute left-0 top-0 opacity-0'
+              }
+              // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
+              priority
+            />
+            <Image
+              src={FIRE_IMG[2]}
+              quality={fireImageQuality}
+              width="900"
+              height="900"
+              alt="Fire"
+              className={
+                currentImageIndex === 2
+                  ? 'relative opacity-100'
+                  : 'absolute left-0 top-0 opacity-0'
+              }
+              // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
+              priority
+            />
+            <Image
+              src={FIRE_IMG[3]}
+              quality={fireImageQuality}
+              width="900"
+              height="900"
+              alt="Fire"
+              className={
+                currentImageIndex === 3
+                  ? 'relative opacity-100'
+                  : 'absolute left-0 top-0 opacity-0'
+              }
+              // https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height
+              priority
+            />
+          </div>
+
           <div>
             <button
               className="hover:drop-shadow-glow border-brown-200 to-brown-100 xs:left-[103px]
