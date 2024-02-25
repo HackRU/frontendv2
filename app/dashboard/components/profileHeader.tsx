@@ -43,6 +43,9 @@ export default function ProfileHeader(props: {
             <CardDescription>Check your registration status.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            Stay tuned! Registration will open soon and you will need to upload a waiver to attend.
+          </CardContent>
+          {/* <CardContent className="space-y-4">
             {(userData.registration_status == "unregistered") &&
               <>
                 {waiverState && (<p className="text-xs italic text-green-500 mt-2">{"Waiver Uploaded"}</p>)}
@@ -107,7 +110,7 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             }
-          </CardContent>
+          </CardContent> */}
         </form>
       </Card>
     </div>

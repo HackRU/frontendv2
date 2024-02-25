@@ -27,30 +27,28 @@ export default function Dashboard() {
 
   const UserUpdateSchema = z.object({
 
-    first_name: z.string(),
-    last_name: z.string(),
+    first_name: z.string().min(1, "Field cannot be empty"),
+    last_name: z.string().min(1, "Field cannot be empty"),
     resume: z.any(),
-    github: z.string(),
-    major: z.string(),
-    short_answer: z.string(),
-    shirt_size: z.string(),
+    github: z.string().min(1, "Field cannot be empty"),
+    major: z.string().min(1, "Field cannot be empty"),
+    short_answer: z.string().min(1, "Field cannot be empty"),
+    shirt_size: z.string().min(1, "Field cannot be empty"),
     hackathon_count: z.number(),
-    dietary_restrictions: z.string(),
-    special_needs: z.string(),
-    date_of_birth: z.string(),
-    school: z.string(),
-    grad_year: z.string(),
-    gender: z.string(),
-    level_of_study: z.string(),
-    country_of_residence: z.string(),
-    ethnicity: z.string(),
+    dietary_restrictions: z.string().min(1, "Field cannot be empty"),
+    special_needs: z.string().min(1, "Field cannot be empty"),
+    date_of_birth: z.string().min(1, "Field cannot be empty"),
+    school: z.string().min(1, "Field cannot be empty"),
+    grad_year: z.string().min(1, "Field cannot be empty"),
+    gender: z.string().min(1, "Field cannot be empty"),
+    level_of_study: z.string().min(1, "Field cannot be empty"),
+    country_of_residence: z.string().min(1, "Field cannot be empty"),
+    ethnicity: z.string().min(1, "Field cannot be empty"),
     phone_number: z.number({
       invalid_type_error: "Enter Phone Number in the format 1234567890",
     }).min(1000000000).max(9999999999),
     how_you_heard_about_hackru: z.string(),
     reasons: z.string(),
-
-
   });
 
   type UserUpdate = z.infer<typeof UserUpdateSchema>;
