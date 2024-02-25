@@ -162,7 +162,7 @@ export async function SignUp(
           let data = res_json.body;
           let token = data.token;
 
-          await fetch('https://api.hackru.org/dev/update', {
+          await fetch(ENDPOINTS.update, {
             method: 'POST',
             headers: {
               'content-type': 'application/json',
