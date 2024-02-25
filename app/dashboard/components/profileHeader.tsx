@@ -47,7 +47,7 @@ export default function ProfileHeader(props: {
               <>
                 {waiverState && (<p className="text-xs italic text-green-500 mt-2">{"Waiver Uploaded"}</p>)}
                 <div className="flex flex-row items-center justify-center">
-                  <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Waiver</a>
+                  <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Click here for the waiver</a>
                   <input className="ml-auto mr-0" type="file" accept=".pdf" onChange={handleChangingFile} required></input>
                 </div>
                 <div className="flex flex-row items-center justify-left">

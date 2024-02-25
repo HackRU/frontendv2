@@ -51,6 +51,10 @@ export async function getSponsors(): Promise<string[]> {
   const res = await fetch(BASE + '/sponsors');
   const sponsors = await res.json();
 
+  if (!sponsors || !sponsors['photos']) {
+    return [];
+  }
+
   return sponsors['photos'].map((url: any) => url);
 }
 

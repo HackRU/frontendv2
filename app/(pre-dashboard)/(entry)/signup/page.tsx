@@ -40,8 +40,6 @@ export default function SignupPage() {
   const router = useRouter();
 
   const onSubmit = async (data: SignUp) => {
-    console.log("SENDING SIGNUP");
-    console.log(data);
     const resp = await SignUp(data.first_name, data.last_name, data.email, data.password, data.confirm_password);
     if (resp) {
       setErrors(resp.error);
@@ -56,7 +54,7 @@ export default function SignupPage() {
         width="900"
         height="900"
         alt="Scroll"
-        className={"h-auto w-[800px] md:w-[800px] lg:w-[800px] xl:w-[800px] absolute"}
+        className={"h-[500px] w-[800px] sm:h-auto md:w-[800px] lg:w-[800px] xl:w-[800px] absolute"}
         priority
         style={{
           objectFit: 'cover',
