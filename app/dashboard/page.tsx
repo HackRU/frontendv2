@@ -203,12 +203,6 @@ export default function Dashboard() {
                 {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
               </div> */}
 
-                {/* Add a resume upload here */}
-                <div className="space-y-2">
-                  <Label htmlFor="resume">Resume</Label>
-                  <Input type="file" id="resume" />
-                </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="github">Github</Label>
                   <Input id="github" value={userData?.github} {...register("github")} onChange={(e) => setUserData({ ...userData, github: e.target.value })} />
