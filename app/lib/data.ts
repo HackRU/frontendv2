@@ -4,9 +4,6 @@ import { auth } from '../../auth';
 import { GetUser, SetUser } from './actions';
 import { BASE } from './definitions';
 export async function getSchedule() {
-  //a fake delay to simulate a real api call
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
   const schedule: Schedule = {
     Saturday: {
       day: 'Saturday',
