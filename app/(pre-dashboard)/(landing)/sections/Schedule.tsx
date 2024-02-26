@@ -1,6 +1,5 @@
 import { getSchedule } from '@/app/lib/data';
-import SectionTitle from './SectionTitle';
-
+import Image from 'next/image';
 
 function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
   const { dayInfo } = props;
@@ -32,9 +31,22 @@ export default async function Schedule() {
 
   return (
     <div
-      className="relative mb-20 flex w-full justify-center z-10"
+      className="relative z-10 mb-20 flex w-full justify-center"
       id="Schedule"
     >
+      <div className="w-0 lg:w-1/3">
+        <Image
+          src={'/landing/python.png'}
+          quality={10}
+          width="900"
+          height="900"
+          alt="Fire"
+          className="absolute opacity-0 md:left-[-175px] md:top-[-100px]
+                     md:w-[700px] lg:left-[-175px] lg:top-[-100px]
+                     lg:w-[700px] lg:opacity-100 xl:left-[-200px]
+                     xl:top-[-200px] xl:w-[900px]"
+        />
+      </div>
       <div className="flex h-fit w-full max-w-7xl flex-col items-center">
         <div
           className="transparent-black-background text-text relative flex
@@ -43,6 +55,17 @@ export default async function Schedule() {
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
           <ScheduleOfTheDay dayInfo={schedule['Sunday']} />
+          <div className="w-0 lg:w-1/3"></div>
+          <div className="flex h-1/3 md:w-0 lg:h-0 justify-center">
+            <Image
+              src={'/landing/python.png'}
+              quality={10}
+              width="900"
+              height="900"
+              alt="Fire"
+              className="opacity-100 md:opacity-0 w-3/4"
+            />
+          </div>
         </div>
       </div>
     </div>
