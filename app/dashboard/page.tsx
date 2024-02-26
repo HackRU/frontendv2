@@ -10,7 +10,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-import { UploadWaiver, GetWaiverInfo, UploadResume, GetResume } from '../lib/actions';
+import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume } from '../lib/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -62,8 +62,12 @@ export default function Dashboard() {
     const { resume, ...otherData } = data;
     await UpdateSelf(otherData);
 
+    console.log(resume);
+    const fileList = resume as FileList;
+    const pdf = fileList[0];
+
     const resumeData = new FormData();
-    resumeData.set('file', resume as File);
+    resumeData.set('file', pdf as File);
 
     await UploadResume(resumeData);
   }
@@ -72,7 +76,6 @@ export default function Dashboard() {
     event.preventDefault();
     if (waiverFile) { //works
       try {
-        console.log(errors);
         const data = new FormData();
         data.set('file', waiverFile);
         await UploadWaiver(data);
@@ -84,19 +87,24 @@ export default function Dashboard() {
 
       } catch (error) {
         console.error("Error uploading waiver:", error);
-        alert("Error uploading waiver");
+        alert("Error uploading waiver. Please contact HackRU.");
       }
     } else {
       console.error("No waiver file selected");//works
       alert("Please select a waiver file");
     }
   }
-  const handleChangingFile = (event: React.ChangeEvent<HTMLInputElement>, acceptedFormats: string) => {
+  const handleChangingFile = (event: React.ChangeEvent<HTMLInputElement>,
+    acceptedFormats: string,
+    input: "WAIVER" | "RESUME") => {
     if (event.target.files && event.target.files.length > 0) {
       const selectedFile = event.target.files[0];
-      if (selectedFile.type === acceptedFormats) {
+      if (selectedFile.type === acceptedFormats && input === "WAIVER") {
         setWaiverFile(selectedFile);
-        console.log("Selected file:", selectedFile);
+        console.log('waiver file: ', selectedFile);
+      } else if (selectedFile.type === acceptedFormats && input === "RESUME") {
+        // i'm just as confused... going to make file upload more consistent here....
+        // most likely, we don't need this condition.... just think about it later
       } else {
         alert("Invalid file format. Please select a PDF file.");
       }
@@ -189,7 +197,7 @@ export default function Dashboard() {
                     {...register("resume")}
                     onChange={(e) => {
                       setUserData({ ...userData, resume: e.target.value });
-                      handleChangingFile(e, "application/pdf");
+                      // handleChangingFile(e, "application/pdf", "RESUME");
                     }}
                   />
                   <a className="text-sm text-blue-200 underline">Resumes may be considered for potential internships and employment!</a>

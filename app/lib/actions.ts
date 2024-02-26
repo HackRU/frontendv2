@@ -466,7 +466,6 @@ export async function UploadWaiver(file: FormData) {
   };
   console.log('UploadWaiver function called');
   const info = await GetWaiverInfo();
-  console.log(info);
 
   await fetch(info.upload, {
     method: 'PUT',
@@ -492,7 +491,6 @@ export async function GetResume() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify({
         email: session.user.email,
@@ -508,15 +506,15 @@ export async function UploadResume(file: FormData) {
     error: '',
     response: '',
   };
-  console.log('UploadWaiver function called');
   const info = await GetResume();
+  const pdf = file.get('file');
 
   await fetch(info.upload, {
     method: 'PUT',
     headers: {
       'content-type': 'application/pdf',
     },
-    body: file.get('file'),
+    body: pdf,
   }).then(async (res) => {
     console.log(res.status);
     if (res.status !== 200) {
