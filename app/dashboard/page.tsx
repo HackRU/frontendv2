@@ -67,7 +67,7 @@ export default function Dashboard() {
     const resumeData = new FormData();
 
     if (!pdf || pdf === undefined) {
-      alert("There was an error uploading your resume. Please try again.");
+      alert("There was an error uploading your resume. Please try again. If the problem persists, please email rnd@hackru.org");
     }
 
     resumeData.set('file', pdf as File);
