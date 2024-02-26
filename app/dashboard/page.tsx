@@ -60,16 +60,20 @@ export default function Dashboard() {
 
   const onSubmit = async (data: UserUpdate) => {
     const { resume, ...otherData } = data;
-    await UpdateSelf(otherData);
 
-    console.log(resume);
     const fileList = resume as FileList;
     const pdf = fileList[0];
 
     const resumeData = new FormData();
+
+    if (!pdf || pdf === undefined) {
+      alert("There was an error uploading your resume. Please try again.");
+    }
+
     resumeData.set('file', pdf as File);
 
     await UploadResume(resumeData);
+    await UpdateSelf(otherData);
   }
 
   const onWaiverSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
