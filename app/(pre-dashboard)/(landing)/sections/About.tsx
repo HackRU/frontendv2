@@ -104,9 +104,9 @@ export default function About() {
         <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">
           <div className="pt-6">
             <p className="inline">HackRU is a</p>
-            <p className="inline font-bold"> 24-hour hackathon</p>
+            <p className="inline font-bold"> 24-hour hackathon </p>
             <p className="inline">at Rutgers University. We welcome</p>
-            <p className="inline font-bold"> hundreds of students</p>
+            <p className="inline font-bold"> hundreds of students </p>
             <p className="inline">to join us in building</p>
             <p className="inline font-bold"> awesome tech projects.</p>
             <p className="inline font-bold"> Industry experts</p>
