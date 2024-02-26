@@ -68,11 +68,13 @@ export default function Dashboard() {
 
     if (!pdf || pdf === undefined) {
       alert("There was an error uploading your resume. Please try again. If the problem persists, please email rnd@hackru.org");
+    } else {
+      await UploadResume(resumeData);
     }
 
     resumeData.set('file', pdf as File);
 
-    await UploadResume(resumeData);
+
     await UpdateSelf(otherData);
   }
 
