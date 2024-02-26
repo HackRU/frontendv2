@@ -85,6 +85,8 @@ export default function Dashboard() {
           RegisterSelf();
         }
 
+        window.location.reload();
+
       } catch (error) {
         console.error("Error uploading waiver:", error);
         alert("Error uploading waiver. Please contact HackRU.");
