@@ -142,6 +142,21 @@ export default function Dashboard() {
     )
   }
 
+  if (!(userData instanceof Object)) {
+    return (
+      <main>
+        <Navbar />
+        <Suspense>
+          <Cursor />
+        </Suspense>
+        <div className="flex flex-col items-center justify-center p-4 space-y-8">
+          <h1 className="text-2xl font-bold">Error: Invalid User Data</h1>
+          <p>Please clear your cookies and refresh the page.</p>
+        </div>
+      </main>
+    );
+  }
+
   if (userData?.role['organizer']) {
     return (<OrganizerView userData={userData} />)
   }
