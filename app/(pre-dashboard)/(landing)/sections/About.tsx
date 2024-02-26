@@ -187,11 +187,11 @@ export default function About() {
           <div className="pb-6 pt-6">
             <p className="inline font-bold">Apply</p>
             <p className="inline"> to attend our</p>
-            <p className="inline font-bold"> Fall 2023 HackRU!</p>
+            <p className="inline font-bold"> Spring 2024 HackRU!</p>
             <p className="inline"> The event will be on</p>
-            <p className="inline font-bold"> October 7th-8th</p>
+            <p className="inline font-bold"> March 23rd-24th</p>
             <p className="inline"> at the</p>
-            <p className="inline font-bold"> College Avenue Student Center.</p>
+            <p className="inline font-bold"> Busch Student Center.</p>
           </div>
 
           <div className="pb-6">
@@ -206,8 +206,14 @@ export default function About() {
             </p>
           </div>
           <div className="pb-6">
-            <p className="inline">Want to receive updates?</p>
-            <p className="inline font-bold"> Subscribe here!</p>
+            <p className="inline">Want to receive updates? </p>
+            <a
+              href="https://hackru.us3.list-manage.com/subscribe?u=457c42db47ebf530a0fc733fb&id=fb01885829"
+              className="inline font-bold underline"
+              target="_blank"
+            >
+              Subscribe here!
+            </a>
           </div>
         </AboutInfo>
       </div>
