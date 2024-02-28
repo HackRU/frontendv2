@@ -2,8 +2,10 @@
 
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
+import Image from "next/image";
 import { usePathname } from 'next/navigation';
 const possibleColors = ['triangle-orange-star', 'triangle-blue-star'];
+const possibleCandles = ['candle 1 with glow.png', 'candle 2 with glow.png', 'candle 3 with glow.png', 'candle 4 with glow.png', 'candle 5 with glow.png'];
 
 const ClientOnly = ({ children, ...delegated }) => {
   const [hasMounted, setHasMounted] = React.useState(false);
@@ -21,6 +23,10 @@ const Star = ({ style }) => {
   return <div style={style} className={style.className} />;
 };
 
+const Candle = ({ style }) => {
+  return <img src={'/landing/' + style.source} width={style.width} style={style} />;
+};
+
 const createStarStyle = () => ({
   position: 'absolute',
   top: `${98 * Math.random()}%`,
@@ -29,8 +35,20 @@ const createStarStyle = () => ({
   animation: `twinkling ${Math.random() * 2 + 1}s infinite`,
 });
 
+
+const createCandleStyle = () => ({
+  position: 'absolute',
+  opacity: `${((50+10*Math.floor(6 * Math.random()))/100)}`,
+  width: `170px`,
+  transform: `rotate(${.1*Math.random()-.05}turn)`,
+  source: possibleCandles[Math.floor(Math.random() * possibleCandles.length)],
+})
+
 const LANDING_PAGE_STAR_COUNT = 150;
 const NOT_LANDING_PAGE_STAR_COUNT = 50;
+
+const LANDING_PAGE_CANDLE_COUNT = 10;
+const NOT_LANDING_PAGE_CANDLE_COUNT = 10;
 
 export function StarryBackground() {
   const pathname = usePathname();
@@ -39,6 +57,49 @@ export function StarryBackground() {
   const stars = useMemo(() => {
     return Array.from({ length: numberOfStars }, createStarStyle);
   }, [numberOfStars]);
+
+  const numberOfCandles =
+    pathname === '/' ? LANDING_PAGE_CANDLE_COUNT : NOT_LANDING_PAGE_CANDLE_COUNT;
+  const candles = useMemo(() => {
+    return Array.from({ length: numberOfCandles }, createCandleStyle);
+  }, [numberOfCandles]);
+
+  const candlePositions = [
+    {x: `40%`, //value betw 0 and 100
+    y: `25vh`}, //value betw 0 and 75
+
+    {x: `12%`, //value betw 0 and 100
+    y: `10vh`}, //value betw 0 and 75
+
+    {x: `12%`, //value betw 0 and 100
+    y: `50vh`}, //value betw 0 and 75
+
+    {x: `12%`, //value betw 0 and 100
+    y: `65vh`}, //value betw 0 and 75
+
+    {x: `45%`, //value betw 0 and 100
+    y: `60vh`}, //value betw 0 and 75
+
+    {x: `50%`, //value betw 0 and 100
+    y: `70vh`}, //value betw 0 and 75
+
+    {x: `80%`, //value betw 0 and 100
+    y: `10vh`}, //value betw 0 and 75
+
+    {x: `84%`, //value betw 0 and 100
+    y: `15vh`}, //value betw 0 and 75
+
+    {x: `82%`, //value betw 0 and 100
+    y: `50vh`}, //value betw 0 and 75
+
+    {x: `95`, //value betw 0 and 100
+    y: `20vh`}, //value betw 0 and 75
+  ]
+
+  candles.map((candle, index) => {
+    candle.left = candlePositions[index].x
+    candle.top = candlePositions[index].y
+  })
 
   return (
     <ClientOnly>
@@ -49,6 +110,9 @@ export function StarryBackground() {
       >
         {stars.map((style, index) => (
           <Star key={index} style={style} />
+        ))}
+        {candles.map((style, index) => (
+          <Candle key={index} style={style} />
         ))}
       </div>
     </ClientOnly>

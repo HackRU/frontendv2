@@ -89,7 +89,7 @@ export default function Hero() {
         />
         <div className="relative z-10 w-full pt-10 text-center md:h-[26rem] md:w-2/5 md:pt-0">
           <div
-            className={`drop-shadow-glow flex h-[40vh] w-full flex-col justify-center
+            className={`drop-shadow-blueGlow flex h-[40vh] w-full flex-col justify-center
                       space-y-4
                        pr-3 md:pr-0 ${bigelowRules.className} inline-block h-fit bg-gradient-to-b
                        from-[#51F4FF] to-[#FFB464] bg-clip-text
@@ -175,7 +175,7 @@ export default function Hero() {
 
           <div>
             <button
-              className="hover:drop-shadow-glow border-brown-200 to-brown-100 xs:left-[103px]
+              className="hover:drop-shadow-blueGlow border-brown-200 to-brown-100 xs:left-[103px]
                          xs:top-[285px] xs:h-[26px] xs:w-[99px] absolute
                          z-30 items-center justify-center rounded-lg
                          border-x-4 border-y-2 border-solid

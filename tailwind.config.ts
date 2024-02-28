@@ -21,6 +21,9 @@ const config: Config = {
           '0 0px 20px rgba(255,255, 255, 0.35)',
           '0 0px 65px rgba(255, 255,255, 0.2)',
         ],
+        blueGlow: [
+          '0 0px 5px rgba(81, 244, 255, 0.7)'
+        ]
       },
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',

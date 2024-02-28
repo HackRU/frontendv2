@@ -12,6 +12,7 @@ import FAQ from "./sections/FAQ/FAQ";
 import GenericSection from "./sections/GenericSection";
 import { BASE } from "@/app/lib/definitions";
 import { getSponsors } from "@/app/lib/data";
+import React from "react";
 
 export default async function Page() {
 
