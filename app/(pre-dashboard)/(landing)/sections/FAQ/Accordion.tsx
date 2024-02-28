@@ -2,16 +2,26 @@ import { useState } from 'react';
 
 type propType = {
   question: string;
+  active: boolean;
+  setActiveAccordion: (value: number | ((prevVar: number) => number)) => void;
+  index: number;
   answer: string;
 };
 
 export default function Accordion(props: propType) {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  // const [accordionOpen, setAccordionOpen] = useState(false);
 
   return (
     <div>
       <button
-        onClick={() => setAccordionOpen(!accordionOpen)}
+        onClick={() => {
+          if(props.active){
+            props.setActiveAccordion(-1)
+          }
+          else{
+            props.setActiveAccordion(props.index)
+          }
+        }}
         className="flex w-full justify-between items-center pt-5"
       >
         <span className="text-3xl text-orange-100 text-left font-bold">{props.question}</span>
@@ -27,7 +37,7 @@ export default function Accordion(props: propType) {
             height="2"
             rx="1"
             className={`origin-center transform transition duration-200 ease-out ${
-              accordionOpen && '!rotate-180'
+              props.active && '!rotate-180'
             }`}
           />
           <rect
@@ -36,14 +46,14 @@ export default function Accordion(props: propType) {
             height="2"
             rx="1"
             className={`origin-center rotate-90 transform transition duration-200 ease-out ${
-              accordionOpen && '!rotate-180'
+              props.active && '!rotate-180'
             }`}
           />
         </svg>
       </button>
       <div
         className={`pb-3 grid overflow-hidden text-sm text-orange-100 transition-all duration-300 ease-in-out ${
-          accordionOpen
+          props.active
             ? 'grid-rows-[1fr] opacity-100'
             : 'grid-rows-[0fr] opacity-0'
         }`}
