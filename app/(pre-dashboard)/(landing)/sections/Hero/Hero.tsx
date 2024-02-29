@@ -85,7 +85,7 @@ export default function Hero() {
           objectFit="cover"
           objectPosition="center"
           alt="Blobs"
-          className="z-0"
+          className="z-0 opacity-60"
         />
         <div className="relative z-10 w-full pt-10 text-center md:h-[26rem] md:w-2/5 md:pt-0">
           <div
