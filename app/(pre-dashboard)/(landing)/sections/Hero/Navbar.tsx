@@ -147,7 +147,7 @@ function Navbar() {
             {sections.map((section) => {
               return (
                 <button
-                  className="glow-center mr-5 font-medium uppercase hover:drop-shadow-glow transition-shadow"
+                  className="glow-center mr-5 font-medium uppercase hover:drop-shadow-blueGlow transition-shadow"
                   onClick={() => scrollToSectionName(section)}
                   key={section}
                 >
