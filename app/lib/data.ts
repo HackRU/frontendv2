@@ -82,7 +82,7 @@ export async function getSelf(): Promise<{
   };
 }
 
-export async function UpdateSelf(data: any) {
+export async function UpdateSelf(data: any): Promise<string> {
   console.log(data);
   console.log('updating self');
 
@@ -94,12 +94,9 @@ export async function UpdateSelf(data: any) {
     if (resp.error === '') {
       return resp.response;
     }
-    return resp.error;
   }
 
-  return {
-    error: 'Something went wrong',
-  };
+  return 'Something went wrong';
 }
 
 export async function RegisterSelf() {

@@ -14,6 +14,8 @@ export default function ProfileHeader(props: {
 
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
 
+  userData.registration_status = "confirmation";
+
   return (
     <div className="w-full max-w-2xl flex flex-col items-center justify-center space-y-8 mt-2 text-white">
       <div className="flex flex-col items-center gap-3 w-full h-fit mt-20">
@@ -93,8 +95,8 @@ export default function ProfileHeader(props: {
             }
             {(userData.registration_status == "registered") &&
               <>
-                <div className="flex flex-row items-center justify-center">
-                  <CardTitle>registered, waiting for approval</CardTitle>
+                <div className="flex flex-row items-center">
+                  <CardTitle>Registered! You will be emailed about acceptance soon.</CardTitle>
                 </div>
               </>
             }

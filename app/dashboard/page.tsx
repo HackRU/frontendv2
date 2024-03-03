@@ -22,8 +22,9 @@ import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 
 export default function Dashboard() {
   const [userData, setUserData] = useState<any>(null);
-
   const [waiverState, setWaiverState] = useState<any>(null);
+  const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
+  const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
 
   const UserUpdateSchema = z.object({
 
@@ -59,6 +60,7 @@ export default function Dashboard() {
   const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const onSubmit = async (data: UserUpdate) => {
+    setSavingUserProfile(true);
     const { resume, ...otherData } = data;
 
     const fileList = resume as FileList;
@@ -74,7 +76,13 @@ export default function Dashboard() {
       }
     }
 
-    await UpdateSelf(otherData);
+    const resp = await UpdateSelf(otherData);
+    setSavingUserProfile(false);
+    if (resp.length > 0) {
+      setUserProfileSubmitText("Failed!");
+    }
+
+    setUserProfileSubmitText("Saved!");
   }
 
   const onWaiverSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -193,7 +201,9 @@ export default function Dashboard() {
                     <CardTitle>Profile</CardTitle>
                     <CardDescription>Update your profile information.</CardDescription>
                   </div>
-                  <Button type="submit" className="ml-auto" onClick={() => console.log("submit button")}>Save</Button>
+                  <Button type="submit" className="ml-auto">
+                    {savingUserProfile ? "Saving..." : userProfileSubmitText}
+                  </Button>
                 </div>
 
               </CardHeader>
@@ -366,7 +376,9 @@ export default function Dashboard() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="ml-auto">Save</Button>
+                <Button type="submit" className="ml-auto">
+                  {savingUserProfile ? "Saving..." : userProfileSubmitText}
+                </Button>
               </CardFooter>
             </form>
           </Card>
