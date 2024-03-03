@@ -62,16 +62,16 @@ export default function Dashboard() {
     const { resume, ...otherData } = data;
 
     const fileList = resume as FileList;
-    const pdf = fileList[0];
+    if (fileList.length === 0) {
+      const pdf = fileList[0];
 
-    const resumeData = new FormData();
-    resumeData.set('file', pdf as File);
+      const resumeData = new FormData();
+      resumeData.set('file', pdf as File);
+      const resp = await UploadResume(resumeData);
 
-    if (!pdf || pdf === undefined) {
-      alert("There was an error uploading your resume. Please try again. If the problem persists, please email rnd@hackru.org");
-    } else {
-
-      await UploadResume(resumeData);
+      if (resp.error.length > 0) {
+        alert("There was an error uploading your resume. Please try again. If the problem persists, please email rnd@hackru.org");
+      }
     }
 
     await UpdateSelf(otherData);
