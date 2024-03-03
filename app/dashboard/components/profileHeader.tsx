@@ -14,8 +14,6 @@ export default function ProfileHeader(props: {
 
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
 
-  userData.registration_status = "confirmation";
-
   return (
     <div className="w-full max-w-2xl flex flex-col items-center justify-center space-y-8 mt-2 text-white">
       <div className="flex flex-col items-center gap-3 w-full h-fit mt-20">
