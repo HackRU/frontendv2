@@ -7,6 +7,8 @@ import { redirect } from "next/dist/server/api-utils";
 import { useState } from "react";
 import { ConfirmComingOrNot } from "@/app/lib/data";
 
+//TODO: coming and not-coming should be ENUMS!!!!
+
 export default function ProfileHeader(props: {
   userData: any;
   onWaiverSubmit: any;
@@ -17,6 +19,8 @@ export default function ProfileHeader(props: {
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
   const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  console.log(userData.registration_status)
 
   const onConfirmationChange = async (isComing: boolean) => {
     setUploadingNewConfirmationStatus(true);
@@ -122,7 +126,7 @@ export default function ProfileHeader(props: {
             }
             {(userData.registration_status == "confirmation" ||
               userData.registration_status == "coming" ||
-              userData.registration_status == "not_coming"
+              userData.registration_status == "not-coming"
             ) &&
               <>
                 <div className="flex flex-row items-center justify-center">
@@ -150,7 +154,7 @@ export default function ProfileHeader(props: {
                       </>
                     }
                     {
-                      userData.registration_status == "not_coming" &&
+                      userData.registration_status == "not-coming" &&
                       <>
                         <CardTitle>You are not coming. Thanks for letting us know.</CardTitle>
                         <Button className="ml-auto" onClick={() => onConfirmationChange(true)}>Coming</Button>
