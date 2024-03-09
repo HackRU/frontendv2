@@ -119,6 +119,36 @@ export async function RegisterSelf() {
   };
 }
 
+export async function ConfirmComingOrNot(isComing: boolean): Promise<{
+  error: string | undefined;
+  response: Record<string, any>;
+}> {
+  const session = await auth();
+  const status = isComing ? 'coming' : 'not-coming';
+  let error = undefined;
+
+  if (session?.user && session?.user?.email) {
+    const resp = await SetUser(
+      { registration_status: status },
+      session.user.email,
+    );
+
+    if (resp.error === '') {
+      return {
+        response: resp.response as unknown as Record<any, any>,
+        error: '',
+      };
+    }
+
+    error = resp.error;
+  }
+
+  return {
+    error: error,
+    response: {},
+  };
+}
+
 export async function getUsers() {
   const Users: Record<string, object> = {
     'testemail@gmail.com': {
