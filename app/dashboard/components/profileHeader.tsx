@@ -4,6 +4,8 @@ import { Button } from "./button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./card";
 import { handleSignOut } from "@/app/lib/actions";
 import { redirect } from "next/dist/server/api-utils";
+import { useState } from "react";
+import { ConfirmComingOrNot } from "@/app/lib/data";
 
 export default function ProfileHeader(props: {
   userData: any;
@@ -13,6 +15,26 @@ export default function ProfileHeader(props: {
 }) {
 
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
+  const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onConfirmationChange = async (isComing: boolean) => {
+    setUploadingNewConfirmationStatus(true);
+    const resp = await ConfirmComingOrNot(isComing);
+
+    if (resp && resp.error == '') {
+      window.location.reload();
+      setUploadingNewConfirmationStatus(false);
+      //force them to reload cause why not
+      //let's play it safe... but please....
+      //there's a better way to do this without refreshing. haha
+      return;
+    }
+
+
+    if (resp.error) setErrorMessage(resp.error);
+    setUploadingNewConfirmationStatus(false);
+  };
 
   return (
     <div className="w-full max-w-2xl flex flex-col items-center justify-center space-y-8 mt-2 text-white">
@@ -86,7 +108,7 @@ export default function ProfileHeader(props: {
                     >MLH Privacy Policy</a></p>
                 </div>
                 <div className="flex flex-row items-center justify-center">
-                  <CardTitle>unregistered</CardTitle>
+                  <CardTitle>Unregistered</CardTitle>
                   <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}>Register</Button>
                 </div>
               </>
@@ -98,19 +120,50 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             }
-            {(userData.registration_status == "confirmation") &&
+            {(userData.registration_status == "confirmation" ||
+              userData.registration_status == "coming" ||
+              userData.registration_status == "not_coming"
+            ) &&
               <>
                 <div className="flex flex-row items-center justify-center">
-                  <CardTitle>confirmation</CardTitle>
-                  <Button className="ml-auto" onClick={() => console.log("confirm button clicked")}>Coming</Button>
-                  <Button className="ml-auto" onClick={() => console.log("confirm button clicked")}>Not Coming</Button>
+
+                  {uploadingNewConfirmationStatus && <p className="">Loading confirmation status...</p>}
+                  {
+                    errorMessage && <p className="text-red-500">{errorMessage}</p>
+                  }
+
+                  {!uploadingNewConfirmationStatus && <>
+
+                    {
+                      userData.registration_status == "confirmation" &&
+                      <>
+                        <CardTitle>Confirmation</CardTitle>
+                        <Button className="ml-auto" onClick={() => onConfirmationChange(true)}>Coming</Button>
+                        <Button className="ml-auto" onClick={() => onConfirmationChange(false)}>Not Coming</Button>
+                      </>
+                    }
+                    {
+                      userData.registration_status == "coming" &&
+                      <>
+                        <CardTitle>You are confirmed to be coming to HackRU!</CardTitle>
+                        <Button className="ml-auto" onClick={() => onConfirmationChange(false)}>Not Coming</Button>
+                      </>
+                    }
+                    {
+                      userData.registration_status == "not_coming" &&
+                      <>
+                        <CardTitle>You are not coming. Thanks for letting us know.</CardTitle>
+                        <Button className="ml-auto" onClick={() => onConfirmationChange(true)}>Coming</Button>
+                      </>
+                    }
+                  </>}
                 </div>
               </>
             }
           </CardContent>
         </form>
       </Card>
-    </div>
+    </div >
 
   );
 }
