@@ -1,0 +1,26 @@
+[
+        {
+
+            "place": 1,
+            "number_of_points": 12,
+            "house_name": "HOUSE_A"
+        },
+        {
+
+           "place": 2,
+            "number_of_points": 10,
+            "house_name": "HOUSE_C"
+        },
+        {
+
+            "place": 3,
+             "number_of_points": 8,
+             "house_name": "HOUSE_C"
+         }, 
+         {
+
+            "place": 4,
+             "number_of_points": 4,
+             "house_name": "HOUSE_C"
+         }
+    ]

@@ -1,4 +1,5 @@
 'use server';
+import { StringDecoder } from 'string_decoder';
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
@@ -50,6 +51,32 @@ export async function getSponsors(): Promise<string[]> {
   return sponsors['photos'].map((url: any) => url);
 }
 
+export async function getLeaderboard(){
+  try{
+    const res = await fetch(BASE + "/leaderboards");
+    const leaderboardData = await res.json();
+    if(!Array.isArray(leaderboardData)){
+      throw new Error;
+    }
+    const  LeaderBoard = leaderboardData.map((entry:{place: string, number_of_points: number, house_name: string})=>({
+      place: entry.place,
+      points: entry.number_of_points,
+      house: entry.house_name
+    }));
+    return LeaderBoard;
+  }catch(err){
+    console.log("proceeding with mock data");
+    const res = await fetch('app/lib/mockLeaderboard.json');
+    const leaderboardData = await res.json();
+    console.log(leaderboardData);
+    const  LeaderBoard = leaderboardData.map((entry:{place: string, number_of_points: number, house_name: string})=>({
+      place: entry.place,
+      points: entry.number_of_points,
+      house: entry.house_name
+    }));
+    return LeaderBoard;
+  }
+}
 export async function getSelf(): Promise<{
   error: string;
   response: Record<string, any>;
