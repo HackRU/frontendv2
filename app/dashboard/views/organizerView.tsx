@@ -9,7 +9,7 @@ import { AttendEventScan, GetUser } from '@/app/lib/actions';
 
 type STATUS = "SUCCESSFUL" | "FAILED" | "PENDING" | "AWAITING SCAN" | "AWAITING RESPONSE";
 type ScannerTab = "CHECK IN" | "EVENT";
-const timeWhenAllHackersCanComeThrough = new Date(2024, 3, 23, 12, 0); // 15th April 2024, 2:30 PM
+const timeWhenAllHackersCanComeThrough = new Date(2024, 3, 23, 14, 0); // March 23rd, 2PM
 
 const events = [
   "Event1",
@@ -35,7 +35,7 @@ function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
         }
         {
           status === "PENDING" &&
-          <p className="text-orange-400">Come again later!</p>
+          <p className="text-orange-400">Come again later at ${timeWhenAllHackersCanComeThrough.toString()}</p>
         }
         {
           status === "FAILED" &&
