@@ -170,8 +170,8 @@ export default function Dashboard() {
     );
   }
 
-  if (true) {
-    return (<OrganizerView userData={userData} />)
+  if (userData?.role['organizer']) {
+    return (<OrganizerView />)
   }
   else if (userData?.role['director']) {
     return (<DirectorView userData={userData} />)

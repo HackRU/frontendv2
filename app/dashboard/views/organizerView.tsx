@@ -9,6 +9,7 @@ import { AttendEventScan, GetUser } from '@/app/lib/actions';
 
 type STATUS = "SUCCESSFUL" | "FAILED" | "PENDING" | "AWAITING SCAN" | "AWAITING RESPONSE";
 type ScannerTab = "CHECK IN" | "EVENT";
+const timeWhenAllHackersCanComeThrough = new Date(2024, 3, 23, 12, 0); // 15th April 2024, 2:30 PM
 
 const events = [
   "Event1",
@@ -39,7 +40,7 @@ function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
         {
           status === "FAILED" &&
           <p className="text-red-500">
-            Failed. Internal server error.
+            Failed. An error occurred.
           </p>
         }
         {
@@ -55,15 +56,29 @@ function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
   );
 }
 
-function OrganizerView(userData: any) {
+function OrganizerView() {
   const [status, setStatus] = useState<STATUS>("AWAITING SCAN");
   const [openScanner, setOpenScanner] = useState<boolean>(false);
   const [scannerTab, setScannerTab] = useState<ScannerTab>("CHECK IN");
   const [selectedEvent, setSelectedEvent] = useState<string>("");
 
-  const handleOnScan = (result: string) => {
+  const handleOnScan = async (result: string) => {
     if (scannerTab === "CHECK IN") {
-      const user = GetUser(result);
+      const resp = await GetUser(result);
+      if (typeof resp.response === 'string') {
+        if (resp.response.includes('error')) {
+          setStatus("FAILED");
+          return;
+        }
+      }
+
+      const userData = resp.response as unknown as Record<any, any>;
+      const now = new Date();
+      if (userData.registration_status === "confirmed" || now > timeWhenAllHackersCanComeThrough) {
+        setStatus("SUCCESSFUL");
+      } else {
+        setStatus("PENDING");
+      }
     } else {
       if (selectedEvent == "") {
         alert("Please select an event first!");
