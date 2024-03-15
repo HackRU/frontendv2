@@ -22,21 +22,15 @@ const args = {
   deviceId: '',
 };
 
-function QrScannerWrapper() {
-  const [stopDecoding, setStopDecoding] = useState(false);
+function QrScannerWrapper(props) {
+  const { onScan } = props;
 
   return (
     <div style={styles.container}>
-      <button
-        onClick={() => setStopDecoding((prev) => !prev)}
-        style={{ marginBottom: 5 }}
-      >
-        {stopDecoding ? 'Start Decoding' : 'Stop Decoding'}
-      </button>
       <Scanner
         constraints={defaultConstraints}
         onResult={(result) => {
-          alert(result);
+          onScan(result);
         }}
       />
     </div>
