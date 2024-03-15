@@ -1,21 +1,18 @@
-import { useState } from "react";
-
-
 
 export default function EventScan(props: {
   events: string[];
+  selectedEvent: string;
   onChange: (event: string) => void;
 }) {
 
-  const [selectedEvent, setSelectedEvent] = useState<string>("");
-  const { events, onChange } = props;
+  const { events, onChange, selectedEvent } = props;
 
   return (
     <div>
       <select
         value={selectedEvent}
         onChange={(e) => {
-          setSelectedEvent(e.target.value)
+          onChange(e.target.value);
         }}
         className="w-full text-black"
       >

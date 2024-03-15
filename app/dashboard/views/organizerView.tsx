@@ -5,6 +5,7 @@ import './organizerView.css';
 import QrReaderWrapper from "../components/QRreader";
 import CheckInScan from './checkInScan';
 import EventScan from './eventScan';
+import { AttendEventScan, GetUser } from '@/app/lib/actions';
 
 type STATUS = "SUCCESSFUL" | "FAILED" | "PENDING" | "AWAITING SCAN" | "AWAITING RESPONSE";
 type ScannerTab = "CHECK IN" | "EVENT";
@@ -17,12 +18,14 @@ const events = [
   "Event5"
 ];
 
-function ScanStatus(props: { status: STATUS }) {
-  const { status } = props;
+function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
+  const { status, scanType } = props;
 
   return (
     <div className="w-full text-center">
-      <p className="">Scan QR to check in</p>
+      <p className="">Scan QR to {
+        scanType === "CHECK IN" ? "check in" : "scan for an event"
+      }</p>
       <p className="">Status: </p>
       <p className="">
         {
@@ -53,7 +56,6 @@ function ScanStatus(props: { status: STATUS }) {
 }
 
 function OrganizerView(userData: any) {
-
   const [status, setStatus] = useState<STATUS>("AWAITING SCAN");
   const [openScanner, setOpenScanner] = useState<boolean>(false);
   const [scannerTab, setScannerTab] = useState<ScannerTab>("CHECK IN");
@@ -61,19 +63,17 @@ function OrganizerView(userData: any) {
 
   const handleOnScan = (result: string) => {
     if (scannerTab === "CHECK IN") {
-      alert("Checking in: " + result);
+      const user = GetUser(result);
     } else {
-      alert("Scanned event: " + result + "Selected event: " + selectedEvent);
-    }
+      if (selectedEvent == "") {
+        alert("Please select an event first!");
+      }
 
-    console.log(result);
-    setStatus("AWAITING RESPONSE");
-    setTimeout(() => {
-      setStatus("SUCCESSFUL");
-    }, 2000);
+      AttendEventScan(selectedEvent, result);
+    }
   };
 
-  const handleEventSelectChange = (event: string) => {
+  const handleEventSelectChange = async (event: string) => {
     setSelectedEvent(event);
   }
 
@@ -102,7 +102,7 @@ function OrganizerView(userData: any) {
             </div>
           </div>
           <div className="flex flex-col items-center my-10">
-            <ScanStatus status={status} />
+            <ScanStatus status={status} scanType={scannerTab} />
             {
               scannerTab === "CHECK IN" ?
                 <CheckInScan status={status} /> :

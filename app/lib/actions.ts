@@ -39,6 +39,11 @@ const ENDPOINTS = {
    * Upload resume
    */
   resume: BASE + '/resume',
+
+  /**
+   * Attend an event
+   */
+  attend: BASE + '/attend-event',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -524,4 +529,44 @@ export async function UploadResume(file: FormData) {
     }
   });
   return resp;
+}
+
+export async function AttendEventScan(
+  scannedEmail: string,
+  event: string,
+): Promise<string> {
+  const session = await auth();
+  let status = 500;
+
+  if (session?.user) {
+    const { email, name } = session.user;
+    /* For some reason, name IS THE TOKEN.... hmmm.?? */
+
+    const content = {
+      auth_email: email,
+      token: name,
+      qr: scannedEmail,
+      event: event,
+      again: '',
+    };
+
+    const resp = await fetch(ENDPOINTS.attend, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(content),
+    });
+
+    const status = resp.status;
+    if (status === 200) {
+      return `${scannedEmail} successfully logged in to {event}!`;
+    } else if (status === 402) {
+      return `User ${scannedEmail} is already checked in to {event}!`;
+    } else if (status === 404) {
+      return `USER not FOUND. Please try again.`;
+    }
+  }
+
+  return 'Invalid user session. Please login.';
 }
