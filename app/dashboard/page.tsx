@@ -20,6 +20,9 @@ import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 
+let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
+const numOfMinsUntilTeamCreation = (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
+
 export default function Dashboard() {
   const [userData, setUserData] = useState<any>(null);
   const [waiverState, setWaiverState] = useState<any>(null);
@@ -190,6 +193,34 @@ export default function Dashboard() {
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
           />
+
+          <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <CardTitle>Team Creation</CardTitle>
+              <CardDescription>Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.</CardDescription>
+            </CardHeader>
+            {numOfMinsUntilTeamCreation !== 0 &&
+              <CardContent>
+                {/* Put three vertical input boxes and then a submit button.
+                When submit button shows up. */}
+                <form id="team-creation-form">
+                  <div className="space-y-2">
+                    <Label htmlFor="team-name">Team Lea</Label>
+                    <Input id="team-name" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="team-description">Team Description</Label>
+                    <Input id="team-description" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="team-members">Team Members</Label>
+                    <Input id="team-members" />
+                  </div>
+                  <Button type="submit">Create Team</Button>
+                </form>
+              </CardContent>
+            }
+          </Card>
 
           <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
