@@ -4,6 +4,7 @@ import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
 import { BASE } from './definitions';
+
 export async function getSchedule() {
   const schedule: Schedule = {
     Saturday: {
@@ -58,22 +59,25 @@ export async function getLeaderboard(){
     if(!Array.isArray(leaderboardData)){
       throw new Error;
     }
-    const  LeaderBoard = leaderboardData.map((entry:{place: string, number_of_points: number, house_name: string})=>({
-      place: entry.place,
-      points: entry.number_of_points,
-      house: entry.house_name
+    const  LeaderBoard = leaderboardData.map((Leaderboard:{place: string, number_of_points: number, house_name: string, logo: string})=>({
+      place: Leaderboard.place,
+      points: Leaderboard.number_of_points,
+      house: Leaderboard.house_name,
+      logo: Leaderboard.logo
     }));
     return LeaderBoard;
   }catch(err){
     console.log("proceeding with mock data");
-    const res = await fetch('app/lib/mockLeaderboard.json');
+    const res = await fetch('http://localhost:3000/Leaderboard');
     const leaderboardData = await res.json();
     console.log(leaderboardData);
-    const  LeaderBoard = leaderboardData.map((entry:{place: string, number_of_points: number, house_name: string})=>({
-      place: entry.place,
-      points: entry.number_of_points,
-      house: entry.house_name
+    const  LeaderBoard = leaderboardData.map((Leaderboard:{place: string, number_of_points: number, house_name: string, logo: string})=>({
+      place: Leaderboard.place,
+      points: Leaderboard.number_of_points,
+      house: Leaderboard.house_name,
+      logo: Leaderboard.logo
     }));
+    console.log(LeaderBoard)
     return LeaderBoard;
   }
 }
