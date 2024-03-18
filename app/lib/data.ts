@@ -52,6 +52,7 @@ export async function getSponsors(): Promise<string[]> {
   return sponsors['photos'].map((url: any) => url);
 }
 
+
 export async function getLeaderboard(){
   try{
     const res = await fetch(BASE + "/leaderboards");

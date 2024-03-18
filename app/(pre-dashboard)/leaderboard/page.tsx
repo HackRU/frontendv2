@@ -48,7 +48,7 @@ const Leaderboard = () => {
                     <td className = "pt-6 pl-5 pr-8  lg:pr-20 pb-6 text-center font-extrabold	 ">{Leaderboard.place}</td>
                     <td className = "pt-6 pr-8 sm:pr-20  md:pr-48 lg:pr-64 xl:pr-80 pb-6 text-center font-extrabold	 ">{Leaderboard.points}</td>
                     <td className = "pt-6 pr-8  sm:pr-20 md:pr-48 lg:pr-64 xl:pr-80 pb-6 text-center font-extrabold	">{Leaderboard.house}</td>
-                    <td className = "pt-6  pb-6 pl-6"> <Image src= {roar} style={{width: 80, height: 80, borderRadius: 60/ 2}}/> </td>
+                    <td className = "pt-6  pb-6 pl-6"> <Image src= {roar} alt = "logo" style={{width: 80, height: 80, borderRadius: 60/ 2}}/> </td>
                     </tr>
                 
             ))}
