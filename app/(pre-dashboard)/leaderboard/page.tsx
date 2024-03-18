@@ -9,7 +9,7 @@ const Leaderboard = () => {
     const[leaderboard, setLeaderboard] = useState<any[]>([]);
     
     
-
+    const logoImage = ["/landing/python.png"]
 
     const fetchData = async()=>{
         try{
@@ -45,13 +45,13 @@ const Leaderboard = () => {
         </tr>
         </thead>
         <tbody className = "ring-1 sm:ring-4 ring-orange-300 rounded-3xl ">
-        {leaderboard.map((Leaderboard, index) =>(
+        {leaderboard.map((Leaderboard,index) =>(
                 
-                    <tr  className = " text-xs sm:text-lg  md:text-2xl lg:text-4xl lx:text-5xl">
+                    <tr  key = {index} className = " text-xs sm:text-lg  md:text-2xl lg:text-4xl lx:text-5xl">
                     <td className = "pt-6 pl-5 pr-8  lg:pr-20 pb-6 text-center font-extrabold	 ">{Leaderboard.place}</td>
                     <td className = "pt-6 pr-8 sm:pr-20  md:pr-48 lg:pr-64 xl:pr-80 pb-6 text-center font-extrabold	 ">{Leaderboard.points}</td>
                     <td className = "pt-6 pr-8  sm:pr-20 md:pr-48 lg:pr-64 xl:pr-80 pb-6 text-center font-extrabold	">{Leaderboard.house}</td>
-                    <td className = "pt-6  pb-6 pl-6"> <Image src= {"/landing/python.png"} alt = "logo" width = {90} height = {90}/> </td>
+                    <td className = "pt-6  pb-6 pl-6"> <Image src = {logoImage[0]} alt = "logo" width = "90" height = "90" /> </td>
                     </tr>
                 
             ))}
