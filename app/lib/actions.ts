@@ -576,8 +576,8 @@ export async function UploadTeamSubmission(
   if (!json || !json.team_id || !json.error) {
     console.error('Unexpected response from server', json);
     return {
-      error: 'Unexpected response from server. See console',
-      response: 'Failed to submit team',
+      error: 'Unexpected response from server.',
+      response: json.body,
       team_id: 0,
       response_code: 500,
     };

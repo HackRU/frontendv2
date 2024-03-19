@@ -55,8 +55,8 @@ export type UserUpdate = z.infer<typeof UserUpdateSchema>;
 
 const TeamSubmitSchema = z.object({
   team_member_A: z.string().email(),
-  team_member_B: z.string().email().optional(),
-  team_member_C: z.string().email().optional(),
+  team_member_B: z.string().optional(),
+  team_member_C: z.string().optional(),
 });
 
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
@@ -86,7 +86,7 @@ export default function Dashboard() {
   const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const onTeamSubmit = async (data: TeamSubmit) => {
-    console.log('submitting team form from onTeamSubmit()');
+    alert('submitting team form from onTeamSubmit()');
     setSubmittingTeamForm(true);
 
     if (!('email' in userData)) {
@@ -101,6 +101,7 @@ export default function Dashboard() {
     }
 
     const resp = await UploadTeamSubmission(current_email, data);
+    console.log(resp.response);
     //convert resp.team_id into a number
     const team_id = resp.team_id;
 
@@ -252,9 +253,11 @@ export default function Dashboard() {
               <CardTitle>Team Creation</CardTitle>
               <CardDescription>
                 Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.
-                READ CLOSELY: Only ONE person needs to submit their team.
+                <br /><br />
+                <strong>READ CLOSELY</strong>: Only ONE person needs to submit their team.
                 The team leader (the person who fills out this form) will type in the emails of their team members.
-                NO ONE else on the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
+                <br /><br />
+                NO ONE else BUT the team leader of the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
               </CardDescription>
             </CardHeader>
             {
@@ -264,39 +267,49 @@ export default function Dashboard() {
                 </CardContent>
               )
             }
-            {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) && !submittingTeamForm &&
+            {/* {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) || (!submittingTeamForm && currentTeam !== 0) && */}
+            {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) &&
               <CardContent>
                 <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
                   <div>
                     {teamSubmissionError && <p className="text-red-500 text-sm">{teamSubmissionError}</p>}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="team_member_A">Team Lead</Label>
+                    <Label htmlFor="team_member_A">Team Member A (not the one filling this form)</Label>
                     <Input id="team_member_A" value={teamFormData?.team_member_A} {...registerTeam("team_member_A")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_A: e.target.value })} />
                     {errorsTeam.team_member_A && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_A?.message}</p>)}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="team_member_B">Team Description</Label>
+                    <Label htmlFor="team_member_B">Team Member B (not the one filling this form)</Label>
                     <Input id="team_member_B" value={teamFormData?.team_member_B} {...registerTeam("team_member_B")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_B: e.target.value })} />
                     {errorsTeam.team_member_B && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_B?.message}</p>)}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="team_member_C">Team Members</Label>
+                    <Label htmlFor="team_member_C">Team Member A (not the one filling this form)</Label>
                     <Input id="team_member_C" value={teamFormData?.team_member_C} {...registerTeam("team_member_C")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_C: e.target.value })} />
                     {errorsTeam.team_member_C && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_C?.message}</p>)}
                   </div>
                   <Button
                     onClick={
                       () => {
-                        setDisplayTeamFormFinalSubmissionWarning(false);
+                        if (Object.keys(errorsTeam).length === 0) {
+                          setDisplayTeamFormFinalSubmissionWarning(true);
+                        }
                       }
                     }
-                  >Create Team</Button>
+                    type="button"
+                    className="mt-10"
+                  >{
+                      submittingTeamForm ? "Submitting..." : "Submit Team"
+                    }</Button>
                   <PopupDialog
                     open={displayTeamFormFinalSubmissionWarning}
                     setOpen={setDisplayTeamFormFinalSubmissionWarning}
                     onYes={() => {
-                      console.log('submitting team form');
+                      handleSubmitTeam(onTeamSubmit)();
+                    }}
+                    onNo={() => {
+                      // setSubmittingTeamForm(false);
                     }}
                     title="Final Submission Warning"
                     content="ARE YOU ABSOLUTELY SURE THIS IS YOUR TEAM?! YOU CANNOT UNDO THIS ACTION. PLEASE MAKE SURE YOUR TEAM EMAILS ARE RIGHT!!"
@@ -308,7 +321,7 @@ export default function Dashboard() {
             {
               currentTeam !== 0 && !submittingTeamForm && (
                 <CardContent>
-                  <p>Your team has been created! Your team id is: {currentTeam}.</p>
+                  <p>Your team has been created! Your team id is: {currentTeam}. Please verify that is the same for your team members.</p>
                 </CardContent>
               )
             }
