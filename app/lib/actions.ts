@@ -536,7 +536,6 @@ export async function AttendEventScan(
   event: string,
 ): Promise<string> {
   const session = await auth();
-  let status = 500;
 
   if (session?.user) {
     const { email, name } = session.user;
