@@ -8,6 +8,7 @@ import { auth } from '../../auth';
 
 import { redirect } from 'next/navigation';
 import { BASE } from './definitions';
+import { TeamSubmit } from '../dashboard/page';
 
 const ENDPOINTS = {
   login: BASE + '/authorize',
@@ -39,6 +40,10 @@ const ENDPOINTS = {
    * Upload resume
    */
   resume: BASE + '/resume',
+  /**
+   * Make team
+   */
+  makeTeam: BASE + '/make-team',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -524,4 +529,73 @@ export async function UploadResume(file: FormData) {
     }
   });
   return resp;
+}
+
+export async function UploadTeamSubmission(
+  leaderEmail: string,
+  data: TeamSubmit,
+): Promise<{
+  error: string;
+  response: string;
+  team_id: number;
+  response_code: number;
+}> {
+  const { team_member_A, team_member_B, team_member_C } = data;
+
+  const member_emails = [team_member_A, team_member_B, team_member_C];
+  for (let i = 0; i < member_emails.length; i++) {
+    if (!member_emails[i]) {
+      member_emails.splice(i, 1);
+    }
+  }
+
+  const postBody = {
+    team_leader: leaderEmail,
+    team_members: member_emails,
+  };
+
+  const resp = await fetch(ENDPOINTS.makeTeam, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postBody),
+  });
+
+  const json = await resp.json();
+
+  //assuming
+  /**
+   * json response:
+   * {
+   * error: string,
+   * team_id: number,
+   * }
+   */
+
+  if (!json || !json.team_id || !json.error) {
+    console.error('Unexpected response from server', json);
+    return {
+      error: 'Unexpected response from server. See console',
+      response: 'Failed to submit team',
+      team_id: 0,
+      response_code: 500,
+    };
+  }
+
+  if (resp.status !== 200) {
+    return {
+      error: json.error,
+      response: 'Failed to submit team',
+      team_id: 0,
+      response_code: resp.status,
+    };
+  }
+
+  return {
+    error: '',
+    response: 'Successfully submitted team!',
+    team_id: json.team_id,
+    response_code: 200,
+  };
 }
