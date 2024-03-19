@@ -250,9 +250,14 @@ export default function Dashboard() {
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <CardTitle>Team Creation</CardTitle>
-              <CardDescription>Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.</CardDescription>
+              <CardDescription>
+                Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.
+                READ CLOSELY: Only ONE person needs to submit their team.
+                The team leader (the person who fills out this form) will type in the emails of their team members.
+                NO ONE else on the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
+              </CardDescription>
             </CardHeader>
-            {numOfMinsUntilTeamCreation !== 0 &&
+            {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) &&
               <CardContent>
                 <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
                   <div>
@@ -292,6 +297,13 @@ export default function Dashboard() {
 
                 </form>
               </CardContent>
+            }
+            {
+              currentTeam !== 0 && (
+                <CardContent>
+                  <p>Your team has been created! Your team id is: {currentTeam}.</p>
+                </CardContent>
+              )
             }
           </Card>
 
