@@ -257,7 +257,14 @@ export default function Dashboard() {
                 NO ONE else on the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
               </CardDescription>
             </CardHeader>
-            {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) &&
+            {
+              submittingTeamForm && (
+                <CardContent>
+                  <p>Submitting team information.</p>
+                </CardContent>
+              )
+            }
+            {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) && !submittingTeamForm &&
               <CardContent>
                 <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
                   <div>
@@ -299,7 +306,7 @@ export default function Dashboard() {
               </CardContent>
             }
             {
-              currentTeam !== 0 && (
+              currentTeam !== 0 && !submittingTeamForm && (
                 <CardContent>
                   <p>Your team has been created! Your team id is: {currentTeam}.</p>
                 </CardContent>
