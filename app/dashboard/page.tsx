@@ -172,7 +172,7 @@ export default function Dashboard() {
     );
   }
 
-  if (userData?.role['organizer']) {
+  if (!userData?.role['organizer']) {
     return (<OrganizerView />)
   }
   else if (userData?.role['director']) {
@@ -203,7 +203,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-4">
+              <div className="flex flex-col items-center justify-center space-y-4 bg-white p-4 rounded-md">
                 <QRCode value={userData?.email} size={256} />
               </div>
             </CardContent>
@@ -211,9 +211,7 @@ export default function Dashboard() {
 
           <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
-
               <CardHeader>
-
                 <div className="flex flex-row items-center justify-center">
                   <div className='flex flex-col'>
                     <CardTitle>Profile</CardTitle>

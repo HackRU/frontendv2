@@ -35,7 +35,7 @@ function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
         }
         {
           status === "PENDING" &&
-          <p className="text-orange-400">Come again later at ${timeWhenAllHackersCanComeThrough.toString()}</p>
+          <p className="text-orange-400">Come again later at {timeWhenAllHackersCanComeThrough.toString()}</p>
         }
         {
           status === "FAILED" &&
@@ -61,8 +61,10 @@ function OrganizerView() {
   const [openScanner, setOpenScanner] = useState<boolean>(false);
   const [scannerTab, setScannerTab] = useState<ScannerTab>("CHECK IN");
   const [selectedEvent, setSelectedEvent] = useState<string>("");
+  const [scanResponse, setScanResponse] = useState<string>("");
 
   const handleOnScan = async (result: string) => {
+    setStatus("AWAITING RESPONSE");
     if (scannerTab === "CHECK IN") {
       const resp = await GetUser(result);
       if (typeof resp.response === 'string') {
@@ -84,7 +86,15 @@ function OrganizerView() {
         alert("Please select an event first!");
       }
 
-      AttendEventScan(selectedEvent, result);
+      const resp = await AttendEventScan(result, selectedEvent);
+      if (resp.error !== '') {
+        setStatus("FAILED");
+        setScanResponse(resp.error);
+        return;
+      }
+
+      setScanResponse(resp.response);
+      setStatus("SUCCESSFUL");
     }
   };
 
@@ -127,6 +137,9 @@ function OrganizerView() {
                   onChange={handleEventSelectChange}
                 />
             }
+            <p className="text-center">
+              {scanResponse}
+            </p>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10"
               onClick={() => setOpenScanner(!openScanner)}

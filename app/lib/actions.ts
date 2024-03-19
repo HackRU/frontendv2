@@ -534,8 +534,13 @@ export async function UploadResume(file: FormData) {
 export async function AttendEventScan(
   scannedEmail: string,
   event: string,
-): Promise<string> {
+): Promise<{
+  error: string;
+  response: string;
+}> {
   const session = await auth();
+  let response_message = '';
+  let error_message = '';
 
   if (session?.user) {
     const { email, name } = session.user;
@@ -546,7 +551,7 @@ export async function AttendEventScan(
       token: name,
       qr: scannedEmail,
       event: event,
-      again: '',
+      again: false,
     };
 
     const resp = await fetch(ENDPOINTS.attend, {
@@ -557,15 +562,27 @@ export async function AttendEventScan(
       body: JSON.stringify(content),
     });
 
+    const json = await resp.json();
+
     const status = resp.status;
     if (status === 200) {
-      return `${scannedEmail} successfully logged in to {event}!`;
+      if (!json.body || !('email' in json.body) || 'new_count' in json.body) {
+        error_message = `An error occured when attempting to attend event. Invalid response.`;
+      } else {
+        response_message = `${json.body['email']} successfully logged in to ${event}!
+         Count: ${json.body['new_count']}`;
+      }
     } else if (status === 402) {
-      return `User ${scannedEmail} is already checked in to {event}!`;
+      error_message = `User ${scannedEmail} is already checked in to ${event}!`;
     } else if (status === 404) {
-      return `USER not FOUND. Please try again.`;
+      error_message = `USER not FOUND. Please try again.`;
     }
+  } else {
+    error_message = 'Invalid user session. Please login.';
   }
 
-  return 'Invalid user session. Please login.';
+  return {
+    error: error_message,
+    response: response_message,
+  };
 }
