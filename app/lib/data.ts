@@ -52,35 +52,29 @@ export async function getSponsors(): Promise<string[]> {
   return sponsors['photos'].map((url: any) => url);
 }
 
-
+interface LeaderboardEntry {
+  place: string;
+  points: number;
+  house: string;
+  logo: string;
+}
 export async function getLeaderboard(){
-  try{
-    const res = await fetch(BASE + "/leaderboards");
+  
+    const res = await fetch(BASE+"/get-house_points");
     const leaderboardData = await res.json();
-    if(!Array.isArray(leaderboardData)){
-      throw new Error;
+    const housesData = Object.entries(leaderboardData['houses']);
+    if(!leaderboardData || !leaderboardData['houses']){
+      throw new Error("Invalid data");
     }
-    const  LeaderBoard = leaderboardData.map((Leaderboard:{place: string, number_of_points: number, house_name: string, logo: string})=>({
-      place: Leaderboard.place,
-      points: Leaderboard.number_of_points,
-      house: Leaderboard.house_name,
-      logo: Leaderboard.logo
+    const LeaderBoard: LeaderboardEntry[] = housesData.map(([house, points], index:number) => ({
+      place: "",
+      points: points as number, 
+      house: house,
+      logo: "" 
     }));
+    
+
     return LeaderBoard;
-  }catch(err){
-    console.log("proceeding with mock data");
-    const res = await fetch('http://localhost:3000/Leaderboard');
-    const leaderboardData = await res.json();
-    console.log(leaderboardData);
-    const  LeaderBoard = leaderboardData.map((Leaderboard:{place: string, number_of_points: number, house_name: string, logo: string})=>({
-      place: Leaderboard.place,
-      points: Leaderboard.number_of_points,
-      house: Leaderboard.house_name,
-      logo: Leaderboard.logo
-    }));
-    console.log(LeaderBoard)
-    return LeaderBoard;
-  }
 }
 export async function getSelf(): Promise<{
   error: string;

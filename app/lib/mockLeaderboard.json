@@ -1,32 +1,4 @@
-{"Leaderboard": [
-        {
-
-            "place": "1.",
-            "number_of_points": 12,
-            "house_name": "HOUSE_A",
-            "logo_team": "app"
-        },
-        {
-
-           "place": "2.",
-            "number_of_points": 10,
-            "house_name": "HOUSE_C",
-            "logo_team": "app"
-            
-        },
-        {
-
-            "place": "3.",
-             "number_of_points": 8,
-             "house_name": "HOUSE_C",
-             "logo_team": "app"
-         }, 
-         {
-
-            "place": "4.",
-             "number_of_points": 4,
-             "house_name": "HOUSE_C",
-             "logo_team": "app"
-         }
-    ]
+{ "houses":{
+     "Roar.js": 20, "Bitsprout": 35, "Pseudoclaw": 50, "Python": 10 
+}
 }
