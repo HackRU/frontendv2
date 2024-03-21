@@ -123,7 +123,7 @@ const Leaderboard = () => {
                   className="lx:text-5xl text-xs sm:text-lg md:text-2xl lg:text-4xl"
                 >
                   <td className="text-center font-extrabold">
-                    {Leaderboard.place}
+                    {index+1}
                   </td>
                   <td className="text-center font-extrabold">
                     {Leaderboard.points}
