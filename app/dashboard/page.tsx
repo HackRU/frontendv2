@@ -172,7 +172,7 @@ export default function Dashboard() {
     );
   }
 
-  if (!userData?.role['organizer']) {
+  if (userData?.role['organizer']) {
     return (<OrganizerView />)
   }
   else if (userData?.role['director']) {
