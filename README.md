@@ -10,7 +10,7 @@ cd frontendv2
 git branch dev
 pnpm i
 ```
-In the project folder, you will find a `.env.example` file. Rename this file to `.env` (this must never be pushed to GitHub).
+In the project folder, you will find a `` file. Rename this file to `.env` (this must never be pushed to GitHub).
 
 Contact me (Kevin) and I will provide you with the secret API keys to connect to the dummy database.
 

@@ -1,8 +1,10 @@
 'use server';
+import { StringDecoder } from 'string_decoder';
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
 import { BASE } from './definitions';
+
 export async function getSchedule() {
   const schedule: Schedule = {
     Saturday: {
@@ -50,6 +52,30 @@ export async function getSponsors(): Promise<string[]> {
   return sponsors['photos'].map((url: any) => url);
 }
 
+interface LeaderboardEntry {
+  place: string;
+  points: number;
+  house: string;
+  logo: string;
+}
+export async function getLeaderboard(){
+  
+    const res = await fetch(BASE+"/get-house_points");
+    const leaderboardData = await res.json();
+    const housesData = Object.entries(leaderboardData['houses']);
+    if(!leaderboardData || !leaderboardData['houses']){
+      throw new Error("Invalid data");
+    }
+    const LeaderBoard: LeaderboardEntry[] = housesData.map(([house, points], index:number) => ({
+      place: "",
+      points: points as number, 
+      house: house,
+      logo: "" 
+    }));
+    
+
+    return LeaderBoard;
+}
 export async function getSelf(): Promise<{
   error: string;
   response: Record<string, any>;
