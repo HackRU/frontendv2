@@ -12,7 +12,7 @@ export async function getSchedule() {
         { time: '11:00 AM', event: 'Opening Ceremony' },
         { time: '12:00 PM', event: 'Team Building Event' },
         { time: '12:00 PM', event: 'Hacking Starts' },
-        { time: '12:30 PM', event: 'Lunch' },
+        { time: '1:00 PM', event: 'Lunch' },
         { time: '1:30 PM', event: 'Workshop 1' },
         { time: '2:00 PM', event: 'Workshop 2' },
         { time: '2:30 PM', event: 'Workshop 3' },
