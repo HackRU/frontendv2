@@ -92,7 +92,7 @@ const Leaderboard = () => {
   return (
     <main className="flex h-[100vh] w-[100vw] flex-col items-center justify-center overflow-hidden md:flex">
       <div className="z-10 flex justify-center text-orange-300">
-        <table className="w-[90vw] border-separate rounded-3xl bg-black bg-opacity-20 font-mono [border-spacing:1.00rem]">
+        <table className="w-[90vw] border-separate rounded-3xl bg-black bg-opacity-[50%] font-mono [border-spacing:1.00rem]">
           <thead className="rounded-3xl ring-1 ring-orange-300 sm:ring-4">
             <tr className="text-xs sm:text-lg md:text-xl lg:text-2xl ">
               <th className="w-[20%] py-4 font-extrabold">Place</th>
@@ -122,9 +122,7 @@ const Leaderboard = () => {
                   key={index}
                   className="lx:text-5xl text-xs sm:text-lg md:text-2xl lg:text-4xl"
                 >
-                  <td className="text-center font-extrabold">
-                    {index+1}
-                  </td>
+                  <td className="text-center font-extrabold">{index + 1}</td>
                   <td className="text-center font-extrabold">
                     {Leaderboard.points}
                   </td>
