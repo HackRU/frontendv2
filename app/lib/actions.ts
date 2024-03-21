@@ -39,6 +39,11 @@ const ENDPOINTS = {
    * Upload resume
    */
   resume: BASE + '/resume',
+
+  /**
+   * Attend an event
+   */
+  attend: BASE + '/attend-event',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -524,4 +529,60 @@ export async function UploadResume(file: FormData) {
     }
   });
   return resp;
+}
+
+export async function AttendEventScan(
+  scannedEmail: string,
+  event: string,
+): Promise<{
+  error: string;
+  response: string;
+}> {
+  const session = await auth();
+  let response_message = '';
+  let error_message = '';
+
+  if (session?.user) {
+    const { email, name } = session.user;
+    /* For some reason, name IS THE TOKEN.... hmmm.?? */
+
+    const content = {
+      auth_email: email,
+      token: name,
+      qr: scannedEmail,
+      event: event,
+      again: false,
+    };
+
+    const resp = await fetch(ENDPOINTS.attend, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(content),
+    });
+
+    const json = await resp.json();
+
+    const status = resp.status;
+    if (status === 200) {
+      if (!json.body || !('email' in json.body) || 'new_count' in json.body) {
+        error_message = `An error occured when attempting to attend event. Invalid response.`;
+      } else {
+        response_message = `${json.body['email']} successfully logged in to ${event}!
+         Count: ${json.body['new_count']}`;
+      }
+    } else if (status === 402) {
+      error_message = `User ${scannedEmail} is already checked in to ${event}!`;
+    } else if (status === 404) {
+      error_message = `USER not FOUND. Please try again.`;
+    }
+  } else {
+    error_message = 'Invalid user session. Please login.';
+  }
+
+  return {
+    error: error_message,
+    response: response_message,
+  };
 }
