@@ -625,6 +625,8 @@ export async function UploadTeamSubmission(
     response: 'Successfully submitted team!',
     team_id: json.body?.team_id,
     response_code: 200,
+  };
+}
 
 export async function AttendEventScan(
   scannedEmail: string,

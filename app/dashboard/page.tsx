@@ -75,8 +75,6 @@ export default function Dashboard() {
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
   const [currentTeam, setCurrentTeam] = useState<number>(0);
 
-  const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
-
   const { register, handleSubmit, reset, trigger, formState: { errors }, } = useForm<UserUpdate>({ resolver: zodResolver(UserUpdateSchema), defaultValues: userData, });
   const {
     register: registerTeam,
