@@ -203,8 +203,8 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-4 bg-white p-4 rounded-md">
-                <QRCode value={userData?.email} size={256} />
+              <div className="flex flex-col items-center justify-center space-y-4 bg-white p-12 rounded-md">
+                <QRCode value={userData?.email} size={512} />
               </div>
             </CardContent>
           </Card>

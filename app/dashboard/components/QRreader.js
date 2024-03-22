@@ -28,6 +28,9 @@ function QrScannerWrapper(props) {
   return (
     <div style={styles.container}>
       <Scanner
+        options={{
+          delayBetweenScanSuccess: args.scanDelay,
+        }}
         constraints={defaultConstraints}
         onResult={(result) => {
           onScan(result);

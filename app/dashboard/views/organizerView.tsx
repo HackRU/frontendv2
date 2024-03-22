@@ -78,6 +78,7 @@ function OrganizerView() {
       const now = new Date();
       if (userData.registration_status === "confirmed" || now > timeWhenAllHackersCanComeThrough) {
         setStatus("SUCCESSFUL");
+        setScanResponse(`Welcome ${userData.first_name} ${userData.last_name}!`);
       } else {
         setStatus("PENDING");
       }
@@ -113,14 +114,20 @@ function OrganizerView() {
               <button
                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${scannerTab === "CHECK IN" ? "bg-blue-700" : ""
                   }`}
-                onClick={() => setScannerTab("CHECK IN")}
+                onClick={() => {
+                  setScannerTab("CHECK IN");
+                  setSelectedEvent("");
+                }}
               >
                 Check In
               </button>
               <button
                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${scannerTab === "EVENT" ? "bg-blue-700" : ""
                   }`}
-                onClick={() => setScannerTab("EVENT")}
+                onClick={() => {
+                  setScannerTab("EVENT");
+                  setSelectedEvent("");
+                }}
               >
                 Event
               </button>

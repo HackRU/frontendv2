@@ -531,6 +531,16 @@ export async function UploadResume(file: FormData) {
   return resp;
 }
 
+interface AttendEventResponse {
+  statusCode: number;
+  body:
+    | string
+    | {
+        email: string;
+        new_count: number;
+      };
+}
+
 export async function AttendEventScan(
   scannedEmail: string,
   event: string,
@@ -546,7 +556,7 @@ export async function AttendEventScan(
     const { email, name } = session.user;
     /* For some reason, name IS THE TOKEN.... hmmm.?? */
 
-    const content = {
+    const body = {
       auth_email: email,
       token: name,
       qr: scannedEmail,
@@ -559,23 +569,25 @@ export async function AttendEventScan(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(content),
+      body: JSON.stringify(body),
     });
 
-    const json = await resp.json();
+    if (!resp.ok) {
+      error_message = `An error occured when attempting to attend event. Invalid response.`;
+    }
 
-    const status = resp.status;
-    if (status === 200) {
-      if (!json.body || !('email' in json.body) || 'new_count' in json.body) {
-        error_message = `An error occured when attempting to attend event. Invalid response.`;
-      } else {
-        response_message = `${json.body['email']} successfully logged in to ${event}!
-         Count: ${json.body['new_count']}`;
-      }
+    const json = await resp.json();
+    const { statusCode: status, body: jsonBody } = json as AttendEventResponse;
+    if (status === 404) {
+      error_message = `User ${scannedEmail} not found. Please try again.`;
     } else if (status === 402) {
       error_message = `User ${scannedEmail} is already checked in to ${event}!`;
-    } else if (status === 404) {
-      error_message = `USER not FOUND. Please try again.`;
+    }
+
+    if (status === 200 && typeof jsonBody !== 'string') {
+      response_message = `${
+        jsonBody!.email
+      } successfully logged in to ${event}!`;
     }
   } else {
     error_message = 'Invalid user session. Please login.';
