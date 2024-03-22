@@ -19,6 +19,14 @@ const events = [
   "Event5"
 ];
 
+const eventPoints = {
+  "Event1": 0,
+  "Event2": 2,
+  "Event3": 3,
+  "Event4": 4,
+  "Event5": 5
+};
+
 function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
   const { status, scanType } = props;
 
@@ -62,6 +70,7 @@ function OrganizerView() {
   const [scannerTab, setScannerTab] = useState<ScannerTab>("CHECK IN");
   const [selectedEvent, setSelectedEvent] = useState<string>("");
   const [scanResponse, setScanResponse] = useState<string>("");
+  const [showAgainDialog, setShowAgainDialog] = useState<boolean>(true);
 
   const handleOnScan = async (result: string) => {
     setStatus("AWAITING RESPONSE");
@@ -87,7 +96,19 @@ function OrganizerView() {
         alert("Please select an event first!");
       }
 
-      const resp = await AttendEventScan(result, selectedEvent);
+      //check if selectedEvent is in eventPoints object
+      if (!Object.keys(eventPoints).includes(selectedEvent)) {
+        setStatus("FAILED");
+        setScanResponse("Event not found in eventPoints object.");
+        return;
+      }
+
+      const resp = await AttendEventScan(
+        result,
+        selectedEvent,
+        eventPoints[selectedEvent as keyof typeof eventPoints]
+      );
+
       if (resp.error !== '') {
         setStatus("FAILED");
         setScanResponse(resp.error);

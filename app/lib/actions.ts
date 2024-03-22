@@ -544,13 +544,17 @@ interface AttendEventResponse {
 export async function AttendEventScan(
   scannedEmail: string,
   event: string,
+  points: number,
+  forceAgain: boolean = false,
 ): Promise<{
   error: string;
   response: string;
+  status: number;
 }> {
   const session = await auth();
   let response_message = '';
   let error_message = '';
+  let status = 0;
 
   if (session?.user) {
     const { email, name } = session.user;
@@ -561,7 +565,8 @@ export async function AttendEventScan(
       token: name,
       qr: scannedEmail,
       event: event,
-      again: false,
+      again: forceAgain,
+      points: points,
     };
 
     const resp = await fetch(ENDPOINTS.attend, {
@@ -577,14 +582,16 @@ export async function AttendEventScan(
     }
 
     const json = await resp.json();
-    const { statusCode: status, body: jsonBody } = json as AttendEventResponse;
-    if (status === 404) {
+    const { statusCode, body: jsonBody } = json as AttendEventResponse;
+    status = statusCode;
+
+    if (statusCode === 404) {
       error_message = `User ${scannedEmail} not found. Please try again.`;
-    } else if (status === 402) {
+    } else if (statusCode === 402) {
       error_message = `User ${scannedEmail} is already checked in to ${event}!`;
     }
 
-    if (status === 200 && typeof jsonBody !== 'string') {
+    if (statusCode === 200 && typeof jsonBody !== 'string') {
       response_message = `${
         jsonBody!.email
       } successfully logged in to ${event}!`;
@@ -596,5 +603,6 @@ export async function AttendEventScan(
   return {
     error: error_message,
     response: response_message,
+    status: status,
   };
 }
