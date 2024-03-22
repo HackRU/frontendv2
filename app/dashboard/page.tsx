@@ -231,7 +231,7 @@ export default function Dashboard() {
     );
   }
 
-  if (userData?.role['organizer']) {
+  if (!userData?.role['organizer']) {
     return (<OrganizerView />)
   }
   else if (userData?.role['director']) {
@@ -324,9 +324,7 @@ export default function Dashboard() {
                         setTeamSubmissionError("");
                         handleSubmitTeam(onTeamSubmit)();
                       }}
-                      onNo={() => {
-                        // setSubmittingTeamForm(false);
-                      }}
+                      onNo={() => { }}
                       title="Final Submission Warning"
                       content="ARE YOU ABSOLUTELY SURE THIS IS YOUR TEAM?! YOU CANNOT UNDO THIS ACTION. PLEASE MAKE SURE YOUR TEAM EMAILS ARE RIGHT!!"
                     />

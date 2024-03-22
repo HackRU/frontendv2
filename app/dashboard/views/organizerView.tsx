@@ -6,6 +6,7 @@ import QrReaderWrapper from "../components/QRreader";
 import CheckInScan from './checkInScan';
 import EventScan from './eventScan';
 import { AttendEventScan, GetUser } from '@/app/lib/actions';
+import PopupDialog from '../components/dialog';
 
 type STATUS = "SUCCESSFUL" | "FAILED" | "PENDING" | "AWAITING SCAN" | "AWAITING RESPONSE";
 type ScannerTab = "CHECK IN" | "EVENT";
@@ -19,8 +20,16 @@ const events = [
   "Event5"
 ];
 
-function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
-  const { status, scanType } = props;
+const eventPoints = {
+  "Event1": 0,
+  "Event2": 20,
+  "Event3": 30,
+  "Event4": 40,
+  "Event5": 50
+};
+
+function ScanStatus(props: { status: STATUS, scanType: ScannerTab, fullName: string }) {
+  const { status, scanType, fullName } = props;
 
   return (
     <div className="w-full text-center">
@@ -28,6 +37,11 @@ function ScanStatus(props: { status: STATUS, scanType: ScannerTab }) {
         scanType === "CHECK IN" ? "check in" : "scan for an event"
       }</p>
       <p className="">Status: </p>
+      <p>
+        {fullName &&
+          <p className="text-green-500">Scanned: {fullName}</p>
+        }
+      </p>
       <p className="">
         {
           status === "SUCCESSFUL" &&
@@ -62,9 +76,17 @@ function OrganizerView() {
   const [scannerTab, setScannerTab] = useState<ScannerTab>("CHECK IN");
   const [selectedEvent, setSelectedEvent] = useState<string>("");
   const [scanResponse, setScanResponse] = useState<string>("");
+  const [showForceAttendance, setShowForceAttendance] = useState<boolean>(false);
+  const [latestScannedEmail, setLatestScannedEmail] = useState<string>("");
+  const [scannedName, setScannedName] = useState<string>("");
 
-  const handleOnScan = async (result: string) => {
+  const handleOnScan = async (
+    result: string,
+    forceAttendance: boolean = false
+  ) => {
+    setScannedName("");
     setStatus("AWAITING RESPONSE");
+    setLatestScannedEmail(result);
     if (scannerTab === "CHECK IN") {
       const resp = await GetUser(result);
       if (typeof resp.response === 'string') {
@@ -76,7 +98,10 @@ function OrganizerView() {
 
       const userData = resp.response as unknown as Record<any, any>;
       const now = new Date();
-      if (userData.registration_status === "confirmed" || now > timeWhenAllHackersCanComeThrough) {
+      setScannedName(userData.first_name + " " + userData.last_name);
+      if (userData.registration_status === "confirmed"
+        || userData.registration_status == "checked_in"
+        || now > timeWhenAllHackersCanComeThrough) {
         setStatus("SUCCESSFUL");
       } else {
         setStatus("PENDING");
@@ -86,7 +111,23 @@ function OrganizerView() {
         alert("Please select an event first!");
       }
 
-      const resp = await AttendEventScan(result, selectedEvent);
+      const resp = await AttendEventScan(
+        result,
+        selectedEvent,
+        eventPoints[selectedEvent as keyof typeof eventPoints],
+        forceAttendance,
+      );
+
+      /**
+       * Not sure why error code is 402?
+       * I just know that it's the error code for multiple attendance.
+       */
+      const multipleAttendanceStatus = 402;
+      if (resp.status == multipleAttendanceStatus) {
+        setShowForceAttendance(true);
+      }
+
+
       if (resp.error !== '') {
         setStatus("FAILED");
         setScanResponse(resp.error);
@@ -126,8 +167,24 @@ function OrganizerView() {
               </button>
             </div>
           </div>
+          {
+            showForceAttendance &&
+            <PopupDialog
+              onYes={() => {
+                handleOnScan(latestScannedEmail, true);
+              }}
+              onNo={() => { }}
+              setOpen={setShowForceAttendance}
+              open={showForceAttendance}
+              content={
+                `This hacker has already attended this event.
+                Are you sure you want to force another attendance count?`
+              }
+              title={"Multiple attendance detected for this event."}
+            />
+          }
           <div className="flex flex-col items-center my-10">
-            <ScanStatus status={status} scanType={scannerTab} />
+            <ScanStatus status={status} scanType={scannerTab} fullName={scannedName} />
             {
               scannerTab === "CHECK IN" ?
                 <CheckInScan status={status} /> :
