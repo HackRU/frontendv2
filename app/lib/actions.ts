@@ -43,7 +43,7 @@ const ENDPOINTS = {
   /**
    * Make team
    */
-  makeTeam: BASE + '/make-team',
+  makeTeam: BASE + '/make-teams',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -531,21 +531,32 @@ export async function UploadResume(file: FormData) {
   return resp;
 }
 
+interface TeamSubmissionResponse {
+  status: number;
+  error: string;
+  email?: string;
+  body?: {
+    team_id: number;
+  };
+}
+
 export async function UploadTeamSubmission(
   leaderEmail: string,
   data: TeamSubmit,
 ): Promise<{
   error: string;
   response: string;
-  team_id: number;
+  team_id: number | undefined;
   response_code: number;
 }> {
   const { team_member_A, team_member_B, team_member_C } = data;
-
   const member_emails = [team_member_A, team_member_B, team_member_C];
+
   for (let i = 0; i < member_emails.length; i++) {
-    if (!member_emails[i]) {
+    member_emails[i] = member_emails[i]?.trim();
+    if (!member_emails[i] || member_emails[i]?.length === 0) {
       member_emails.splice(i, 1);
+      i--;
     }
   }
 
@@ -562,40 +573,49 @@ export async function UploadTeamSubmission(
     body: JSON.stringify(postBody),
   });
 
-  const json = await resp.json();
-
-  //assuming
-  /**
-   * json response:
-   * {
-   * error: string,
-   * team_id: number,
-   * }
-   */
-
-  if (!json || !json.team_id || !json.error) {
-    console.error('Unexpected response from server', json);
-    return {
-      error: 'Unexpected response from server.',
-      response: json.body,
-      team_id: 0,
-      response_code: 500,
-    };
-  }
-
   if (resp.status !== 200) {
     return {
-      error: json.error,
+      error: 'Non 200 response',
       response: 'Failed to submit team',
       team_id: 0,
       response_code: resp.status,
     };
   }
 
+  const json: TeamSubmissionResponse = await resp.json();
+  if (!json) {
+    console.error('Unexpected response from server: ', json);
+    return {
+      error: 'Unexpected response from server.',
+      response: 'An error ocurred.',
+      team_id: 0,
+      response_code: 500,
+    };
+  }
+
+  if (json.error) {
+    if (json.error.includes('exist')) {
+      return {
+        error: json.error + ' : ' + json.email,
+        response:
+          'Failed to submit team because email does not exist: ' + json.email,
+        team_id: 0,
+        response_code: 400,
+      };
+    }
+
+    return {
+      error: json.error,
+      response: 'Failed to submit team',
+      team_id: 0,
+      response_code: 400,
+    };
+  }
+
   return {
     error: '',
     response: 'Successfully submitted team!',
-    team_id: json.team_id,
+    team_id: json.body?.team_id,
     response_code: 200,
   };
 }

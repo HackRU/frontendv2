@@ -86,7 +86,6 @@ export default function Dashboard() {
   const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const onTeamSubmit = async (data: TeamSubmit) => {
-    alert('submitting team form from onTeamSubmit()');
     setSubmittingTeamForm(true);
 
     if (!('email' in userData)) {
@@ -101,13 +100,11 @@ export default function Dashboard() {
     }
 
     const resp = await UploadTeamSubmission(current_email, data);
-    console.log(resp.response);
-    //convert resp.team_id into a number
+    console.log(resp);
     const team_id = resp.team_id;
 
-    if (resp.error.length > 0) {
+    if (resp.error.length > 0 || team_id === undefined || team_id === 0) {
       const error = resp.error;
-      alert("There was an error submitting your team. Please try again.");
       setTeamSubmissionError(error);
     } else {
       setCurrentTeam(team_id);
@@ -268,7 +265,7 @@ export default function Dashboard() {
               )
             }
             {/* {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) || (!submittingTeamForm && currentTeam !== 0) && */}
-            {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) &&
+            {(numOfMinsUntilTeamCreation !== 0 || (currentTeam === 0 && numOfMinsUntilTeamCreation === 0)) &&
               <CardContent>
                 <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
                   <div>
