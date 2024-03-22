@@ -565,8 +565,11 @@ export async function UploadTeamSubmission(
     team_members: member_emails,
   };
 
+  console.log(postBody);
+
   const resp = await fetch(ENDPOINTS.makeTeam, {
     method: 'POST',
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -596,7 +599,7 @@ export async function UploadTeamSubmission(
   if (json.error) {
     if (json.error.includes('exist')) {
       return {
-        error: json.error + ' : ' + json.email,
+        error: json.error + ': ' + json.email,
         response:
           'Failed to submit team because email does not exist: ' + json.email,
         team_id: 0,

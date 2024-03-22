@@ -199,9 +199,15 @@ export default function Dashboard() {
     }
 
     fetchUser();
-    reset()
+    reset();
 
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.team_id) {
+      setCurrentTeam(userData.team_id);
+    }
+  }, [userData]);
 
   if (!userData) {
     return (
@@ -245,84 +251,103 @@ export default function Dashboard() {
             onWaiverSubmit={onWaiverSubmit}
           />
 
-          <Card className="w-full max-w-2xl">
-            <CardHeader>
-              <CardTitle>Team Creation</CardTitle>
-              <CardDescription>
-                Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.
-                <br /><br />
-                <strong>READ CLOSELY</strong>: Only ONE person needs to submit their team.
-                The team leader (the person who fills out this form) will type in the emails of their team members.
-                <br /><br />
-                NO ONE else BUT the team leader of the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
-              </CardDescription>
-            </CardHeader>
-            {
-              submittingTeamForm && (
+          {userData?.registration_status === "checked_in" &&
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>House Information</CardTitle>
+                <CardDescription>
+                  Your house is {userData?.house}!
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          }
+
+          {userData?.registration_status === "checked_in" &&
+            (<Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>Team Creation</CardTitle>
+                <CardDescription>
+                  Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.
+                  <br /><br />
+                  <strong>READ CLOSELY</strong>: Only ONE person needs to submit their team.
+                  The team leader (the person who fills out this form) will type in the emails of their team members.
+                  <br /><br />
+                  NO ONE else BUT the team leader of the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
+                </CardDescription>
+              </CardHeader>
+              {
+                submittingTeamForm && (
+                  <CardContent>
+                    <p>Submitting team information.</p>
+                  </CardContent>
+                )
+              }
+              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked_in" &&
                 <CardContent>
-                  <p>Submitting team information.</p>
-                </CardContent>
-              )
-            }
-            {/* {(numOfMinsUntilTeamCreation !== 0 || currentTeam === 0) || (!submittingTeamForm && currentTeam !== 0) && */}
-            {(numOfMinsUntilTeamCreation !== 0 || (currentTeam === 0 && numOfMinsUntilTeamCreation === 0)) &&
-              <CardContent>
-                <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
-                  <div>
-                    {teamSubmissionError && <p className="text-red-500 text-sm">{teamSubmissionError}</p>}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="team_member_A">Team Member A (not the one filling this form)</Label>
-                    <Input id="team_member_A" value={teamFormData?.team_member_A} {...registerTeam("team_member_A")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_A: e.target.value })} />
-                    {errorsTeam.team_member_A && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_A?.message}</p>)}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="team_member_B">Team Member B (not the one filling this form)</Label>
-                    <Input id="team_member_B" value={teamFormData?.team_member_B} {...registerTeam("team_member_B")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_B: e.target.value })} />
-                    {errorsTeam.team_member_B && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_B?.message}</p>)}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="team_member_C">Team Member A (not the one filling this form)</Label>
-                    <Input id="team_member_C" value={teamFormData?.team_member_C} {...registerTeam("team_member_C")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_C: e.target.value })} />
-                    {errorsTeam.team_member_C && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_C?.message}</p>)}
-                  </div>
-                  <Button
-                    onClick={
-                      () => {
-                        if (Object.keys(errorsTeam).length === 0) {
-                          setDisplayTeamFormFinalSubmissionWarning(true);
+                  <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
+                    <div>
+                      {teamSubmissionError && <p className="text-red-500 text-sm">{teamSubmissionError}</p>}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="team_member_A">Team Member A (not the one filling this form) * Must be filled. </Label>
+                      <Input id="team_member_A" value={teamFormData?.team_member_A} {...registerTeam("team_member_A")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_A: e.target.value })} />
+                      {errorsTeam.team_member_A && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_A?.message}</p>)}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="team_member_B">Team Member B (not the one filling this form)</Label>
+                      <Input id="team_member_B" value={teamFormData?.team_member_B} {...registerTeam("team_member_B")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_B: e.target.value })} />
+                      {errorsTeam.team_member_B && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_B?.message}</p>)}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="team_member_C">Team Member C (not the one filling this form)</Label>
+                      <Input id="team_member_C" value={teamFormData?.team_member_C} {...registerTeam("team_member_C")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_C: e.target.value })} />
+                      {errorsTeam.team_member_C && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_C?.message}</p>)}
+                    </div>
+                    <Button
+                      onClick={
+                        () => {
+                          if (Object.keys(errorsTeam).length === 0) {
+                            setDisplayTeamFormFinalSubmissionWarning(true);
+                          }
                         }
                       }
-                    }
-                    type="button"
-                    className="mt-10"
-                  >{
-                      submittingTeamForm ? "Submitting..." : "Submit Team"
-                    }</Button>
-                  <PopupDialog
-                    open={displayTeamFormFinalSubmissionWarning}
-                    setOpen={setDisplayTeamFormFinalSubmissionWarning}
-                    onYes={() => {
-                      handleSubmitTeam(onTeamSubmit)();
-                    }}
-                    onNo={() => {
-                      // setSubmittingTeamForm(false);
-                    }}
-                    title="Final Submission Warning"
-                    content="ARE YOU ABSOLUTELY SURE THIS IS YOUR TEAM?! YOU CANNOT UNDO THIS ACTION. PLEASE MAKE SURE YOUR TEAM EMAILS ARE RIGHT!!"
-                  />
+                      type="button"
+                      className="mt-10"
+                    >{
+                        submittingTeamForm ? "Submitting..." : "Submit Team"
+                      }</Button>
+                    <PopupDialog
+                      open={displayTeamFormFinalSubmissionWarning}
+                      setOpen={setDisplayTeamFormFinalSubmissionWarning}
+                      onYes={() => {
+                        setTeamSubmissionError("");
+                        handleSubmitTeam(onTeamSubmit)();
+                      }}
+                      onNo={() => {
+                        // setSubmittingTeamForm(false);
+                      }}
+                      title="Final Submission Warning"
+                      content="ARE YOU ABSOLUTELY SURE THIS IS YOUR TEAM?! YOU CANNOT UNDO THIS ACTION. PLEASE MAKE SURE YOUR TEAM EMAILS ARE RIGHT!!"
+                    />
 
-                </form>
-              </CardContent>
-            }
-            {
-              currentTeam !== 0 && !submittingTeamForm && (
-                <CardContent>
-                  <p>Your team has been created! Your team id is: {currentTeam}. Please verify that is the same for your team members.</p>
+                  </form>
                 </CardContent>
-              )
-            }
-          </Card>
+              }
+              {
+                currentTeam !== 0 && !submittingTeamForm && (
+                  <CardContent>
+                    <p>Your team has been created!
+                      <br />
+                      <strong>Your team id is</strong>: {currentTeam}.
+                      <br />
+                      <br />
+                      Please have your team members refresh their dashboards and verify that
+                      you all have the same team ids.</p>
+                  </CardContent>
+                )
+              }
+            </Card>)
+          }
 
           <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -515,7 +540,7 @@ export default function Dashboard() {
           </Card>
 
         </div>
-      </main>
+      </main >
     );
   }
 
