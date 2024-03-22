@@ -577,6 +577,7 @@ export async function AttendEventScan(
 
     const resp = await fetch(ENDPOINTS.attend, {
       method: 'POST',
+      cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -585,18 +586,26 @@ export async function AttendEventScan(
 
     if (!resp.ok) {
       error_message = `An error occured when attempting to attend event. Invalid response.`;
+      return {
+        error: error_message,
+        response: '',
+        status: 500,
+      };
     }
 
     const json = await resp.json();
-    const { statusCode: status, body: jsonBody } = json as AttendEventResponse;
-    response_status = status;
-    if (status === 404) {
+    const { statusCode, body: jsonBody } = json as AttendEventResponse;
+
+    response_status = statusCode;
+    if (statusCode === 404) {
       error_message = `User ${scannedEmail} not found. Please try again.`;
-    } else if (status === 402) {
+    } else if (statusCode === 402) {
       error_message = `User ${scannedEmail} is already checked in to ${event}!`;
     }
 
-    if (status === 200 && typeof jsonBody !== 'string') {
+    console.log('statusCode: ', statusCode, 'jsonBody: ', jsonBody);
+
+    if (statusCode === 200 && typeof jsonBody !== 'string') {
       response_message = `${
         jsonBody!.email
       } successfully logged in to ${event}!`;
@@ -605,10 +614,24 @@ export async function AttendEventScan(
     error_message = 'Invalid user session. Please login.';
   }
 
+  const field = `day_of.${event}`;
+  const mongoQuery: { $inc: { [key: string]: number } } = {
+    $inc: {},
+  };
+
+  mongoQuery['$inc'][field] = 1;
+
+  const resp = await SetUser({ $inc: { field: 1 } }, scannedEmail);
+
+  if (resp.error !== '') {
+    error_message = resp.error;
+    response_status = 500;
+  }
+
   return {
+    status: response_status,
     error: error_message,
     response: response_message,
-    status: response_status,
   };
 }
 
@@ -645,8 +668,6 @@ export async function UploadTeamSubmission(
     team_leader: leaderEmail,
     team_members: member_emails,
   };
-
-  console.log(postBody);
 
   const resp = await fetch(ENDPOINTS.makeTeam, {
     method: 'POST',

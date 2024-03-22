@@ -69,7 +69,6 @@ export default function Dashboard() {
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
   const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
-  const [showQR, setShowQR] = useState<boolean>(false);
 
   const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");

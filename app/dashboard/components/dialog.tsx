@@ -66,7 +66,7 @@ export default function PopupDialog(props: {
                       setOpen(false);
                     }}
                   >
-                    Yep! Form my team!
+                    Yep!
                   </button>
                   <button
                     type="button"

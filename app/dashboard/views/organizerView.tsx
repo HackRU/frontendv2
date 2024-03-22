@@ -5,8 +5,9 @@ import './organizerView.css';
 import QrReaderWrapper from "../components/QRreader";
 import CheckInScan from './checkInScan';
 import EventScan from './eventScan';
-import { AttendEventScan, GetUser } from '@/app/lib/actions';
+import { AttendEventScan, GetUser, SetUser } from '@/app/lib/actions';
 import PopupDialog from '../components/dialog';
+import { set } from 'zod';
 
 type STATUS = "SUCCESSFUL" | "FAILED" | "PENDING" | "AWAITING SCAN" | "AWAITING RESPONSE";
 type ScannerTab = "CHECK IN" | "EVENT";
@@ -80,6 +81,13 @@ function OrganizerView() {
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>("");
   const [scannedName, setScannedName] = useState<string>("");
 
+  const resetScanLog = () => {
+    setScannedName("");
+    setLatestScannedEmail("");
+    setScanResponse("");;
+    setStatus("AWAITING SCAN");
+  }
+
   const handleOnScan = async (
     result: string,
     forceAttendance: boolean = false
@@ -87,22 +95,36 @@ function OrganizerView() {
     setScannedName("");
     setStatus("AWAITING RESPONSE");
     setLatestScannedEmail(result);
-    if (scannerTab === "CHECK IN") {
-      const resp = await GetUser(result);
-      if (typeof resp.response === 'string') {
-        if (resp.response.includes('error')) {
-          setStatus("FAILED");
-          return;
-        }
-      }
 
-      const userData = resp.response as unknown as Record<any, any>;
-      const now = new Date();
-      setScannedName(userData.first_name + " " + userData.last_name);
+    const resp = await GetUser(result);
+    if (typeof resp.response === 'string') {
+      if (resp.response.includes('error')) {
+        setStatus("FAILED");
+        return;
+      }
+    }
+    const userData = resp.response as unknown as Record<any, any>;
+    const now = new Date();
+    setScannedName(userData.first_name + " " + userData.last_name);
+
+    if (scannerTab === "CHECK IN") {
       if (userData.registration_status === "confirmed"
         || userData.registration_status == "checked_in"
         || now > timeWhenAllHackersCanComeThrough) {
+
+        const resp = await SetUser(
+          { 'day_of.checkIn': true, 'registration_status': 'checked-in' },
+          result
+        );
+
+        if (resp.error !== '') {
+          setStatus("FAILED");
+          setScanResponse(resp.error);
+          return;
+        }
+
         setStatus("SUCCESSFUL");
+
       } else {
         setStatus("PENDING");
       }
@@ -123,10 +145,10 @@ function OrganizerView() {
        * I just know that it's the error code for multiple attendance.
        */
       const multipleAttendanceStatus = 402;
-      if (resp.status == multipleAttendanceStatus) {
+      if (resp.status == multipleAttendanceStatus && !forceAttendance) {
         setShowForceAttendance(true);
+        return;
       }
-
 
       if (resp.error !== '') {
         setStatus("FAILED");
@@ -154,14 +176,20 @@ function OrganizerView() {
               <button
                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${scannerTab === "CHECK IN" ? "bg-blue-700" : ""
                   }`}
-                onClick={() => setScannerTab("CHECK IN")}
+                onClick={() => {
+                  setScannerTab("CHECK IN");
+                  resetScanLog();
+                }}
               >
                 Check In
               </button>
               <button
                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${scannerTab === "EVENT" ? "bg-blue-700" : ""
                   }`}
-                onClick={() => setScannerTab("EVENT")}
+                onClick={() => {
+                  setScannerTab("EVENT");
+                  resetScanLog();
+                }}
               >
                 Event
               </button>
