@@ -1,18 +1,12 @@
-import { Suspense } from "react";
+import { Suspense } from 'react';
 
-export default function Layout({ children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <main className="w-fit h-fit relative">
+      <main className="relative h-fit w-fit">
         {children}
-        <div
-          id="entry-radial"
-          className="top-0 w-full h-full absolute -z-10"
-        />
+        <div id="entry-radial" className="absolute top-0 -z-10 h-full w-full" />
       </main>
     </>
-  )
+  );
 }

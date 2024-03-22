@@ -1,8 +1,10 @@
 'use server';
+import { StringDecoder } from 'string_decoder';
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
 import { BASE } from './definitions';
+
 export async function getSchedule() {
   const schedule: Schedule = {
     Saturday: {
@@ -12,7 +14,7 @@ export async function getSchedule() {
         { time: '11:00 AM', event: 'Opening Ceremony' },
         { time: '12:00 PM', event: 'Team Building Event' },
         { time: '12:00 PM', event: 'Hacking Starts' },
-        { time: '12:30 PM', event: 'Lunch' },
+        { time: '1:00 PM', event: 'Lunch' },
         { time: '1:30 PM', event: 'Workshop 1' },
         { time: '2:00 PM', event: 'Workshop 2' },
         { time: '2:30 PM', event: 'Workshop 3' },
@@ -44,12 +46,41 @@ export async function getSponsors(): Promise<string[]> {
   const sponsors = await res.json();
 
   if (!sponsors || !sponsors['photos']) {
-    return [];
+    return [
+      'cloudflare.jpeg',
+      'icims.png',
+      'wakefern.png',
+      'RU-climate-action.png',
+    ];
   }
 
   return sponsors['photos'].map((url: any) => url);
-}
+} 
 
+interface LeaderboardEntry {
+  place: string;
+  points: number;
+  house: string;
+  logo: string;
+}
+export async function getLeaderboard() {
+  const res = await fetch(BASE + '/get-house_points');
+  const leaderboardData = await res.json();
+  const housesData = Object.entries(leaderboardData['houses']);
+  if (!leaderboardData || !leaderboardData['houses']) {
+    throw new Error('Invalid data');
+  }
+  const LeaderBoard: LeaderboardEntry[] = housesData.map(
+    ([house, points], index: number) => ({
+      place: '',
+      points: points as number,
+      house: house,
+      logo: '',
+    }),
+  );
+
+  return LeaderBoard;
+}
 export async function getSelf(): Promise<{
   error: string;
   response: Record<string, any>;

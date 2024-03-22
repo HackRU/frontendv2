@@ -11,6 +11,7 @@ import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
 import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume, UploadTeamSubmission } from '../lib/actions';
+import QRCode from "react-qr-code";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -67,6 +68,8 @@ export default function Dashboard() {
   const [waiverState, setWaiverState] = useState<any>(null);
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
+  const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
+  const [showQR, setShowQR] = useState<boolean>(false);
 
   const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
@@ -231,7 +234,7 @@ export default function Dashboard() {
   }
 
   if (userData?.role['organizer']) {
-    return (<OrganizerView userData={userData} />)
+    return (<OrganizerView />)
   }
   else if (userData?.role['director']) {
     return (<DirectorView userData={userData} />)
@@ -348,6 +351,21 @@ export default function Dashboard() {
               }
             </Card>)
           }
+          <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <div className="flex flex-col ">
+                <div className='flex flex-col'>
+                  <CardTitle>QR Code</CardTitle>
+                  <CardDescription>Use this QR code to check-in or scan-in for events!</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center justify-center space-y-4 bg-white p-4 rounded-md">
+                <QRCode value={userData?.email} size={256} />
+              </div>
+            </CardContent>
+          </Card>
 
           <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
