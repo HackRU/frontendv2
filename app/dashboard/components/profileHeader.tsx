@@ -20,8 +20,6 @@ export default function ProfileHeader(props: {
   const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  console.log(userData.registration_status)
-
   const onConfirmationChange = async (isComing: boolean) => {
     setUploadingNewConfirmationStatus(true);
     const resp = await ConfirmComingOrNot(isComing);

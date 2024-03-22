@@ -10,56 +10,109 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume } from '../lib/actions';
+import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume, UploadTeamSubmission } from '../lib/actions';
 import QRCode from "react-qr-code";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from 'zod';
+import { set, z } from 'zod';
 import Cursor from '../ui/cursor';
 import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
+import PopupDialog from './components/dialog';
+
+let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
+const numOfMinsUntilTeamCreation = (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
+
+const UserUpdateSchema = z.object({
+
+  first_name: z.string().min(1, "Field cannot be empty"),
+  last_name: z.string().min(1, "Field cannot be empty"),
+  resume: z.any(),
+  github: z.string().min(1, "Field cannot be empty"),
+  major: z.string().min(1, "Field cannot be empty"),
+  short_answer: z.string().min(1, "Field cannot be empty"),
+  shirt_size: z.string().min(1, "Field cannot be empty"),
+  hackathon_count: z.number(),
+  dietary_restrictions: z.string().min(1, "Field cannot be empty"),
+  special_needs: z.string().min(1, "Field cannot be empty"),
+  date_of_birth: z.string().min(1, "Field cannot be empty"),
+  school: z.string().min(1, "Field cannot be empty"),
+  grad_year: z.string().min(1, "Field cannot be empty"),
+  gender: z.string().min(1, "Field cannot be empty"),
+  level_of_study: z.string().min(1, "Field cannot be empty"),
+  country_of_residence: z.string().min(1, "Field cannot be empty"),
+  ethnicity: z.string().min(1, "Field cannot be empty"),
+  phone_number: z.number({
+    invalid_type_error: "Enter Phone Number in the format 1234567890",
+  }).min(1000000000).max(9999999999),
+  how_you_heard_about_hackru: z.string().min(1, "Field cannot be empty"),
+  reasons: z.string(),
+});
+
+
+export type UserUpdate = z.infer<typeof UserUpdateSchema>;
+
+const TeamSubmitSchema = z.object({
+  team_member_A: z.string().email(),
+  team_member_B: z.string().optional(),
+  team_member_C: z.string().optional(),
+});
+
+export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
 export default function Dashboard() {
   const [userData, setUserData] = useState<any>(null);
+  const [teamFormData, setTeamFormData] = useState<any>(null);
   const [waiverState, setWaiverState] = useState<any>(null);
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
+  const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
   const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
   const [showQR, setShowQR] = useState<boolean>(false);
 
-  const UserUpdateSchema = z.object({
-
-    first_name: z.string().min(1, "Field cannot be empty"),
-    last_name: z.string().min(1, "Field cannot be empty"),
-    resume: z.any(),
-    github: z.string().min(1, "Field cannot be empty"),
-    major: z.string().min(1, "Field cannot be empty"),
-    short_answer: z.string().min(1, "Field cannot be empty"),
-    shirt_size: z.string().min(1, "Field cannot be empty"),
-    hackathon_count: z.number(),
-    dietary_restrictions: z.string().min(1, "Field cannot be empty"),
-    special_needs: z.string().min(1, "Field cannot be empty"),
-    date_of_birth: z.string().min(1, "Field cannot be empty"),
-    school: z.string().min(1, "Field cannot be empty"),
-    grad_year: z.string().min(1, "Field cannot be empty"),
-    gender: z.string().min(1, "Field cannot be empty"),
-    level_of_study: z.string().min(1, "Field cannot be empty"),
-    country_of_residence: z.string().min(1, "Field cannot be empty"),
-    ethnicity: z.string().min(1, "Field cannot be empty"),
-    phone_number: z.number({
-      invalid_type_error: "Enter Phone Number in the format 1234567890",
-    }).min(1000000000).max(9999999999),
-    how_you_heard_about_hackru: z.string().min(1, "Field cannot be empty"),
-    reasons: z.string(),
-  });
-
-  type UserUpdate = z.infer<typeof UserUpdateSchema>;
-
+  const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
+  const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
+  const [currentTeam, setCurrentTeam] = useState<number>(0);
 
   const { register, handleSubmit, reset, trigger, formState: { errors }, } = useForm<UserUpdate>({ resolver: zodResolver(UserUpdateSchema), defaultValues: userData, });
+  const {
+    register: registerTeam,
+    handleSubmit: handleSubmitTeam,
+    reset: resetTeam,
+    formState: { errors: errorsTeam },
+  } = useForm<TeamSubmit>({ resolver: zodResolver(TeamSubmitSchema), defaultValues: userData, });
+
   const [waiverFile, setWaiverFile] = useState<File | null>(null);
   const [resumeExists, setResumeExists] = useState<boolean>(false);
+
+  const onTeamSubmit = async (data: TeamSubmit) => {
+    setSubmittingTeamForm(true);
+
+    if (!('email' in userData)) {
+      alert("Invalid userData for session! Please refresh the page and try. If the problem persists, please contact HackRU.");
+      return;
+    }
+
+    const current_email: string = userData.email;
+    if (current_email === "") {
+      alert("Invalid email in user data! Please refresh the page and try. If the problem persists, please contact HackRU.");
+      return;
+    }
+
+    const resp = await UploadTeamSubmission(current_email, data);
+    console.log(resp);
+    const team_id = resp.team_id;
+
+    if (resp.error.length > 0 || team_id === undefined || team_id === 0) {
+      const error = resp.error;
+      setTeamSubmissionError(error);
+    } else {
+      setCurrentTeam(team_id);
+    }
+
+    setSubmittingTeamForm(false);
+  }
 
   const onSubmit = async (data: UserUpdate) => {
     setSavingUserProfile(true);
@@ -147,9 +200,15 @@ export default function Dashboard() {
     }
 
     fetchUser();
-    reset()
+    reset();
 
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.team_id) {
+      setCurrentTeam(userData.team_id);
+    }
+  }, [userData]);
 
   if (!userData) {
     return (
@@ -193,6 +252,103 @@ export default function Dashboard() {
             onWaiverSubmit={onWaiverSubmit}
           />
 
+          {userData?.registration_status === "checked_in" &&
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>House Information</CardTitle>
+                <CardDescription>
+                  Your house is {userData?.house}!
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          }
+
+          {userData?.registration_status === "checked_in" &&
+            (<Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>Team Creation</CardTitle>
+                <CardDescription>
+                  Create your team here. Team creation begins in {Math.max(numOfMinsUntilTeamCreation, 0).toFixed(0)} minutes.
+                  <br /><br />
+                  <strong>READ CLOSELY</strong>: Only ONE person needs to submit their team.
+                  The team leader (the person who fills out this form) will type in the emails of their team members.
+                  <br /><br />
+                  NO ONE else BUT the team leader of the team needs to submit this form. Once submitted, team members can refresh their page to see their team id.
+                </CardDescription>
+              </CardHeader>
+              {
+                submittingTeamForm && (
+                  <CardContent>
+                    <p>Submitting team information.</p>
+                  </CardContent>
+                )
+              }
+              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked_in" &&
+                <CardContent>
+                  <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
+                    <div>
+                      {teamSubmissionError && <p className="text-red-500 text-sm">{teamSubmissionError}</p>}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="team_member_A">Team Member A (not the one filling this form) * Must be filled. </Label>
+                      <Input id="team_member_A" value={teamFormData?.team_member_A} {...registerTeam("team_member_A")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_A: e.target.value })} />
+                      {errorsTeam.team_member_A && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_A?.message}</p>)}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="team_member_B">Team Member B (not the one filling this form)</Label>
+                      <Input id="team_member_B" value={teamFormData?.team_member_B} {...registerTeam("team_member_B")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_B: e.target.value })} />
+                      {errorsTeam.team_member_B && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_B?.message}</p>)}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="team_member_C">Team Member C (not the one filling this form)</Label>
+                      <Input id="team_member_C" value={teamFormData?.team_member_C} {...registerTeam("team_member_C")} onChange={(e) => setTeamFormData({ ...teamFormData, team_member_C: e.target.value })} />
+                      {errorsTeam.team_member_C && (<p className="text-xs italic text-red-500 mt-2">{errorsTeam.team_member_C?.message}</p>)}
+                    </div>
+                    <Button
+                      onClick={
+                        () => {
+                          if (Object.keys(errorsTeam).length === 0) {
+                            setDisplayTeamFormFinalSubmissionWarning(true);
+                          }
+                        }
+                      }
+                      type="button"
+                      className="mt-10"
+                    >{
+                        submittingTeamForm ? "Submitting..." : "Submit Team"
+                      }</Button>
+                    <PopupDialog
+                      open={displayTeamFormFinalSubmissionWarning}
+                      setOpen={setDisplayTeamFormFinalSubmissionWarning}
+                      onYes={() => {
+                        setTeamSubmissionError("");
+                        handleSubmitTeam(onTeamSubmit)();
+                      }}
+                      onNo={() => {
+                        // setSubmittingTeamForm(false);
+                      }}
+                      title="Final Submission Warning"
+                      content="ARE YOU ABSOLUTELY SURE THIS IS YOUR TEAM?! YOU CANNOT UNDO THIS ACTION. PLEASE MAKE SURE YOUR TEAM EMAILS ARE RIGHT!!"
+                    />
+
+                  </form>
+                </CardContent>
+              }
+              {
+                currentTeam !== 0 && !submittingTeamForm && (
+                  <CardContent>
+                    <p>Your team has been created!
+                      <br />
+                      <strong>Your team id is</strong>: {currentTeam}.
+                      <br />
+                      <br />
+                      Please have your team members refresh their dashboards and verify that
+                      you all have the same team ids.</p>
+                  </CardContent>
+                )
+              }
+            </Card>)
+          }
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
@@ -400,7 +556,7 @@ export default function Dashboard() {
           </Card>
 
         </div>
-      </main>
+      </main >
     );
   }
 
