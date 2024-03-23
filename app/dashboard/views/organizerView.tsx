@@ -150,8 +150,8 @@ function OrganizerView() {
           setStatus('FAILED');
           setScanResponse(
             resp.error +
-              ' : Registration Status: ' +
-              userData.registration_status,
+            ' : Registration Status: ' +
+            userData.registration_status,
           );
           return;
         }
@@ -197,7 +197,7 @@ function OrganizerView() {
   const handleEventSelectChange = async (event: string) => {
     setSelectedEvent(event);
   };
- 
+
   return (
     <main>
       <div className="flex w-full items-center justify-center text-white">
@@ -207,9 +207,8 @@ function OrganizerView() {
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
             <div className="flex justify-center space-x-4">
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -218,9 +217,8 @@ function OrganizerView() {
                 Check In
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();

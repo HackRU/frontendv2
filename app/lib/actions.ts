@@ -1,4 +1,5 @@
 'use server';
+import { unstable_noStore as noStore } from 'next/cache';
 
 import { z } from 'zod';
 import { signIn, signOut } from '@/auth';
@@ -53,6 +54,7 @@ const ENDPOINTS = {
 };
 
 export async function authenticate(email: string, password: string) {
+  noStore();
   try {
     const session = await auth();
     await signIn('credentials', {
@@ -76,6 +78,7 @@ export async function authenticate(email: string, password: string) {
 }
 
 export async function handleSignOut() {
+  noStore();
   try {
     await signOut();
   } catch (error) {
@@ -85,6 +88,7 @@ export async function handleSignOut() {
 }
 
 export async function authUser(email: string, password: string) {
+  noStore();
   let resp = {
     error: '',
     response: '',
@@ -124,6 +128,7 @@ export async function SignUp(
   password: string,
   confirmpassword: string,
 ) {
+  noStore();
   let resp = {
     error: '',
     response: '',
@@ -248,7 +253,7 @@ export async function GetUser(email: string) {
     error: '',
     response: '',
   };
-
+  noStore();
   const session = await auth();
 
   if (session?.user) {
@@ -291,7 +296,7 @@ export async function SetUser(data: any, user_email_to_update: string) {
     error: '',
     response: '',
   };
-
+  noStore();
   const session = await auth();
 
   if (session?.user) {
@@ -329,6 +334,7 @@ export async function SetUser(data: any, user_email_to_update: string) {
   return resp;
 }
 export async function Forgot(email: string) {
+  noStore();
   let resp = {
     error: '',
     response: '',
@@ -380,6 +386,7 @@ export async function Reset(
   conpassword: string,
   magic: string,
 ) {
+  noStore();
   let resp = {
     error: '',
     response: '',
@@ -454,6 +461,7 @@ export async function GetWaiverInfo(){
 }
 */
 export async function GetWaiverInfo() {
+  noStore();
   const session = await auth();
   if (session?.user) {
     const json = await fetch(ENDPOINTS.waiver, {
@@ -475,7 +483,7 @@ export async function UploadWaiver(file: FormData) {
     error: '',
     response: '',
   };
-  console.log('UploadWaiver function called');
+  noStore();
   const info = await GetWaiverInfo();
 
   await fetch(info.upload, {
@@ -496,6 +504,7 @@ export async function UploadWaiver(file: FormData) {
 }
 
 export async function GetResume() {
+  noStore();
   const session = await auth();
   if (session?.user) {
     const json = await fetch(ENDPOINTS.resume, {
@@ -517,6 +526,7 @@ export async function UploadResume(file: FormData) {
     error: '',
     response: '',
   };
+  noStore();
   const info = await GetResume();
   const pdf = file.get('file');
 
@@ -558,6 +568,7 @@ export async function AttendEventScan(
   status: number;
   count: number;
 }> {
+  noStore();
   const session = await auth();
   let response_message = '';
   let error_message = '';
@@ -602,7 +613,7 @@ export async function AttendEventScan(
     if (typeof jsonBody !== 'string') {
       count = jsonBody!.new_count;
     }
-
+    console.log(jsonBody);
     response_status = statusCode;
     if (statusCode === 404) {
       error_message = `User ${scannedEmail} not found. Please try again.`;
@@ -645,6 +656,7 @@ export async function UploadTeamSubmission(
   team_id: number | undefined;
   response_code: number;
 }> {
+  noStore();
   const { team_member_A, team_member_B, team_member_C } = data;
   const member_emails = [team_member_A, team_member_B, team_member_C];
 

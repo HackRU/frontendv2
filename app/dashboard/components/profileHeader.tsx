@@ -115,6 +115,13 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             }
+            {(userData.registration_status == "checked-in") &&
+              <>
+                <div className="flex flex-row items-center">
+                  <CardTitle>You are now checked in!</CardTitle>
+                </div>
+              </>
+            }
             {(userData.registration_status == "registered") &&
               <>
                 <div className="flex flex-row items-center">
