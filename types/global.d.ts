@@ -1,7 +1,7 @@
 declare module '@waaark/luge';
 interface DayInfo {
   day: string,
-  times: { time: string, event: string }[]
+  times: { time: string, event: string, location: string }[]
 }
 
 type day = string

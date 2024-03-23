@@ -1,5 +1,4 @@
 'use server';
-import { StringDecoder } from 'string_decoder';
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
@@ -10,30 +9,38 @@ export async function getSchedule() {
     Saturday: {
       day: 'Saturday',
       times: [
-        { time: '10:00 AM', event: 'Check-in starts' },
-        { time: '11:00 AM', event: 'Opening Ceremony' },
-        { time: '12:00 PM', event: 'Team Building Event' },
-        { time: '12:00 PM', event: 'Hacking Starts' },
-        { time: '1:00 PM', event: 'Lunch' },
-        { time: '1:30 PM', event: 'Workshop 1' },
-        { time: '2:00 PM', event: 'Workshop 2' },
-        { time: '2:30 PM', event: 'Workshop 3' },
-        { time: '6:00 PM', event: 'Workshop 4' },
-        { time: '7:00 PM', event: 'Workshop 5' },
-        { time: '8:00 PM', event: 'Dinner' },
+        { time: '10:00 AM', event: 'Check-in Starts', location: 'Center Lobby'},
+        { time: '11:00 AM', event: 'Opening Ceremony', location: 'Hacking Area' },
+        { time: '12:00 PM', event: 'Team Building', location: 'Hacking Area' },
+        { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area'},
+        { time: '1:00 PM', event: 'Lunch', location: 'In Front of MPR'},
+        {
+          time: '2:00 PM',
+          event: 'Wakefern Tech Talk',
+          location: 'Room 120',
+        },
+        { time: '2:30 PM', event: 'API Demo', location: 'Room 122' },
+        { time: '3:00 PM', event: 'iCIMS Tech Talk', location: 'Room 120' }, 
+        { time: '3:30 PM', event: 'RUSA Workshop', location: 'Room 122'},
+        { time: '3:30 PM', event: 'USACS Workshop', location: 'Room 120' },
+        { time: '4:30 PM', event: 'Cloudflare Tech Talk', location: 'Room 122' },
+        { time: '5:00 PM', event: 'MLH Mini Event', location: 'Room 120' }, 
+        { time: '6:30 PM', event: 'MLH Copilot Workshop', location: 'Room 120' },
+        { time: '7:30 PM', event: 'RUCP Workshop', location: 'Room 117' }, 
+        { time: '8:30 PM', event: 'Dinner', location: 'In Front of MPR' },
       ],
     },
 
     Sunday: {
       day: 'Sunday',
       times: [
-        { time: '12:00 AM', event: 'Midnight Surprise' },
-        { time: '8:00 AM', event: 'Breakfast' },
-        { time: '12:00 PM', event: 'Submissions Due' },
-        { time: '12:30 PM', event: 'Lunch' },
-        { time: '1:00 PM', event: 'Judging Begins' },
-        { time: '3:00 PM', event: 'Judging Ends' },
-        { time: '3:30 PM', event: 'Closing Ceremony' },
+        { time: '12:00 AM', event: 'Midnight Surprise', location: 'Hacking Area'},
+        { time: '8:00 AM', event: 'Breakfast', location: 'In Front of MPR' },
+        { time: '12:00 PM', event: 'Submissions Due', location: 'Hacking Area' },
+        { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
+        { time: '1:00 PM', event: 'Judging Begins', location: 'Hacking Area' },
+        { time: '3:00 PM', event: 'Judging Ends', location: 'Hacking Area' },
+        { time: '3:30 PM', event: 'Closing Ceremony', location: 'Hacking Area' },
       ],
     },
   };
