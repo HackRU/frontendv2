@@ -45,15 +45,15 @@ const eventPoints = {
   'rusa-workshop': 20,
   'usacs-resume-workshop': 10,
   'cloudflare-tech-talk': 20,
-  'mlh-soroban-quest': 20,
-  'mlh-copilot': 20,
+  'mlh-soroban-quest': 10,
+  'mlh-copilot': 10,
   'meta-swe-tech-talk': 10,
   'rucp-workshop': 10,
   'dinner-saturday': 0,
   'breakfast-sunday': 0,
   'lunch-sunday': 0,
-  'chess-win': 20,
-  'found-douglass': 20,
+  'chess-win': 15,
+  'found-douglass': 15,
 };
 
 function ScanStatus(props: {
