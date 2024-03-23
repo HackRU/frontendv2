@@ -138,6 +138,7 @@ function OrganizerView() {
       if (
         userData.registration_status === 'confirmed' ||
         userData.registration_status == 'checked-in' ||
+        userData.registration_status == "coming" ||
         (now > timeWhenAllHackersCanComeThrough &&
           userData.registration_status !== 'unregistered')
       ) {
