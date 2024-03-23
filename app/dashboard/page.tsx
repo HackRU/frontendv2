@@ -261,7 +261,8 @@ export default function Dashboard() {
             </Card>
           }
 
-          {userData?.registration_status === "checked-in" &&
+          {/* we are doing "&& false" because we're disabling the team form. */}
+          {userData?.registration_status === "checked-in" && false &&
             (<Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Team Creation</CardTitle>
