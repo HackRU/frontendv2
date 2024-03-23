@@ -197,7 +197,7 @@ function OrganizerView() {
   const handleEventSelectChange = async (event: string) => {
     setSelectedEvent(event);
   };
-
+ 
   return (
     <main>
       <div className="flex w-full items-center justify-center text-white">
