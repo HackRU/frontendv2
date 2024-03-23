@@ -185,7 +185,6 @@ export default function Dashboard() {
         const data = await getSelf();
         setUserData(data.response);
         const resumeInfo = await GetResume();
-        console.log(resumeInfo);
         if (resumeInfo.exists) {
           setResumeExists(true);
         }

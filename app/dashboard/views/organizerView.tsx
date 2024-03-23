@@ -79,6 +79,7 @@ function OrganizerView() {
   const [scanResponse, setScanResponse] = useState<string>("");
   const [showForceAttendance, setShowForceAttendance] = useState<boolean>(false);
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>("");
+  const [houseOfScannedUser, setHouseOfScannedUser] = useState<string>("");
   const [scannedName, setScannedName] = useState<string>("");
 
   const resetScanLog = () => {
@@ -92,6 +93,8 @@ function OrganizerView() {
     result: string,
     forceAttendance: boolean = false
   ) => {
+    setScanResponse("");
+    setHouseOfScannedUser("");
     setScannedName("");
     setStatus("AWAITING RESPONSE");
     setLatestScannedEmail(result);
@@ -106,6 +109,7 @@ function OrganizerView() {
     const userData = resp.response as unknown as Record<any, any>;
     const now = new Date();
     setScannedName(userData.first_name + " " + userData.last_name);
+    setHouseOfScannedUser(userData.house);
 
     if (scannerTab === "CHECK IN") {
       if (userData.registration_status === "confirmed"
@@ -113,7 +117,7 @@ function OrganizerView() {
         || now > timeWhenAllHackersCanComeThrough) {
 
         const resp = await SetUser(
-          { 'day_of.checkIn': true, 'registration_status': 'checked-in' },
+          { 'day_of.checkIn': true, 'registration_status': 'checked_in' },
           result
         );
 
@@ -145,6 +149,7 @@ function OrganizerView() {
        * I just know that it's the error code for multiple attendance.
        */
       const multipleAttendanceStatus = 402;
+
       if (resp.status == multipleAttendanceStatus && !forceAttendance) {
         setShowForceAttendance(true);
         return;
@@ -156,7 +161,7 @@ function OrganizerView() {
         return;
       }
 
-      setScanResponse(resp.response);
+      setScanResponse(resp.response + " Attendance Count: " + resp.count);
       setStatus("SUCCESSFUL");
     }
   };
@@ -201,7 +206,9 @@ function OrganizerView() {
               onYes={() => {
                 handleOnScan(latestScannedEmail, true);
               }}
-              onNo={() => { }}
+              onNo={() => {
+                resetScanLog();
+              }}
               setOpen={setShowForceAttendance}
               open={showForceAttendance}
               content={
@@ -224,6 +231,9 @@ function OrganizerView() {
             }
             <p className="text-center">
               {scanResponse}
+              {houseOfScannedUser &&
+                <p>House: {houseOfScannedUser}</p>
+              }
             </p>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10"

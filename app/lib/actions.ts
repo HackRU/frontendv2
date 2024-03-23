@@ -556,11 +556,13 @@ export async function AttendEventScan(
   error: string;
   response: string;
   status: number;
+  count: number;
 }> {
   const session = await auth();
   let response_message = '';
   let error_message = '';
   let response_status = 0;
+  let count = 0;
 
   if (session?.user) {
     const { email, name } = session.user;
@@ -590,11 +592,16 @@ export async function AttendEventScan(
         error: error_message,
         response: '',
         status: 500,
+        count: -1,
       };
     }
 
     const json = await resp.json();
     const { statusCode, body: jsonBody } = json as AttendEventResponse;
+
+    if (typeof jsonBody !== 'string') {
+      count = jsonBody!.new_count;
+    }
 
     response_status = statusCode;
     if (statusCode === 404) {
@@ -602,8 +609,6 @@ export async function AttendEventScan(
     } else if (statusCode === 402) {
       error_message = `User ${scannedEmail} is already checked in to ${event}!`;
     }
-
-    console.log('statusCode: ', statusCode, 'jsonBody: ', jsonBody);
 
     if (statusCode === 200 && typeof jsonBody !== 'string') {
       response_message = `${
@@ -614,24 +619,11 @@ export async function AttendEventScan(
     error_message = 'Invalid user session. Please login.';
   }
 
-  const field = `day_of.${event}`;
-  const mongoQuery: { $inc: { [key: string]: number } } = {
-    $inc: {},
-  };
-
-  mongoQuery['$inc'][field] = 1;
-
-  const resp = await SetUser({ $inc: { field: 1 } }, scannedEmail);
-
-  if (resp.error !== '') {
-    error_message = resp.error;
-    response_status = 500;
-  }
-
   return {
     status: response_status,
     error: error_message,
     response: response_message,
+    count: count,
   };
 }
 
