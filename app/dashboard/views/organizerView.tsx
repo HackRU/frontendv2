@@ -21,7 +21,7 @@ const timeWhenAllHackersCanComeThrough = new Date(2024, 3, 23, 12, 0); // March 
 const events = [
   'lunch-saturday',
   'wakefern-tech-talk',
-  'api-demo',
+  'wakefern-api-demo',
   'icims-tech-talk',
   'rusa-workshop',
   'usacs-resume-workshop',
@@ -40,7 +40,7 @@ const events = [
 const eventPoints = {
   'lunch-saturday': 0,
   'wakefern-tech-talk': 20,
-  'api-demo': 20,
+  'wakefern-api-demo': 20,
   'icims-tech-talk': 20,
   'rusa-workshop': 20,
   'usacs-resume-workshop': 10,
