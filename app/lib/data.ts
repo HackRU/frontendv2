@@ -55,7 +55,7 @@ export async function getSponsors(): Promise<string[]> {
   }
 
   return sponsors['photos'].map((url: any) => url);
-} 
+}
 
 interface LeaderboardEntry {
   place: string;
@@ -64,7 +64,9 @@ interface LeaderboardEntry {
   logo: string;
 }
 export async function getLeaderboard() {
-  const res = await fetch(BASE + '/get-house_points');
+  const res = await fetch(BASE + '/get-house_points', {
+    cache: 'no-store',
+  });
   const leaderboardData = await res.json();
   const housesData = Object.entries(leaderboardData['houses']);
   if (!leaderboardData || !leaderboardData['houses']) {
@@ -256,7 +258,7 @@ export async function getUsers() {
     'waitlist',
     'confirmed',
     'rejected',
-    'checked_in',
+    'checked-in',
     'registered',
   ];
 

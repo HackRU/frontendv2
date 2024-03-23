@@ -113,17 +113,16 @@ function OrganizerView() {
 
     if (scannerTab === "CHECK IN") {
       if (userData.registration_status === "confirmed"
-        || userData.registration_status == "checked_in"
-        || now > timeWhenAllHackersCanComeThrough) {
-
+        || userData.registration_status == "checked-in"
+        || (now > timeWhenAllHackersCanComeThrough && userData.registration_status !== "unregistered")) {
         const resp = await SetUser(
-          { 'day_of.checkIn': true, 'registration_status': 'checked_in' },
+          { 'registration_status': "checked-in" },
           result
         );
 
         if (resp.error !== '') {
           setStatus("FAILED");
-          setScanResponse(resp.error);
+          setScanResponse(resp.error + " : Registration Status: " + userData.registration_status);
           return;
         }
 

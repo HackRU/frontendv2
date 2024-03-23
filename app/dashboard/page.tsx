@@ -250,7 +250,7 @@ export default function Dashboard() {
             onWaiverSubmit={onWaiverSubmit}
           />
 
-          {userData?.registration_status === "checked_in" &&
+          {userData?.registration_status === "checked-in" &&
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>House Information</CardTitle>
@@ -261,7 +261,7 @@ export default function Dashboard() {
             </Card>
           }
 
-          {userData?.registration_status === "checked_in" &&
+          {userData?.registration_status === "checked-in" &&
             (<Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Team Creation</CardTitle>
@@ -281,7 +281,7 @@ export default function Dashboard() {
                   </CardContent>
                 )
               }
-              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked_in" &&
+              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked-in" &&
                 <CardContent>
                   <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
                     <div>

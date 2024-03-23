@@ -320,7 +320,7 @@ export async function SetUser(data: any, user_email_to_update: string) {
         }
       })
       .catch((error) => {
-        resp.error = error + '; An error occured retrieving data';
+        resp.error = error + '; An error occurred retrieving data';
       });
   } else {
     resp.error = 'Please log in';
