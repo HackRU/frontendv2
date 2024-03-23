@@ -16,7 +16,7 @@ type STATUS =
   | 'AWAITING SCAN'
   | 'AWAITING RESPONSE';
 type ScannerTab = 'CHECK IN' | 'EVENT';
-const timeWhenAllHackersCanComeThrough = new Date(2024, 3, 23, 12, 0); // March 23rd, 2PM
+const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const events = [
   'lunch-saturday',
@@ -104,6 +104,7 @@ function OrganizerView() {
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>('');
   const [houseOfScannedUser, setHouseOfScannedUser] = useState<string>('');
   const [scannedName, setScannedName] = useState<string>('');
+  const [confirmation, setConfirmation] = useState<boolean>(false);
 
   const resetScanLog = () => {
     setScannedName('');
@@ -235,7 +236,7 @@ function OrganizerView() {
                 handleOnScan(latestScannedEmail, true);
               }}
               onNo={() => {
-                resetScanLog();
+                // resetScanLog();
               }}
               setOpen={setShowForceAttendance}
               open={showForceAttendance}
@@ -244,6 +245,23 @@ function OrganizerView() {
               title={'Multiple attendance detected for this event.'}
             />
           )}
+          {
+            confirmation && (
+              <PopupDialog
+                onYes={() => {
+                  setConfirmation(false);
+                  handleOnScan(latestScannedEmail, false);
+                }}
+                onNo={() => {
+                  setConfirmation(false);
+                }}
+                setOpen={setConfirmation}
+                open={confirmation}
+                content={`Continue the scan?`}
+                title={'You have just scanned someone.'}
+              />
+            )
+          }
           <div className="my-10 flex flex-col items-center">
             <ScanStatus
               status={status}
@@ -271,7 +289,16 @@ function OrganizerView() {
             </button>
           </div>
 
-          {openScanner && <QrReaderWrapper onScan={handleOnScan} />}
+          {openScanner &&
+            (
+              <QrReaderWrapper
+                onScan={(text: string) => {
+                  setLatestScannedEmail(text);
+                  setConfirmation(true);
+                }}
+              />
+            )
+          }
         </div>
       </div>
     </main>
