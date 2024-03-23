@@ -116,6 +116,12 @@ function OrganizerView() {
     result: string,
     forceAttendance: boolean = false,
   ) => {
+
+    if (result == latestScannedEmail) {
+      alert(`Cannot scan ${latestScannedEmail} twice in row!`);
+      return;
+    }
+
     setScanResponse('');
     setHouseOfScannedUser('');
     setScannedName('');
