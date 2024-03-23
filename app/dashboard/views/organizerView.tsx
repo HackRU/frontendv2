@@ -117,7 +117,6 @@ function OrganizerView() {
     forceAttendance: boolean = false,
   ) => {
 
-    if (status === 'AWAITING RESPONSE') return;
 
     setScanResponse('');
     setHouseOfScannedUser('');
