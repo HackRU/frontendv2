@@ -35,6 +35,7 @@ const events = [
   'lunch-sunday',
   'chess-win',
   'found-douglass',
+  'tshirts'
 ];
 
 const eventPoints = {
@@ -54,6 +55,7 @@ const eventPoints = {
   'lunch-sunday': 0,
   'chess-win': 15,
   'found-douglass': 15,
+  'tshirts': 0
 };
 
 function ScanStatus(props: {
