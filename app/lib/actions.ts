@@ -50,7 +50,7 @@ const ENDPOINTS = {
   /**
    * Create a team
    */
-  makeTeam: BASE + '/team',
+  makeTeam: BASE + '/make-teams',
 };
 
 export async function authenticate(email: string, password: string) {
