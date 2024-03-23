@@ -3,7 +3,8 @@
 
 import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
 import { useState, useEffect, Suspense } from 'react';
-import { AvatarImage, AvatarInitials, Avatar } from "@/app/dashboard/components/avatar"
+import { AvatarImage, AvatarInitials, Avatar } from "@/app/dashboard/components/avatar";
+import Image from 'next/image';
 import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/app/dashboard/components/card"
 import { Label } from "@/app/dashboard/components/label"
 import { Input } from "@/app/dashboard/components/input"
@@ -59,6 +60,15 @@ const TeamSubmitSchema = z.object({
   team_member_B: z.string().optional(),
   team_member_C: z.string().optional(),
 });
+
+const logoImage = {
+  'Bitsprout': '/landing/bitsprout.png',
+  'Python': '/landing/python.png',
+  'Pseudoclaw': '/landing/pseudoclaw.png',
+  'Roar.js': '/landing/roar.js.png',
+};
+
+
 
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
@@ -229,6 +239,8 @@ export default function Dashboard() {
     );
   }
 
+
+
   if (userData?.role['organizer']) {
     return (<OrganizerView />)
   }
@@ -256,6 +268,13 @@ export default function Dashboard() {
                 <CardTitle>House Information</CardTitle>
                 <CardDescription>
                   Your house is {userData?.house}!
+                  <Image
+                    src={logoImage[userData?.house as keyof typeof logoImage]}
+                    alt={userData?.house}
+                    width={200}
+                    height={200}
+                    priority
+                  />
                 </CardDescription>
               </CardHeader>
             </Card>
