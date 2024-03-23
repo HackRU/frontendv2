@@ -65,12 +65,12 @@ const schedule = {
       },
       {
         time: '5:00 PM',
-        event: 'MLH Soroban Quest Mini Event',
+        event: 'MLH Intro to Github Copilot Workshop',
         location: 'Room 120',
       },
       {
         time: '6:30 PM',
-        event: 'MLH Intro to Github Copilot Workshop',
+        event: 'MLH Soroban Quest Mini Event',
         location: 'Room 120',
       },
       {
