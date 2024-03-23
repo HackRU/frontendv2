@@ -1,4 +1,5 @@
 'use server';
+import { unstable_noStore } from 'next/cache';
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
@@ -99,6 +100,7 @@ interface LeaderboardEntry {
   logo: string;
 }
 export async function getLeaderboard() {
+  unstable_noStore();
   const res = await fetch(BASE + '/get-house_points', {
     cache: 'no-store',
   });
