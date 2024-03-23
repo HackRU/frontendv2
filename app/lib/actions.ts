@@ -574,7 +574,7 @@ export async function AttendEventScan(
       qr: scannedEmail,
       event: event,
       again: again,
-      points: points,
+      point: points,
     };
 
     const resp = await fetch(ENDPOINTS.attend, {
