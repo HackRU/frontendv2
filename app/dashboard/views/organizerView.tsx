@@ -118,6 +118,7 @@ function OrganizerView() {
   ) => {
 
     if (result == latestScannedEmail) {
+      setScanResponse('Cannot scan hacker twice in a row. Please scan another hacker.');
       return;
     }
 
