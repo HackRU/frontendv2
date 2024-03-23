@@ -15,7 +15,7 @@ const styles = {
 };
 
 const args = {
-  scanDelay: 100,
+  scanDelay: 400,
   tracker: true,
   hideCount: true,
   constraints: defaultConstraints,

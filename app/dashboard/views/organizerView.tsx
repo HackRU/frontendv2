@@ -118,7 +118,7 @@ function OrganizerView() {
   ) => {
 
     if (result == latestScannedEmail) {
-      alert(`Cannot scan ${latestScannedEmail} twice in row!`);
+      setScanResponse(`Scanned ${latestScannedEmail} twice in row!`);
       return;
     }
 
