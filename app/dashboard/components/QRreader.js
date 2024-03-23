@@ -15,7 +15,7 @@ const styles = {
 };
 
 const args = {
-  scanDelay: 400,
+  scanDelay: 1500,
   tracker: true,
   hideCount: true,
   constraints: defaultConstraints,
@@ -29,6 +29,9 @@ function QrScannerWrapper(props) {
     <div style={styles.container}>
       <Scanner
         constraints={defaultConstraints}
+        options={{
+          delayBetweenScanAttempts: 1000,
+        }}
         onResult={(result) => {
           onScan(result);
         }}
