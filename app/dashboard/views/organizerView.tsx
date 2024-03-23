@@ -16,7 +16,7 @@ type STATUS =
   | 'AWAITING SCAN'
   | 'AWAITING RESPONSE';
 type ScannerTab = 'CHECK IN' | 'EVENT';
-const timeWhenAllHackersCanComeThrough = new Date(2024, 3, 23, 12, 0); // March 23rd, 2PM
+const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const events = [
   'lunch-saturday',
