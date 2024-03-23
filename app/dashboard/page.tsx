@@ -69,7 +69,6 @@ export default function Dashboard() {
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
   const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
-  const [showQR, setShowQR] = useState<boolean>(false);
 
   const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
@@ -186,7 +185,6 @@ export default function Dashboard() {
         const data = await getSelf();
         setUserData(data.response);
         const resumeInfo = await GetResume();
-        console.log(resumeInfo);
         if (resumeInfo.exists) {
           setResumeExists(true);
         }
@@ -231,7 +229,7 @@ export default function Dashboard() {
     );
   }
 
-  if (userData?.role['organizer']) {
+  if (!userData?.role['organizer']) {
     return (<OrganizerView />)
   }
   else if (userData?.role['director']) {
@@ -324,9 +322,7 @@ export default function Dashboard() {
                         setTeamSubmissionError("");
                         handleSubmitTeam(onTeamSubmit)();
                       }}
-                      onNo={() => {
-                        // setSubmittingTeamForm(false);
-                      }}
+                      onNo={() => { }}
                       title="Final Submission Warning"
                       content="ARE YOU ABSOLUTELY SURE THIS IS YOUR TEAM?! YOU CANNOT UNDO THIS ACTION. PLEASE MAKE SURE YOUR TEAM EMAILS ARE RIGHT!!"
                     />
