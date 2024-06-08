@@ -11,8 +11,9 @@ export const hackRUFAQ = {
   'Can I win anything?':
     "Yes! We'll release more information about prizes as the event draws near.",
 
-  'Will there be a mask mandate?':
-    'No, HackRU will not have a mask mandate but it is encouraged throughout the duration of the event.',
+  'What are the rules and policies that I need to follow?':
+    'HackRU follows the MLH Code of Conduct: "Be respectful. Harassment and abuse are never tolerated. If you are in a situation that makes you uncomfortable at an MLH Member Event, if the event itself is creating an unsafe or inappropriate environment, or if interacting with a MLH representative or event organizer makes you uncomfortable, please report it using the procedures included in the document provided below". You can read the full MLH Code of Conduct here: https://static.mlh.io/docs/mlh-code-of-conduct.pdf'
+    ,
 
   'Who can come?': `HackRU welcomes undergraduate and graduate students of all majors, backgrounds, and skill level to come create. Additionally, high
   school students who will be 18 by HackRU are allowed to register. Unfortunately, if you are under 18, you will not be able to attend.`,
