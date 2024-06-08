@@ -107,7 +107,7 @@ export default function ProfileHeader(props: {
                   </p>
                 </div>
                 <div className="flex flex-row items-center justify-left">
-                  <input type="checkbox" className="rounded text-pink-500 mr-3"/>
+                  <input type="checkbox" className="rounded text-pink-500 mr-3" onChange={(e) => userData.opt_in = e.target.checked} />  
                   <p>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</p>
                 </div>
                 <div className="flex flex-row items-center justify-center">
