@@ -468,7 +468,20 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="dietary-restrictions">Dietary Restrictions</Label>
-                  <Input id="dietary-restrictions" value={userData?.dietary_restrictions} {...register("dietary_restrictions")} onChange={(e) => setUserData({ ...userData, dietary_restrictions: e.target.value })} />
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.dietary_restrictions}
+                    {...register("dietary_restrictions")}
+                    onChange={(e) => setUserData({ ...userData, dietary_restrictions: e.target.value })}
+                  >
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Celiac Disease">Celiac Disease</option>
+                    <option value="Allergies">Allergies</option>
+                    <option value="Kosher">Kosher</option>
+                    <option value="Halal">Halal</option>
+                  </select>
                   {errors.dietary_restrictions && (<p className="text-xs italic text-red-500 mt-2">{errors.dietary_restrictions?.message}</p>)}
                 </div>
                 <div className="space-y-2">
@@ -482,7 +495,7 @@ export default function Dashboard() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
                     value={userData?.age}
-                    {...register("shirt_size")}
+                    {...register("age")}
                     onChange={(e) => setUserData({ ...userData, age: e.target.value })}
                   >
                     <option value="18">18</option>
@@ -508,7 +521,31 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="grad-year">Grad Year</Label>
-                  <Input type="number" id="grad-year" value={userData?.grad_year} {...register("grad_year")} onChange={(e) => setUserData({ ...userData, grad_year: e.target.value })} />
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.grad_year}
+                    {...register("grad_year")}
+                    onChange={(e) => setUserData({ ...userData, grad_year: e.target.value })}
+                  >
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <option value="2032">2032</option>
+                    <option value="2033">2033</option>
+                    <option value="2034">2034</option>
+                    <option value="2035">2035</option>
+                    <option value="2036">2036</option>
+                    <option value="2037">2037</option>
+                    <option value="2038">2038</option>
+                    <option value="2039">2039</option>
+                    <option value="2040">2040</option>
+                  </select>
                   {errors.grad_year && (<p className="text-xs italic text-red-500 mt-2">{errors.grad_year?.message}</p>)}
                 </div>
                 <div className="space-y-2">
@@ -558,7 +595,25 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="hackathon-count">Hackathon Count</Label>
-                  <Input type="number" id="hackathon-count" value={userData?.hackathon_count} {...register("hackathon_count", { valueAsNumber: true })} onChange={(e) => setUserData({ ...userData, hackathon_count: e.target.value })} />
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.hackathon_count}
+                    {...register("hackathon_count")}
+                    onChange={(e) => setUserData({ ...userData, hackathon_count: e.target.value })}
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
                   {errors.hackathon_count && (<p className="text-xs italic text-red-500 mt-2">{errors.hackathon_count?.message}</p>)}
                 </div>
                 <div className="space-y-2">
