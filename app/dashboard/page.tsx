@@ -38,7 +38,7 @@ const UserUpdateSchema = z.object({
   hackathon_count: z.number(),
   dietary_restrictions: z.string().min(1, "Field cannot be empty"),
   special_needs: z.string().min(1, "Field cannot be empty"),
-  date_of_birth: z.string().min(1, "Field cannot be empty"),
+  age: z.string().min(1, "Field cannot be empty"),
   school: z.string().min(1, "Field cannot be empty"),
   grad_year: z.string().min(1, "Field cannot be empty"),
   gender: z.string().min(1, "Field cannot be empty"),
@@ -477,9 +477,29 @@ export default function Dashboard() {
                   {errors.special_needs && (<p className="text-xs italic text-red-500 mt-2">{errors.special_needs?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dob">Date of Birth</Label>
-                  <Input type="date" max="2024-01-01" id="dob" value={userData?.date_of_birth} {...register("date_of_birth")} onChange={(e) => setUserData({ ...userData, date_of_birth: e.target.value })} />
-                  {errors.date_of_birth && (<p className="text-xs italic text-red-500 mt-2">{errors.date_of_birth?.message}</p>)}
+                  <Label htmlFor="dob">Age</Label>
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.age}
+                    {...register("shirt_size")}
+                    onChange={(e) => setUserData({ ...userData, age: e.target.value })}
+                  >
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                  </select>
+                  {errors.age && (<p className="text-xs italic text-red-500 mt-2">{errors.age?.message}</p>)}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="school">School</Label>
