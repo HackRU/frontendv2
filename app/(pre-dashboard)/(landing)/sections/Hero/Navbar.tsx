@@ -124,7 +124,7 @@ function Navbar() {
       </div>
 
       <a
-        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2024-season&utm_content=white"
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -132,7 +132,7 @@ function Navbar() {
           width={0}
           height={0}
           className="absolute right-2 top-0 z-50 w-24"
-          src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-yellow.svg"
+          src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
         />
       </a>
