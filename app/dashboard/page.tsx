@@ -24,6 +24,7 @@ import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 import PopupDialog from './components/dialog';
 import { parse } from 'papaparse';
 import { mlhSchools } from '../lib/constants.ts';
+import { countries as countryConstants } from '../lib/constants.ts';
 
 
 
@@ -77,8 +78,19 @@ const logoImage = {
 
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
+async function fetchAndSetData(csvData, setData, errorMessage) {
+  try {
+    const lines = csvData.split('\n').filter(line => line.trim() !== '');
+    const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
+    setData(parsedData);
+  } catch (error) {
+    console.error(errorMessage, error);
+  }
+}
+
 export default function Dashboard() {
   const [schools, setSchools] = useState<string[]>([]);
+  const [countries, setCountries] = useState<string[]>([]);
   const [userData, setUserData] = useState<any>(null);
   const [teamFormData, setTeamFormData] = useState<any>(null);
   const [waiverState, setWaiverState] = useState<any>(null);
@@ -196,24 +208,15 @@ export default function Dashboard() {
     };
   }
 
+  
+  // First useEffect to fetch and set schools data
   useEffect(() => {
-    async function fetchSchools() {
-      try {
-        const csvData = mlhSchools;
-        
-        const lines = csvData.split('\n').filter(line => line.trim() !== '');
-        
-        const schools = lines.map(line => line.trim().replace(/['"]/g, ''));
+    fetchAndSetData(mlhSchools, setSchools, "Error fetching or parsing schools data:");
+  }, []);
   
-        console.log(schools);
-  
-        setSchools(schools);
-      } catch (error) {
-        console.error("Error fetching or parsing schools data:", error);
-      }
-    }
-  
-    fetchSchools();
+  // Second useEffect to fetch and set countries data
+  useEffect(() => {
+    fetchAndSetData(countryConstants, setCountries, "Error fetching or parsing country data:");
   }, []);
 
   useEffect(() => {
@@ -673,6 +676,9 @@ export default function Dashboard() {
                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
 
                   >
+                  {countries.map((country, index) => (
+    <option key={index} value={country}>{country}</option>
+  ))}
 
 
 
