@@ -203,7 +203,7 @@ export default function Dashboard() {
         
         const lines = csvData.split('\n').filter(line => line.trim() !== '');
         
-        const schools = lines.map(line => line.trim());
+        const schools = lines.map(line => line.trim().replace(/['"]/g, ''));
   
         console.log(schools);
   
