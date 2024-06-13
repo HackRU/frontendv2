@@ -78,7 +78,11 @@ const logoImage = {
 
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
-async function fetchAndSetData(csvData, setData, errorMessage) {
+async function fetchAndSetData(
+  csvData: string, 
+  setData: (data: string[]) => void, 
+  errorMessage: string
+) {
   try {
     const lines = csvData.split('\n').filter(line => line.trim() !== '');
     const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
