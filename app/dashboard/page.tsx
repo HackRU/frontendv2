@@ -23,6 +23,7 @@ import ProfileHeader from './components/profileHeader';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 import PopupDialog from './components/dialog';
 import { parse } from 'papaparse';
+import { mlhSchools } from '../lib/constants.ts';
 
 
 
@@ -198,7 +199,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchSchools() {
       try {
-        const csvData = await fetch('http://localhost:3000/schools.csv').then((response) => response.text());
+        const csvData = mlhSchools;
         
         const lines = csvData.split('\n').filter(line => line.trim() !== '');
         
