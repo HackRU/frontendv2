@@ -78,19 +78,8 @@ const logoImage = {
 
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
-async function fetchAndSetData(
-  csvData: string, 
-  setData: (data: string[]) => void, 
-  errorMessage: string
-) {
-  try {
-    const lines = csvData.split('\n').filter(line => line.trim() !== '');
-    const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
-    setData(parsedData);
-  } catch (error) {
-    console.error(errorMessage, error);
-  }
-}
+
+
 
 export default function Dashboard() {
   const [schools, setSchools] = useState<string[]>([]);
@@ -212,15 +201,26 @@ export default function Dashboard() {
     };
   }
 
-  
+
   // First useEffect to fetch and set schools data
   useEffect(() => {
-    fetchAndSetData(mlhSchools, setSchools, "Error fetching or parsing schools data:");
+    try {
+      const lines = mlhSchools.split('\n').filter(line => line.trim() !== '');
+      const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
+      setSchools(parsedData);
+    } catch (error) {
+      console.error("Error fetching or parsing schools data:", error);
+    }
   }, []);
-  
-  // Second useEffect to fetch and set countries data
+
   useEffect(() => {
-    fetchAndSetData(countryConstants, setCountries, "Error fetching or parsing country data:");
+    try {
+      const lines = countryConstants.split('\n').filter(line => line.trim() !== '');
+      const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
+      setCountries(parsedData);
+    } catch (error) {
+      console.error("Error fetching or parsing country data:", error);
+    }
   }, []);
 
   useEffect(() => {
@@ -250,8 +250,6 @@ export default function Dashboard() {
     if (userData && userData.team_id) {
       setCurrentTeam(userData.team_id);
     }
-
-  
   }, [userData]);
 
   if (!userData) {
@@ -259,7 +257,7 @@ export default function Dashboard() {
       <HackerDashboardSkeleton />
     )
   }
-  
+
 
   if (!(userData instanceof Object)) {
     return (
@@ -551,21 +549,23 @@ export default function Dashboard() {
                   </select>
                   {errors.age && (<p className="text-xs italic text-red-500 mt-2">{errors.age?.message}</p>)}
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="school">School</Label>
-                  <select 
-                  id="school" value={userData?.school} {...register("school")} onChange={(e) => 
-                  setUserData({ ...userData, school: e.target.value })}
-                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
-                    >
-                      {schools.map((school, index) => (
-    <option key={index} value={school}>{school}</option>
-  ))}
-                      
-                     
+                  <select
+                    id="school"
+                    value={userData?.school}
+                    {...register("school")}
+                    onChange={(e) => setUserData({ ...userData, school: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                  >
+                    {schools.map((school, index) => (
+                      <option key={index} value={school}>{school}</option>
+                    ))}
 
-                    </select>
+
+
+                  </select>
                   {errors.school && (<p className="text-xs italic text-red-500 mt-2">{errors.school?.message}</p>)}
                 </div>
                 <div className="space-y-2">
@@ -615,41 +615,46 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="level-of-study">Level of Study</Label>
-                  <select 
-                  id="level-of-study" 
-                  value={userData?.level_of_study} {...register("level_of_study")} 
-                  onChange={(e) => setUserData({ ...userData, level_of_study: e.target.value })}
-                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                  <select
+                    id="level-of-study"
+                    value={userData?.level_of_study}
+                    {...register("level_of_study")}
+                    onChange={(e) => setUserData({ ...userData, level_of_study: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
 
                   >
-                   
-                  <option value = "Less than Secondary / High School">Less than Secondary / High School</option>
-                  <option value = "Secondary / High School">Secondary / High School</option>
-                  <option value = "Undergraduate University (2 year - community college or similar)">Undergraduate University (2 year - community college or similar)</option>
-                  <option value = "Undergraduate University (3+ year)">Undergraduate University (3+ year)</option>
-                  <option value = "Graduate University (Masters, Professional, Doctoral, etc)">Graduate University (Masters, Professional, Doctoral, etc)</option>
-                  <option value = "Code School / Bootcamp">Code School / Bootcamp</option>
-                  <option value = "Other Vocational / Trade Program or Apprenticeship">Other Vocational / Trade Program or Apprenticeship</option>
-                  <option value = "Post Doctorate">Post Doctorate</option>
-                  <option value = "Other">Other</option>
-                  <option value = "I'm not currently a student">I'm not currently a student</option>
-                  <option value = "Prefer not to answer">Prefer not to answer</option>
+
+                    <option value="Less than Secondary / High School">Less than Secondary / High School</option>
+                    <option value="Secondary / High School">Secondary / High School</option>
+                    <option value="Undergraduate University (2 year - community college or similar)">Undergraduate University (2 year - community college or similar)</option>
+                    <option value="Undergraduate University (3+ year)">Undergraduate University (3+ year)</option>
+                    <option value="Graduate University (Masters, Professional, Doctoral, etc)">Graduate University (Masters, Professional, Doctoral, etc)</option>
+                    <option value="Code School / Bootcamp">Code School / Bootcamp</option>
+                    <option value="Other Vocational / Trade Program or Apprenticeship">Other Vocational / Trade Program or Apprenticeship</option>
+                    <option value="Post Doctorate">Post Doctorate</option>
+                    <option value="Other">Other</option>
+                    <option value="I&apos;m not currently a student">I&apos;m not currently a student</option>
+                    <option value="Prefer not to answer">Prefer not to answer</option>
                   </select>
                   {errors.level_of_study && (<p className="text-xs italic text-red-500 mt-2">{errors.level_of_study?.message}</p>)}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="country-of-residence">Country of Residence</Label>
-                  <select id="country-of-residence" value={userData?.country_of_residence} {...register("country_of_residence")} onChange={(e) => setUserData({ ...userData, country_of_residence: e.target.value })}
-                   className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                  <select
+                    id="country-of-residence"
+                    value={userData?.country_of_residence}
+                    {...register("country_of_residence")}
+                    onChange={(e) => setUserData({ ...userData, country_of_residence: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
 
                   >
-                  {countries.map((country, index) => (
-    <option key={index} value={country}>{country}</option>
-  ))}
+                    {countries.map((country, index) => (
+                      <option key={index} value={country}>{country}</option>
+                    ))}
 
 
 
-                </select>
+                  </select>
                   {errors.country_of_residence && (<p className="text-xs italic text-red-500 mt-2">{errors.country_of_residence?.message}</p>)}
                 </div>
                 <div className="space-y-2">
