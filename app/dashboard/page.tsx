@@ -22,9 +22,8 @@ import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 import PopupDialog from './components/dialog';
-import { parse } from 'papaparse';
-import { mlhSchools } from '../lib/constants.ts';
-import { countries as countryConstants } from '../lib/constants.ts';
+import { mlhSchools } from '@/app/lib/constants';
+import { countries as countryConstants } from '@/app/lib/constants';
 
 
 
