@@ -22,6 +22,10 @@ import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 import PopupDialog from './components/dialog';
+import { mlhSchools } from '@/app/lib/constants';
+import { countries as countryConstants } from '@/app/lib/constants';
+
+
 
 let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
 const numOfMinsUntilTeamCreation = (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
@@ -38,7 +42,7 @@ const UserUpdateSchema = z.object({
   hackathon_count: z.number(),
   dietary_restrictions: z.string().min(1, "Field cannot be empty"),
   special_needs: z.string().min(1, "Field cannot be empty"),
-  date_of_birth: z.string().min(1, "Field cannot be empty"),
+  age: z.string().min(1, "Field cannot be empty"),
   school: z.string().min(1, "Field cannot be empty"),
   grad_year: z.string().min(1, "Field cannot be empty"),
   gender: z.string().min(1, "Field cannot be empty"),
@@ -70,9 +74,15 @@ const logoImage = {
 
 
 
+
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
+
+
+
 export default function Dashboard() {
+  const [schools, setSchools] = useState<string[]>([]);
+  const [countries, setCountries] = useState<string[]>([]);
   const [userData, setUserData] = useState<any>(null);
   const [teamFormData, setTeamFormData] = useState<any>(null);
   const [waiverState, setWaiverState] = useState<any>(null);
@@ -189,6 +199,29 @@ export default function Dashboard() {
       }
     };
   }
+
+
+  // First useEffect to fetch and set schools data
+  useEffect(() => {
+    try {
+      const lines = mlhSchools.split('\n').filter(line => line.trim() !== '');
+      const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
+      setSchools(parsedData);
+    } catch (error) {
+      console.error("Error fetching or parsing schools data:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const lines = countryConstants.split('\n').filter(line => line.trim() !== '');
+      const parsedData = lines.map(line => line.trim().replace(/['"]/g, ''));
+      setCountries(parsedData);
+    } catch (error) {
+      console.error("Error fetching or parsing country data:", error);
+    }
+  }, []);
+
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -223,6 +256,7 @@ export default function Dashboard() {
       <HackerDashboardSkeleton />
     )
   }
+
 
   if (!(userData instanceof Object)) {
     return (
@@ -468,7 +502,20 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="dietary-restrictions">Dietary Restrictions</Label>
-                  <Input id="dietary-restrictions" value={userData?.dietary_restrictions} {...register("dietary_restrictions")} onChange={(e) => setUserData({ ...userData, dietary_restrictions: e.target.value })} />
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.dietary_restrictions}
+                    {...register("dietary_restrictions")}
+                    onChange={(e) => setUserData({ ...userData, dietary_restrictions: e.target.value })}
+                  >
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Celiac Disease">Celiac Disease</option>
+                    <option value="Allergies">Allergies</option>
+                    <option value="Kosher">Kosher</option>
+                    <option value="Halal">Halal</option>
+                  </select>
                   {errors.dietary_restrictions && (<p className="text-xs italic text-red-500 mt-2">{errors.dietary_restrictions?.message}</p>)}
                 </div>
                 <div className="space-y-2">
@@ -477,18 +524,76 @@ export default function Dashboard() {
                   {errors.special_needs && (<p className="text-xs italic text-red-500 mt-2">{errors.special_needs?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dob">Date of Birth</Label>
-                  <Input type="date" max="2024-01-01" id="dob" value={userData?.date_of_birth} {...register("date_of_birth")} onChange={(e) => setUserData({ ...userData, date_of_birth: e.target.value })} />
-                  {errors.date_of_birth && (<p className="text-xs italic text-red-500 mt-2">{errors.date_of_birth?.message}</p>)}
+                  <Label htmlFor="dob">Age</Label>
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.age}
+                    {...register("age")}
+                    onChange={(e) => setUserData({ ...userData, age: e.target.value })}
+                  >
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                  </select>
+                  {errors.age && (<p className="text-xs italic text-red-500 mt-2">{errors.age?.message}</p>)}
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="school">School</Label>
-                  <Input id="school" value={userData?.school} {...register("school")} onChange={(e) => setUserData({ ...userData, school: e.target.value })} />
+                  <select
+                    id="school"
+                    value={userData?.school}
+                    {...register("school")}
+                    onChange={(e) => setUserData({ ...userData, school: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                  >
+                    {schools.map((school, index) => (
+                      <option key={index} value={school}>{school}</option>
+                    ))}
+
+
+
+                  </select>
                   {errors.school && (<p className="text-xs italic text-red-500 mt-2">{errors.school?.message}</p>)}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="grad-year">Grad Year</Label>
-                  <Input type="number" id="grad-year" value={userData?.grad_year} {...register("grad_year")} onChange={(e) => setUserData({ ...userData, grad_year: e.target.value })} />
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.grad_year}
+                    {...register("grad_year")}
+                    onChange={(e) => setUserData({ ...userData, grad_year: e.target.value })}
+                  >
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <option value="2032">2032</option>
+                    <option value="2033">2033</option>
+                    <option value="2034">2034</option>
+                    <option value="2035">2035</option>
+                    <option value="2036">2036</option>
+                    <option value="2037">2037</option>
+                    <option value="2038">2038</option>
+                    <option value="2039">2039</option>
+                    <option value="2040">2040</option>
+                  </select>
                   {errors.grad_year && (<p className="text-xs italic text-red-500 mt-2">{errors.grad_year?.message}</p>)}
                 </div>
                 <div className="space-y-2">
@@ -509,12 +614,46 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="level-of-study">Level of Study</Label>
-                  <Input id="level-of-study" value={userData?.level_of_study} {...register("level_of_study")} onChange={(e) => setUserData({ ...userData, level_of_study: e.target.value })} />
+                  <select
+                    id="level-of-study"
+                    value={userData?.level_of_study}
+                    {...register("level_of_study")}
+                    onChange={(e) => setUserData({ ...userData, level_of_study: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+
+                  >
+
+                    <option value="Less than Secondary / High School">Less than Secondary / High School</option>
+                    <option value="Secondary / High School">Secondary / High School</option>
+                    <option value="Undergraduate University (2 year - community college or similar)">Undergraduate University (2 year - community college or similar)</option>
+                    <option value="Undergraduate University (3+ year)">Undergraduate University (3+ year)</option>
+                    <option value="Graduate University (Masters, Professional, Doctoral, etc)">Graduate University (Masters, Professional, Doctoral, etc)</option>
+                    <option value="Code School / Bootcamp">Code School / Bootcamp</option>
+                    <option value="Other Vocational / Trade Program or Apprenticeship">Other Vocational / Trade Program or Apprenticeship</option>
+                    <option value="Post Doctorate">Post Doctorate</option>
+                    <option value="Other">Other</option>
+                    <option value="I&apos;m not currently a student">I&apos;m not currently a student</option>
+                    <option value="Prefer not to answer">Prefer not to answer</option>
+                  </select>
                   {errors.level_of_study && (<p className="text-xs italic text-red-500 mt-2">{errors.level_of_study?.message}</p>)}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="country-of-residence">Country of Residence</Label>
-                  <Input id="country-of-residence" value={userData?.country_of_residence} {...register("country_of_residence")} onChange={(e) => setUserData({ ...userData, country_of_residence: e.target.value })} />
+                  <select
+                    id="country-of-residence"
+                    value={userData?.country_of_residence}
+                    {...register("country_of_residence")}
+                    onChange={(e) => setUserData({ ...userData, country_of_residence: e.target.value })}
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+
+                  >
+                    {countries.map((country, index) => (
+                      <option key={index} value={country}>{country}</option>
+                    ))}
+
+
+
+                  </select>
                   {errors.country_of_residence && (<p className="text-xs italic text-red-500 mt-2">{errors.country_of_residence?.message}</p>)}
                 </div>
                 <div className="space-y-2">
@@ -538,7 +677,25 @@ export default function Dashboard() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="hackathon-count">Hackathon Count</Label>
-                  <Input type="number" id="hackathon-count" value={userData?.hackathon_count} {...register("hackathon_count", { valueAsNumber: true })} onChange={(e) => setUserData({ ...userData, hackathon_count: e.target.value })} />
+                  <select
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    id="shirt-size"
+                    value={userData?.hackathon_count}
+                    {...register("hackathon_count")}
+                    onChange={(e) => setUserData({ ...userData, hackathon_count: e.target.value })}
+                  >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
                   {errors.hackathon_count && (<p className="text-xs italic text-red-500 mt-2">{errors.hackathon_count?.message}</p>)}
                 </div>
                 <div className="space-y-2">
