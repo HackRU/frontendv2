@@ -33,7 +33,7 @@ export default async function Page() {
           </Suspense>
         </GenericSection>
         <GenericSection title="Sponsors">
-          <Sponsors />
+          {/* <Sponsors /> */}
         </GenericSection>
         <GenericSection title="FAQ" color="from-dark_blue_figma">
           <FAQ />
