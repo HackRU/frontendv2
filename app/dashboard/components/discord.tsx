@@ -58,6 +58,7 @@ export default function DiscordAuth(props: {
   return (
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
+          {(<p className="text-xs italic mt-2">{userData.discord.username}</p>)}
           <Button className={`mt-4 justify-center ${discordAuth?"bg-green-400":"bg-red-400 disabled:bg-slate-400"} `} onClick={() => getOAuth()}>Verify Discord Account</Button>
         </div>
   );
