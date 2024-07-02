@@ -20,7 +20,6 @@ export default function DiscordAuth(props: {
   const [submit_errors, setErrors] = useState<string | undefined>("");
 
   const [discordAuth, setdiscordAuth] = useState<Boolean>(userData.discord.user_id != '');
-  const [hackruRole, sethackruRole] = useState<Boolean>(false);
 
 
   const router = useRouter();
@@ -49,13 +48,6 @@ export default function DiscordAuth(props: {
     }
   }
 
-  const getRole = async () =>{
-    if (!hackruRole){
-      console.log("Go green")
-      sethackruRole(true);
-    }
-  }
-
   useEffect(() => {
     setHackRU();
   }, []);
@@ -67,7 +59,6 @@ export default function DiscordAuth(props: {
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <Button className={`mt-4 justify-center ${discordAuth?"bg-green-400":"bg-red-400 disabled:bg-slate-400"} `} onClick={() => getOAuth()}>Verify Discord Account</Button>
-          <Button disabled = {!discordAuth} className={`mt-4 justify-center ${hackruRole?"bg-green-400":"bg-red-400 disabled:bg-slate-400"}`} onClick={() => getRole()}>Get Role for HACKRU </Button>
         </div>
   );
 }
