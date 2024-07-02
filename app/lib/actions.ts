@@ -8,7 +8,7 @@ import { AuthError } from 'next-auth';
 import { auth } from '../../auth';
 
 import { redirect } from 'next/navigation';
-import { BASE } from './definitions';
+import { BASE, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from './definitions';
 import { TeamSubmit } from '../dashboard/page';
 
 const ENDPOINTS = {
@@ -51,6 +51,11 @@ const ENDPOINTS = {
    * Create a team
    */
   makeTeam: BASE + '/make-teams',
+
+  /**
+   * get discord auth token, then send that to backend to set a role
+   */
+  discord: BASE + '/discord',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -108,10 +113,10 @@ export async function authUser(email: string, password: string) {
     if (resJSON.statusCode === 403) {
       resp.error = 'Invalid email or password';
     } else if (resJSON.statusCode === 200) {
-      resp.response = resJSON.body.token;
+      resp.response = resJSON.token;
     } else {
-      if (resJSON.body) {
-        resp.error = resJSON.body;
+      if (resJSON.message) {
+        resp.error = resJSON.message;
       } else {
         resp.error = 'Unexpected Error';
       }
@@ -172,7 +177,7 @@ export async function SignUp(
       .then(async (res) => {
         let res_json = await res.json();
         if (res_json.statusCode === 400) {
-          resp.error = 'User with email ' + email + ' already exists';
+          resp.error = res_json.message
         } else if (res_json.statusCode === 200) {
           // Set the first and last name
           let data = res_json.body;
@@ -727,4 +732,53 @@ export async function UploadTeamSubmission(
     team_id: json.body?.team_id,
     response_code: 200,
   };
+}
+
+export async function getOAuthUrl() {
+  const state = crypto.randomUUID();
+
+  const url = new URL('https://discord.com/api/oauth2/authorize');
+  url.searchParams.set('client_id', DISCORD_CLIENT_ID);
+  url.searchParams.set('redirect_uri', DISCORD_REDIRECT_URI);
+  url.searchParams.set('response_type', 'code');
+  url.searchParams.set('state', state);
+  url.searchParams.set('scope', 'role_connections.write identify');
+  url.searchParams.set('prompt', 'consent');
+  return { state, url: url.toString() };
+}
+
+export async function setDiscord(code:string) {
+  noStore();
+  const session = await auth();
+  let resp = {
+    error: '',
+    response: '',
+  };
+  if (session?.user) {
+
+    const json = await fetch(ENDPOINTS.discord, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        token: session.user.name,
+        code: code,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (resJSON.statusCode === 200) {
+        resp.response = resJSON.message;
+      } else {
+        if (resJSON.message) {
+          resp.error = resJSON.message;
+        } else {
+          resp.error = 'Unexpected Error';
+        }
+      }
+    });
+  
+    return resp;
+  }
 }

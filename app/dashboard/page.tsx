@@ -20,10 +20,13 @@ import { set, z } from 'zod';
 import Cursor from '../ui/cursor';
 import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
+import DiscordAuth from './components/discord';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 import PopupDialog from './components/dialog';
 import { mlhSchools } from '@/app/lib/constants';
 import { countries as countryConstants } from '@/app/lib/constants';
+
+import { useSearchParams } from 'next/navigation'
 
 
 
@@ -104,6 +107,10 @@ export default function Dashboard() {
 
   const [waiverFile, setWaiverFile] = useState<File | null>(null);
   const [resumeExists, setResumeExists] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  console.log(searchParams.get('code'));
+  
 
   const onTeamSubmit = async (data: TeamSubmit) => {
     setSubmittingTeamForm(true);
@@ -225,16 +232,61 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const data = await getSelf();
-        setUserData(data.response);
-        const resumeInfo = await GetResume();
-        if (resumeInfo.exists) {
-          setResumeExists(true);
-        }
+        // const data = await getSelf();
+        // setUserData(data.response);
+        // const resumeInfo = await GetResume();
+        // if (resumeInfo.exists) {
+        //   setResumeExists(true);
+        // }
 
-        const haswaiver = await GetWaiverInfo();
-        setWaiverState(haswaiver.exists);
-        //   setLoading(false);
+        // const haswaiver = await GetWaiverInfo();
+        // setWaiverState(haswaiver.exists);
+        // //   setLoading(false);
+        setUserData( {
+          email:"test@test.org",
+          role: {
+            hacker: true,
+            volunteer: false,
+            judge: false,
+            sponsor: false,
+            mentor: false,
+            organizer: false,
+            director: false,
+          },
+          votes: 0,
+          github: 'testgithub',
+          major: 'Computer Science',
+          short_answer: 'Things',
+          shirt_size: 'Unisex M',
+          first_name: 'Test',
+          last_name: 'User',
+          dietary_restrictions: '',
+          special_needs: 'No',
+          date_of_birth: '2000-01-01',
+          school: 'Rutgers, The State University of New Jersey',
+          grad_year: '2026',
+          gender: 'Prefer not to say',
+          registration_status: 'unregistered',
+          level_of_study: 'University (Undergraduate)',
+          day_of: {
+            checkIn: false,
+          },
+          token: ['faketoken'],
+          country_of_residence: 'US',
+          ethnicity: 'Prefer not to say',
+          hackathon_count: '1',
+          phone_number: '1234567890',
+          how_you_heard_about_hackru: 'Mailing List',
+          reasons: 'Learn new skills',
+          discord: {
+            user_id: '',
+            username: '',
+            access_token: '',
+            refresh_token: '',
+            expires_at: 0,
+          },
+        }
+      )
       } catch (error) {
         console.log(error);
       }
@@ -272,6 +324,8 @@ export default function Dashboard() {
       </main>
     );
   }
+
+  
 
 
 
@@ -412,6 +466,20 @@ export default function Dashboard() {
               <div className="flex flex-col items-center justify-center space-y-4 bg-white p-4 rounded-md">
                 <QRCode value={userData?.email} size={256} />
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <div className="flex flex-col ">
+                <div className='flex flex-col'>
+                  <CardTitle>Discord</CardTitle>
+                  <CardDescription>Use this to join our Discord!</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <DiscordAuth userData={userData} code ={searchParams.get('code')}/>
             </CardContent>
           </Card>
 
