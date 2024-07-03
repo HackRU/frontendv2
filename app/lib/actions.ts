@@ -765,6 +765,8 @@ export async function setDiscord(code:string) {
         email: session.user.email,
         token: session.user.name,
         code: code,
+        redirect_uri: DISCORD_REDIRECT_URI,
+
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
