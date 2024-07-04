@@ -144,7 +144,7 @@ export default function Dashboard() {
     const { resume, ...otherData } = data;
 
     const fileList = resume as FileList;
-    if (fileList.length === 0) {
+    if (fileList.length === 1) {
       const pdf = fileList[0];
 
       const resumeData = new FormData();
@@ -234,7 +234,7 @@ export default function Dashboard() {
         const data = await getSelf();
         setUserData(data.response);
         const resumeInfo = await GetResume();
-        if (resumeInfo?.exists) {
+        if (resumeInfo?.response.url === "") {
           setResumeExists(true);
         }
 

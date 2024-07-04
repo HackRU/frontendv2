@@ -319,8 +319,6 @@ export async function SetUser(data: any, user_email_to_update: string) {
     })
       .then(async (res) => {
         let resJSON = await res.json();
-        console.log("resp")
-        console.log(resJSON)
         if (resJSON.statusCode !== 200) {
           if (resJSON.body) {
             resp.error = resJSON.body;
@@ -510,6 +508,10 @@ export async function UploadWaiver(file: FormData) {
 
 export async function GetResume() {
   noStore();
+  let resp = {
+    error: '',
+    response: {url: '', message: ''},
+  };
   const session = await auth();
   if (session?.user) {
     const json = await fetch(ENDPOINTS.resume, {
@@ -521,8 +523,19 @@ export async function GetResume() {
         email: session.user.email,
         auth_token: session.user.name,
       }),
-    }).then((res) => res.json());
-    return json.body;
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      console.log("RESUME1")
+      console.log(resJSON)
+      console.log(res.status)
+      if (res.status !==  200) {
+        resp.error = 'Error Uploading Resume';
+      } else {
+        resp.response = resJSON;
+      }
+    });
+    return resp;
+    
   }
 }
 
@@ -535,14 +548,16 @@ export async function UploadResume(file: FormData) {
   const info = await GetResume();
   const pdf = file.get('file');
 
-  await fetch(info.upload, {
+  await fetch(info.response.url, {
     method: 'PUT',
     headers: {
       'content-type': 'application/pdf',
     },
     body: pdf,
   }).then(async (res) => {
-    console.log(res.status);
+    console.log("RESUME UPLOADED")
+    console.log(res.status)
+    console.log(res)
     if (res.status !== 200) {
       resp.error = 'Error Uploading Waiver';
     } else {
@@ -770,8 +785,6 @@ export async function setDiscord(userCode:string) {
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
-      console.log("DISCOIRd")
-      console.log(resJSON)
       if (resJSON.statusCode === 200) {
         resp.response = resJSON.message;
       } else {

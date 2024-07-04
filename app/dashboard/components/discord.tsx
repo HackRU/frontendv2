@@ -36,7 +36,6 @@ export default function DiscordAuth(props: {
   }
   
   const setHackRU = async () =>{
-    console.log("Things")
     if (code != null){
       console.log("SEND REQUEST")
       //setdiscordAuth(true);
