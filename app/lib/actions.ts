@@ -197,7 +197,7 @@ export async function SignUp(
               },
               user_email: email,
               auth_email: email,
-              token: token,
+              auth_token: token,
             }),
           })
             .then(async (res) => {
@@ -268,17 +268,15 @@ export async function GetUser(email: string) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        email: session.user.email,
-        token: session.user.name,
-        query: {
-          email: email,
-        },
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+        email: email,
       }),
     })
       .then(async (res) => {
         let res_json = await res.json();
-        if (res_json.statusCode === 200) {
-          resp.response = res_json.body[0];
+        if (res_json.error != '' ) {
+          resp.response = res_json
         } else {
           if (res_json.body) {
             resp.response = res_json.body;
@@ -316,11 +314,13 @@ export async function SetUser(data: any, user_email_to_update: string) {
         },
         user_email: user_email_to_update,
         auth_email: session.user.email,
-        token: session.user.name,
+        auth_token: session.user.name,
       }),
     })
       .then(async (res) => {
         let resJSON = await res.json();
+        console.log("resp")
+        console.log(resJSON)
         if (resJSON.statusCode !== 200) {
           if (resJSON.body) {
             resp.error = resJSON.body;
@@ -476,7 +476,7 @@ export async function GetWaiverInfo() {
       },
       body: JSON.stringify({
         email: session.user.email,
-        token: session.user.name,
+        auth_token: session.user.name,
       }),
     }).then((res) => res.json());
     return json.body;
@@ -519,7 +519,7 @@ export async function GetResume() {
       },
       body: JSON.stringify({
         email: session.user.email,
-        token: session.user.name,
+        auth_token: session.user.name,
       }),
     }).then((res) => res.json());
     return json.body;
@@ -586,7 +586,7 @@ export async function AttendEventScan(
 
     const body = {
       auth_email: email,
-      token: name,
+      auth_token: name,
       qr: scannedEmail,
       event: event,
       again: again,
@@ -747,7 +747,7 @@ export async function getOAuthUrl() {
   return { state, url: url.toString() };
 }
 
-export async function setDiscord(code:string) {
+export async function setDiscord(userCode:string) {
   noStore();
   const session = await auth();
   let resp = {
@@ -763,13 +763,15 @@ export async function setDiscord(code:string) {
       },
       body: JSON.stringify({
         email: session.user.email,
-        token: session.user.name,
-        code: code,
+        auth_token: session.user.name,
+        code: userCode,
         redirect_uri: DISCORD_REDIRECT_URI,
 
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
+      console.log("DISCOIRd")
+      console.log(resJSON)
       if (resJSON.statusCode === 200) {
         resp.response = resJSON.message;
       } else {

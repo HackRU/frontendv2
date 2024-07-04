@@ -42,7 +42,7 @@ const UserUpdateSchema = z.object({
   major: z.string().min(1, "Field cannot be empty"),
   short_answer: z.string().min(1, "Field cannot be empty"),
   shirt_size: z.string().min(1, "Field cannot be empty"),
-  hackathon_count: z.number(),
+  hackathon_count: z.string().min(1, "Field cannot be empty"),
   dietary_restrictions: z.string().min(1, "Field cannot be empty"),
   special_needs: z.string().min(1, "Field cannot be empty"),
   age: z.string().min(1, "Field cannot be empty"),
@@ -109,7 +109,6 @@ export default function Dashboard() {
   const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
-  console.log(searchParams.get('code'));
   
 
   const onTeamSubmit = async (data: TeamSubmit) => {
@@ -232,61 +231,17 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        // const data = await getSelf();
-        // setUserData(data.response);
-        // const resumeInfo = await GetResume();
-        // if (resumeInfo.exists) {
-        //   setResumeExists(true);
-        // }
-
-        // const haswaiver = await GetWaiverInfo();
-        // setWaiverState(haswaiver.exists);
-        // //   setLoading(false);
-        setUserData( {
-          email:"test@test.org",
-          role: {
-            hacker: true,
-            volunteer: false,
-            judge: false,
-            sponsor: false,
-            mentor: false,
-            organizer: false,
-            director: false,
-          },
-          votes: 0,
-          github: 'testgithub',
-          major: 'Computer Science',
-          short_answer: 'Things',
-          shirt_size: 'Unisex M',
-          first_name: 'Test',
-          last_name: 'User',
-          dietary_restrictions: '',
-          special_needs: 'No',
-          date_of_birth: '2000-01-01',
-          school: 'Rutgers, The State University of New Jersey',
-          grad_year: '2026',
-          gender: 'Prefer not to say',
-          registration_status: 'unregistered',
-          level_of_study: 'University (Undergraduate)',
-          day_of: {
-            checkIn: false,
-          },
-          token: ['faketoken'],
-          country_of_residence: 'US',
-          ethnicity: 'Prefer not to say',
-          hackathon_count: '1',
-          phone_number: '1234567890',
-          how_you_heard_about_hackru: 'Mailing List',
-          reasons: 'Learn new skills',
-          discord: {
-            user_id: '',
-            username: '',
-            access_token: '',
-            refresh_token: '',
-            expires_at: 0,
-          },
+        const data = await getSelf();
+        setUserData(data.response);
+        const resumeInfo = await GetResume();
+        if (resumeInfo?.exists) {
+          setResumeExists(true);
         }
-      )
+
+        const haswaiver = await GetWaiverInfo();
+        setWaiverState(haswaiver?.exists);
+        //   setLoading(false);
+        
       } catch (error) {
         console.log(error);
       }
@@ -326,7 +281,6 @@ export default function Dashboard() {
   }
 
   
-
 
 
   if (userData?.role['organizer']) {
@@ -516,6 +470,7 @@ export default function Dashboard() {
                     type="file"
                     id="resume"
                     accept="application/pdf"
+                    required = {!resumeExists}
                     {...register("resume")}
                     onChange={(e) => {
                       setUserData({ ...userData, resume: e.target.value });
