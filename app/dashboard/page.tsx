@@ -20,10 +20,13 @@ import { set, z } from 'zod';
 import Cursor from '../ui/cursor';
 import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
 import ProfileHeader from './components/profileHeader';
+import DiscordAuth from './components/discord';
 import DashboardSkeleton, { HackerDashboardSkeleton } from '../ui/skeletons';
 import PopupDialog from './components/dialog';
 import { mlhSchools } from '@/app/lib/constants';
 import { countries as countryConstants } from '@/app/lib/constants';
+
+import { useSearchParams } from 'next/navigation'
 
 
 
@@ -39,7 +42,7 @@ const UserUpdateSchema = z.object({
   major: z.string().min(1, "Field cannot be empty"),
   short_answer: z.string().min(1, "Field cannot be empty"),
   shirt_size: z.string().min(1, "Field cannot be empty"),
-  hackathon_count: z.number(),
+  hackathon_count: z.string().min(1, "Field cannot be empty"),
   dietary_restrictions: z.string().min(1, "Field cannot be empty"),
   special_needs: z.string().min(1, "Field cannot be empty"),
   age: z.string().min(1, "Field cannot be empty"),
@@ -104,6 +107,9 @@ export default function Dashboard() {
 
   const [waiverFile, setWaiverFile] = useState<File | null>(null);
   const [resumeExists, setResumeExists] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  
 
   const onTeamSubmit = async (data: TeamSubmit) => {
     setSubmittingTeamForm(true);
@@ -228,13 +234,14 @@ export default function Dashboard() {
         const data = await getSelf();
         setUserData(data.response);
         const resumeInfo = await GetResume();
-        if (resumeInfo.exists) {
+        if (resumeInfo?.exists) {
           setResumeExists(true);
         }
 
         const haswaiver = await GetWaiverInfo();
-        setWaiverState(haswaiver.exists);
+        setWaiverState(haswaiver?.exists);
         //   setLoading(false);
+        
       } catch (error) {
         console.log(error);
       }
@@ -273,6 +280,7 @@ export default function Dashboard() {
     );
   }
 
+  
 
 
   if (userData?.role['organizer']) {
@@ -416,6 +424,20 @@ export default function Dashboard() {
           </Card>
 
           <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <div className="flex flex-col ">
+                <div className='flex flex-col'>
+                  <CardTitle>Discord</CardTitle>
+                  <CardDescription>Use this to join our Discord!</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <DiscordAuth userData={userData} code ={searchParams.get('code')}/>
+            </CardContent>
+          </Card>
+
+          <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
               <CardHeader>
                 <div className="flex flex-row items-center justify-center">
@@ -448,6 +470,7 @@ export default function Dashboard() {
                     type="file"
                     id="resume"
                     accept="application/pdf"
+                    required = {!resumeExists}
                     {...register("resume")}
                     onChange={(e) => {
                       setUserData({ ...userData, resume: e.target.value });
