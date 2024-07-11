@@ -186,7 +186,7 @@ export default function About() {
         >
           <div className="pb-6 pt-6">
             <p className="inline font-bold">Apply</p>
-            <p className="inline"> to attend our</p>
+            <p className="inline"> to attend our </p>
             <p className="inline font-bold">Fall 2024 HackRU!</p>
             <p className="inline"> The event will be on</p>
             <p className="inline font-bold"> October 26th-27th</p>
