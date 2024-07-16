@@ -428,7 +428,7 @@ export default function Dashboard() {
               <div className="flex flex-col ">
                 <div className='flex flex-col'>
                   <CardTitle>Discord</CardTitle>
-                  <CardDescription>Use this to validate your HACKRU account with your Discord Account! If you don't validate with discord by the time of hackathon, you will not have write access to the server and can only view things that are happening</CardDescription>
+                  <CardDescription>Use this to validate your HACKRU account with your Discord Account! If you do not validate with discord by the time of hackathon, you will not have write access to the server and can only view things that are happening</CardDescription>
                 </div>
               </div>
             </CardHeader>
