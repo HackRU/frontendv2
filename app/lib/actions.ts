@@ -547,23 +547,26 @@ export async function UploadResume(file: FormData) {
   noStore();
   const info = await GetResume();
   const pdf = file.get('file');
+  if (info != null){
+    await fetch(info.response.url, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/pdf',
+      },
+      body: pdf,
+    }).then(async (res) => {
+      console.log("RESUME UPLOADED")
+      console.log(res.status)
+      console.log(res)
+      if (res.status !== 200) {
+        resp.error = 'Error Uploading Waiver';
+      } else {
+        resp.response = 'Waiver Uploaded';
+      }
+    });
+  }
 
-  await fetch(info.response.url, {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/pdf',
-    },
-    body: pdf,
-  }).then(async (res) => {
-    console.log("RESUME UPLOADED")
-    console.log(res.status)
-    console.log(res)
-    if (res.status !== 200) {
-      resp.error = 'Error Uploading Waiver';
-    } else {
-      resp.response = 'Waiver Uploaded';
-    }
-  });
+  
   return resp;
 }
 
