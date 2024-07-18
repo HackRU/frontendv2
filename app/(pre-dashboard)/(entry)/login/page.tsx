@@ -96,6 +96,7 @@ export default function LoginPage() {
           </div>
           <Button className="mt-4 justify-center" type="submit">Log in</Button>
           <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
+          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/forgot')}>Forgot Password? Reset it Here!</p>
         </div>
       </form>
     </main>

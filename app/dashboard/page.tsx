@@ -150,6 +150,8 @@ export default function Dashboard() {
       const resumeData = new FormData();
       resumeData.set('file', pdf as File);
       const resp = await UploadResume(resumeData);
+      console.log("RESUME UPLOAD FROM DASHBOARD")
+      console.log(resp)
 
       if (resp.error.length > 0) {
         alert("There was an error uploading your resume. Please try again. If the problem persists, please email rnd@hackru.org");

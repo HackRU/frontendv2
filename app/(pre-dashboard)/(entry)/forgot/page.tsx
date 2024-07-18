@@ -37,7 +37,7 @@ export default function SignupPage() {
 
 
   return (
-    <main className="flex items-center justify-center md:h-screen">
+    <main className="flex items-center justify-center md:h-screen w-screen">
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}

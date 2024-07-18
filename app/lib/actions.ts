@@ -28,11 +28,11 @@ const ENDPOINTS = {
   /**
    * Create forgot magic link to reset password
    */
-  forgot: BASE + '/createmagiclink',
+  forgot: BASE + '/forgot-password',
   /**
    * Reset password from magic link to reset password
    */
-  resetpassword: BASE + '/consume',
+  resetpassword: BASE + '/reset-password',
   /**
    * Digest magic links
    */
@@ -172,74 +172,39 @@ export async function SignUp(
         email: email,
         password: password,
         registration_status: 'unregistered', //"waitlist" is one of them
+        first_name: firstname,
+        last_name: lastname,
       }),
     })
       .then(async (res) => {
-        let res_json = await res.json();
-        if (res_json.statusCode === 400) {
-          resp.error = res_json.message
-        } else if (res_json.statusCode === 200) {
-          // Set the first and last name
-          let data = res_json.body;
-          let token = data.token;
-
-          await fetch(ENDPOINTS.update, {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-              updates: {
-                $set: {
-                  first_name: firstname,
-                  last_name: lastname,
-                },
-              },
-              user_email: email,
-              auth_email: email,
-              auth_token: token,
-            }),
-          })
-            .then(async (res) => {
-              let res_json = await res.json();
-              if (res_json.statusCode === 200) {
-                resp.response = '200';
-                try {
-                  await signIn('credentials', {
-                    email: email,
-                    password: password,
-                    redirectTo: '/dashboard',
-                  });
-                } catch (error) {
-                  if (error instanceof AuthError) {
-                    switch (error.type) {
-                      case 'CredentialsSignin':
-                        resp.error = 'Invalid credentials.';
-                      default:
-                        resp.error = 'Something went wrong.';
-                    }
-                  }
-                }
-              } else {
-                if (res_json.body) {
-                  resp.error = res_json.body;
-                } else {
-                  resp.error = 'Unexpected Error';
-                }
-              }
-            })
-            .catch((error) => {
-              resp.error =
-                error +
-                '; An error occured when attempting signup. Failed at 2/2';
-            });
-        } else {
-          if (res_json.body) {
-            resp.error = res_json.body;
-          } else {
-            resp.error = 'Unexpected Error';
+      let res_json = await res.json();
+      
+      if (res_json.statusCode === 200) {
+        resp.response = '200';
+        try {
+          await signIn('credentials', {
+            email: email,
+            password: password,
+            redirectTo: '/dashboard',
+          });
+        } catch (error) {
+          if (error instanceof AuthError) {
+            switch (error.type) {
+              case 'CredentialsSignin':
+                resp.error = 'Invalid credentials.';
+              default:
+                resp.error = 'Something went wrong.';
+            }
           }
         }
+      } else {
+        if (res_json.body) {
+          resp.error = res_json.body;
+        } else {
+          resp.error = 'Unexpected Error';
+        }
+      }
+        
       })
       .catch((error) => {
         resp.error =
@@ -360,11 +325,12 @@ export async function Forgot(email: string) {
         },
         body: JSON.stringify({
           email: email,
-          forgot: true,
         }),
       })
         .then(async (res) => {
           let resJSON = await res.json();
+          console.log("FORGOT")
+          console.log(resJSON)
           if (resJSON.statusCode === 200) {
             return resp;
           } else {
@@ -409,13 +375,13 @@ export async function Reset(
       },
       body: JSON.stringify({
         email: email,
-        forgot: true,
-        password: password,
-        link: magic,
+        new_password: password,
+        reset_token: magic,
       }),
     })
       .then(async (res) => {
         let resJSON = await res.json();
+        console.log(resJSON)
         if (resJSON.statusCode !== 200) {
           if (resJSON.body) {
             resp.error = resJSON.body;
@@ -525,9 +491,6 @@ export async function GetResume() {
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
-      console.log("RESUME1")
-      console.log(resJSON)
-      console.log(res.status)
       if (res.status !==  200) {
         resp.error = 'Error Uploading Resume';
       } else {
