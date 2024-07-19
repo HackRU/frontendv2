@@ -55,7 +55,7 @@ export default function LoginPage() {
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
-          <p className = "text-s italic text-grey-500 mt-5">Press Login or Press Enter to Login</p>
+          <p className = "text-s italic text-grey-500">Press Login or Press Enter to Login</p>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
