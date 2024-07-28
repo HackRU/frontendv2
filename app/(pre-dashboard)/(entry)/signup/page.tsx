@@ -65,7 +65,7 @@ export default function SignupPage() {
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 ">{submit_errors}</p>)}
           <div>
-          <p className = "text-s italic text-grey-500">Press Login Button or Enter to Sign up</p>
+          <p className = "text-s italic text-grey-500">Press Sign up Button or Enter to Sign up</p>
             <label
               className="mb-3 mt-4 block text-xs font-medium text-gray-900"
               htmlFor="email"
