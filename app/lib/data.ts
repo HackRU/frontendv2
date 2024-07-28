@@ -153,9 +153,6 @@ export async function getSelf(): Promise<{
 }
 
 export async function UpdateSelf(data: any): Promise<string> {
-  console.log(data);
-  console.log('updating self');
-
   const session = await auth();
 
   if (session?.user && session?.user?.email) {

@@ -55,6 +55,7 @@ export default function LoginPage() {
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
+          <p className = "text-s italic text-grey-200">Press Login or Press Enter to Login</p>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
@@ -96,6 +97,7 @@ export default function LoginPage() {
           </div>
           <Button className="mt-4 justify-center" type="submit">Log in</Button>
           <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
+          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/forgot')}>Forgot Password? Reset it Here!</p>
         </div>
       </form>
     </main>

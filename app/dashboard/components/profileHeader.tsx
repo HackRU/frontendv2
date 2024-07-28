@@ -91,11 +91,7 @@ export default function ProfileHeader(props: {
                   <input type="checkbox" className="rounded text-pink-500 mr-3" required />
                   <p>I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the{" "}
                     <a className="text-blue-300 hover:text-blue-500" href="https://mlh.io/privacy" rel="noopener noreferrer" target="_blank">MLH Privacy Policy</a>
-                  </p>
-                </div>
-                <div className="flex flex-row items-center justify-left">
-                  <input type="checkbox" className="rounded text-pink-500 mr-3" required />
-                  <p> Further, I agree to the terms of both the{" "}
+                    . Further, I agree to the terms of both the{" "}
                     <a
                       className="text-blue-300 hover:text-blue-500"
                       href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md"
@@ -107,7 +103,12 @@ export default function ProfileHeader(props: {
                       href="https://mlh.io/privacy"
                       rel="noopener noreferrer"
                       target="_blank"
-                    >MLH Privacy Policy</a></p>
+                    >MLH Privacy Policy</a>
+                  </p>
+                </div>
+                <div className="flex flex-row items-center justify-left">
+                  <input type="checkbox" className="rounded text-pink-500 mr-3" onChange={(e) => userData.opt_in = e.target.checked} />  
+                  <p>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</p>
                 </div>
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>Unregistered</CardTitle>

@@ -38,6 +38,8 @@ export default function SignupPage() {
   const pathname = usePathname();
   const arr = pathname.split("magic/")
 
+  console.log(arr[1])
+
   const onSubmit = async (data: SignUp) => {
     console.log("SENDING Reset");
     console.log(data);
@@ -51,7 +53,7 @@ export default function SignupPage() {
 
 
   return (
-    <main className="flex items-center justify-center md:h-screen">
+    <main className="flex items-center justify-center md:h-screen w-screen">
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}

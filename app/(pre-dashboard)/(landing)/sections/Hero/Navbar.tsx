@@ -23,8 +23,9 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -41,8 +42,9 @@ function OtherPageMenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
             history.push('/contact');
@@ -59,10 +61,11 @@ function CollapsedMenu() {
   const pathname = usePathname();
   return (
     <div
-      className={clsx("bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden",
+      className={clsx(
+        'bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden',
         {
-          "hidden": pathname !== '/'
-        }
+          hidden: pathname !== '/',
+        },
       )}
     >
       <Menu as="div" className="relative inline-block text-left">
@@ -86,6 +89,7 @@ function CollapsedMenu() {
               <MenuItem sectionName="About" />
               <MenuItem sectionName="Schedule" />
               <MenuItem sectionName="FAQ" />
+              <MenuItem sectionName="Team" />
               {/* <MenuItem sectionName="Sponsors" /> */}
               {<OtherPageMenuItem sectionName="Contact" />}
             </div>
@@ -104,10 +108,13 @@ function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === '/';
-  const sections = ['Home', 'About', 'Schedule', 'FAQ'];
+  const sections = ['Home', 'About', 'Schedule', 'FAQ', 'Team'];
 
   return (
-    <div className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`} id="navbar">
+    <div
+      className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`}
+      id="navbar"
+    >
       <div
         className="absolute left-4 top-0 z-50 w-24"
         onClick={() => {
@@ -124,7 +131,7 @@ function Navbar() {
       </div>
 
       <a
-        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2024-season&utm_content=white"
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -132,7 +139,7 @@ function Navbar() {
           width={0}
           height={0}
           className="absolute right-2 top-0 z-50 w-24"
-          src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-yellow.svg"
+          src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
         />
       </a>
@@ -147,7 +154,7 @@ function Navbar() {
             {sections.map((section) => {
               return (
                 <button
-                  className="glow-center mr-5 font-medium uppercase hover:drop-shadow-blueGlow transition-shadow"
+                  className="glow-center mr-5 font-medium uppercase transition-shadow hover:drop-shadow-blueGlow"
                   onClick={() => scrollToSectionName(section)}
                   key={section}
                 >

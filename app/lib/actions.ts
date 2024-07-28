@@ -8,7 +8,7 @@ import { AuthError } from 'next-auth';
 import { auth } from '../../auth';
 
 import { redirect } from 'next/navigation';
-import { BASE } from './definitions';
+import { BASE, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from './definitions';
 import { TeamSubmit } from '../dashboard/page';
 
 const ENDPOINTS = {
@@ -28,11 +28,11 @@ const ENDPOINTS = {
   /**
    * Create forgot magic link to reset password
    */
-  forgot: BASE + '/createmagiclink',
+  forgot: BASE + '/forgot-password',
   /**
    * Reset password from magic link to reset password
    */
-  resetpassword: BASE + '/consume',
+  resetpassword: BASE + '/reset-password',
   /**
    * Digest magic links
    */
@@ -51,6 +51,11 @@ const ENDPOINTS = {
    * Create a team
    */
   makeTeam: BASE + '/make-teams',
+
+  /**
+   * get discord auth token, then send that to backend to set a role
+   */
+  discord: BASE + '/discord',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -108,10 +113,10 @@ export async function authUser(email: string, password: string) {
     if (resJSON.statusCode === 403) {
       resp.error = 'Invalid email or password';
     } else if (resJSON.statusCode === 200) {
-      resp.response = resJSON.body.token;
+      resp.response = resJSON.token;
     } else {
-      if (resJSON.body) {
-        resp.error = resJSON.body;
+      if (resJSON.message) {
+        resp.error = resJSON.message;
       } else {
         resp.error = 'Unexpected Error';
       }
@@ -167,74 +172,39 @@ export async function SignUp(
         email: email,
         password: password,
         registration_status: 'unregistered', //"waitlist" is one of them
+        first_name: firstname,
+        last_name: lastname,
       }),
     })
       .then(async (res) => {
-        let res_json = await res.json();
-        if (res_json.statusCode === 400) {
-          resp.error = 'User with email ' + email + ' already exists';
-        } else if (res_json.statusCode === 200) {
-          // Set the first and last name
-          let data = res_json.body;
-          let token = data.token;
-
-          await fetch(ENDPOINTS.update, {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-              updates: {
-                $set: {
-                  first_name: firstname,
-                  last_name: lastname,
-                },
-              },
-              user_email: email,
-              auth_email: email,
-              token: token,
-            }),
-          })
-            .then(async (res) => {
-              let res_json = await res.json();
-              if (res_json.statusCode === 200) {
-                resp.response = '200';
-                try {
-                  await signIn('credentials', {
-                    email: email,
-                    password: password,
-                    redirectTo: '/dashboard',
-                  });
-                } catch (error) {
-                  if (error instanceof AuthError) {
-                    switch (error.type) {
-                      case 'CredentialsSignin':
-                        resp.error = 'Invalid credentials.';
-                      default:
-                        resp.error = 'Something went wrong.';
-                    }
-                  }
-                }
-              } else {
-                if (res_json.body) {
-                  resp.error = res_json.body;
-                } else {
-                  resp.error = 'Unexpected Error';
-                }
-              }
-            })
-            .catch((error) => {
-              resp.error =
-                error +
-                '; An error occured when attempting signup. Failed at 2/2';
-            });
-        } else {
-          if (res_json.body) {
-            resp.error = res_json.body;
-          } else {
-            resp.error = 'Unexpected Error';
+      let res_json = await res.json();
+      
+      if (res_json.statusCode === 200) {
+        resp.response = '200';
+        try {
+          await signIn('credentials', {
+            email: email,
+            password: password,
+            redirectTo: '/dashboard',
+          });
+        } catch (error) {
+          if (error instanceof AuthError) {
+            switch (error.type) {
+              case 'CredentialsSignin':
+                resp.error = 'Invalid credentials.';
+              default:
+                resp.error = 'Something went wrong.';
+            }
           }
         }
+      } else {
+        if (res_json.body) {
+          resp.error = res_json.body;
+        } else {
+          resp.error = 'Unexpected Error';
+        }
+      }
+        
       })
       .catch((error) => {
         resp.error =
@@ -263,17 +233,15 @@ export async function GetUser(email: string) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        email: session.user.email,
-        token: session.user.name,
-        query: {
-          email: email,
-        },
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+        email: email,
       }),
     })
       .then(async (res) => {
         let res_json = await res.json();
-        if (res_json.statusCode === 200) {
-          resp.response = res_json.body[0];
+        if (res_json.error != '' ) {
+          resp.response = res_json
         } else {
           if (res_json.body) {
             resp.response = res_json.body;
@@ -311,7 +279,7 @@ export async function SetUser(data: any, user_email_to_update: string) {
         },
         user_email: user_email_to_update,
         auth_email: session.user.email,
-        token: session.user.name,
+        auth_token: session.user.name,
       }),
     })
       .then(async (res) => {
@@ -357,11 +325,12 @@ export async function Forgot(email: string) {
         },
         body: JSON.stringify({
           email: email,
-          forgot: true,
         }),
       })
         .then(async (res) => {
           let resJSON = await res.json();
+          console.log("FORGOT")
+          console.log(resJSON)
           if (resJSON.statusCode === 200) {
             return resp;
           } else {
@@ -406,13 +375,13 @@ export async function Reset(
       },
       body: JSON.stringify({
         email: email,
-        forgot: true,
-        password: password,
-        link: magic,
+        new_password: password,
+        reset_token: magic,
       }),
     })
       .then(async (res) => {
         let resJSON = await res.json();
+        console.log(resJSON)
         if (resJSON.statusCode !== 200) {
           if (resJSON.body) {
             resp.error = resJSON.body;
@@ -471,7 +440,7 @@ export async function GetWaiverInfo() {
       },
       body: JSON.stringify({
         email: session.user.email,
-        token: session.user.name,
+        auth_token: session.user.name,
       }),
     }).then((res) => res.json());
     return json.body;
@@ -505,6 +474,10 @@ export async function UploadWaiver(file: FormData) {
 
 export async function GetResume() {
   noStore();
+  let resp = {
+    error: '',
+    response: {url: '', message: ''},
+  };
   const session = await auth();
   if (session?.user) {
     const json = await fetch(ENDPOINTS.resume, {
@@ -514,10 +487,18 @@ export async function GetResume() {
       },
       body: JSON.stringify({
         email: session.user.email,
-        token: session.user.name,
+        auth_token: session.user.name,
       }),
-    }).then((res) => res.json());
-    return json.body;
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !==  200) {
+        resp.error = 'Error Uploading Resume';
+      } else {
+        resp.response = resJSON;
+      }
+    });
+    return resp;
+    
   }
 }
 
@@ -529,21 +510,26 @@ export async function UploadResume(file: FormData) {
   noStore();
   const info = await GetResume();
   const pdf = file.get('file');
+  if (info != null){
+    await fetch(info.response.url, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/pdf',
+      },
+      body: pdf,
+    }).then(async (res) => {
+      console.log("RESUME UPLOADED")
+      console.log(res.status)
+      console.log(res)
+      if (res.status !== 200) {
+        resp.error = 'Error Uploading Waiver';
+      } else {
+        resp.response = 'Waiver Uploaded';
+      }
+    });
+  }
 
-  await fetch(info.upload, {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/pdf',
-    },
-    body: pdf,
-  }).then(async (res) => {
-    console.log(res.status);
-    if (res.status !== 200) {
-      resp.error = 'Error Uploading Waiver';
-    } else {
-      resp.response = 'Waiver Uploaded';
-    }
-  });
+  
   return resp;
 }
 
@@ -581,7 +567,7 @@ export async function AttendEventScan(
 
     const body = {
       auth_email: email,
-      token: name,
+      auth_token: name,
       qr: scannedEmail,
       event: event,
       again: again,
@@ -727,4 +713,55 @@ export async function UploadTeamSubmission(
     team_id: json.body?.team_id,
     response_code: 200,
   };
+}
+
+export async function getOAuthUrl() {
+  const state = crypto.randomUUID();
+
+  const url = new URL('https://discord.com/api/oauth2/authorize');
+  url.searchParams.set('client_id', DISCORD_CLIENT_ID);
+  url.searchParams.set('redirect_uri', DISCORD_REDIRECT_URI);
+  url.searchParams.set('response_type', 'code');
+  url.searchParams.set('state', state);
+  url.searchParams.set('scope', 'role_connections.write identify');
+  url.searchParams.set('prompt', 'consent');
+  return { state, url: url.toString() };
+}
+
+export async function setDiscord(userCode:string) {
+  noStore();
+  const session = await auth();
+  let resp = {
+    error: '',
+    response: '',
+  };
+  if (session?.user) {
+
+    const json = await fetch(ENDPOINTS.discord, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        auth_token: session.user.name,
+        code: userCode,
+        redirect_uri: DISCORD_REDIRECT_URI,
+
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (resJSON.statusCode === 200) {
+        resp.response = resJSON.message;
+      } else {
+        if (resJSON.message) {
+          resp.error = resJSON.message;
+        } else {
+          resp.error = 'Unexpected Error';
+        }
+      }
+    });
+  
+    return resp;
+  }
 }

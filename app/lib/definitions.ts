@@ -1,4 +1,7 @@
-export const BASE = process.env.BASE_URL;
+//export const BASE = process.env.BASE_URL;
+export const BASE = "https://api.hackru.org/dev";
+export const DISCORD_CLIENT_ID = "1248717914618593372";
+export const DISCORD_REDIRECT_URI = "http://localhost:3000/dashboard";
 
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
