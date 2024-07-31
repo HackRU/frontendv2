@@ -455,6 +455,11 @@ export async function UploadWaiver(file: FormData) {
   noStore();
   const info = await GetWaiverInfo();
 
+  if (!info.upload) {
+    resp.error = "Invalid Upload URL";
+    return resp;
+  }
+
   await fetch(info.upload, {
     method: 'PUT',
     headers: {
@@ -494,12 +499,10 @@ export async function GetResume() {
       if (res.status !==  200) {
         resp.error = 'Error Uploading Resume';
       } else {
-        resp.response = resJSON;
       }
     });
-    return resp;
-    
   }
+  return resp;
 }
 
 export async function UploadResume(file: FormData) {
@@ -510,9 +513,16 @@ export async function UploadResume(file: FormData) {
   noStore();
   const info = await GetResume();
   const pdf = file.get('file');
-  if (info != null){
+
+  if (info.error) {
+      resp.error = info.error;
+      return resp;
+  }
+  
+  if (info.response.url) {
+      
     await fetch(info.response.url, {
-      method: 'PUT',
+       method: 'PUT',
       headers: {
         'content-type': 'application/pdf',
       },
@@ -527,9 +537,7 @@ export async function UploadResume(file: FormData) {
         resp.response = 'Waiver Uploaded';
       }
     });
-  }
-
-  
+}
   return resp;
 }
 
