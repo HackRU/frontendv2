@@ -32,13 +32,11 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">
-          {/* <Sponsors /> */}
-        </GenericSection>
+        <GenericSection title="Sponsors">{/* <Sponsors /> */}</GenericSection>
         <GenericSection title="FAQ" color="from-dark_blue_figma">
           <FAQ />
         </GenericSection>
-        <GenericSection title="Meet The Team">
+        <GenericSection title="Team">
           <Team />
         </GenericSection>
         <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
