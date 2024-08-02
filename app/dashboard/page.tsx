@@ -85,6 +85,8 @@ export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
 
 export default function Dashboard() {
+  const [selectedMajor, setSelectedMajor] = useState<string>("No major selected");
+  const [otherMajor, setOtherMajor] = useState<string>("");
   const[majors, setMajors] = useState<string[]>([]);
   const [schools, setSchools] = useState<string[]>([]);
   const [countries, setCountries] = useState<string[]>([]);
@@ -508,22 +510,40 @@ export default function Dashboard() {
                 <div className="space-y-2">
                   <Label htmlFor="major">Major</Label>
 
-                  <select
-                    id="major"
-                    value={userData?.school}
-                    {...register("major")}
-                    onChange={(e) => setUserData({ ...userData, major: e.target.value })}
-                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
-                  >
-                    {majors.map((major, index) => (
-                      <option key={index} value={major}>{major}</option>
-                    ))}
+                      <select
+                        id="major"
+                        value={selectedMajor}
+                        {...register("major")}
+                        onChange={(e) => {
+                        const selected = e.target.value;
+                        setSelectedMajor(selected);
+                        if (selected !== 'Other') {
+                        setUserData({ ...userData, major: selected });
+                      }
+                    }}
+                        className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                      >
+                {majors.map((major, index) => (
+                  <option key={index} value={major}>{major}</option>
+                ))}
+                <option value="Other">Other</option>
+                </select>
 
-
-
-                  </select>
+              {selectedMajor === 'Other' && (
+                <Input
+                  placeholder="Enter major here"
+                  id="otherMajor"
+                  value={otherMajor}
+                  {...register("major")}
+                  onChange={(e) => {
+                    const newMajor = e.target.value;
+                    setUserData({ ...userData, major: newMajor });
+                    setOtherMajor(newMajor);
+                  }}
+                />
+              )}
                   
-                  <Input placeholder='Enter here if major not listed above' id="major" value={userData?.major} {...register("major")} onChange={(e) => setUserData({ ...userData, major: e.target.value })} />
+                  
                   {errors.major && (<p className="text-xs italic text-red-500 mt-2">{errors.major?.message}</p>)}
                 </div>
                 <div className="space-y-2">
