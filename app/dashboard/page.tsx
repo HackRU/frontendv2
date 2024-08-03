@@ -534,7 +534,6 @@ export default function Dashboard() {
                   placeholder="Enter major here"
                   id="otherMajor"
                   value={otherMajor}
-                  {...register("major")}
                   onChange={(e) => {
                     const newMajor = e.target.value;
                     setUserData({ ...userData, major: newMajor });
