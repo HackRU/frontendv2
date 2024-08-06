@@ -1,3 +1,5 @@
+import { MdScience } from "react-icons/md";
+
 export const hackRUFAQ = {
   'What is HackRU?': `HackRU is a 24-hour hackathon at Rutgers University. We welcome hundreds of students to join us in building
   awesome software and hardware projects. Industry experts and mentors come from all over the country to create
@@ -31,7 +33,18 @@ export const hackRUFAQ = {
     "Reach out to us at info@hackru.org! We'll be happy to answer.",
 };
 
+export const majors = `
+  Computer Science
+  Data Science
+  Electrical and Computer Engineering
+  Information Technology and Informatics
+  Business Analytics and Information Technology
+`;
+
 export const mlhSchools = `
+  Rutgers - New Brunswick
+  Rutgers - Newark
+  Rutgers - Camden
   21st Century Cyber Charter School
   Aalto University
   Aarhus University
@@ -1497,9 +1510,6 @@ export const mlhSchools = `
   "Rungta College of Engineering and Technology, Bhilai"
   Rustamji Institute of Technology
   Rutgers Preparatory School
-  Rutgers University - Newark
-  Rutgers University – Camden
-  "Rutgers, The State University of New Jersey"
   Ryde School
   Rye High School
   Ryerson University
@@ -2259,8 +2269,9 @@ export const mlhSchools = `
 `;
 
 export const countries = `
+  United States of America
   Afghanistan
-  Ã…land Islands
+  Ãland Islands
   Albania
   Algeria
   American Samoa
@@ -2494,7 +2505,6 @@ export const countries = `
   Ukraine
   United Arab Emirates
   United Kingdom of Great Britain and Northern Ireland
-  United States of America
   United States Minor Outlying Islands
   Uruguay
   Uzbekistan
