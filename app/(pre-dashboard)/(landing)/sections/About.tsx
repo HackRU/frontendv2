@@ -101,7 +101,7 @@ export default function About() {
         md:flex-row md:px-4 md:text-lg xl:text-xl 2xl:text-2xl "
         id="About"
       >
-        <AboutInfo title="WHAT" imageSrc="/landing/roar.js.png" alt="Python">
+        <AboutInfo title="WHAT" imageSrc="/landing/catPawn.png" alt="Python" reverse>
           <div className="pt-6">
             <p className="inline">HackRU is a</p>
             <p className="inline font-bold"> 24-hour hackathon </p>
@@ -137,9 +137,9 @@ export default function About() {
 
         <AboutInfo
           title="TRACKS"
-          imageSrc="/landing/bitsprout.png"
+          imageSrc="/landing/catQueenKing.png"
           alt="Python"
-          reverse
+          
         >
           <div className="pt-6">
             <p className="inline font-bold">Social Good:</p>
@@ -181,8 +181,9 @@ export default function About() {
 
         <AboutInfo
           title="JOIN US"
-          imageSrc="/landing/pseudoclaw.png"
+          imageSrc="/landing/catKnight.png"
           alt="Python"
+          reverse
         >
           <div className="pb-6 pt-6">
             <p className="inline font-bold">Apply</p>
