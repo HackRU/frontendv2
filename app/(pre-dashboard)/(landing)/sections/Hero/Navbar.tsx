@@ -8,6 +8,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { bizUdg } from '@/app/ui/fonts';
+import { longCang } from '@/app/ui/fonts';
 import clsx from 'clsx';
 
 function scrollToSectionName(sectionName: string) {
@@ -108,65 +109,77 @@ function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === '/';
-  const sections = ['Home', 'About', 'Schedule', 'FAQ', 'Team'];
+  const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
     <div
-      className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`}
+      className={`z-40 flex w-full justify-end md:fixed ${longCang.className}`}
       id="navbar"
     >
       <div
-        className="absolute left-4 top-0 z-50 w-24"
-        onClick={() => {
-          router.push('/');
-        }}
+        style={{ left: '5%', top: '24px' }}
+        className="absolute z-50 w-16 sm:w-20 md:w-24"
+        onClick={() => router.push('/')}
       >
         <Image
-          width={200}
-          height={200}
-          // sizes={'100vw'}
-          src="/landing/yellow_hackru.png"
-          alt="yellow hackru logo"
+          width={84}
+          height={84}
+          src="/landing/hrulogo_nav.png"
+          alt="neon hackru logo"
+          layout="responsive"
         />
       </div>
-
       <a
         href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
+        className="absolute right-2 top-0 z-50 w-16 sm:w-20 md:w-24"
       >
         <Image
-          width={0}
-          height={0}
-          className="absolute right-2 top-0 z-50 w-24"
+          width={100}
+          height={100}
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
+          layout="responsive"
         />
       </a>
-
       <CollapsedMenu />
       <div
-        className="text-text from-f23-lightGreen absolute top-0 z-40 hidden
-                w-[100%] justify-end bg-gradient-to-b pr-32 pt-8 text-lg font-light md:flex"
+        className="text-mediumBlue absolute top-0 z-40 hidden w-full
+        justify-end bg-gradient-to-b pr-4 pt-8 text-lg font-light sm:pr-8 sm:text-xl md:flex md:pr-16 md:text-2xl lg:pr-32"
       >
         {isHomePage && (
           <>
-            {sections.map((section) => {
-              return (
-                <button
-                  className="glow-center mr-5 font-medium uppercase transition-shadow hover:drop-shadow-blueGlow"
-                  onClick={() => scrollToSectionName(section)}
-                  key={section}
-                >
-                  {section}
-                </button>
-              );
-            })}
-            {/* <Link href="/contact">
-              <button className="glow-center mr-5 font-medium uppercase">
-                Contact
+            {sections.map((section) => (
+              <button
+                style={{
+                  color: '#536F91',
+                  textTransform: 'lowercase',
+                  fontSize: '32px',
+                  marginRight: '3rem',
+                }}
+                className="glow-center mr-4 font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 md:mr-5"
+                onClick={() => scrollToSectionName(section)}
+                key={section}
+              >
+                {section}
               </button>
-            </Link> */}
+            ))}
+            {
+              <Link href="/contact">
+                <button
+                  style={{
+                    color: '#536F91',
+                    textTransform: 'lowercase',
+                    fontSize: '32px',
+                    marginRight: '3rem',
+                  }}
+                  className="glow-center mr-4 font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 md:mr-5"
+                >
+                  Contact
+                </button>
+              </Link>
+            }
           </>
         )}
       </div>

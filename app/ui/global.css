@@ -67,11 +67,11 @@ input[type='number']::-webkit-outer-spin-button {
 
 #Home {
   /* radial gradient */
-  background-image: radial-gradient(circle, #396a66, #284e4e,#213437,#1c2428, #1b1f23);
+  background-image: radial-gradient(circle, #141719, #141719,#141719,#141719, #141719);
 }
 
 #entry-radial {
-  background-image: radial-gradient(circle, #284e4e, #1b1f23);
+  background-image: radial-gradient(circle, #141719, #141719);
 } 
 
 @keyframes twinkling {
