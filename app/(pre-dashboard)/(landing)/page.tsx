@@ -17,7 +17,7 @@ import React from 'react';
 export default async function Page() {
   return (
     <main
-      className={`relative flex h-fit flex-col ${longCang.className} text-orange-100`}
+      className={`relative flex h-fit flex-col ${longCang.className} text-[#1ED4FE]`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />

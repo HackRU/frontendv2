@@ -8,20 +8,20 @@ function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
   const { dayInfo } = props;
   const { day, times } = dayInfo;
   return (
-    <div className="my-5 flex w-full flex-col">
-      <div className="glow-subtitles text-textSubtitle mb-4 w-full text-center text-5xl font-semibold md:text-7xl">
+    <div className="my-5 flex w-full flex-col text-white">
+      <div className="glow-subtitles text-textSubtitle mb-4 w-full text-center text-3xl font-semibold md:text-5xl">
         {dayInfo.day}
       </div>
       <div className="w-full">
         {times.map((timeInfo, index) => (
           <div
-            className="my-2 flex w-full flex-row pr-4 text-xl md:my-5 md:px-3"
+            className="mt-2 flex w-full flex-row pr-4 text-xl md:my-5 md:px-3"
             key={`${day}-${index}`}
           >
-            <div className="h-fit w-2/5 pr-2 text-right font-black">
+            <div className="h-fit w-2/5 pr-2 text-right font-black text-pink-100">
               {timeInfo.time}
             </div>
-            <div className="flex w-3/5 flex-col">
+            <div className="flex w-3/5 pl-20 flex-col">
               <div className="text-md w-3/5">{timeInfo.event}</div>
               <div className="w-3/5 text-sm">{timeInfo.location}</div>
             </div>
@@ -116,22 +116,9 @@ export default function Schedule() {
       className="relative z-10 mb-20 flex w-full justify-center"
       id="Schedule"
     >
-      <div className="w-0 lg:w-1/3">
-        <Image
-          src={'/landing/python.png'}
-          quality={10}
-          width="900"
-          height="900"
-          alt="Fire"
-          className="absolute opacity-0 md:left-[-175px] md:top-[-100px]
-                     md:w-[700px] lg:left-[-175px] lg:top-[-100px]
-                     lg:w-[700px] lg:opacity-100 xl:left-[-200px]
-                     xl:top-[-200px] xl:w-[900px]"
-        />
-      </div>
       <div className="flex h-fit w-full max-w-7xl flex-col items-center">
         <div
-          className="transparent-black-background text-text relative flex
+          className="bg-gradient-to-b from-offblack-100 to-[#453148] text-text relative flex
                               w-full flex-col items-center rounded-3xl md:flex-row md:items-start"
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
@@ -153,19 +140,17 @@ export default function Schedule() {
               <strong>Show Event Map</strong>
             </button>
           </div>
-          <div className="w-0 lg:w-1/3"></div>
-          <div className="flex h-1/3 justify-center md:w-0 lg:h-0">
-            <Image
-              src={'/landing/python.png'}
-              quality={10}
-              width="900"
-              height="900"
-              alt="Fire"
-              className="w-3/4 opacity-100 md:opacity-0"
-            />
-          </div>
         </div>
       </div>
+
+      <Image
+          src={"/landing/cat poker cards 1.png"}
+          width="300"
+          height="300"
+          className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[500px] lg:-bottom-[700px]"
+          alt={'cool'}
+          quality={50}
+        />
 
       <Transition appear show={mapOpen} as={Fragment}>
         <Dialog

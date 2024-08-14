@@ -43,6 +43,12 @@ const config: Config = {
           100: '#9A654D',
           200: '#482820',
         },
+        pink:{
+          100: '#C3557D',
+        },
+        offblack:{
+          100: '#172335'
+        }
       },
     },
     keyframes: {
