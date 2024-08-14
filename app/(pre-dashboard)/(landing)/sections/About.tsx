@@ -39,12 +39,12 @@ function AboutInfo({
       >
        <h1
           className={clsx('text-3xl md:text-5xl', longCang.className)}
-          style={{ color: titleColor }}
+          style={{ color: titleColor, letterSpacing: '0.12em' }}
         >
           {title}
           
         </h1>
-        <div className={clsx('text-[#536F91]', longCang.className)}>
+        <div className={clsx(longCang.className)}  style={{letterSpacing: '0.12em' }}>
         {children}
           </div>
         
@@ -108,8 +108,8 @@ export default function About() {
         className="from-dark_blue_figma relative flex  h-fit w-full
         flex-col flex-wrap 
          pb-20 text-base
-        md:flex-row md:px-4 md:text-lg xl:text-xl 2xl:text-2xl "
-        style={{ backgroundColor: '#141719' }}
+        md:flex-row md:px-4 md:text-lg xl:text-xl 2xl:text-2xl bg-blue-500"
+        
         id="About"
       >
         <div>
@@ -119,7 +119,7 @@ export default function About() {
         <AboutInfo title="WHAT" imageSrc="/landing/catPawn.png" alt="Python" reverse titleColor='#C3557D'>
           <div className="pt-6">
             <p className="inline">HackRU is a</p>
-            <p className="inline text-[#1ED4FE]"> 24-hour hackathon </p>
+            <p className="inline text-blue-100"> 24-hour hackathon </p>
             <p className="inline">at Rutgers University. We welcome</p>
             <p className="inline"> hundreds of students </p>
             <p className="inline">to join us in building</p>
@@ -130,14 +130,14 @@ export default function About() {
             <p className="inline"> help foster an atmosphere of</p>
             <p className="inline"> learning</p>
             <p className="inline"> through</p>
-            <p className="inline text-[#1ED4FE]"> tech-talks</p>
+            <p className="inline text-blue-100"> tech-talks</p>
             <p className="inline"> and</p>
-            <p className="inline text-[#1ED4FE]">
+            <p className="inline text-blue-100">
               {' '}
               one-on-one guidance.
             </p>
             <p className='inline '> We encourage</p>
-            <p className="inline text-[#1ED4FE]"> all students,</p>
+            <p className="inline text-blue-100"> all students,</p>
             <p className="inline">
               {' '}
               no matter their experience level or educational background, to
@@ -158,14 +158,14 @@ export default function About() {
           titleColor="#EC9655"
         >
           <div className="pt-6">
-            <p className="inline  text-[#C3557D]">Social Good:</p>
+            <p className="inline  text-pink-100">Social Good:</p>
             <p className="inline pb-4 pt-4">
               {' '}
               Hacks that betters the community.
             </p>
 
             <div className="pt-6">
-              <p className="inline  text-[#C3557D]">Health:</p>
+              <p className="inline  text-pink-100">Health:</p>
               <p className="inline pb-4">
                 {' '}
                 Hacks that improve the mind or body, aiding with health,
@@ -174,7 +174,7 @@ export default function About() {
             </div>
 
             <div className="pt-6">
-              <p className="inline  text-[#C3557D]">Education:</p>
+              <p className="inline   text-pink-100">Education:</p>
               <p className="inline pb-4">
                 {' '}
                 Hacks that focus on building an educated community.
@@ -182,14 +182,14 @@ export default function About() {
             </div>
 
             <div className="pt-6">
-              <p className="inline  text-[#C3557D]">Maverick:</p>
+              <p className="inline   text-pink-100">Maverick:</p>
               <p className="inline pb-4"> Any other hack! The</p>
               <p>opportunities are limitless.</p>
             </div>
 
             <div className="pt-6">
               <p className="inline">And more</p>
-              <p className="inline  text-[#1ED4FE]"> sponsor prizes!</p>
+              <p className="inline  text-blue-100"> sponsor prizes!</p>
             </div>
           </div>
         </AboutInfo>
@@ -202,20 +202,20 @@ export default function About() {
           titleColor = "#1ED4FE"
         >
           <div className="pb-6 pt-6">
-            <p className="inline text-[#C3557D]">Apply</p>
+            <p className="inline  text-pink-100">Apply</p>
             <p className="inline"> to attend our </p>
-            <p className="inline  text-[#C3557D]">Fall 2024 HackRU!</p>
+            <p className="inline   text-pink-100">Fall 2024 HackRU!</p>
             <p className="inline"> The event will be on</p>
-            <p className="inline  text-[#C3557D]"> October 26th-27th</p>
+            <p className="inline   text-pink-100"> October 26th-27th</p>
             <p className="inline"> at the</p>
-            <p className="inline  text-[#C3557D]"> College Ave Student Center.</p>
+            <p className="inline   text-pink-100"> College Ave Student Center.</p>
           </div>
 
           <div className="pb-6">
             <p className="inline">Want to help? Sign up to</p>
-            <p className="inline  text-[#C3557D]"> volunteer</p>
+            <p className="inline   text-pink-100"> volunteer</p>
             <p className="inline"> and/or</p>
-            <p className="inline text-[#C3557D]"> mentor!</p>
+            <p className="inline  text-pink-100"> mentor!</p>
             <p className="inline">
               {' '}
               To know when organizer applications open subscribe to our
@@ -226,7 +226,7 @@ export default function About() {
             <p className="inline">Want to receive updates? </p>
             <a
               href="https://hackru.us3.list-manage.com/subscribe?u=457c42db47ebf530a0fc733fb&id=fb01885829"
-              className="inline  text-[#C3557D] underline"
+              className="inline   text-pink-100 underline"
               target="_blank"
             >
               Subscribe here!

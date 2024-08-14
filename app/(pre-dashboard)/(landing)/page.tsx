@@ -17,11 +17,11 @@ import React from 'react';
 export default async function Page() {
   return (
     <main
-      className={`relative flex h-fit flex-col ${longCang.className} text-orange-100`}
+      className={`relative flex h-fit flex-col ${longCang.className} text-blue-200`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
-        <h1 className={`text-center text-[#536F91] ${longCang.className}`} style={{ backgroundColor: '#141719', fontSize: '96px' }}>
+        <h1 className={`text-center bg-blue-500 ${longCang.className}`} style={{ fontSize: '96px' }}>
   ABOUT
 </h1>
 
