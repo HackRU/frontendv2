@@ -1,7 +1,7 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { bigelowRules, bizUdg } from '@/app/ui/fonts';
+import { bigelowRules, bizUdg, longCang } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Hero from './sections/Hero/Hero';
 import Schedule from './sections/Schedule';
@@ -12,15 +12,19 @@ import FAQ from './sections/FAQ/FAQ';
 import Team from './sections/Team';
 import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
-import React from 'react';
+import React from 'react'; 
 
 export default async function Page() {
   return (
     <main
-      className={`relative flex h-fit flex-col ${bizUdg.className} text-orange-100`}
+      className={`relative flex h-fit flex-col ${longCang.className} text-orange-100`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
+        <h1 className={`text-center text-[#536F91] ${longCang.className}`} style={{ backgroundColor: '#141719', fontSize: '96px' }}>
+  ABOUT
+</h1>
+
         <About />
         {/**
          * We are using Suspense because Schedule and Sponsors will eventually
@@ -39,7 +43,8 @@ export default async function Page() {
         <GenericSection title="Team">
           <Team />
         </GenericSection>
-        <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
+        <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]"
+        >
           <Image
             src="/landing/kittywizards.svg"
             alt="bottom image"
