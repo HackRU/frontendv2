@@ -12,7 +12,7 @@ import FAQ from './sections/FAQ/FAQ';
 import Team from './sections/Team';
 import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
-import React from 'react'; 
+import React from 'react';
 
 export default async function Page() {
   return (
@@ -22,8 +22,8 @@ export default async function Page() {
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
         <h1 className={`text-center bg-blue-500 ${longCang.className}`} style={{ fontSize: '96px' }}>
-  ABOUT
-</h1>
+          ABOUT
+        </h1>
 
         <About />
         {/**
@@ -43,8 +43,7 @@ export default async function Page() {
         <GenericSection title="Team">
           <Team />
         </GenericSection>
-        <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]"
-        >
+        <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
           <Image
             src="/landing/kittywizards.svg"
             alt="bottom image"

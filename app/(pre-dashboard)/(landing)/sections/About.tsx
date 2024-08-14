@@ -37,17 +37,17 @@ function AboutInfo({
           },
         )}
       >
-       <h1
+        <h1
           className={clsx('text-3xl md:text-5xl', longCang.className)}
           style={{ color: titleColor, letterSpacing: '0.12em' }}
         >
           {title}
-          
+
         </h1>
-        <div className={clsx(longCang.className)}  style={{letterSpacing: '0.12em' }}>
-        {children}
-          </div>
-        
+        <div className={clsx(longCang.className)} style={{ letterSpacing: '0.12em' }}>
+          {children}
+        </div>
+
       </div>
     );
   }
@@ -109,12 +109,12 @@ export default function About() {
         flex-col flex-wrap 
          pb-20 text-base
         md:flex-row md:px-4 md:text-lg xl:text-xl 2xl:text-2xl bg-blue-500"
-        
+
         id="About"
       >
         <div>
 
-         
+
         </div>
         <AboutInfo title="WHAT" imageSrc="/landing/catPawn.png" alt="Python" reverse titleColor='#C3557D'>
           <div className="pt-6">
@@ -199,7 +199,7 @@ export default function About() {
           imageSrc="/landing/catKnight.png"
           alt="Python"
           reverse
-          titleColor = "#1ED4FE"
+          titleColor="#1ED4FE"
         >
           <div className="pb-6 pt-6">
             <p className="inline  text-pink-100">Apply</p>
