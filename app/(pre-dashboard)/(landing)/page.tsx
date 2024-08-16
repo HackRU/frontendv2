@@ -9,7 +9,7 @@ import { Suspense, useEffect } from 'react';
 import Sponsors from './sections/Sponsors';
 import About from './sections/About';
 import FAQ from './sections/FAQ/FAQ';
-import Team from './sections/Team';
+//import Team from './sections/Team';
 import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
 import React from 'react';
@@ -40,9 +40,9 @@ export default async function Page() {
         <GenericSection title="FAQ" color="from-dark_blue_figma">
           <FAQ />
         </GenericSection>
-        <GenericSection title="Team">
+        {/* <GenericSection title="Team">
           <Team />
-        </GenericSection>
+        </GenericSection> */}
         <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
           <Image
             src="/landing/kittywizards.svg"

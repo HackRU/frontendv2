@@ -8,7 +8,7 @@ type GenericSectionProps = {
 };
 
 export default function GenericSection(props: GenericSectionProps) {
-  const defaultColor = 'bg-blue-100';
+  const defaultColor = 'bg-dark_blue_figma';
   const bgColorNew = props.color ? `${props.color}` : defaultColor;
   return (
     <div
