@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Cursor from "../ui/cursor";
 import Navbar from "../(pre-dashboard)/(landing)/sections/Hero/Navbar";
-import { StarryBackground } from "../(pre-dashboard)/(landing)/misc/StarsBackground";
+//import { StarryBackground } from "../(pre-dashboard)/(landing)/misc/StarsBackground";
 
 
 export default function Layout({ children
@@ -20,7 +20,7 @@ export default function Layout({ children
         </Suspense>
         {children}
         <Suspense>
-          <StarryBackground />
+          {/* <StarryBackground /> */}
         </Suspense>
       </main>
     </>

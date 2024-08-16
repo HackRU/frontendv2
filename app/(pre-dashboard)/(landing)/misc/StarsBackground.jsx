@@ -1,4 +1,4 @@
-'use client';
+/*'use client';
 
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
@@ -152,3 +152,5 @@ export function StarryBackground() {
     </ClientOnly>
   );
 }
+
+*/

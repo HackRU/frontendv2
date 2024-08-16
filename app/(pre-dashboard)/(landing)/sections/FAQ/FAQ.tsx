@@ -17,6 +17,7 @@ function QuestionContainer() {
           setActiveAccordion={setActiveAccordion}
           index={i}
           answer={Object.values(hackRUFAQ)[i]}
+          textcolor={['text-[#1ED4FE]', 'text-[#C3557D]', 'text-[#EC9655]'][i%3]}
         />
       ))}
     </div>

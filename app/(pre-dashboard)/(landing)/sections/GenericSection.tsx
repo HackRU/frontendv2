@@ -17,7 +17,7 @@ export default function GenericSection(props: GenericSectionProps) {
     >
       <SectionTitle title={props.title} />
       <div className="w-full h-fit sections relative">
-        <div className="absolute bg-dark_blue_figma top-0 w-full h-full z-10" />
+        <div className="absolute bg-dark_blue_figma top-0 w-full h-full " />
         {props.children}
       </div>
       <div className={`h-[15vh] w-full ${bgColorNew}`}></div>
