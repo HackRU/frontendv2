@@ -126,7 +126,6 @@ function Navbar() {
           height={84}
           src="/landing/hrulogo_nav.png"
           alt="neon hackru logo"
-          layout="responsive"
         />
       </div>
       <a
@@ -140,7 +139,6 @@ function Navbar() {
           height={100}
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
-          layout="responsive"
         />
       </a>
       <CollapsedMenu />

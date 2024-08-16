@@ -57,32 +57,19 @@ export default function Hero() {
         className="relative flex w-full flex-col items-center justify-center overflow-hidden md:flex md:h-[100vh] md:flex-row-reverse"
         id="Home"
       >
-        <div
-          className="relative z-10 w-full"
-          style={{ maxHeight: '80vh', maxWidth: '100vw' }}
-        >
-          <Image
+        <div className='relative flex w-full justify-center'>
+          <div className = 'h-auto w-[790px] xs:max-w-[320px] sm:max-w-[576px] md:w-[600px] md:min-w-[500px] lg:w-[700px] xl:w-[800px]'>
+        <Image
             src={POKER_IMG[0]}
             alt="Poker"
-            style={{
-              width: 'auto',
-              height: 'auto',
-              maxWidth: '100%',
-              maxHeight: '100%',
-              objectFit: 'contain',
-            }}
-            width={900}
-            height={900}
-            className={
-              currentImageIndex === 0
-                ? 'relative opacity-100'
-                : 'absolute left-0 top-0 opacity-0'
-            }
+            width="900"
+            height="900"
+            className={'relative right-0 top-0'}
             priority
           />
         </div>
-
-        <div className="relative flex flex-col items-center justify-center">
+        </div>
+        <div className="relative flex flex-col items-center justify-center min-h-[400px]">
           <div
             className="relative left-0 top-0 h-auto w-[790px]
         xs:max-w-[320px] sm:max-w-[576px] md:w-[500px] md:min-w-[500px]
@@ -105,10 +92,9 @@ export default function Hero() {
           <div className="items-left flex-col  ">
             <p
               className={`${longCang.className} text-2xl`}
-              style={{ marginTop: '-200px' }}
             >
-              <span style={{ color: '#536F91' }}>THE GAMES ARE </span>
-              <span style={{ color: '#ADD8E6' }}>ON!</span>
+              <span className = "text-[#536F91]">THE GAMES ARE </span>
+              <span className = "text-[#ADD8E6]">ON!</span>
             </p>
             <div className="mt-10 flex justify-center space-x-4">
               <button
