@@ -30,13 +30,15 @@ const config: Config = {
       },
       colors: {
         blue: {
-          100: '#203437',
-          200: '#51F4FF',
-          300: '#4D6F6C',
+          100: '#1ED4FE',
+          200: '#536F91',
+          300: '#2B3941',
+          400: '#172335',
+          500: '#141719'
         },
         dark_blue_figma: '#1B1F23',
         orange: {
-          100: '#FFB464',
+          100: '#EC9655',
           200: '#1B1F23',
         },
         brown: {
@@ -49,6 +51,7 @@ const config: Config = {
         offblack:{
           100: '#172335'
         }
+
       },
     },
     keyframes: {

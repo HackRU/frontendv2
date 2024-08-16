@@ -20,4 +20,5 @@ export const lusitana = Lusitana({
 export const longCang = Long_Cang({
   weight: ['400'],
   subsets: ['latin'],
+
 });

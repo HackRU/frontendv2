@@ -17,10 +17,14 @@ import React from 'react';
 export default async function Page() {
   return (
     <main
-      className={`relative flex h-fit flex-col ${longCang.className} text-[#1ED4FE]`}
+      className={`relative flex h-fit flex-col ${longCang.className} text-blue-200`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
+        <h1 className={`text-center bg-blue-500 ${longCang.className}`} style={{ fontSize: '96px' }}>
+          ABOUT
+        </h1>
+
         <About />
         {/**
          * We are using Suspense because Schedule and Sponsors will eventually

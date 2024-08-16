@@ -26,13 +26,11 @@ export default function SignupPage() {
 
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
-  const [submit_errors, setErrors] = useState("");
-  const [success, setSuccess] = useState("");
+  const [message, setMessage] = useState("");
 
   const onSubmit = async (data: SignUp) => {
     const resp = await Forgot(data.email);
-    setSuccess(resp.response);
-    setErrors(resp.error);
+    setMessage(resp);
   }
 
 
@@ -40,8 +38,7 @@ export default function SignupPage() {
     <main className="flex items-center justify-center md:h-screen w-screen">
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
-          {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
-          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
+          {(<p className="text-xs italic mt-2">{message}</p>)}
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"

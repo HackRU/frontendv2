@@ -303,20 +303,17 @@ export async function SetUser(data: any, user_email_to_update: string) {
 }
 export async function Forgot(email: string) {
   noStore();
-  let resp = {
-    error: '',
-    response: '',
-  };
+  let message = '';
 
   const session = await auth();
 
   if (session?.user) {
-    resp.error = 'User is already logged in';
-    return resp;
+    message = 'User is already logged in';
+    return message ;
   } else {
     if (!email) {
-      resp.error = 'Invalid email';
-      return resp;
+      message = 'Invalid email';
+      return message;
     } else {
       await fetch(ENDPOINTS.forgot, {
         method: 'POST',
@@ -332,21 +329,21 @@ export async function Forgot(email: string) {
           console.log("FORGOT")
           console.log(resJSON)
           if (resJSON.statusCode === 200) {
-            return resp;
+            return message;
           } else {
-            if (resJSON.body) {
-              resp.error = resJSON.body;
+            if (resJSON.message) {
+              message = resJSON.message;
             } else {
-              resp.error = 'Unexpected Error';
+              message = 'Unexpected Error';
             }
           }
         })
         .catch((error) => {
-          resp.error =
+          message =
             error + 'An error occured when attempting to general url';
         });
     }
-    return resp;
+    return message;
   }
 }
 export async function Reset(
