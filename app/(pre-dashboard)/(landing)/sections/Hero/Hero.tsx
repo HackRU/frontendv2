@@ -57,13 +57,18 @@ export default function Hero() {
         className="relative flex w-full flex-col items-center justify-center overflow-hidden md:flex md:h-[100vh] md:flex-row-reverse"
         id="Home"
       >
-        <div className="relative z-10 w-full" style={{ height: '650px' }}>
+        <div
+          className="relative z-10 w-full"
+          style={{ maxHeight: '80vh', maxWidth: '100vw' }}
+        >
           <Image
             src={POKER_IMG[0]}
             alt="Poker"
             style={{
-              width: '100%',
-              height: '100%',
+              width: 'auto',
+              height: 'auto',
+              maxWidth: '100%',
+              maxHeight: '100%',
               objectFit: 'contain',
             }}
             width={900}

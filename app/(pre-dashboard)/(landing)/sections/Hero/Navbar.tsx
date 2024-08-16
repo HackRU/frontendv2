@@ -118,7 +118,7 @@ function Navbar() {
     >
       <div
         style={{ left: '5%', top: '24px' }}
-        className="absolute z-50 w-16 sm:w-20 md:w-24"
+        className="hover:drop-shadow-inner absolute z-50 w-12 hover:scale-105 sm:w-16 md:w-20 lg:w-24"
         onClick={() => router.push('/')}
       >
         <Image
@@ -133,7 +133,7 @@ function Navbar() {
         href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute right-2 top-0 z-50 w-16 sm:w-20 md:w-24"
+        className="absolute right-2 top-0 z-50 w-12 sm:w-16 md:w-20 lg:w-24"
       >
         <Image
           width={100}
@@ -145,42 +145,36 @@ function Navbar() {
       </a>
       <CollapsedMenu />
       <div
-        className="text-mediumBlue absolute top-0 z-40 hidden w-full
-        justify-end bg-gradient-to-b pr-4 pt-8 text-lg font-light sm:pr-8 sm:text-xl md:flex md:pr-16 md:text-2xl lg:pr-32"
+        className="text-mediumBlue absolute right-20 top-0 z-40 hidden
+        w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:flex md:pr-6 md:pt-8 md:text-lg lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
-          <>
+          <div className="flex items-center justify-start">
             {sections.map((section) => (
               <button
                 style={{
                   color: '#536F91',
                   textTransform: 'lowercase',
-                  fontSize: '32px',
-                  marginRight: '3rem',
                 }}
-                className="glow-center mr-4 font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 md:mr-5"
+                className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
                 onClick={() => scrollToSectionName(section)}
                 key={section}
               >
                 {section}
               </button>
             ))}
-            {
-              <Link href="/contact">
-                <button
-                  style={{
-                    color: '#536F91',
-                    textTransform: 'lowercase',
-                    fontSize: '32px',
-                    marginRight: '3rem',
-                  }}
-                  className="glow-center mr-4 font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 md:mr-5"
-                >
-                  Contact
-                </button>
-              </Link>
-            }
-          </>
+            <Link href="/contact">
+              <button
+                style={{
+                  color: '#536F91',
+                  textTransform: 'lowercase',
+                }}
+                className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
+              >
+                Contact
+              </button>
+            </Link>
+          </div>
         )}
       </div>
     </div>
