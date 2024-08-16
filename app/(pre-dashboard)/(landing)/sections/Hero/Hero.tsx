@@ -60,13 +60,13 @@ export default function Hero() {
         <div className='relative flex w-full justify-center'>
           <div className = 'h-auto w-[790px] xs:max-w-[320px] sm:max-w-[576px] md:w-[600px] md:min-w-[500px] lg:w-[700px] xl:w-[800px]'>
         <Image
-            src={POKER_IMG[0]}
-            alt="Poker"
-            width="900"
-            height="900"
-            className={'relative right-0 top-0'}
-            priority
-          />
+          src={POKER_IMG[0]}
+          alt="Poker"
+          width="900"
+          height="900"
+          className={'relative right-0 top-0'}
+          priority
+        />
         </div>
         </div>
         <div className="relative flex flex-col items-center justify-center min-h-[400px]">

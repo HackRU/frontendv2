@@ -144,13 +144,13 @@ export default function Schedule() {
       </div>
 
       <Image
-          src={"/landing/cat poker cards 1.png"}
-          width="300"
-          height="300"
-          className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[500px] lg:-bottom-[700px] z-30"
-          alt={'cool'}
-          quality={50}
-        />
+        src={"/landing/cat poker cards 1.png"}
+        width="300"
+        height="300"
+        className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[500px] lg:-bottom-[700px] z-30"
+        alt={'cool'}
+        quality={50}
+      />
 
       <Transition appear show={mapOpen} as={Fragment}>
         <Dialog
