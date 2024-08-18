@@ -129,12 +129,10 @@ export default function Schedule() {
               onClick={() => {
                 setMapOpen(true);
               }}
-              className="hover:drop-shadow-blueGlow border-brown-200 to-brown-100 
-                         text-md z-30 h-10 w-3/5
-                         items-center justify-center rounded-3xl
-                         border-x-4 border-y-2 border-solid
-                         bg-black bg-gradient-to-t from-blue-300 text-blue-200
-                         transition-all duration-100 
+              className="items-center justify-center
+            rounded-lg border-x-4 border-y-2 border-solid
+            border-orange-500 bg-transparent text-xl text-orange-500
+            transition-all duration-100 hover:drop-shadow-[0_0_8px_orange] hidden
                          "
             >
               <strong>Show Event Map</strong>
