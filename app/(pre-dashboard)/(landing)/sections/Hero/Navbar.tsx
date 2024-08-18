@@ -113,7 +113,7 @@ function Navbar() {
 
   return (
     <div
-      className={`z-40 flex w-full justify-end md:fixed ${longCang.className}`}
+      className={`z-40 flex w-full justify-end md:fixed bg-gradient-to-b from-blue-500 to-transparent ${longCang.className}`}
       id="navbar"
     >
       <div

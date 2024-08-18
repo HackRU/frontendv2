@@ -6,7 +6,7 @@ import GenericSection from './GenericSection';
 import SectionTitle from './SectionTitle';
 import { longCang } from '@/app/ui/fonts';
 
-const animalQuality = 50;
+const animalQuality = 100;
 
 function AboutInfo({
   children,
@@ -64,7 +64,7 @@ function AboutInfo({
           src={imageSrc}
           width="400"
           height="400"
-          className="w-[400px] lg:w-[600px]"
+          className="w-[600px] lg:w-[800px]"
           alt={alt}
           quality={animalQuality}
         />

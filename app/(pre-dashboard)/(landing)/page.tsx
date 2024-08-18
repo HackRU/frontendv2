@@ -45,7 +45,7 @@ export default async function Page() {
         </GenericSection> */}
         <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
           <Image
-            src="/landing/machine.svg"
+            src="/landing/machine.png"
             alt="bottom image"
             object-fit="cover"
             style={{
@@ -54,6 +54,8 @@ export default async function Page() {
             }}
             width={400}
             height={300}
+            quality={100}
+            unoptimized
           />
         </div>
       </div>

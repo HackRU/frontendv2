@@ -58,7 +58,7 @@ export default function Hero() {
         id="Home"
       >
         <div className='relative flex w-full justify-center'>
-          <div className = 'h-auto w-[790px] xs:max-w-[320px] sm:max-w-[576px] md:w-[600px] md:min-w-[500px] lg:w-[700px] xl:w-[800px]'>
+          <div className = 'h-auto w-[790px] xs:max-w-[400px] sm:max-w-[500px] md:w-[600px] md:min-w-[700px] lg:w-[800px] xl:w-[900px] z-10'>
         <Image
           src={POKER_IMG[0]}
           alt="Poker"

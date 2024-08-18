@@ -8,16 +8,16 @@ type GenericSectionProps = {
 };
 
 export default function GenericSection(props: GenericSectionProps) {
-  const defaultColor = 'bg-dark_blue_figma';
+  const defaultColor = 'bg-blue-500';
   const bgColorNew = props.color ? `${props.color}` : defaultColor;
   return (
     <div
       id={props.title}
-      className={'flex w-full flex-col items-center bg-dark_blue_figma sections'}
+      className={'flex w-full flex-col items-center bg-blue-500 sections'}
     >
       <SectionTitle title={props.title} />
       <div className="w-full h-fit sections relative">
-        <div className="absolute bg-dark_blue_figma top-0 w-full h-full " />
+        <div className="absolute bg-blue-500 top-0 w-full h-full " />
         {props.children}
       </div>
       <div className={`h-[15vh] w-full ${bgColorNew}`}></div>
