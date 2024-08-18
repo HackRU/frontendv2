@@ -37,13 +37,13 @@ export default async function Page() {
           </Suspense>
         </GenericSection>
         <GenericSection title="Sponsors">{<Sponsors /> }</GenericSection>
-        <GenericSection title="FAQ" color="from-dark_blue_figma">
+        <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>
         {/* <GenericSection title="Team">
           <Team />
         </GenericSection> */}
-        <div className="bg-gradient-to-b from-dark_blue_figma to-[#1B1F23]">
+        <div className="bg-gradient-to-b from-blue-500 to-blue-500">
           <Image
             src="/landing/machine.png"
             alt="bottom image"
