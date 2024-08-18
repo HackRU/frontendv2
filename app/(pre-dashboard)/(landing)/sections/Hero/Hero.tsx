@@ -69,11 +69,11 @@ export default function Hero() {
         />
         </div>
         </div>
-        <div className="relative flex flex-col items-center justify-center min-h-[400px]">
+        <div className="relative flex flex-col items-center justify-center min-h-[400px] z-20">
           <div
             className="relative left-0 top-0 h-auto w-[790px]
-        xs:max-w-[320px] sm:max-w-[576px] md:w-[500px] md:min-w-[500px]
-        md:pl-8 lg:w-[600px] xl:w-[650px]"
+        xs:max-w-[320px] sm:max-w-[576px] md:w-[500px] md:min-w-[600px]
+        md:pl-8 lg:w-[700px] xl:w-[800px]"
           >
             <Image
               src={FIRE_IMG[0]}
@@ -82,9 +82,7 @@ export default function Hero() {
               height="900"
               alt="Fire"
               className={
-                currentImageIndex === 0
-                  ? 'relative opacity-100'
-                  : 'absolute left-0 top-0 opacity-0'
+                "relative"
               }
               priority
             />
