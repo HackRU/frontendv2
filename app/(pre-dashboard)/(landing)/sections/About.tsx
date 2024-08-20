@@ -39,12 +39,12 @@ function AboutInfo({
       >
         <h1
           className={clsx('text-3xl md:text-5xl', longCang.className)}
-          style={{ color: titleColor, letterSpacing: '0.12em' }}
+          style={{ color: titleColor }}
         >
           {title}
 
         </h1>
-        <div className={clsx(longCang.className)} style={{ letterSpacing: '0.12em' }}>
+        <div className={clsx('text-2xl', longCang.className)}>
           {children}
         </div>
 

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { getSelf } from '@/app/lib/data';
 import { bigelowRules, longCang } from '@/app/ui/fonts';
 
-const FIRE_IMG = ['/landing/logo_F24.png'];
+const FIRE_IMG = ['/landing/logo_f24_2.png'];
 const POKER_IMG = ['/landing/hackru_asset.png'];
 
 const animationTime = 800;
@@ -99,7 +99,7 @@ export default function Hero() {
                 className="z-30 items-center justify-center
             rounded-lg border-x-4 border-y-2 border-solid
             border-pink-500 bg-transparent text-sm text-pink-500
-            transition-all duration-100 hover:drop-shadow-[0_0_8px_pink]
+            transition-all duration-100 hover:drop-shadow-[0_0_20px_pink]
             xs:h-[26px] xs:w-[99px]
             sm:h-[45px] sm:w-[179px]
             sm:text-lg md:h-[37px]
@@ -113,7 +113,7 @@ export default function Hero() {
                 className="z-30 items-center justify-center
             rounded-lg border-x-4 border-y-2 border-solid
             border-orange-500 bg-transparent text-sm text-orange-500
-            transition-all duration-100 hover:drop-shadow-[0_0_8px_orange]
+            transition-all duration-100 hover:drop-shadow-[0_0px_20px_orange]
             xs:h-[26px] xs:w-[99px]
             sm:h-[45px] sm:w-[179px]
             sm:text-lg md:h-[37px]
