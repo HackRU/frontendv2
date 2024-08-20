@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
-
+ 
 export default function OffseasonPage() {
   return (
     <main className="flex flex-col items-center justify-center w-screen h-screen relative">
@@ -17,7 +17,7 @@ export default function OffseasonPage() {
           Thanks for your interest in HackRU! Our registrations aren't open yet, but you can follow us on our social channels to stay updated.
         </p>
         <Button
-          className="mt-6 px-6 py-3 bg-green-500 text-white rounded-full shadow-lg transform transition hover:bg-green-600 hover:scale-105 active:bg-green-700"
+          className="text-s text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"
           onClick={() => window.open('https://www.instagram.com/thehackru/', '_blank')}
         >
           Follow us on Instagram
@@ -51,7 +51,7 @@ export default function OffseasonPage() {
           Check out all our links and resources on our Linktree!
         </p>
         <Button
-          className="mt-6 px-6 py-3 bg-green-500 text-white rounded-full shadow-lg transform transition hover:bg-green-600 hover:scale-105 active:bg-green-700"
+          className="text-s text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"
           onClick={() => window.open('https://linktr.ee/thehackru', '_blank')}
         >
           Visit Our Linktree
