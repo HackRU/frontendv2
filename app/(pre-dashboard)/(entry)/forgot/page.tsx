@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from '@/app/ui/button';
+import Image from 'next/image';
 
 
 import { Forgot } from '../../../lib/actions';
@@ -36,12 +37,24 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
+        <Image
+        src={('/Rectangle1.png')}
+        width="900"
+        height="900"
+        alt="Scroll"
+        className={"h-[500px] w-[650px] sm:h-auto md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
+        priority
+        style={{
+          objectFit: 'cover',
+          zIndex: -1
+        }}
+      />
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           {(<p className="text-xs italic mt-2">{message}</p>)}
           <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="email"
             >
               Email

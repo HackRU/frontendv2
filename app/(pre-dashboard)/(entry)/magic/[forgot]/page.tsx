@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 
 import { useState } from "react";
+import Image from 'next/image';
 
 import { usePathname } from 'next/navigation'
 
@@ -54,13 +55,25 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
+            <Image
+        src={('/Rectangle1.png')}
+        width="900"
+        height="900"
+        alt="Scroll"
+        className={"h-[500px] w-[650px] sm:h-auto md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
+        priority
+        style={{
+          objectFit: 'cover',
+          zIndex: -1
+        }}
+      />
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
           <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="email"
             >
               Email
@@ -81,7 +94,7 @@ export default function SignupPage() {
 
           <div className="mt-4">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="password"
             >
               Password
@@ -100,7 +113,7 @@ export default function SignupPage() {
           </div>
           <div className="mt-4">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="confirm_password"
             >
               Confim Password

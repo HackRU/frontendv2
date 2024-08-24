@@ -40,7 +40,7 @@ export default function LoginPage() {
   return (
     <main className="flex items-center justify-center md:h-screen w-screen h-screen">
       <Image
-        src={('/textbannerBROWN.png')}
+        src={('/Rectangle1.png')}
         width="900"
         height="900"
         alt="Scroll"
@@ -55,9 +55,9 @@ export default function LoginPage() {
         <div className="w-full grid gap-0 items-center">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
-          <p className = "text-s italic text-grey-200">Press Login or Press Enter to Login</p>
+          <p className = "text-s italic  text-white">Press Login or Press Enter to Login</p>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="email"
             >
               Email
@@ -77,7 +77,7 @@ export default function LoginPage() {
           </div>
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="password"
             >
               Password
@@ -95,9 +95,9 @@ export default function LoginPage() {
               {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
-          <Button className="mt-4 justify-center" type="submit">Log in</Button>
-          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
-          <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/forgot')}>Forgot Password? Reset it Here!</p>
+          <Button className="mt-4 justify-center" type="submit">Login</Button>
+          <p className="text-s italic  text-white mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
+          <p className="text-s italic  text-white mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/forgot')}>Forgot Password? Reset it Here!</p>
         </div>
       </form>
     </main>
