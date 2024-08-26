@@ -37,7 +37,7 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
-        <Image
+      <Image
         src={('/Rectangle1.png')}
         width="900"
         height="900"

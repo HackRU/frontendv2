@@ -255,7 +255,7 @@ export default function Dashboard() {
         }
 
         const haswaiver = await GetWaiverInfo();
-        setWaiverState(haswaiver?.exists);
+        setWaiverState(resumeInfo?.response.url === "");
         //   setLoading(false);
         
       } catch (error) {

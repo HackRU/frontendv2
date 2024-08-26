@@ -426,8 +426,14 @@ export async function GetWaiverInfo(){
 
 }
 */
+
+
 export async function GetWaiverInfo() {
   noStore();
+  let resp = {
+    error: '',
+    response: {url: '', message: ''},
+  };
   const session = await auth();
   if (session?.user) {
     const json = await fetch(ENDPOINTS.waiver, {
@@ -439,9 +445,17 @@ export async function GetWaiverInfo() {
         email: session.user.email,
         auth_token: session.user.name,
       }),
-    }).then((res) => res.json());
-    return json.body;
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !==  200) {
+        resp.error = 'Error Uploading Resume';
+      } else {
+        resp.response.url = resJSON.url;
+        resp.response.message = resJSON.message;
+      }
+    });
   }
+  return resp;
 }
 
 export async function UploadWaiver(file: FormData) {
@@ -452,25 +466,29 @@ export async function UploadWaiver(file: FormData) {
   noStore();
   const info = await GetWaiverInfo();
 
-  if (!info.upload) {
-    resp.error = "Invalid Upload URL";
-    return resp;
-  }
+  const pdf = file.get('file');
 
-  await fetch(info.upload, {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/pdf',
-    },
-    body: file.get('file'),
-  }).then(async (res) => {
-    console.log(res.status);
-    if (res.status !== 200) {
-      resp.error = 'Error Uploading Waiver';
-    } else {
-      resp.response = 'Waiver Uploaded';
-    }
-  });
+  if (info.error) {
+      resp.error = info.error;
+      return resp;
+  }
+  
+  if (info.response.url) {
+    await fetch(info.response.url, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/pdf',
+      },
+      body: pdf,
+    }).then(async (res) => {
+      console.log(res.status);
+      if (res.status !== 200) {
+        resp.error = 'Error Uploading Waiver';
+      } else {
+        resp.response = 'Waiver Uploaded';
+      }
+    });
+  }
   return resp;
 }
 
@@ -496,6 +514,8 @@ export async function GetResume() {
       if (res.status !==  200) {
         resp.error = 'Error Uploading Resume';
       } else {
+        resp.response.url = resJSON.url;
+        resp.response.message = resJSON.message;
       }
     });
   }
@@ -510,6 +530,7 @@ export async function UploadResume(file: FormData) {
   noStore();
   const info = await GetResume();
   const pdf = file.get('file');
+  console.log(info)
 
   if (info.error) {
       resp.error = info.error;
@@ -529,9 +550,9 @@ export async function UploadResume(file: FormData) {
       console.log(res.status)
       console.log(res)
       if (res.status !== 200) {
-        resp.error = 'Error Uploading Waiver';
+        resp.error = 'Error Uploading Resume';
       } else {
-        resp.response = 'Waiver Uploaded';
+        resp.response = 'Resume Uploaded';
       }
     });
 }
