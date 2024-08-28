@@ -50,7 +50,7 @@ export default function SignupPage() {
   return (
     <main className="flex items-center justify-center w-screen h-screen">
       <Image
-        src={('/textbannerBROWN.png')}
+        src={('/Rectangle1.png')}
         width="900"
         height="900"
         alt="Scroll"
@@ -63,10 +63,11 @@ export default function SignupPage() {
       />
       <form onSubmit={handleSubmit(onSubmit)} className="h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden ">
         <div className="w-full grid gap-0 items-center">
-          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
+          {(<p className="text-xs italic text-white ">{submit_errors}</p>)}
           <div>
+          <p className = "text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-4 block text-xs font-medium text-white"
               htmlFor="email"
             >
               Email
@@ -87,7 +88,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="first_name"
             >
               First
@@ -107,7 +108,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="first"
             >
               Last
@@ -127,7 +128,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="password"
             >
               Password
@@ -147,7 +148,7 @@ export default function SignupPage() {
           </div>
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="confirm_password"
             >
               Confim Password
@@ -167,8 +168,10 @@ export default function SignupPage() {
           </div>
 
         </div>
-        <Button type="submit" className="mt-4 justify-self-stretch">Sign Up</Button>
-        <p className="text-s italic text-grey-500 mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>Already a member? Log In!</p>
+        <div className = "text-center">
+          <Button type="submit" className="mt-4 justify-self-stretch">Sign Up</Button>
+        </div>
+        <p className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>Already a member? Log In!</p>
       </form>
     </main>
   );

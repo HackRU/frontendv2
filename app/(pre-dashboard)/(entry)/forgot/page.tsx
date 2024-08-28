@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from '@/app/ui/button';
+import Image from 'next/image';
 
 
 import { Forgot } from '../../../lib/actions';
@@ -26,25 +27,34 @@ export default function SignupPage() {
 
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
-  const [submit_errors, setErrors] = useState("");
-  const [success, setSuccess] = useState("");
+  const [message, setMessage] = useState("");
 
   const onSubmit = async (data: SignUp) => {
     const resp = await Forgot(data.email);
-    setSuccess(resp.response);
-    setErrors(resp.error);
+    setMessage(resp);
   }
 
 
   return (
-    <main className="flex items-center justify-center md:h-screen">
+    <main className="flex items-center justify-center md:h-screen w-screen">
+      <Image
+        src={('/Rectangle1.png')}
+        width="900"
+        height="900"
+        alt="Scroll"
+        className={"h-[500px] w-[650px] sm:h-auto md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
+        priority
+        style={{
+          objectFit: 'cover',
+          zIndex: -1
+        }}
+      />
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
-          {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
-          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
+          {(<p className="text-xs italic mt-2">{message}</p>)}
           <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="email"
             >
               Email

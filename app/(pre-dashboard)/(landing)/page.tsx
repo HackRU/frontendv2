@@ -1,7 +1,7 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { bigelowRules, bizUdg } from '@/app/ui/fonts';
+import { bigelowRules, bizUdg, longCang } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Hero from './sections/Hero/Hero';
 import Schedule from './sections/Schedule';
@@ -9,6 +9,7 @@ import { Suspense, useEffect } from 'react';
 import Sponsors from './sections/Sponsors';
 import About from './sections/About';
 import FAQ from './sections/FAQ/FAQ';
+//import Team from './sections/Team';
 import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
 import React from 'react';
@@ -16,10 +17,14 @@ import React from 'react';
 export default async function Page() {
   return (
     <main
-      className={`relative flex h-fit flex-col ${bizUdg.className} text-orange-100`}
+      className={`relative flex h-fit flex-col ${longCang.className} text-blue-200`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
+        <h1 className={`text-center bg-blue-500 ${longCang.className}`} style={{ fontSize: '96px' }}>
+          ABOUT
+        </h1>
+
         <About />
         {/**
          * We are using Suspense because Schedule and Sponsors will eventually
@@ -31,15 +36,16 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">
-          <Sponsors />
-        </GenericSection>
-        <GenericSection title="FAQ" color="from-dark_blue_figma">
+        <GenericSection title="Sponsors">{<Sponsors /> }</GenericSection>
+        <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>
-        <div className="from-dark_blue_figma bg-gradient-to-b to-[#1B1F23]">
+        {/* <GenericSection title="Team">
+          <Team />
+        </GenericSection> */}
+        <div className="bg-gradient-to-b from-blue-500 to-blue-500">
           <Image
-            src="/landing/kittywizards.svg"
+            src="/landing/machine.png"
             alt="bottom image"
             object-fit="cover"
             style={{
@@ -48,6 +54,8 @@ export default async function Page() {
             }}
             width={400}
             height={300}
+            quality={100}
+            unoptimized
           />
         </div>
       </div>

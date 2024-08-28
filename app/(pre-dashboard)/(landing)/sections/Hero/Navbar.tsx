@@ -8,6 +8,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { bizUdg } from '@/app/ui/fonts';
+import { longCang } from '@/app/ui/fonts';
 import clsx from 'clsx';
 
 function scrollToSectionName(sectionName: string) {
@@ -23,8 +24,9 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -41,8 +43,9 @@ function OtherPageMenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
             history.push('/contact');
@@ -59,10 +62,11 @@ function CollapsedMenu() {
   const pathname = usePathname();
   return (
     <div
-      className={clsx("bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden",
+      className={clsx(
+        'bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden',
         {
-          "hidden": pathname !== '/'
-        }
+          hidden: pathname !== '/',
+        },
       )}
     >
       <Menu as="div" className="relative inline-block text-left">
@@ -86,6 +90,7 @@ function CollapsedMenu() {
               <MenuItem sectionName="About" />
               <MenuItem sectionName="Schedule" />
               <MenuItem sectionName="FAQ" />
+              <MenuItem sectionName="Team" />
               {/* <MenuItem sectionName="Sponsors" /> */}
               {<OtherPageMenuItem sectionName="Contact" />}
             </div>
@@ -107,60 +112,67 @@ function Navbar() {
   const sections = ['Home', 'About', 'Schedule', 'FAQ'];
 
   return (
-    <div className={`z-40 flex w-full justify-end md:fixed ${bizUdg.className}`} id="navbar">
+    <div
+      className={`z-40 flex w-full justify-end md:fixed bg-gradient-to-b from-blue-500 to-transparent ${longCang.className}`}
+      id="navbar"
+    >
       <div
-        className="absolute left-4 top-0 z-50 w-24"
-        onClick={() => {
-          router.push('/');
-        }}
+        style={{ left: '5%', top: '24px' }}
+        className="hover:drop-shadow-inner absolute z-50 w-12 hover:scale-105 sm:w-16 md:w-20 lg:w-24"
+        onClick={() => router.push('/')}
       >
         <Image
-          width={200}
-          height={200}
-          // sizes={'100vw'}
-          src="/landing/yellow_hackru.png"
-          alt="yellow hackru logo"
+          width={84}
+          height={84}
+          src="/landing/hrulogo_2.png"
+          alt="neon hackru logo"
         />
       </div>
-
       <a
-        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2024-season&utm_content=white"
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
+        className="absolute right-2 top-0 z-50 w-12 sm:w-16 md:w-20 lg:w-24"
       >
         <Image
-          width={0}
-          height={0}
-          className="absolute right-2 top-0 z-50 w-24"
-          src="https://s3.amazonaws.com/logged-assets/trust-badge/2024/mlh-trust-badge-2024-yellow.svg"
+          width={100}
+          height={100}
+          src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
           alt="Major League Hacking 2024 Hackathon Season"
         />
       </a>
-
       <CollapsedMenu />
       <div
-        className="text-text from-f23-lightGreen absolute top-0 z-40 hidden
-                w-[100%] justify-end bg-gradient-to-b pr-32 pt-8 text-lg font-light md:flex"
+        className="text-mediumBlue absolute right-20 top-0 z-40 hidden
+        w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:flex md:pr-6 md:pt-8 md:text-lg lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
-          <>
-            {sections.map((section) => {
-              return (
-                <button
-                  className="glow-center mr-5 font-medium uppercase hover:drop-shadow-blueGlow transition-shadow"
-                  onClick={() => scrollToSectionName(section)}
-                  key={section}
-                >
-                  {section}
-                </button>
-              );
-            })}
-            {/* <Link href="/contact">
-              <button className="glow-center mr-5 font-medium uppercase">
+          <div className="flex items-center justify-start">
+            {sections.map((section) => (
+              <button
+                style={{
+                  color: '#536F91',
+                  textTransform: 'lowercase',
+                }}
+                className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
+                onClick={() => scrollToSectionName(section)}
+                key={section}
+              >
+                {section}
+              </button>
+            ))}
+            <Link href="/contact">
+              <button
+                style={{
+                  color: '#536F91',
+                  textTransform: 'lowercase',
+                }}
+                className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
+              >
                 Contact
               </button>
-            </Link> */}
-          </>
+            </Link>
+          </div>
         )}
       </div>
     </div>
