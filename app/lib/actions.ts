@@ -432,7 +432,7 @@ export async function GetWaiverInfo() {
   noStore();
   let resp = {
     error: '',
-    response: {url: '', message: ''},
+    response: {url: '', message: '', hasUploaded: false},
   };
   const session = await auth();
   if (session?.user) {
@@ -452,6 +452,7 @@ export async function GetWaiverInfo() {
       } else {
         resp.response.url = resJSON.url;
         resp.response.message = resJSON.message;
+        resp.response.hasUploaded = resJSON.hasUploaded;
       }
     });
   }
@@ -496,7 +497,7 @@ export async function GetResume() {
   noStore();
   let resp = {
     error: '',
-    response: {url: '', message: ''},
+    response: {url: '', message: '', hasUploaded: false},
   };
   const session = await auth();
   if (session?.user) {
@@ -516,6 +517,7 @@ export async function GetResume() {
       } else {
         resp.response.url = resJSON.url;
         resp.response.message = resJSON.message;
+        resp.response.hasUploaded = resJSON.hasUploaded;
       }
     });
   }

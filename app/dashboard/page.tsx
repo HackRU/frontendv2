@@ -250,12 +250,10 @@ export default function Dashboard() {
         const data = await getSelf();
         setUserData(data.response);
         const resumeInfo = await GetResume();
-        if (resumeInfo?.response.url === "") {
-          setResumeExists(true);
-        }
+        setResumeExists(resumeInfo.response.hasUploaded);
 
         const haswaiver = await GetWaiverInfo();
-        setWaiverState(resumeInfo?.response.url === "");
+        setWaiverState(haswaiver.response.hasUploaded);
         //   setLoading(false);
         
       } catch (error) {
