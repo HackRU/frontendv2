@@ -98,8 +98,8 @@ export default function Hero() {
               <button
                 className="z-30 items-center justify-center
             rounded-lg border-x-4 border-y-2 border-solid
-            border-pink-500 bg-transparent text-sm text-pink-500
-            transition-all duration-100 hover:drop-shadow-[0_0_20px_pink]
+            border-[#C3557D] bg-transparent text-sm text-[#C3557D]
+            transition-all duration-100 hover:drop-shadow-[0_0_20px_#C3557D]
             xs:h-[26px] xs:w-[99px]
             sm:h-[45px] sm:w-[179px]
             sm:text-lg md:h-[37px]
@@ -112,8 +112,8 @@ export default function Hero() {
               <button
                 className="z-30 items-center justify-center
             rounded-lg border-x-4 border-y-2 border-solid
-            border-orange-500 bg-transparent text-sm text-orange-500
-            transition-all duration-100 hover:drop-shadow-[0_0px_20px_orange]
+            border-[#EC9655] bg-transparent text-sm text-[#EC9655]
+            transition-all duration-100 hover:drop-shadow-[0_0px_20px_#EC9655]
             xs:h-[26px] xs:w-[99px]
             sm:h-[45px] sm:w-[179px]
             sm:text-lg md:h-[37px]
