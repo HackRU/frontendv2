@@ -70,7 +70,7 @@ export default function SignupPage() {
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
-          {(<p className="text-xs italic text-red-500 mt-2">{success}</p>)}
+          {(<p className="text-xs italic text-green-500 mt-2">{success}</p>)}
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-white"

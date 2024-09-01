@@ -63,7 +63,7 @@ export default function SignupPage() {
       />
       <form onSubmit={handleSubmit(onSubmit)} className="h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden ">
         <div className="w-full grid gap-0 items-center">
-          {(<p className="text-xs italic text-white ">{submit_errors}</p>)}
+          {(<p className="text-xs italic text-red-500 ">{submit_errors}</p>)}
           <div>
           <p className = "text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
             <label

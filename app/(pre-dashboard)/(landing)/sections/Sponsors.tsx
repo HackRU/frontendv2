@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 export default async function Sponsors() {
   const sponsors = [
-     '/landing/bitsprout.png'
+     '/landing/coming_soon.png'
   ];
 
   return (
@@ -19,7 +19,7 @@ export default async function Sponsors() {
                 return (
                   <div
                     key={index}
-                    className="relative mb-4 h-[30vh] bg-white md:w-[40vw] w-[80vw]"
+                    className="relative mb-4 h-[30vh] md:w-[40vw] w-[80vw]"
                   >
                     <Image
                       src={sponsorURL}
@@ -38,7 +38,7 @@ export default async function Sponsors() {
                 return (
                   <div
                     key={index}
-                    className="relative mb-4 h-[30vh] bg-white md:w-[40vw] w-[80vw]"
+                    className="relative mb-4 h-[30vh] md:w-[30vw] w-[70vw]"
                   >
                     <Image
                       src={sponsorURL}
