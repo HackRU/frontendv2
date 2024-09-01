@@ -1,5 +1,5 @@
-export const BASE = process.env.BASE_URL;
-//export const BASE = "https://api.hackru.org/dev";
+//export const BASE = process.env.BASE_URL;
+export const BASE = "https://api.hackru.org/dev";
 export const DISCORD_CLIENT_ID = "1248717914618593372";
 export const DISCORD_REDIRECT_URI = "https://hackru.org/dashboard";
 

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
 import GenericSection from './GenericSection';
 import SectionTitle from './SectionTitle';
-import { longCang } from '@/app/ui/fonts';
+import { longCang, fuzzy } from '@/app/ui/fonts';
 
 const animalQuality = 100;
 
@@ -38,13 +38,13 @@ function AboutInfo({
         )}
       >
         <h1
-          className={clsx('text-3xl md:text-5xl', longCang.className)}
+          className={clsx('text-3xl md:text-5xl', fuzzy.className)}
           style={{ color: titleColor }}
         >
           {title}
 
         </h1>
-        <div className={clsx('text-2xl', longCang.className)}>
+        <div className={clsx('text-2xl', fuzzy.className)}>
           {children}
         </div>
 

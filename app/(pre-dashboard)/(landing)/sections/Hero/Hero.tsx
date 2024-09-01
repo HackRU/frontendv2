@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSelf } from '@/app/lib/data';
-import { bigelowRules, longCang } from '@/app/ui/fonts';
+import { bigelowRules, fuzzy } from '@/app/ui/fonts';
 
 const FIRE_IMG = ['/landing/logo_f24_2.png'];
 const POKER_IMG = ['/landing/hackru_asset.png'];
@@ -89,7 +89,7 @@ export default function Hero() {
           </div>
           <div className="items-left flex-col  ">
             <p
-              className={`${longCang.className} text-2xl`}
+              className={`${fuzzy.className} text-2xl`}
             >
               <span className = "text-[#536F91]">THE GAMES ARE </span>
               <span className = "text-[#ADD8E6]">ON!</span>

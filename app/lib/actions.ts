@@ -380,8 +380,8 @@ export async function Reset(
         let resJSON = await res.json();
         console.log(resJSON)
         if (resJSON.statusCode !== 200) {
-          if (resJSON.body) {
-            resp.error = resJSON.body;
+          if (resJSON.message) {
+            resp.error = resJSON.message;
           } else {
             resp.error = 'Unexpected Error';
           }
