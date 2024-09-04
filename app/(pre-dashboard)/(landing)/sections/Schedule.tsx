@@ -123,7 +123,7 @@ export default function Schedule() {
       <div className="flex h-fit w-full max-w-7xl flex-col items-center">
         <div
           className="bg-gradient-to-b from-offblack-100 to-[#453148] text-text relative flex
-                              w-full flex-col items-center rounded-3xl md:flex-row md:items-start"
+          w-full flex-col items-center rounded-3xl md:flex-row md:items-start overflow-y-auto max-h-[600px]" //scroll
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
