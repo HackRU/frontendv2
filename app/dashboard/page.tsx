@@ -579,7 +579,7 @@ export default function Dashboard() {
                     {...register("dietary_restrictions")}
                     onChange={(e) => setUserData({ ...userData, dietary_restrictions: e.target.value })}
                   >
-                    <option value="None">Vegetarian</option>
+                    <option value="None">None</option>
                     <option value="Vegetarian">Vegetarian</option>
                     <option value="Vegan">Vegan</option>
                     <option value="Celiac Disease">Celiac Disease</option>
