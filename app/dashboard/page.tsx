@@ -39,24 +39,24 @@ const UserUpdateSchema = z.object({
   first_name: z.string().min(1, "Field cannot be empty"),
   last_name: z.string().min(1, "Field cannot be empty"),
   resume: z.any(),
-  github: z.string().min(1, "Field cannot be empty"),
-  major: z.string().min(1, "Field cannot be empty"),
-  short_answer: z.string().min(1, "Field cannot be empty"),
-  shirt_size: z.string().min(1, "Field cannot be empty"),
-  hackathon_count: z.string().min(1, "Field cannot be empty"),
-  dietary_restrictions: z.string().min(1, "Field cannot be empty"),
-  special_needs: z.string().min(1, "Field cannot be empty"),
-  age: z.string().min(1, "Field cannot be empty"),
-  school: z.string().min(1, "Field cannot be empty"),
-  grad_year: z.string().min(1, "Field cannot be empty"),
-  gender: z.string().min(1, "Field cannot be empty"),
-  level_of_study: z.string().min(1, "Field cannot be empty"),
-  country_of_residence: z.string().min(1, "Field cannot be empty"),
-  ethnicity: z.string().min(1, "Field cannot be empty"),
+  github: z.string(),
+  major: z.string(),
+  short_answer: z.string(),
+  shirt_size: z.string(),
+  hackathon_count: z.string(),
+  dietary_restrictions: z.string(),
+  special_needs: z.string(),
+  age: z.string(),
+  school: z.string(),
+  grad_year: z.string(),
+  gender: z.string(),
+  level_of_study: z.string(),
+  country_of_residence: z.string(),
+  ethnicity: z.string(),
   phone_number: z.number({
     invalid_type_error: "Enter Phone Number in the format 1234567890",
   }).min(1000000000).max(9999999999),
-  how_you_heard_about_hackru: z.string().min(1, "Field cannot be empty"),
+  how_you_heard_about_hackru: z.string(),
   reasons: z.string(),
 });
 
@@ -163,6 +163,11 @@ export default function Dashboard() {
     }
 
     const resp = await UpdateSelf(otherData);
+    setUserData({ ...userData, major: data.major, shirt_size: data.shirt_size, hackathon_count: data.hackathon_count, dietary_restrictions: data.dietary_restrictions, age: data.age, school: data.school, gender: data.gender 
+      , grad_year: data.grad_year, level_of_study: data.level_of_study, country_of_residence: data.country_of_residence, ethnicity: data.ethnicity 
+      });
+
+
     setSavingUserProfile(false);
     if (resp.length > 0) {
       setUserProfileSubmitText("Failed!");
@@ -177,14 +182,23 @@ export default function Dashboard() {
       try {
         const data = new FormData();
         data.set('file', waiverFile);
-        await UploadWaiver(data);
+        const requiredFields = ["first_name","last_name","resume","github","major","short_answer","shirt_size","hackathon_count","dietary_restrictions","special_needs","age","school","grad_year","gender","level_of_study","country_of_residence","ethnicity","how_you_heard_about_hackru","reasons","phone_number"]
+        for (let i = 0; i < requiredFields.length; i++) {
+          if (!userData[requiredFields[i]]){
+            console.log("THIS FIELD IS FAIL" + requiredFields[i])
+            trigger(requiredFields[i] as any, { shouldFocus: true });
+            alert("Please scroll down and fill out the entire profile before registering");
+            return;
+          } 
+        } 
 
-        trigger('phone_number', { shouldFocus: true });
+        await UploadWaiver(data);
         if (Object.keys(errors).length === 0) {
           RegisterSelf();
+          setUserData({ ...userData, registration_status: "registered" })
         }
-
-        window.location.reload();
+        
+        //window.location.reload();
 
       } catch (error) {
         console.error("Error uploading waiver:", error);
@@ -484,7 +498,6 @@ export default function Dashboard() {
                     type="file"
                     id="resume"
                     accept="application/pdf"
-                    required = {!resumeExists}
                     {...register("resume")}
                     onChange={(e) => {
                       setUserData({ ...userData, resume: e.target.value });
@@ -515,7 +528,7 @@ export default function Dashboard() {
                         onChange={(e) => {
                         const selected = e.target.value;
                         setSelectedMajor(selected);
-                        if (selected !== 'Other') {
+                        if (selected != 'Other') {
                         setUserData({ ...userData, major: selected });
                       }
                     }}
