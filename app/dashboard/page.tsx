@@ -185,10 +185,12 @@ export default function Dashboard() {
         const requiredFields = ["first_name","last_name","resume","github","major","short_answer","shirt_size","hackathon_count","dietary_restrictions","special_needs","age","school","grad_year","gender","level_of_study","country_of_residence","ethnicity","how_you_heard_about_hackru","reasons","phone_number"]
         for (let i = 0; i < requiredFields.length; i++) {
           if (!userData[requiredFields[i]]){
-            console.log("THIS FIELD IS FAIL" + requiredFields[i])
-            trigger(requiredFields[i] as any, { shouldFocus: true });
-            alert("Please scroll down and fill out the entire profile before registering");
-            return;
+            if(!resumeExists){
+              console.log("THIS FIELD IS FAIL" + requiredFields[i])
+              trigger(requiredFields[i] as any, { shouldFocus: true });
+              alert("Please scroll down and fill out the entire profile before registering");
+              return;
+            }
           } 
         } 
 
