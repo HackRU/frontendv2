@@ -94,6 +94,11 @@ export default function Hero() {
               <span className = "text-[#536F91]">THE GAMES ARE </span>
               <span className = "text-[#ADD8E6]">ON!</span>
             </p>
+            <p
+              className={`${fuzzy.className} text-2xl`}
+            >
+              <span className = "text-[#ADD8E6]">Oct 26-27! </span>
+            </p>
             <div className="mt-10 flex justify-center space-x-4">
               <button
                 className="z-30 items-center justify-center
