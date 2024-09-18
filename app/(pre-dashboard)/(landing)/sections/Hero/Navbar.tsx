@@ -161,7 +161,7 @@ function Navbar() {
                 {section}
               </button>
             ))}
-            <Link href="/contact">
+            <Link href="https://linktr.ee/thehackru">
               <button
                 style={{
                   color: '#536F91',
