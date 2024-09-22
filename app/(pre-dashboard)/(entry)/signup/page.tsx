@@ -176,3 +176,4 @@ export default function SignupPage() {
     </main>
   );
 }
+//should show what fields are missing now
