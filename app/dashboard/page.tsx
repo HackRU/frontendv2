@@ -654,7 +654,7 @@ export default function Dashboard() {
                   {errors.school && (<p className="text-xs italic text-red-500 mt-2">{errors.school?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="grad-year">Grad Year</Label>
+                  <Label htmlFor="grad-year">Graduation Year</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -791,12 +791,12 @@ export default function Dashboard() {
                   {errors.phone_number && (<p className="text-xs italic text-red-500 mt-2">{errors.phone_number?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="how-heard">How you heard about hackru</Label>
+                  <Label htmlFor="how-heard">How you heard about HackRU:</Label>
                   <Input id="how-heard" value={userData?.how_you_heard_about_hackru} {...register("how_you_heard_about_hackru")} onChange={(e) => setUserData({ ...userData, how_you_heard_about_hackru: e.target.value })} />
                   {errors.how_you_heard_about_hackru && (<p className="text-xs italic text-red-500 mt-2">{errors.how_you_heard_about_hackru?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="reasons">What are your reasons for joining HackRU</Label>
+                  <Label htmlFor="reasons">What are your reasons for joining HackRU?</Label>
                   <textarea
                     className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="reasons"

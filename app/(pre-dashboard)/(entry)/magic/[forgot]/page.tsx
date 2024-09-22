@@ -52,7 +52,6 @@ export default function SignupPage() {
     setErrors(resp.error);
   }
 
-
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
       <Image
@@ -81,7 +80,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("email")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
                 name="email"
@@ -102,8 +101,9 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("password")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
+                type="password"
                 name="password"
                 placeholder="Enter password"
                 required
@@ -121,8 +121,9 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("confirm_password")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="confirm_password"
+                type="password"
                 name="confirm_password"
                 placeholder="Enter password again"
                 required
