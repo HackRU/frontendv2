@@ -51,7 +51,7 @@ export default function SignupPage() {
       />
       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="w-full">
-          {(<p className="text-xs italic mt-2">{message}</p>)}
+          {(<p className="text-xs italic text-white mt-2">{message}</p>)}
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-white"
@@ -62,7 +62,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("email")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
                 name="email"

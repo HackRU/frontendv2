@@ -75,7 +75,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("email")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
                 name="email"
@@ -96,7 +96,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("first_name")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="first_name"
                 name="first_name"
                 placeholder="First"
@@ -116,7 +116,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("last_name")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="last_name"
                 name="last_name"
                 placeholder="Last"
@@ -136,7 +136,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("password")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 name="password"
                 type="password"
@@ -156,7 +156,7 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("confirm_password")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
                 id="confirm_password"
                 name="confirm_password"
                 type="password"
