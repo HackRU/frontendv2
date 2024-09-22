@@ -18,24 +18,23 @@ import { useRouter } from 'next/navigation'
 export default function SignupPage() {
 
   const SignUpSchema = z.object({
-    email: z.string().email(),
-
-    first_name: z.string(),
-    last_name: z.string(),
-
-    password: z.string(),
-    confirm_password: z.string()
-
+    email: z.string().email("Please enter a valid email address").nonempty("Please fill out the email field"),
+    first_name: z.string().nonempty("Please fill out the first name field"),
+    last_name: z.string().nonempty("Please fill out the last name field"),
+    password: z.string().min(6, "Password must be at least 6 characters").nonempty("Please fill out the password field"),
+    confirm_password: z.string().nonempty("Please confirm your password")
   }).refine((data) => data.password === data.confirm_password, {
     message: "Passwords don't match",
-    path: ["confirm_password"], // path of error
+    path: ["confirm_password"],
   });
+  
 
   type SignUp = z.infer<typeof SignUpSchema>;
 
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
 
   const [submit_errors, setErrors] = useState("");
+  const [submitErrors, setSubmitErrors] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -45,6 +44,18 @@ export default function SignupPage() {
       setErrors(resp.error);
     }
   }
+  
+
+  const onError = (errorList: any) => {
+    const errorMessages: string[] = Object.keys(errors).map((field) => {
+      if (errors[field]?.message) {
+        return `${field.replace("_", " ")}: ${errors[field]?.message}`;
+      }
+      return `${field.replace("_", " ")} is required`;
+    });
+    setSubmitErrors(errorMessages);
+    
+  };
 
 
   return (
@@ -58,18 +69,17 @@ export default function SignupPage() {
         priority
         style={{
           objectFit: 'cover',
-          zIndex: -1
+          zIndex: -1,
         }}
       />
-      <form onSubmit={handleSubmit(onSubmit)} className="h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden ">
-        <div className="w-full grid gap-0 items-center">
-          {(<p className="text-xs italic text-red-500 ">{submit_errors}</p>)}
-          <div>
-          <p className = "text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
-            <label
-              className="mb-3 mt-4 block text-xs font-medium text-white"
-              htmlFor="email"
-            >
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden ">
+      <div className="w-full grid gap-0 items-center">
+      {}
+      {}
+        
+          <div className='w-full'>
+            <p className="text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
+            <label className="mb-3 mt-4 block text-xs font-medium text-white" htmlFor="email">
               Email
             </label>
             <div className="relative">
@@ -80,18 +90,20 @@ export default function SignupPage() {
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
-                required
+                //required
               />
-              {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
+              {errors.email && (
+                <p className="text-xs italic text-red-500 mt-2">
+                  {errors.email.message || "Email is required"}
+                </p>
+              )}
             </div>
           </div>
-
-          <div className="">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
-              htmlFor="first_name"
-            >
-              First
+  
+          
+          <div>
+            <label className="mb-3 mt-5 block text-xs font-medium text-white" htmlFor="first_name">
+              First Name
             </label>
             <div className="relative">
               <input
@@ -99,19 +111,21 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="first_name"
                 name="first_name"
-                placeholder="First"
-                required
+                placeholder="First Name"
+                //required
               />
-              {errors.first_name && (<p className="text-xs italic text-red-500 mt-2">{errors.first_name?.message}</p>)}
+              {errors.first_name && (
+                <p className="text-xs italic text-red-500 mt-2">
+                  {errors.first_name.message || "First name is required"}
+                </p>
+              )}
             </div>
           </div>
-
-          <div className="">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
-              htmlFor="first"
-            >
-              Last
+  
+          
+          <div>
+            <label className="mb-3 mt-5 block text-xs font-medium text-white" htmlFor="last_name">
+              Last Name
             </label>
             <div className="relative">
               <input
@@ -119,18 +133,20 @@ export default function SignupPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="last_name"
                 name="last_name"
-                placeholder="Last"
-                required
+                placeholder="Last Name"
+                //required
               />
-              {errors.last_name && (<p className="text-xs italic text-red-500 mt-2">{errors.last_name?.message}</p>)}
+              {errors.last_name && (
+                <p className="text-xs italic text-red-500 mt-2">
+                  {errors.last_name.message || "Last name is required"}
+                </p>
+              )}
             </div>
           </div>
-
-          <div className="">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
-              htmlFor="password"
-            >
+  
+          
+          <div>
+            <label className="mb-3 mt-5 block text-xs font-medium text-white" htmlFor="password">
               Password
             </label>
             <div className="relative">
@@ -141,17 +157,20 @@ export default function SignupPage() {
                 name="password"
                 type="password"
                 placeholder="Enter password"
-                required
+                //required
               />
-              {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
+              {errors.password && (
+                <p className="text-xs italic text-red-500 mt-2">
+                  {errors.password.message || "Password is required"}
+                </p>
+              )}
             </div>
           </div>
-          <div className="">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
-              htmlFor="confirm_password"
-            >
-              Confim Password
+  
+          
+          <div>
+            <label className="mb-3 mt-5 block text-xs font-medium text-white" htmlFor="confirm_password">
+              Confirm Password
             </label>
             <div className="relative">
               <input
@@ -161,18 +180,28 @@ export default function SignupPage() {
                 name="confirm_password"
                 type="password"
                 placeholder="Enter password again"
-                required
+                //required
               />
-              {errors.confirm_password && (<p className="text-xs italic text-red-500 mt-2">{errors.confirm_password?.message}</p>)}
+              {errors.confirm_password && (
+                <p className="text-xs italic text-red-500 mt-2">
+                  {errors.confirm_password.message || "Confirm password is required"}
+                </p>
+              )}
             </div>
           </div>
-
+  
         </div>
-        <div className = "text-center">
+        <div className="text-center">
           <Button type="submit" className="mt-4 justify-self-stretch">Sign Up</Button>
         </div>
-        <p className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>Already a member? Log In!</p>
+        <p
+          className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer"
+          onClick={() => router.push('/login')}
+        >
+          Already a member? Log In!
+        </p>
       </form>
     </main>
   );
+  
 }
