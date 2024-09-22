@@ -48,13 +48,18 @@ export default function SignupPage() {
 
   const onError = (errorList: any) => {
     const errorMessages: string[] = Object.keys(errors).map((field) => {
-      if (errors[field]?.message) {
-        return `${field.replace("_", " ")}: ${errors[field]?.message}`;
+      type FieldKey = keyof SignUp; // Defining possible keys from the SignUp type
+  
+      const typedField = field as FieldKey; // Casting field to the specific known type
+      if (errors[typedField]?.message) {
+        return `${typedField.replace("_", " ")}: ${errors[typedField]?.message}`;
       }
-      return `${field.replace("_", " ")} is required`;
+      return `${typedField.replace("_", " ")} is required`;
     });
+  
     setSubmitErrors(errorMessages);
   };
+  
 
 
   return (
