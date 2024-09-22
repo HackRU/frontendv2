@@ -2,7 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 export default async function Sponsors() {
   const sponsors = [
-     '/landing/coming_soon.png'
+     '/sponsors/NJTRANSIT.png',
+     '/sponsors/RHNIC_RED_WHITE_RBG.png'
   ];
 
   return (
