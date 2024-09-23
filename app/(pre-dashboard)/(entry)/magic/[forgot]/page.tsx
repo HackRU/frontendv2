@@ -55,19 +55,7 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
-      <Image
-        src={('/Rectangle1.png')}
-        width="900"
-        height="900"
-        alt="Scroll"
-        className={"h-[500px] w-[650px] sm:h-auto md:w-[650px] lg:w-[650px] xl:w-[650px] absolute"}
-        priority
-        style={{
-          objectFit: 'cover',
-          zIndex: -1
-        }}
-      />
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)} className='bg-gradient-to-b from-offblack-100 to-[#453148] p-20 rounded-xl'>
         <div className="w-full">
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           {(<p className="text-xs italic text-green-500 mt-2">{success}</p>)}
