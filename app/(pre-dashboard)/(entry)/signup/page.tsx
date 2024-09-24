@@ -1,22 +1,15 @@
-"use client"
+"use client";
 
 import { Button } from '@/app/ui/button';
-
-
 import { SignUp } from '../../../lib/actions';
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
-
 import { useState } from "react";
-
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
-
   const SignUpSchema = z.object({
     email: z.string().email("Please enter a valid email address").nonempty("Please fill out the email field"),
     first_name: z.string().nonempty("Please fill out the first name field"),
@@ -35,7 +28,6 @@ export default function SignupPage() {
   });
 
   const [submit_errors, setErrors] = useState("");
-
   const [submitErrors, setSubmitErrors] = useState<string[]>([]);
   const router = useRouter();
 
@@ -44,23 +36,21 @@ export default function SignupPage() {
     if (resp) {
       setErrors(resp.error);
     }
-  }
+  };
 
   const onError = (errorList: any) => {
     const errorMessages: string[] = Object.keys(errors).map((field) => {
       type FieldKey = keyof SignUp; // Defining possible keys from the SignUp type
-  
+
       const typedField = field as FieldKey; // Casting field to the specific known type
       if (errors[typedField]?.message) {
         return `${typedField.replace("_", " ")}: ${errors[typedField]?.message}`;
       }
       return `${typedField.replace("_", " ")} is required`;
     });
-  
+
     setSubmitErrors(errorMessages);
   };
-  
-
 
   return (
     <main className="flex items-center justify-center w-screen h-screen">
@@ -76,11 +66,11 @@ export default function SignupPage() {
           zIndex: -1
         }}
       />
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden ">
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="bg-gradient-to-b from-offblack-100 to-[#453148] p-20 rounded-xl h-[300px] overflow-y-scroll sm:h-[400px] md:h-fit md:overflow-y-hidden">
         <div className="w-full grid gap-0 items-center">
-          {(<p className="text-xs italic text-red-500 ">{submit_errors}</p>)}
+          {submit_errors && (<p className="text-xs italic text-red-500 ">{submit_errors}</p>)}
+          <p className="text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
           <div>
-          <p className = "text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
             <label
               className="mb-3 mt-4 block text-xs font-medium text-white"
               htmlFor="email"
@@ -109,7 +99,7 @@ export default function SignupPage() {
               className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="first_name"
             >
-              First Name 
+              First Name
             </label>
             <div className="relative">
               <input
@@ -118,7 +108,6 @@ export default function SignupPage() {
                 id="first_name"
                 name="first_name"
                 placeholder="First"
-                //required
               />
               {errors.first_name && (
                 <p className="text-xs italic text-red-500 mt-2">
@@ -131,9 +120,9 @@ export default function SignupPage() {
           <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-white"
-              htmlFor="first"
+              htmlFor="last_name"
             >
-              Last Name 
+              Last Name
             </label>
             <div className="relative">
               <input
@@ -142,7 +131,6 @@ export default function SignupPage() {
                 id="last_name"
                 name="last_name"
                 placeholder="Last"
-                //required
               />
               {errors.last_name && (
                 <p className="text-xs italic text-red-500 mt-2">
@@ -167,7 +155,6 @@ export default function SignupPage() {
                 name="password"
                 type="password"
                 placeholder="Enter password"
-                //required
               />
               {errors.password && (
                 <p className="text-xs italic text-red-500 mt-2">
@@ -176,12 +163,13 @@ export default function SignupPage() {
               )}
             </div>
           </div>
+
           <div className="">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="confirm_password"
             >
-              Confim Password
+              Confirm Password
             </label>
             <div className="relative">
               <input
@@ -191,7 +179,6 @@ export default function SignupPage() {
                 name="confirm_password"
                 type="password"
                 placeholder="Enter password again"
-                //required
               />
               {errors.confirm_password && (
                 <p className="text-xs italic text-red-500 mt-2">
@@ -200,12 +187,13 @@ export default function SignupPage() {
               )}
             </div>
           </div>
-
         </div>
-        <div className = "text-center">
+        <div className="text-center">
           <Button type="submit" className="mt-4 justify-self-stretch">Sign Up</Button>
         </div>
-        <p className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>Already a member? Log In!</p>
+        <p className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>
+          Already a member? Log In!
+        </p>
       </form>
     </main>
   );
