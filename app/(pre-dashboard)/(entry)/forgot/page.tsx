@@ -34,7 +34,6 @@ export default function SignupPage() {
     setMessage(resp);
   }
 
-
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
       <Image
@@ -72,8 +71,6 @@ export default function SignupPage() {
               {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
             </div>
           </div>
-
-
         </div>
         <Button type="submit">Send Reset Link</Button>
       </form>

@@ -48,9 +48,19 @@ export default function SignupPage() {
     const resp = await Reset(data.email, data.password, data.confirm_password, arr[1]);
 
     console.log(resp);
-    setSuccess(resp.response);
-    setErrors(resp.error);
-  }
+    if (resp.error) {
+      setErrors(resp.error);
+      setSuccess("");
+    } else {
+      setSuccess(resp.response);
+      setErrors("");
+    }
+
+    if (resp.error == "Password reset successful") {   // for some reason this is showing up as an error
+      setSuccess(resp.error);
+      setErrors("");
+    }
+  };
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
