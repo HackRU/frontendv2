@@ -582,6 +582,8 @@ export default function Dashboard() {
                     <option value="Unisex S">Unisex S</option>
                     <option value="Unisex M">Unisex M</option>
                     <option value="Unisex L">Unisex L</option>
+                    <option value="Unisex XL">Unisex XL</option>
+                    <option value="Unisex XXL">Unisex XXL</option>
                   </select>
                   {errors.shirt_size && (<p className="text-xs italic text-red-500 mt-2">{errors.shirt_size?.message}</p>)}
                 </div>
