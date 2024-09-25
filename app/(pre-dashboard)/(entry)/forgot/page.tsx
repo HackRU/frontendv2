@@ -32,9 +32,9 @@ export default function SignupPage() {
     setButtonDisabled(true);
     const resp = await Forgot(data.email);
     setMessage(resp);
-    setTimeout(() => {  // wait 5 minutes between requests
+    setTimeout(() => {  // wait 1 minutes between requests
       setButtonDisabled(false);
-    }, 300000);
+    }, 60000);
   }
 
   return (
@@ -76,7 +76,7 @@ export default function SignupPage() {
           </div>
         </div>
         <Button type="submit" disabled={buttonDisabled}>
-          {buttonDisabled ? "Please wait 5 minutes between requests!" : "Send reset link"}
+          {buttonDisabled ? "Please wait 1 minute between requests!" : "Send reset link"}
         </Button>
       </form>
     </main>
