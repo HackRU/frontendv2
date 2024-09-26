@@ -288,7 +288,7 @@ export default function Dashboard() {
     }
   }, [userData]);
 
-  if (!userData) {
+  if ((!userData || !userData.role)) {
     return (
       <HackerDashboardSkeleton />
     )
