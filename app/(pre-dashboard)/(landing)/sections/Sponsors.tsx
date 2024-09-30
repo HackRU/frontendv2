@@ -3,7 +3,8 @@ import Image from 'next/image';
 export default async function Sponsors() {
   const sponsors = [
      '/sponsors/NJTRANSIT.png',
-     '/sponsors/RHNIC_RED_WHITE_RBG.png'
+     '/sponsors/RHNIC_RED_WHITE_RBG.png',
+     '/sponsors/CAIT2.png'
   ];
 
   return (
