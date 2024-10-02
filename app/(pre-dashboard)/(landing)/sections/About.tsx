@@ -182,8 +182,7 @@ export default function About() {
 
             <div className="pt-6">
               <p className="inline   text-pink-100">Maverick:</p>
-              <p className="inline pb-4"> Any other hack! The</p>
-              <p>opportunities are limitless.</p>
+              <p className="inline pb-4"> Any other hack! The opportunities are limitless.</p>
             </div>
 
             <div className="pt-6">
