@@ -14,7 +14,7 @@ export default function SignupPage() {
     email: z.string().email("Please enter a valid email address").nonempty("Please fill out the email field"),
     first_name: z.string().nonempty("Please fill out the first name field"),
     last_name: z.string().nonempty("Please fill out the last name field"),
-    password: z.string().min(6, "Password must be at least 6 characters").nonempty("Please fill out the password field"),
+    password: z.string().min(4, "Password must be at least 4 characters").nonempty("Please fill out the password field"),
     confirm_password: z.string().nonempty("Please confirm your password")
   }).refine((data) => data.password === data.confirm_password, {
     message: "Passwords don't match",
