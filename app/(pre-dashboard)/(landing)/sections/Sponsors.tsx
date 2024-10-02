@@ -1,11 +1,18 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link'
 export default async function Sponsors() {
   const sponsors = [
      '/sponsors/NJTRANSIT.png',
      '/sponsors/RHNIC_RED_WHITE_RBG.png',
      '/sponsors/CAIT2.png'
   ];
+
+  const sponsorsLinks = [
+    'https://www.njtransit.com/innovation',
+    'https://www.canva.com/design/DAGSRyhN4jE/q65xcClKrYfxJka-VgXBwA/watch?utm_content=DAGSRyhN4jE&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel',
+    'https://cait.rutgers.edu/about/'
+ ];
 
   return (
     <div
@@ -23,12 +30,14 @@ export default async function Sponsors() {
                     key={index}
                     className="relative mb-4 h-[30vh] md:w-[40vw] w-[80vw]"
                   >
+                    <Link href={sponsorsLinks[(index*2)+1]}>
                     <Image
                       src={sponsorURL}
                       alt="Sponsor Logo"
                       layout="fill"
                       objectFit="contain"
                     />
+                    </Link>
                   </div>
                 );
               })}
@@ -42,12 +51,14 @@ export default async function Sponsors() {
                     key={index}
                     className="relative mb-4 h-[30vh] md:w-[30vw] w-[70vw]"
                   >
+                    <Link href={sponsorsLinks[index*2]}>
                     <Image
                       src={sponsorURL}
                       alt="Sponsor Logo"
                       layout="fill"
                       objectFit="contain"
                     />
+                    </Link>
                   </div>
                 );
               })}
