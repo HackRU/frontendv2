@@ -56,6 +56,16 @@ const ENDPOINTS = {
    * get discord auth token, then send that to backend to set a role
    */
   discord: BASE + '/discord',
+
+  /**
+   * set raffle amounts
+   */
+  setRaffle: '',
+
+  /**
+   * get raffle amounts
+   */
+  getRaffle: '',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -792,4 +802,88 @@ export async function setDiscord(userCode:string) {
   
     return resp;
   }
+}
+
+export async function SetRaffle(data: any, user_email_to_update: string) {
+  let resp = {
+    error: '',
+    response: '',
+  };
+  noStore();
+  const session = await auth();
+
+  if (session?.user) {
+    await fetch(ENDPOINTS.setRaffle, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        updates: {
+          $set: data,
+        },
+        user_email: user_email_to_update,
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+      }),
+    })
+      .then(async (res) => {
+        let resJSON = await res.json();
+        if (resJSON.statusCode !== 200) {
+          if (resJSON.body) {
+            resp.error = resJSON.body;
+          } else {
+            resp.error = 'Unexpected Error';
+          }
+        }
+      })
+      .catch((error) => {
+        resp.error = error + '; An error occurred retrieving data';
+      });
+  } else {
+    resp.error = 'Please log in';
+  }
+
+  return resp;
+}
+
+export async function GetRaffle(email: string) {
+  let resp = {
+    error: '',
+    response: '',
+  };
+  noStore();
+  const session = await auth();
+
+  if (session?.user) {
+    await fetch(ENDPOINTS.getRaffle, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+        email: email,
+      }),
+    })
+      .then(async (res) => {
+        let res_json = await res.json();
+        if (res_json.error != '' ) {
+          resp.response = res_json
+        } else {
+          if (res_json.body) {
+            resp.response = res_json.body;
+          } else {
+            resp.error = 'Unexpected Error';
+          }
+        }
+      })
+      .catch((error) => {
+        resp.error = error + 'An error occured retrieving data';
+      });
+  } else {
+    resp.error = 'Please log in';
+  }
+  return resp;
 }

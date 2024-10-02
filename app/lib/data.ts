@@ -3,6 +3,7 @@ import { unstable_noStore } from 'next/cache';
 import { auth } from '../../auth';
 
 import { GetUser, SetUser } from './actions';
+import { GetRaffle, SetRaffle } from './actions';
 import { BASE } from './definitions';
 
 export async function getSchedule() {
@@ -214,6 +215,41 @@ export async function ConfirmComingOrNot(isComing: boolean): Promise<{
     error: error,
     response: {},
   };
+}
+
+export async function SetSelfRaffle(amount:number) {
+  const session = await auth();
+  console.log('Set Self Raffle ' + amount);
+  if (session?.user && session?.user?.email) {
+    const resp = await SetRaffle(amount,
+      session.user.email,
+    );
+
+    if (resp.error === '') {
+      return resp.response;
+    }
+    return resp.error;
+  }
+
+  return 'Something went wrong'
+  ;
+}
+
+export async function GetSelfRaffle() {
+  const session = await auth();
+  console.log('Get Self Raffle');
+  if (session?.user && session?.user?.email) {
+    const resp = await GetRaffle(
+      session.user.email,
+    );
+
+    if (resp.error === '') {
+      return resp.response;
+    }
+    return resp.error;
+  }
+
+  return 'Something went wrong'
 }
 
 export async function getUsers() {
