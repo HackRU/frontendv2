@@ -197,7 +197,17 @@ export async function SignUp(
             }
           }
         }
-      } else {
+      } 
+      
+      else if (res_json.statusCode === 400){
+        if (res_json.message && res_json.message.includes('Duplicates user')){
+          resp.error ="Email already in use";
+        } else {
+          resp.error = 'Bad request. Please check your input.';
+        }
+      }
+      
+      else {
         if (res_json.body) {
           resp.error = res_json.body;
         } else {
