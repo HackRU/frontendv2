@@ -112,7 +112,8 @@ export default function ProfileHeader(props: {
                 </div>
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>Unregistered</CardTitle>
-                  <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}>Register</Button>
+                  <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}> 
+                    'Register' </Button>
                 </div>
               </>
             }

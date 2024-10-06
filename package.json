@@ -27,7 +27,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "next": "^14.0.2",
+    "next": "^14.2.14",
     "next-auth": "5.0.0-beta.4",
     "pnpm": "9.4.0",
     "postcss": "8.4.31",

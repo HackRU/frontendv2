@@ -101,6 +101,7 @@ export default function Dashboard() {
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
   const [currentTeam, setCurrentTeam] = useState<number>(0);
 
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset, trigger, formState: { errors }, } = useForm<UserUpdate>({ resolver: zodResolver(UserUpdateSchema), defaultValues: userData, });
   const {
     register: registerTeam,
@@ -411,7 +412,7 @@ export default function Dashboard() {
                       className="mt-10"
                     >{
                         submittingTeamForm ? "Submitting..." : "Submit Team"
-                      }</Button>
+                     }</Button>
                     <PopupDialog
                       open={displayTeamFormFinalSubmissionWarning}
                       setOpen={setDisplayTeamFormFinalSubmissionWarning}
