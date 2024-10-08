@@ -184,7 +184,7 @@ export default function Dashboard() {
         data.set('file', waiverFile);
         const requiredFields = ["first_name","last_name","resume","github","major","short_answer","shirt_size","hackathon_count","dietary_restrictions","special_needs","age","school","grad_year","gender","level_of_study","country_of_residence","ethnicity","how_you_heard_about_hackru","reasons","phone_number"]
         const fieldtext = ["First Name", "Last Name", "Resume", "Github", "major", "What are you hoping to experience at HackRU?", "Shirt Size", "Hackathon Count", "Dietary Restrictions", "Anything we should account for?", 
-          'age', "schhool", "Graduation Year", "Gender",  "Level of Study", "Country of Residence", "Ethnicity", "How you heard about hackru", "reasons for attending", "phone number"
+          'age', "school", "Graduation Year", "Gender",  "Level of Study", "Country of Residence", "Ethnicity", "How you heard about hackru", "reasons for attending", "phone number"
         ]
         for (let i = 0; i < requiredFields.length; i++) {
           if (!userData[requiredFields[i]]){
@@ -488,19 +488,19 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="first_name">First Name</Label>
+                  <Label htmlFor="first_name">First Name *</Label>
                   <Input id="first_name" value={userData?.first_name} {...register("first_name")} onChange={(e) => setUserData({ ...userData, first_name: e.target.value })} />
                   {errors.first_name && (<p className="text-xs italic text-red-500 mt-2">{errors.first_name?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="last_name">Last Name</Label>
+                  <Label htmlFor="last_name">Last Name *</Label>
                   <Input id="last_name" value={userData?.last_name} {...register("last_name")} onChange={(e) => setUserData({ ...userData, last_name: e.target.value })} />
                   {errors.last_name && (<p className="text-xs italic text-red-500 mt-2">{errors.last_name?.message}</p>)}
                 </div>
 
                 {/* Add resume upload file here */}
                 <div className="space-y-2">
-                  <Label htmlFor="resume">{resumeExists ? "Resume (Already Uploaded)" : "Resume"}</Label>
+                  <Label htmlFor="resume">{resumeExists ? "Resume (Already Uploaded) *" : "Resume *"}</Label>
                   <Input
                     type="file"
                     id="resume"
@@ -521,12 +521,12 @@ export default function Dashboard() {
               </div> */}
 
                 <div className="space-y-2">
-                  <Label htmlFor="github">Github</Label>
+                  <Label htmlFor="github">Github *</Label>
                   <Input id="github" value={userData?.github} {...register("github")} onChange={(e) => setUserData({ ...userData, github: e.target.value })} />
                   {errors.github && (<p className="text-xs italic text-red-500 mt-2">{errors.github?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="major">Major</Label>
+                  <Label htmlFor="major">Major *</Label>
 
                       <select
                         id="major"
@@ -564,7 +564,7 @@ export default function Dashboard() {
                   {errors.major && (<p className="text-xs italic text-red-500 mt-2">{errors.major?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="short-answer">What are you hoping to experience at HackRU?</Label>
+                  <Label htmlFor="short-answer">What are you hoping to experience at HackRU? *</Label>
                   <textarea
                     className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="short-answer"
@@ -576,7 +576,7 @@ export default function Dashboard() {
                   {errors.short_answer && (<p className="text-xs italic text-red-500 mt-2">{errors.short_answer?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="shirt-size">Shirt Size</Label>
+                  <Label htmlFor="shirt-size">Shirt Size *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -593,7 +593,7 @@ export default function Dashboard() {
                   {errors.shirt_size && (<p className="text-xs italic text-red-500 mt-2">{errors.shirt_size?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dietary-restrictions">Dietary Restrictions</Label>
+                  <Label htmlFor="dietary-restrictions">Dietary Restrictions *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -612,12 +612,12 @@ export default function Dashboard() {
                   {errors.dietary_restrictions && (<p className="text-xs italic text-red-500 mt-2">{errors.dietary_restrictions?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="special-needs">Anything we should account for?</Label>
+                  <Label htmlFor="special-needs">Anything we should account for? *</Label>
                   <Input id="special-needs" value={userData?.special_needs} {...register("special_needs")} onChange={(e) => setUserData({ ...userData, special_needs: e.target.value })} />
                   {errors.special_needs && (<p className="text-xs italic text-red-500 mt-2">{errors.special_needs?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dob">Age</Label>
+                  <Label htmlFor="dob">Age *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -643,7 +643,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="school">School</Label>
+                  <Label htmlFor="school">School *</Label>
                   <select
                     id="school"
                     value={userData?.school}
@@ -661,7 +661,7 @@ export default function Dashboard() {
                   {errors.school && (<p className="text-xs italic text-red-500 mt-2">{errors.school?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="grad-year">Graduation Year</Label>
+                  <Label htmlFor="grad-year">Graduation Year *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -690,7 +690,7 @@ export default function Dashboard() {
                   {errors.grad_year && (<p className="text-xs italic text-red-500 mt-2">{errors.grad_year?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="gender">Gender</Label>
+                  <Label htmlFor="gender">Gender *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -707,7 +707,7 @@ export default function Dashboard() {
                   {errors.gender && (<p className="text-xs italic text-red-500 mt-2">{errors.gender?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="level-of-study">Level of Study</Label>
+                  <Label htmlFor="level-of-study">Level of Study *</Label>
                   <select
                     id="level-of-study"
                     value={userData?.level_of_study}
@@ -732,7 +732,7 @@ export default function Dashboard() {
                   {errors.level_of_study && (<p className="text-xs italic text-red-500 mt-2">{errors.level_of_study?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="country-of-residence">Country of Residence</Label>
+                  <Label htmlFor="country-of-residence">Country of Residence *</Label>
                   <select
                     id="country-of-residence"
                     value={userData?.country_of_residence}
@@ -751,7 +751,7 @@ export default function Dashboard() {
                   {errors.country_of_residence && (<p className="text-xs italic text-red-500 mt-2">{errors.country_of_residence?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="ethnicity">Ethnicity</Label>
+                  <Label htmlFor="ethnicity">Ethnicity *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -770,7 +770,7 @@ export default function Dashboard() {
                   {errors.ethnicity && (<p className="text-xs italic text-red-500 mt-2">{errors.ethnicity?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="hackathon-count">Hackathon Count</Label>
+                  <Label htmlFor="hackathon-count">Hackathon Count *</Label>
                   <select
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="shirt-size"
@@ -793,17 +793,17 @@ export default function Dashboard() {
                   {errors.hackathon_count && (<p className="text-xs italic text-red-500 mt-2">{errors.hackathon_count?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone-number">Phone #</Label>
+                  <Label htmlFor="phone-number">Phone # *</Label>
                   <Input type="number" id="phone-number" value={userData?.phone_number} {...register("phone_number", { valueAsNumber: true })} onChange={(e) => setUserData({ ...userData, phone_number: e.target.value })} />
                   {errors.phone_number && (<p className="text-xs italic text-red-500 mt-2">{errors.phone_number?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="how-heard">How you heard about HackRU:</Label>
+                  <Label htmlFor="how-heard">How you heard about HackRU? *</Label>
                   <Input id="how-heard" value={userData?.how_you_heard_about_hackru} {...register("how_you_heard_about_hackru")} onChange={(e) => setUserData({ ...userData, how_you_heard_about_hackru: e.target.value })} />
                   {errors.how_you_heard_about_hackru && (<p className="text-xs italic text-red-500 mt-2">{errors.how_you_heard_about_hackru?.message}</p>)}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="reasons">What are your reasons for joining HackRU?</Label>
+                  <Label htmlFor="reasons">What are your reasons for joining HackRU? *</Label>
                   <textarea
                     className="flex h-24 resize-none w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                     id="reasons"
