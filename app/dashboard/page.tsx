@@ -184,7 +184,7 @@ export default function Dashboard() {
         data.set('file', waiverFile);
         const requiredFields = ["first_name","last_name","resume","github","major","short_answer","shirt_size","hackathon_count","dietary_restrictions","special_needs","age","school","grad_year","gender","level_of_study","country_of_residence","ethnicity","how_you_heard_about_hackru","reasons","phone_number"]
         const fieldtext = ["First Name", "Last Name", "Resume", "Github", "major", "What are you hoping to experience at HackRU?", "Shirt Size", "Hackathon Count", "Dietary Restrictions", "Anything we should account for?", 
-          'age', "schhool", "Graduation Year", "Gender",  "Level of Study", "Country of Residence", "Ethnicity", "How you heard about hackru", "reasons for attending", "phone number"
+          'age', "school", "Graduation Year", "Gender",  "Level of Study", "Country of Residence", "Ethnicity", "How you heard about hackru", "reasons for attending", "phone number"
         ]
         for (let i = 0; i < requiredFields.length; i++) {
           if (!userData[requiredFields[i]]){
