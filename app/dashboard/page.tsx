@@ -193,7 +193,7 @@ export default function Dashboard() {
             else{
               console.log("THIS FIELD IS FAIL" + requiredFields[i])
               trigger(requiredFields[i] as any, { shouldFocus: true });
-              alert(`Please scroll down and fill out ${fieldtext[i]} the entire profile before registering`);
+              alert(`Please scroll down and fill out ${fieldtext[i]} and the entire profile and save before registering`);
               return;
             }
           } 
@@ -201,8 +201,10 @@ export default function Dashboard() {
 
         await UploadWaiver(data);
         if (Object.keys(errors).length === 0) {
-          RegisterSelf();
-          setUserData({ ...userData, registration_status: "registered" })
+          const resp = await RegisterSelf();
+          if (resp == "User updated successfully"){
+            setUserData({ ...userData, registration_status: "registered" })
+          }
         }
         
         //window.location.reload();
