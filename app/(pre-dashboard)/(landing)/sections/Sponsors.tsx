@@ -5,13 +5,15 @@ export default async function Sponsors() {
   const sponsors = [
      '/sponsors/NJTRANSIT.png',
      '/sponsors/RHNIC_RED_WHITE_RBG.png',
-     '/sponsors/CAIT2.png'
+     '/sponsors/CAIT2.png',
+     '/sponsors/iCIMSWhite.png'
   ];
 
   const sponsorsLinks = [
     'https://www.njtransit.com/innovation',
     'https://www.canva.com/design/DAGSRyhN4jE/q65xcClKrYfxJka-VgXBwA/watch?utm_content=DAGSRyhN4jE&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel',
-    'https://cait.rutgers.edu/about/'
+    'https://cait.rutgers.edu/about/',
+    'https://www.icims.com'
  ];
 
   return (
