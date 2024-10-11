@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { fuzzy } from '@/app/ui/fonts';
 
 interface LeaderboardEntry {
-  place: string;
   id: string;
   points: number;
 }
