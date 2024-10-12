@@ -119,11 +119,14 @@ export async function getLeaderboard() {
 
     return leaderboardData; 
 
-  } catch (error) {
-    console.error('Error fetching leaderboard:', error.message);
-    return null; 
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error fetching leaderboard:', error.message);
+    } 
+    return null;
   }
-}
+  }
+
 export async function getSelf(): Promise<{
   error: string;
   response: Record<string, any>;
