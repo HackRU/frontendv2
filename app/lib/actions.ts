@@ -580,6 +580,7 @@ export async function AttendEventScan(
   points: number,
   again: boolean = false,
   limit:number,
+  sponsor:boolean = false,
 ): Promise<{
   error: string;
   response: string;
@@ -593,28 +594,30 @@ export async function AttendEventScan(
   let response_status = 0;
   let count = 0;
 
+  let limitChange = limit
+  let eventChange = event
+
   if (session?.user) {
     const { email, name } = session.user;
     /* For some reason, name IS THE TOKEN.... hmmm.?? */
+
+    if(again){
+      limitChange = limit + 999
+    }
+
+    if(sponsor){
+      eventChange = email + event
+    }
+
 
     let body = {
       auth_email: email,
       auth_token: name,
       qr: scannedEmail,
-      event: event,
-      limit: limit,
+      event: eventChange,
+      limit: limitChange,
       points: points,
     };
-    if (again){
-      body = {
-        auth_email: email,
-        auth_token: name,
-        qr: scannedEmail,
-        event: event,
-        limit: limit+999,
-        points: points,
-      };
-    }
 
     const resp = await fetch(ENDPOINTS.attend, {
       method: 'POST',

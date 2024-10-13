@@ -17,7 +17,7 @@ type STATUS =
   | 'PENDING'
   | 'AWAITING SCAN'
   | 'AWAITING RESPONSE';
-type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL';
+type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const events = [
@@ -102,6 +102,7 @@ function OrganizerView() {
   const [openScanner, setOpenScanner] = useState<boolean>(false);
   const [scannerTab, setScannerTab] = useState<ScannerTab>('CHECK IN');
   const [selectedEvent, setSelectedEvent] = useState<string>('');
+  const [selectedABList, setSelectedABList] = useState<boolean>(true);
   const [scanResponse, setScanResponse] = useState<string>('');
   const [showForceAttendance, setShowForceAttendance] =
     useState<boolean>(false);
@@ -180,6 +181,40 @@ function OrganizerView() {
         eventPoints[selectedEvent as keyof typeof eventPoints],
         forceAttendance,
         1
+      );
+
+      /**
+       * Not sure why error code is 402?
+       * I just know that it's the error code for multiple attendance.
+       */
+      const multipleAttendanceStatus = 409;
+
+      if (resp.status == multipleAttendanceStatus && !forceAttendance) {
+        console.log("HI")
+        setShowForceAttendance(true);
+        return;
+      }
+
+      if (resp.error !== '') {
+        setStatus('FAILED');
+        setScanResponse(resp.error);
+        return;
+      }
+
+      setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
+      setStatus('SUCCESSFUL');
+    }
+    else if (scannerTab === 'SPONSOR'){
+
+      const eventName = selectedABList ? "SponsorA" : "SponsorB";
+
+      const resp = await AttendEventScan(
+        result,
+        eventName,
+        0,
+        forceAttendance,
+        1,
+        true
       );
 
       /**
@@ -290,6 +325,17 @@ function OrganizerView() {
                 Manual
               </button>
               <button
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
+                }`}
+                onClick={() => {
+                  setScannerTab('SPONSOR');
+                  resetScanLog();
+                }}
+              >
+                Sponsor
+              </button>
+              <button
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                 onClick={async () => {
                 await handleSignOut();
@@ -348,6 +394,34 @@ function OrganizerView() {
                 events={events}
                 onChange={handleEventSelectChange}
               />): 
+            (scannerTab === 'SPONSOR'  ? (
+              <div>
+              <button
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  selectedABList ? 'bg-blue-700' : ''
+                }`}
+                onClick={() => {
+                  setSelectedABList(true);
+                  resetScanLog();
+                }}
+              >
+                A
+            </button>
+            <button
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  !selectedABList ? 'bg-blue-700' : ''
+                }`}
+                onClick={() => {
+                  setSelectedABList(false);
+                  resetScanLog();
+                }}
+              >
+                B
+            </button>
+            </div>
+            
+            ):
+              
             (<div className="mt-4">
               Manual Points:
               <input
@@ -358,7 +432,7 @@ function OrganizerView() {
                 className="mr-2 rounded border p-2 text-black"
               />
 
-            </div>)
+            </div>))
 
           )}
             <p className="text-center">
