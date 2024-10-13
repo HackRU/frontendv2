@@ -290,14 +290,14 @@ function OrganizerView() {
                 Manual
               </button>
               <button
-              className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-              onClick={async () => {
+                className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                onClick={async () => {
                 await handleSignOut();
                 window.location.href = "/";
               }}
-            >
-              Logout
-            </button>
+              >
+                Logout
+              </button>
             </div>
 
 
@@ -342,11 +342,12 @@ function OrganizerView() {
               <CheckInScan status={status} />
             ) : (
               scannerTab === 'EVENT' ? 
-              (<EventScan
-              selectedEvent={selectedEvent}
-              events={events}
-              onChange={handleEventSelectChange}
-            />): 
+              (
+              <EventScan
+                selectedEvent={selectedEvent}
+                events={events}
+                onChange={handleEventSelectChange}
+              />): 
             (<div className="mt-4">
               Manual Points:
               <input
