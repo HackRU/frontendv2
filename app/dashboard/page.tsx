@@ -97,11 +97,11 @@ export default function Dashboard() {
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
   const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
 
+  const [loading, setLoading] = useState(false)
   const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
   const [currentTeam, setCurrentTeam] = useState<number>(0);
 
-  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset, trigger, formState: { errors }, } = useForm<UserUpdate>({ resolver: zodResolver(UserUpdateSchema), defaultValues: userData, });
   const {
     register: registerTeam,
@@ -177,8 +177,10 @@ export default function Dashboard() {
     setUserProfileSubmitText("Saved!");
   }
 
-  const onWaiverSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onWaiverSubmit = async (event: React.FormEvent<HTMLFormElement>, setLoading: (isLoading: boolean) => void) => {
     event.preventDefault();
+    setLoading(true);
+
     if (waiverFile) { //works
       try {
         const data = new FormData();
@@ -195,6 +197,7 @@ export default function Dashboard() {
               console.log("THIS FIELD IS FAIL" + requiredFields[i])
               trigger(requiredFields[i] as any, { shouldFocus: true });
               alert(`Please scroll down and fill out ${fieldtext[i]} the entire profile before registering`);
+              setLoading(false);
               return;
             }
           } 
@@ -211,10 +214,12 @@ export default function Dashboard() {
       } catch (error) {
         console.error("Error uploading waiver:", error);
         alert("Error uploading waiver. Please contact HackRU.");
+        setLoading(false);
       }
     } else {
       console.error("No waiver file selected");//works
       alert("Please select a waiver file");
+      setLoading(false);
     }
   }
   const handleChangingFile = (event: React.ChangeEvent<HTMLInputElement>,
@@ -317,8 +322,6 @@ export default function Dashboard() {
   }
 
   
-
-
   if (userData?.role['organizer']) {
     return (<OrganizerView />)
   }
