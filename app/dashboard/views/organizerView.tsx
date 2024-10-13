@@ -8,6 +8,7 @@ import EventScan from './eventScan';
 import { AttendEventScan, GetUser, SetUser } from '@/app/lib/actions';
 import PopupDialog from '../components/dialog';
 import { set } from 'zod';
+import Page from '@/app/(pre-dashboard)/(landing)/page';
 
 type STATUS =
   | 'SUCCESSFUL'
@@ -107,6 +108,7 @@ function OrganizerView() {
   const [houseOfScannedUser, setHouseOfScannedUser] = useState<string>('');
   const [scannedName, setScannedName] = useState<string>('');
   const [confirmation, setConfirmation] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const resetScanLog = () => {
     setScannedName('');
@@ -114,6 +116,14 @@ function OrganizerView() {
     setScanResponse('');
     setStatus('AWAITING SCAN');
   };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+  }
+
+  if(!isLoggedIn) {
+    return <Page /> //render page is user is not logged in
+  }
 
   const handleOnScan = async (
     result: string,
@@ -231,6 +241,13 @@ function OrganizerView() {
                 Event
               </button>
             </div>
+
+            <button 
+              className='mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700'
+              onClick={logout}
+            >
+                  Logout 
+            </button>
           </div>
           {showForceAttendance && (
             <PopupDialog

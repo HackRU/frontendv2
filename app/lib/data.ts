@@ -181,9 +181,7 @@ export async function RegisterSelf() {
     return resp.error;
   }
 
-  return {
-    error: 'Something went wrong',
-  };
+  return 'Something went wrong';
 }
 
 export async function ConfirmComingOrNot(isComing: boolean): Promise<{
