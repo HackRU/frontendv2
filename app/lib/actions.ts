@@ -603,7 +603,7 @@ export async function AttendEventScan(
       qr: scannedEmail,
       event: event,
       limit: limit,
-      point: points,
+      points: points,
     };
     if (again){
       body = {
@@ -612,7 +612,7 @@ export async function AttendEventScan(
         qr: scannedEmail,
         event: event,
         limit: limit+999,
-        point: points,
+        points: points,
       };
     }
 
