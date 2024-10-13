@@ -74,7 +74,7 @@ export async function authenticate(email: string, password: string) {
         case 'CredentialsSignin':
           return 'Invalid credentials.';
         default:
-          return 'Something went wrong.';
+          return error.message;
       }
     }
     redirect('/dashboard');
@@ -193,7 +193,7 @@ export async function SignUp(
               case 'CredentialsSignin':
                 resp.error = 'Invalid credentials.';
               default:
-                resp.error = 'Something went wrong.';
+                resp.error = error.message;
             }
           }
         }
