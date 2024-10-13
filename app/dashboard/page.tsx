@@ -178,6 +178,7 @@ export default function Dashboard() {
 
   const onWaiverSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (waiverFile) { //works
       try {
         const data = new FormData();
@@ -277,7 +278,6 @@ export default function Dashboard() {
 
         const haswaiver = await GetWaiverInfo();
         setWaiverState(haswaiver.response.hasUploaded);
-        //   setLoading(false);
         
       } catch (error) {
         console.log(error);
@@ -318,8 +318,6 @@ export default function Dashboard() {
   }
 
   
-
-
   if (userData?.role['organizer']) {
     return (<OrganizerView />)
   }
@@ -413,7 +411,7 @@ export default function Dashboard() {
                       className="mt-10"
                     >{
                         submittingTeamForm ? "Submitting..." : "Submit Team"
-                      }</Button>
+                     }</Button>
                     <PopupDialog
                       open={displayTeamFormFinalSubmissionWarning}
                       setOpen={setDisplayTeamFormFinalSubmissionWarning}
