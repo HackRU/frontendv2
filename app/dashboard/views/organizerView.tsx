@@ -36,7 +36,7 @@ const events = [
   'lunch-sunday',
   'chess-win',
   'found-douglass',
-  'tshirts'
+  'tshirts',
 ];
 
 const eventPoints = {
@@ -56,7 +56,7 @@ const eventPoints = {
   'lunch-sunday': 0,
   'chess-win': 15,
   'found-douglass': 15,
-  'tshirts': 0
+  tshirts: 0,
 };
 
 function ScanStatus(props: {
@@ -110,6 +110,8 @@ function OrganizerView() {
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+  const [manualEmail, setManualEmail] = useState<string>('');
+
   const resetScanLog = () => {
     setScannedName('');
     setLatestScannedEmail('');
@@ -119,10 +121,10 @@ function OrganizerView() {
 
   const logout = () => {
     setIsLoggedIn(false);
-  }
+  };
 
-  if(!isLoggedIn) {
-    return <Page /> //render page is user is not logged in
+  if (!isLoggedIn) {
+    return <Page />; //render page is user is not logged in
   }
 
   const handleOnScan = async (
@@ -151,7 +153,7 @@ function OrganizerView() {
       if (
         userData.registration_status === 'confirmed' ||
         userData.registration_status == 'checked-in' ||
-        userData.registration_status == "coming" ||
+        userData.registration_status == 'coming' ||
         (now > timeWhenAllHackersCanComeThrough &&
           userData.registration_status !== 'unregistered')
       ) {
@@ -164,8 +166,8 @@ function OrganizerView() {
           setStatus('FAILED');
           setScanResponse(
             resp.error +
-            ' : Registration Status: ' +
-            userData.registration_status,
+              ' : Registration Status: ' +
+              userData.registration_status,
           );
           return;
         }
@@ -212,6 +214,15 @@ function OrganizerView() {
     setSelectedEvent(event);
   };
 
+  const handleManualScan = async () => {
+    if (manualEmail.trim() === '') {
+      setStatus('FAILED');
+      return;
+    }
+    await handleOnScan(manualEmail);
+    setManualEmail('');
+  };
+
   return (
     <main>
       <div className="flex w-full items-center justify-center text-white">
@@ -221,8 +232,9 @@ function OrganizerView() {
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
             <div className="flex justify-center space-x-4">
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -231,8 +243,9 @@ function OrganizerView() {
                 Check In
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -242,11 +255,11 @@ function OrganizerView() {
               </button>
             </div>
 
-            <button 
-              className='mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700'
+            <button
+              className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
               onClick={logout}
             >
-                  Logout 
+              Logout
             </button>
           </div>
           {showForceAttendance && (
@@ -264,23 +277,21 @@ function OrganizerView() {
               title={'Multiple attendance detected for this event.'}
             />
           )}
-          {
-            confirmation && (
-              <PopupDialog
-                onYes={() => {
-                  setConfirmation(false);
-                  handleOnScan(latestScannedEmail, false);
-                }}
-                onNo={() => {
-                  setConfirmation(false);
-                }}
-                setOpen={setConfirmation}
-                open={confirmation}
-                content={`Continue the scan?`}
-                title={'You have just scanned someone.'}
-              />
-            )
-          }
+          {confirmation && (
+            <PopupDialog
+              onYes={() => {
+                setConfirmation(false);
+                handleOnScan(latestScannedEmail, false);
+              }}
+              onNo={() => {
+                setConfirmation(false);
+              }}
+              setOpen={setConfirmation}
+              open={confirmation}
+              content={`Continue the scan?`}
+              title={'You have just scanned someone.'}
+            />
+          )}
           <div className="my-10 flex flex-col items-center">
             <ScanStatus
               status={status}
@@ -306,18 +317,32 @@ function OrganizerView() {
             >
               {openScanner ? 'Close Scanner' : 'Open Scanner'}
             </button>
+
+            <div className="mt-4">
+              <input
+                type="email"
+                value={manualEmail}
+                onChange={(e) => setManualEmail(e.target.value)}
+                placeholder="Enter email manually (If QR Code fails)"
+                className="mr-2 rounded border p-2 text-black"
+              />
+              <button
+                onClick={handleManualScan}
+                className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              >
+                Manual Scan
+              </button>
+            </div>
           </div>
 
-          {openScanner &&
-            (
-              <QrReaderWrapper
-                onScan={(text: string) => {
-                  setLatestScannedEmail(text);
-                  setConfirmation(true);
-                }}
-              />
-            )
-          }
+          {openScanner && (
+            <QrReaderWrapper
+              onScan={(text: string) => {
+                setLatestScannedEmail(text);
+                setConfirmation(true);
+              }}
+            />
+          )}
         </div>
       </div>
     </main>
