@@ -6,6 +6,7 @@ import QrReaderWrapper from '../components/QRreader';
 import CheckInScan from './checkInScan';
 import EventScan from './eventScan';
 import { AttendEventScan, GetUser, SetUser } from '@/app/lib/actions';
+import { handleSignOut } from "@/app/lib/actions";
 import PopupDialog from '../components/dialog';
 import { set } from 'zod';
 import Page from '@/app/(pre-dashboard)/(landing)/page';
@@ -16,7 +17,7 @@ type STATUS =
   | 'PENDING'
   | 'AWAITING SCAN'
   | 'AWAITING RESPONSE';
-type ScannerTab = 'CHECK IN' | 'EVENT';
+type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const events = [
@@ -56,7 +57,7 @@ const eventPoints = {
   'lunch-sunday': 0,
   'chess-win': 15,
   'found-douglass': 15,
-  tshirts: 0,
+  'tshirts': 0,
 };
 
 function ScanStatus(props: {
@@ -105,12 +106,12 @@ function OrganizerView() {
   const [showForceAttendance, setShowForceAttendance] =
     useState<boolean>(false);
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>('');
-  const [houseOfScannedUser, setHouseOfScannedUser] = useState<string>('');
   const [scannedName, setScannedName] = useState<string>('');
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const [manualEmail, setManualEmail] = useState<string>('');
+  const [manualPoints, setManualPoints] = useState<number>(0);
 
   const resetScanLog = () => {
     setScannedName('');
@@ -119,20 +120,13 @@ function OrganizerView() {
     setStatus('AWAITING SCAN');
   };
 
-  const logout = () => {
-    setIsLoggedIn(false);
-  };
 
-  if (!isLoggedIn) {
-    return <Page />; //render page is user is not logged in
-  }
 
   const handleOnScan = async (
     result: string,
     forceAttendance: boolean = false,
   ) => {
     setScanResponse('');
-    setHouseOfScannedUser('');
     setScannedName('');
     setStatus('AWAITING RESPONSE');
     setLatestScannedEmail(result);
@@ -147,7 +141,6 @@ function OrganizerView() {
     const userData = resp.response as unknown as Record<any, any>;
     const now = new Date();
     setScannedName(userData.first_name + ' ' + userData.last_name);
-    setHouseOfScannedUser(userData.house);
 
     if (scannerTab === 'CHECK IN') {
       if (
@@ -176,7 +169,7 @@ function OrganizerView() {
       } else {
         setStatus('PENDING');
       }
-    } else {
+    } else if (scannerTab === 'EVENT'){
       if (selectedEvent == '') {
         alert('Please select an event first!');
       }
@@ -186,13 +179,44 @@ function OrganizerView() {
         selectedEvent,
         eventPoints[selectedEvent as keyof typeof eventPoints],
         forceAttendance,
+        1
       );
 
       /**
        * Not sure why error code is 402?
        * I just know that it's the error code for multiple attendance.
        */
-      const multipleAttendanceStatus = 402;
+      const multipleAttendanceStatus = 409;
+
+      if (resp.status == multipleAttendanceStatus && !forceAttendance) {
+        console.log("HI")
+        setShowForceAttendance(true);
+        return;
+      }
+
+      if (resp.error !== '') {
+        setStatus('FAILED');
+        setScanResponse(resp.error);
+        return;
+      }
+
+      setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
+      setStatus('SUCCESSFUL');
+    }
+    else{
+      const resp = await AttendEventScan(
+        result,
+        "Manual",
+        manualPoints,
+        true,
+        999
+      );
+
+      /**
+       * Not sure why error code is 402?
+       * I just know that it's the error code for multiple attendance.
+       */
+      const multipleAttendanceStatus = 409;
 
       if (resp.status == multipleAttendanceStatus && !forceAttendance) {
         setShowForceAttendance(true);
@@ -229,6 +253,7 @@ function OrganizerView() {
         <div className="m-32 h-full w-full min-w-fit bg-slate-900">
           <div>
             <h1 className="text-center text-3xl">Organizer View</h1>
+            
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
             <div className="flex justify-center space-x-4">
               <button
@@ -253,14 +278,29 @@ function OrganizerView() {
               >
                 Event
               </button>
-            </div>
-
-            <button
+              <button
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
+                }`}
+                onClick={() => {
+                  setScannerTab('MANUAL');
+                  resetScanLog();
+                }}
+              >
+                Manual
+              </button>
+              <button
               className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-              onClick={logout}
+              onClick={async () => {
+                await handleSignOut();
+                window.location.href = "/";
+              }}
             >
               Logout
             </button>
+            </div>
+
+
           </div>
           {showForceAttendance && (
             <PopupDialog
@@ -301,15 +341,27 @@ function OrganizerView() {
             {scannerTab === 'CHECK IN' ? (
               <CheckInScan status={status} />
             ) : (
-              <EventScan
-                selectedEvent={selectedEvent}
-                events={events}
-                onChange={handleEventSelectChange}
+              scannerTab === 'EVENT' ? 
+              (<EventScan
+              selectedEvent={selectedEvent}
+              events={events}
+              onChange={handleEventSelectChange}
+            />): 
+            (<div className="mt-4">
+              Manual Points:
+              <input
+                type="number"
+                value={manualPoints}
+                onChange={(e) => setManualPoints(Number(e.target.value))}
+                placeholder="Enter points"
+                className="mr-2 rounded border p-2 text-black"
               />
-            )}
+
+            </div>)
+
+          )}
             <p className="text-center">
               {scanResponse}
-              {houseOfScannedUser && <p>House: {houseOfScannedUser}</p>}
             </p>
             <button
               className="mt-10 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"

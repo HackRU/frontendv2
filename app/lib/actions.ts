@@ -579,6 +579,7 @@ export async function AttendEventScan(
   event: string,
   points: number,
   again: boolean = false,
+  limit:number,
 ): Promise<{
   error: string;
   response: string;
@@ -596,14 +597,24 @@ export async function AttendEventScan(
     const { email, name } = session.user;
     /* For some reason, name IS THE TOKEN.... hmmm.?? */
 
-    const body = {
+    let body = {
       auth_email: email,
       auth_token: name,
       qr: scannedEmail,
       event: event,
-      again: again,
+      limit: limit,
       point: points,
     };
+    if (again){
+      body = {
+        auth_email: email,
+        auth_token: name,
+        qr: scannedEmail,
+        event: event,
+        limit: limit+999,
+        point: points,
+      };
+    }
 
     const resp = await fetch(ENDPOINTS.attend, {
       method: 'POST',
@@ -613,8 +624,8 @@ export async function AttendEventScan(
       },
       body: JSON.stringify(body),
     });
-
-    if (!resp.ok) {
+    //console.log(resp)
+    if (false) {
       error_message = `An error occured when attempting to attend event. Invalid response.`;
       return {
         error: error_message,
@@ -628,19 +639,19 @@ export async function AttendEventScan(
     const { statusCode, body: jsonBody } = json as AttendEventResponse;
 
     if (typeof jsonBody !== 'string') {
-      count = jsonBody!.new_count;
+      count = 1;
     }
-    console.log(jsonBody);
+    //console.log(jsonBody);
     response_status = statusCode;
     if (statusCode === 404) {
       error_message = `User ${scannedEmail} not found. Please try again.`;
-    } else if (statusCode === 402) {
+    } else if (statusCode === 409) {
       error_message = `User ${scannedEmail} is already checked in to ${event}!`;
     }
 
     if (statusCode === 200 && typeof jsonBody !== 'string') {
       response_message = `${
-        jsonBody!.email
+      scannedEmail
       } successfully logged in to ${event}!`;
     }
   } else {
