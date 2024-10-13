@@ -62,12 +62,13 @@ export default function ProfileHeader(props: {
       </div>
 
       <Card className="w-full max-w-2xl">
-        <form onSubmit={async (e) => {
-          e.preventDefault();
-          setLoading(true);
-          onWaiverSubmit(e, setLoading);
-          setLoading(false);
-        }}>
+        <form 
+          onSubmit={async (e) => {
+            setLoading(true);
+            await onWaiverSubmit(e);
+            setLoading(false);
+          }}
+        >
           <CardHeader>
             <CardTitle>Registration</CardTitle>
             <CardDescription>Check your registration status.</CardDescription>
