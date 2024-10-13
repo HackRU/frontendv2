@@ -27,13 +27,15 @@ export default function LoginPage() {
   type Login = z.infer<typeof LoginSchema>;
 
   const [submit_errors, setErrors] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const { register, handleSubmit, reset, formState: { errors }, } = useForm<Login>({ resolver: zodResolver(LoginSchema) });
 
   const onSubmit = async (data: Login) => {
+    setLoading(true);
     const resp = await authenticate(data.email, data.password);
+    setLoading(false);
     setErrors(resp);
   }
 
@@ -83,7 +85,8 @@ export default function LoginPage() {
               {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
-          <Button className="mt-4 justify-center" type="submit">Login</Button>
+          <Button className="mt-4 justify-center" type="submit">
+            {loading ? 'Loading...' : 'Login'} </Button>
           <p className="text-s italic  text-white mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/signup')}>Not a member? Create an Account!</p>
           <p className="text-s italic  text-white mt-2 hover:text-blue-500 cursor-pointer" onClick={() => router.push('/forgot')}>Forgot Password? Reset it Here!</p>
         </div>

@@ -19,6 +19,7 @@ export default function ProfileHeader(props: {
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
   const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onConfirmationChange = async (isComing: boolean) => {
     setUploadingNewConfirmationStatus(true);
@@ -61,7 +62,13 @@ export default function ProfileHeader(props: {
       </div>
 
       <Card className="w-full max-w-2xl">
-        <form onSubmit={(onWaiverSubmit)}>
+        <form 
+          onSubmit={async (e) => {
+            setLoading(true);
+            await onWaiverSubmit(e);
+            setLoading(false);
+          }}
+        >
           <CardHeader>
             <CardTitle>Registration</CardTitle>
             <CardDescription>Check your registration status.</CardDescription>
@@ -112,7 +119,8 @@ export default function ProfileHeader(props: {
                 </div>
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>Unregistered</CardTitle>
-                  <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}>Register</Button>
+                  <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}> 
+                    {loading ? 'Loading...' : 'Register'} </Button>
                 </div>
               </>
             }
