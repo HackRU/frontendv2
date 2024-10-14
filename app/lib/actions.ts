@@ -56,6 +56,8 @@ const ENDPOINTS = {
    * get discord auth token, then send that to backend to set a role
    */
   discord: BASE + '/discord',
+
+  points: BASE + '/points'
 };
 
 export async function authenticate(email: string, password: string) {
@@ -304,6 +306,43 @@ export async function SetUser(data: any, user_email_to_update: string) {
 
   return resp;
 }
+
+export async function GetPoints() {
+  let resp = {
+    error: '',
+    response: '',
+  };
+  noStore();
+  const session = await auth();
+
+  if (session?.user) {
+    await fetch(ENDPOINTS.points, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        auth_token: session.user.name,
+      }),
+    })
+      .then(async (res) => {
+        let res_json = await res.json();
+        console.log(res_json)
+        if (res_json?.total_points) {
+          resp.response = res_json.total_points;
+        }
+      })
+      .catch((error) => {
+        resp.error = error + 'An error occured retrieving data';
+      });
+  } else {
+    resp.error = 'Please log in';
+  }
+  return resp;
+}
+
+
 export async function Forgot(email: string) {
   noStore();
   let message = '';

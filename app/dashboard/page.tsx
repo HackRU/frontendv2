@@ -11,7 +11,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume, UploadTeamSubmission } from '../lib/actions';
+import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume, UploadTeamSubmission, GetPoints } from '../lib/actions';
 import QRCode from "react-qr-code";
 
 import { useForm } from "react-hook-form";
@@ -96,6 +96,7 @@ export default function Dashboard() {
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
   const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
+  const [points, setPoints] = useState<string>("0");
 
   const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
@@ -278,6 +279,9 @@ export default function Dashboard() {
 
         const haswaiver = await GetWaiverInfo();
         setWaiverState(haswaiver.response.hasUploaded);
+
+        const pointResp = await GetPoints();
+        setPoints(pointResp.response)
         
       } catch (error) {
         console.log(error);
@@ -337,6 +341,7 @@ export default function Dashboard() {
             waiverState={waiverState}
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
+            points={points}
           />
 
           {userData?.registration_status === "checked-in" &&

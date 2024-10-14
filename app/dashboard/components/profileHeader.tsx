@@ -14,9 +14,10 @@ export default function ProfileHeader(props: {
   onWaiverSubmit: any;
   handleChangingFile: any;
   waiverState: any;
+  points:string;
 }) {
 
-  const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
+  const { userData, onWaiverSubmit, handleChangingFile, waiverState, points } = props;
   const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,9 @@ export default function ProfileHeader(props: {
         <div className="grid gap-0.5 text-xs overflow-ellipsis w-full">
           <div className="font-medium text-xl ">{userData?.first_name} {userData?.last_name}</div>
           <div className="font-medium text-lg ">{userData && Object.keys(userData.role).find(key => userData.role[key])}</div>
+          <div className=" font-medium text-xl">{points}</div>
           <div className=" dark:text-gray-400">{userData?.email}</div>
+          
           <Button
             className="w-24 h-8 my-2"
             onClick={async () => {
