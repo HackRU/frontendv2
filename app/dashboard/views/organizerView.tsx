@@ -408,14 +408,14 @@ function OrganizerView() {
                 A
             </button>
             <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  !selectedABList ? 'bg-blue-700' : ''
-                }`}
-                onClick={() => {
-                  setSelectedABList(false);
-                  resetScanLog();
-                }}
-              >
+              className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                !selectedABList ? 'bg-blue-700' : ''
+              }`}
+              onClick={() => {
+                setSelectedABList(false);
+                resetScanLog();
+              }}
+            >
                 B
             </button>
             </div>
