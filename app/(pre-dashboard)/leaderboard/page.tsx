@@ -77,6 +77,7 @@ const Leaderboard = () => {
   return (
     <main className={`flex h-[100vh] w-[100vw] flex-col items-center justify-center overflow-hidden md:flex ${fuzzy.className}`}>
       <div className="z-10 flex justify-center text-blue-100">
+      <div className="h-[60vh] w-[90vw] overflow-y-auto">
         <table className="w-[90vw] border-separate rounded-3xl bg-gradient-to-b from-offblack-100 to-[#453148]   [border-spacing:1.00rem]">
           <thead className="rounded-3xl ring-1 ring-pink-100 sm:ring-4">
             <tr className="text-lg sm:text-2xl md:text-3xl lg:text-4xl ">
@@ -85,11 +86,12 @@ const Leaderboard = () => {
               <th className="w-[20%] text-center font-extrabold">Points</th>
             </tr>
           </thead>
-          <tbody className="rounded-3xl ring-1 ring-pink-100 sm:ring-4 ">
+          <tbody className="rounded-3xl ring-1 ring-pink-100 sm:ring-4">
             {leaderboard.map((Leaderboard, index) => {
               console.log(Leaderboard);
               if (Leaderboard.id === 'Loading...') {
                 return (
+                  
                   <tr
                     key={index}
                     className=" lx:text-5xl text-xs  sm:text-lg md:text-2xl lg:text-4xl"
@@ -128,6 +130,7 @@ const Leaderboard = () => {
             })}
           </tbody>
         </table>
+        </div>
       </div>
     </main>
   );
