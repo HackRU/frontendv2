@@ -56,6 +56,8 @@ const ENDPOINTS = {
    * get discord auth token, then send that to backend to set a role
    */
   discord: BASE + '/discord',
+
+  getBuyIns: BASE + '/get-buy-ins',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -177,34 +179,33 @@ export async function SignUp(
       }),
     })
       .then(async (res) => {
-      let res_json = await res.json();
-      
-      if (res_json.statusCode === 200) {
-        resp.response = '200';
-        try {
-          await signIn('credentials', {
-            email: email,
-            password: password,
-            redirectTo: '/dashboard',
-          });
-        } catch (error) {
-          if (error instanceof AuthError) {
-            switch (error.type) {
-              case 'CredentialsSignin':
-                resp.error = 'Invalid credentials.';
-              default:
-                resp.error = 'Something went wrong.';
+        let res_json = await res.json();
+
+        if (res_json.statusCode === 200) {
+          resp.response = '200';
+          try {
+            await signIn('credentials', {
+              email: email,
+              password: password,
+              redirectTo: '/dashboard',
+            });
+          } catch (error) {
+            if (error instanceof AuthError) {
+              switch (error.type) {
+                case 'CredentialsSignin':
+                  resp.error = 'Invalid credentials.';
+                default:
+                  resp.error = 'Something went wrong.';
+              }
             }
           }
-        }
-      } else {
-        if (res_json.body) {
-          resp.error = res_json.body;
         } else {
-          resp.error = 'Unexpected Error';
+          if (res_json.body) {
+            resp.error = res_json.body;
+          } else {
+            resp.error = 'Unexpected Error';
+          }
         }
-      }
-        
       })
       .catch((error) => {
         resp.error =
@@ -240,8 +241,8 @@ export async function GetUser(email: string) {
     })
       .then(async (res) => {
         let res_json = await res.json();
-        if (res_json.error != '' ) {
-          resp.response = res_json
+        if (res_json.error != '') {
+          resp.response = res_json;
         } else {
           if (res_json.body) {
             resp.response = res_json.body;
@@ -290,8 +291,7 @@ export async function SetUser(data: any, user_email_to_update: string) {
           } else {
             resp.error = 'Unexpected Error';
           }
-        }
-        else{
+        } else {
           resp.response = resJSON.message;
         }
       })
@@ -312,7 +312,7 @@ export async function Forgot(email: string) {
 
   if (session?.user) {
     message = 'User is already logged in';
-    return message ;
+    return message;
   } else {
     if (!email) {
       message = 'Invalid email';
@@ -329,8 +329,8 @@ export async function Forgot(email: string) {
       })
         .then(async (res) => {
           let resJSON = await res.json();
-          console.log("FORGOT")
-          console.log(resJSON)
+          console.log('FORGOT');
+          console.log(resJSON);
           if (resJSON.statusCode === 200) {
             return message;
           } else {
@@ -342,8 +342,7 @@ export async function Forgot(email: string) {
           }
         })
         .catch((error) => {
-          message =
-            error + 'An error occured when attempting to general url';
+          message = error + 'An error occured when attempting to general url';
         });
     }
     return message;
@@ -381,7 +380,7 @@ export async function Reset(
     })
       .then(async (res) => {
         let resJSON = await res.json();
-        console.log(resJSON)
+        console.log(resJSON);
         if (resJSON.statusCode !== 200) {
           if (resJSON.message) {
             resp.error = resJSON.message;
@@ -430,12 +429,11 @@ export async function GetWaiverInfo(){
 }
 */
 
-
 export async function GetWaiverInfo() {
   noStore();
   let resp = {
     error: '',
-    response: {url: '', message: '', hasUploaded: false},
+    response: { url: '', message: '', hasUploaded: false },
   };
   const session = await auth();
   if (session?.user) {
@@ -450,7 +448,7 @@ export async function GetWaiverInfo() {
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
-      if (res.status !==  200) {
+      if (res.status !== 200) {
         resp.error = 'Error Uploading Resume';
       } else {
         resp.response.url = resJSON.url;
@@ -473,10 +471,10 @@ export async function UploadWaiver(file: FormData) {
   const pdf = file.get('file');
 
   if (info.error) {
-      resp.error = info.error;
-      return resp;
+    resp.error = info.error;
+    return resp;
   }
-  
+
   if (info.response.url) {
     await fetch(info.response.url, {
       method: 'PUT',
@@ -500,7 +498,7 @@ export async function GetResume() {
   noStore();
   let resp = {
     error: '',
-    response: {url: '', message: '', hasUploaded: false},
+    response: { url: '', message: '', hasUploaded: false },
   };
   const session = await auth();
   if (session?.user) {
@@ -515,7 +513,7 @@ export async function GetResume() {
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
-      if (res.status !==  200) {
+      if (res.status !== 200) {
         resp.error = 'Error Uploading Resume';
       } else {
         resp.response.url = resJSON.url;
@@ -535,32 +533,31 @@ export async function UploadResume(file: FormData) {
   noStore();
   const info = await GetResume();
   const pdf = file.get('file');
-  console.log(info)
+  console.log(info);
 
   if (info.error) {
-      resp.error = info.error;
-      return resp;
+    resp.error = info.error;
+    return resp;
   }
-  
+
   if (info.response.url) {
-      
     await fetch(info.response.url, {
-       method: 'PUT',
+      method: 'PUT',
       headers: {
         'content-type': 'application/pdf',
       },
       body: pdf,
     }).then(async (res) => {
-      console.log("RESUME UPLOADED")
-      console.log(res.status)
-      console.log(res)
+      console.log('RESUME UPLOADED');
+      console.log(res.status);
+      console.log(res);
       if (res.status !== 200) {
         resp.error = 'Error Uploading Resume';
       } else {
         resp.response = 'Resume Uploaded';
       }
     });
-}
+  }
   return resp;
 }
 
@@ -759,7 +756,7 @@ export async function getOAuthUrl() {
   return { state, url: url.toString() };
 }
 
-export async function setDiscord(userCode:string) {
+export async function setDiscord(userCode: string) {
   noStore();
   const session = await auth();
   let resp = {
@@ -767,7 +764,6 @@ export async function setDiscord(userCode:string) {
     response: '',
   };
   if (session?.user) {
-
     const json = await fetch(ENDPOINTS.discord, {
       method: 'POST',
       headers: {
@@ -778,7 +774,6 @@ export async function setDiscord(userCode:string) {
         auth_token: session.user.name,
         code: userCode,
         redirect_uri: DISCORD_REDIRECT_URI,
-
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
@@ -792,7 +787,41 @@ export async function setDiscord(userCode:string) {
         }
       }
     });
-  
+
     return resp;
   }
 }
+
+export async function GetBuyIns() {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.getBuyIns, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        auth_token: session.user.name,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !== 200) {
+        resp.error = 'Error Getting Buy-Ins';
+      } else {
+        resp.response = resJSON.body;
+      }
+    });
+  } else {
+    resp.error = 'User not authenticated';
+  }
+  return resp;
+}
+
+export async function UpdateBuyIns() {}

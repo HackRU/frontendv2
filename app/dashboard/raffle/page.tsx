@@ -10,6 +10,7 @@ import {
 } from '@/app/dashboard/components/card';
 import { Button } from '@/app/dashboard/components/button';
 import { Input } from '@/app/dashboard/components/input';
+import { GetBuyIns } from '@/app/lib/actions';
 
 interface RafflePrize {
   id: string;
@@ -25,15 +26,9 @@ export default function RafflePage() {
   const [currentBuyPoints, setCurrentBuyPoints] = useState(0);
 
   useEffect(() => {
-    // Mock function to fetch raffle items
     const fetchRaffleItems = async () => {
-      // Simulating API call
-      const mockItems: RafflePrize[] = [
-        { id: '1', userBuyIn: 0 },
-        { id: '2', userBuyIn: 0 },
-        { id: '3', userBuyIn: 0 },
-      ];
-      setRaffleItems(mockItems);
+      const raffleItems = await GetBuyIns();
+      console.log(raffleItems);
     };
 
     fetchRaffleItems();
