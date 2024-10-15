@@ -109,23 +109,20 @@ export async function getLeaderboard() {
       cache: 'no-store',
     });
 
-
     if (!res.ok) {
       throw new Error(`Failed to fetch: ${res.status}`);
     }
 
     const leaderboardData = await res.json();
 
-
-    return leaderboardData; 
-
+    return leaderboardData;
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error fetching leaderboard:', error.message);
-    } 
+    }
     return null;
   }
-  }
+}
 
 export async function getSelf(): Promise<{
   error: string;
@@ -297,7 +294,7 @@ export async function getUsers() {
     'waitlist',
     'confirmed',
     'rejected',
-    'checked-in',
+    'checked_in',
     'registered',
   ];
 

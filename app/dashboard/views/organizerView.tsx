@@ -146,13 +146,13 @@ function OrganizerView() {
     if (scannerTab === 'CHECK IN') {
       if (
         userData.registration_status === 'confirmed' ||
-        userData.registration_status == 'checked-in' ||
+        userData.registration_status == 'checked_in' ||
         userData.registration_status == 'coming' ||
         (now > timeWhenAllHackersCanComeThrough &&
           userData.registration_status !== 'unregistered')
       ) {
         const resp = await SetUser(
-          { registration_status: 'checked-in' },
+          { registration_status: 'checked_in' },
           result,
         );
 
@@ -160,8 +160,8 @@ function OrganizerView() {
           setStatus('FAILED');
           setScanResponse(
             resp.error +
-              ' : Registration Status: ' +
-              userData.registration_status,
+            ' : Registration Status: ' +
+            userData.registration_status,
           );
           return;
         }
@@ -170,7 +170,7 @@ function OrganizerView() {
       } else {
         setStatus('PENDING');
       }
-    } else if (scannerTab === 'EVENT'){
+    } else if (scannerTab === 'EVENT') {
       if (selectedEvent == '') {
         alert('Please select an event first!');
       }
@@ -204,7 +204,7 @@ function OrganizerView() {
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
     }
-    else if (scannerTab === 'SPONSOR'){
+    else if (scannerTab === 'SPONSOR') {
 
       const eventName = selectedABList ? "SponsorA" : "SponsorB";
 
@@ -238,7 +238,7 @@ function OrganizerView() {
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
     }
-    else{
+    else {
       const resp = await AttendEventScan(
         result,
         "Manual",
@@ -288,13 +288,12 @@ function OrganizerView() {
         <div className="m-32 h-full w-full min-w-fit bg-slate-900">
           <div>
             <h1 className="text-center text-3xl">Organizer View</h1>
-            
+
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
             <div className="flex justify-center space-x-4">
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -303,9 +302,8 @@ function OrganizerView() {
                 Check In
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -314,9 +312,8 @@ function OrganizerView() {
                 Event
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();
@@ -325,9 +322,8 @@ function OrganizerView() {
                 Manual
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('SPONSOR');
                   resetScanLog();
@@ -338,9 +334,9 @@ function OrganizerView() {
               <button
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                 onClick={async () => {
-                await handleSignOut();
-                window.location.href = "/";
-              }}
+                  await handleSignOut();
+                  window.location.href = "/";
+                }}
               >
                 Logout
               </button>
@@ -387,54 +383,52 @@ function OrganizerView() {
             {scannerTab === 'CHECK IN' ? (
               <CheckInScan status={status} />
             ) : (
-              scannerTab === 'EVENT' ? 
-              (
-              <EventScan
-                selectedEvent={selectedEvent}
-                events={events}
-                onChange={handleEventSelectChange}
-              />): 
-            (scannerTab === 'SPONSOR'  ? (
-              <div>
-              <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  selectedABList ? 'bg-blue-700' : ''
-                }`}
-                onClick={() => {
-                  setSelectedABList(true);
-                  resetScanLog();
-                }}
-              >
-                A
-            </button>
-            <button
-              className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                !selectedABList ? 'bg-blue-700' : ''
-              }`}
-              onClick={() => {
-                setSelectedABList(false);
-                resetScanLog();
-              }}
-            >
-                B
-            </button>
-            </div>
-            
-            ):
-              
-            (<div className="mt-4">
-              Manual Points:
-              <input
-                type="number"
-                value={manualPoints}
-                onChange={(e) => setManualPoints(Number(e.target.value))}
-                placeholder="Enter points"
-                className="mr-2 rounded border p-2 text-black"
-              />
+              scannerTab === 'EVENT' ?
+                (
+                  <EventScan
+                    selectedEvent={selectedEvent}
+                    events={events}
+                    onChange={handleEventSelectChange}
+                  />) :
+                (scannerTab === 'SPONSOR' ? (
+                  <div>
+                    <button
+                      className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${selectedABList ? 'bg-blue-700' : ''
+                        }`}
+                      onClick={() => {
+                        setSelectedABList(true);
+                        resetScanLog();
+                      }}
+                    >
+                      A
+                    </button>
+                    <button
+                      className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${!selectedABList ? 'bg-blue-700' : ''
+                        }`}
+                      onClick={() => {
+                        setSelectedABList(false);
+                        resetScanLog();
+                      }}
+                    >
+                      B
+                    </button>
+                  </div>
 
-            </div>))
+                ) :
 
-          )}
+                  (<div className="mt-4">
+                    Manual Points:
+                    <input
+                      type="number"
+                      value={manualPoints}
+                      onChange={(e) => setManualPoints(Number(e.target.value))}
+                      placeholder="Enter points"
+                      className="mr-2 rounded border p-2 text-black"
+                    />
+
+                  </div>))
+
+            )}
             <p className="text-center">
               {scanResponse}
             </p>

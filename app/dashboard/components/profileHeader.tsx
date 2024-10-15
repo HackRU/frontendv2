@@ -14,7 +14,7 @@ export default function ProfileHeader(props: {
   onWaiverSubmit: any;
   handleChangingFile: any;
   waiverState: any;
-  points:string;
+  points: string;
 }) {
 
   const { userData, onWaiverSubmit, handleChangingFile, waiverState, points } = props;
@@ -51,7 +51,7 @@ export default function ProfileHeader(props: {
           <div className="font-medium text-lg ">{userData && Object.keys(userData.role).find(key => userData.role[key])}</div>
           <div className=" font-medium text-xl">{points}</div>
           <div className=" dark:text-gray-400">{userData?.email}</div>
-          
+
           <Button
             className="w-24 h-8 my-2"
             onClick={async () => {
@@ -65,7 +65,7 @@ export default function ProfileHeader(props: {
       </div>
 
       <Card className="w-full max-w-2xl">
-        <form 
+        <form
           onSubmit={async (e) => {
             setLoading(true);
             await onWaiverSubmit(e);
@@ -117,17 +117,17 @@ export default function ProfileHeader(props: {
                   </p>
                 </div>
                 <div className="flex flex-row items-center justify-left">
-                  <input type="checkbox" className="rounded text-pink-500 mr-3" onChange={(e) => userData.opt_in = e.target.checked} />  
+                  <input type="checkbox" className="rounded text-pink-500 mr-3" onChange={(e) => userData.opt_in = e.target.checked} />
                   <p>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements. (optional)</p>
                 </div>
                 <div className="flex flex-row items-center justify-center">
                   <CardTitle>Unregistered</CardTitle>
-                  <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}> 
+                  <Button type="submit" className="ml-auto" onClick={() => console.log("register button clicked")}>
                     {loading ? 'Loading...' : 'Register'} </Button>
                 </div>
               </>
             }
-            {(userData.registration_status == "checked-in") &&
+            {(userData.registration_status == "checked_in") &&
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>You are now checked in!</CardTitle>
