@@ -478,7 +478,7 @@ export default function Dashboard() {
                 <div className="flex flex-row items-center justify-center">
                   <div className='flex flex-col'>
                     <CardTitle>Profile</CardTitle>
-                    <CardDescription>Update your profile information.</CardDescription>
+                    <CardDescription>Update your profile information. * fields are required</CardDescription>
                   </div>
                   <Button type="submit" className="ml-auto">
                     {savingUserProfile ? "Saving..." : userProfileSubmitText}
@@ -819,6 +819,7 @@ export default function Dashboard() {
                   {savingUserProfile ? "Saving..." : userProfileSubmitText}
                 </Button>
               </CardFooter>
+              {(userData.registration_status == "unregistered") && <p className='p-3'>Make to register at the top after saving your profile!</p>}
             </form>
           </Card>
 

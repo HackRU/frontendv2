@@ -78,7 +78,11 @@ export default function ProfileHeader(props: {
               <>
                 {waiverState && (<p className="text-xs italic text-green-500 mt-2">{"Waiver Uploaded"}</p>)}
                 <div className="flex flex-row items-center justify-center">
-                  <a className="underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank">Click here for the waiver</a>
+                  <p>Click 
+                    <a className="hover:underline" href="waiver.pdf" rel="noopener noreferrer" target="_blank"> PDF</a>/
+                    <a className="hover:underline" href="https://docs.google.com/document/d/10lLW1txoODd2ZVVNkj5mPeOYJWQ8_WflHi6cwo5I_b8/copy" rel="noopener noreferrer" target="_blank">DOC </a> 
+                    for waiver
+                  </p>
                   <input
                     className="ml-auto mr-0"
                     type="file"
