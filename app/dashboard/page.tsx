@@ -11,7 +11,7 @@ import { Input } from "@/app/dashboard/components/input"
 import { Button } from "@/app/dashboard/components/button"
 import OrganizerView from "@/app/dashboard/views/organizerView"
 import DirectorView from "@/app/dashboard/views/directorView"
-import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume, UploadTeamSubmission } from '../lib/actions';
+import { UploadWaiver, GetWaiverInfo, GetResume, UploadResume, UploadTeamSubmission, GetPoints } from '../lib/actions';
 import QRCode from "react-qr-code";
 
 import { useForm } from "react-hook-form";
@@ -87,7 +87,7 @@ export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 export default function Dashboard() {
   const [selectedMajor, setSelectedMajor] = useState<string>("No major selected");
   const [otherMajor, setOtherMajor] = useState<string>("");
-  const[majors, setMajors] = useState<string[]>([]);
+  const [majors, setMajors] = useState<string[]>([]);
   const [schools, setSchools] = useState<string[]>([]);
   const [countries, setCountries] = useState<string[]>([]);
   const [userData, setUserData] = useState<any>(null);
@@ -96,6 +96,7 @@ export default function Dashboard() {
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
   const [userProfileSubmitText, setUserProfileSubmitText] = useState<string>("Save");
+  const [points, setPoints] = useState<string>("0");
 
   const [displayTeamFormFinalSubmissionWarning, setDisplayTeamFormFinalSubmissionWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>("");
@@ -113,7 +114,7 @@ export default function Dashboard() {
   const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
-  
+
 
   const onTeamSubmit = async (data: TeamSubmit) => {
     setSubmittingTeamForm(true);
@@ -163,9 +164,10 @@ export default function Dashboard() {
     }
 
     const resp = await UpdateSelf(otherData);
-    setUserData({ ...userData, major: data.major, shirt_size: data.shirt_size, hackathon_count: data.hackathon_count, dietary_restrictions: data.dietary_restrictions, age: data.age, school: data.school, gender: data.gender 
-      , grad_year: data.grad_year, level_of_study: data.level_of_study, country_of_residence: data.country_of_residence, ethnicity: data.ethnicity 
-      });
+    setUserData({
+      ...userData, major: data.major, shirt_size: data.shirt_size, hackathon_count: data.hackathon_count, dietary_restrictions: data.dietary_restrictions, age: data.age, school: data.school, gender: data.gender
+      , grad_year: data.grad_year, level_of_study: data.level_of_study, country_of_residence: data.country_of_residence, ethnicity: data.ethnicity
+    });
 
 
     setSavingUserProfile(false);
@@ -183,31 +185,31 @@ export default function Dashboard() {
       try {
         const data = new FormData();
         data.set('file', waiverFile);
-        const requiredFields = ["first_name","last_name","resume","github","major","short_answer","shirt_size","hackathon_count","dietary_restrictions","special_needs","age","school","grad_year","gender","level_of_study","country_of_residence","ethnicity","how_you_heard_about_hackru","reasons","phone_number"]
-        const fieldtext = ["First Name", "Last Name", "Resume", "Github", "major", "What are you hoping to experience at HackRU?", "Shirt Size", "Hackathon Count", "Dietary Restrictions", "Anything we should account for?", 
-          'age', "school", "Graduation Year", "Gender",  "Level of Study", "Country of Residence", "Ethnicity", "How you heard about hackru", "reasons for attending", "phone number"
+        const requiredFields = ["first_name", "last_name", "resume", "github", "major", "short_answer", "shirt_size", "hackathon_count", "dietary_restrictions", "special_needs", "age", "school", "grad_year", "gender", "level_of_study", "country_of_residence", "ethnicity", "how_you_heard_about_hackru", "reasons", "phone_number"]
+        const fieldtext = ["First Name", "Last Name", "Resume", "Github", "major", "What are you hoping to experience at HackRU?", "Shirt Size", "Hackathon Count", "Dietary Restrictions", "Anything we should account for?",
+          'age', "school", "Graduation Year", "Gender", "Level of Study", "Country of Residence", "Ethnicity", "How you heard about hackru", "reasons for attending", "phone number"
         ]
         for (let i = 0; i < requiredFields.length; i++) {
-          if (!userData[requiredFields[i]]){
-            if(requiredFields[i] == "resume" && resumeExists){
+          if (!userData[requiredFields[i]]) {
+            if (requiredFields[i] == "resume" && resumeExists) {
             }
-            else{
+            else {
               console.log("THIS FIELD IS FAIL" + requiredFields[i])
               trigger(requiredFields[i] as any, { shouldFocus: true });
               alert(`Please scroll down and fill out ${fieldtext[i]} and the entire profile and save before registering`);
               return;
             }
-          } 
-        } 
+          }
+        }
 
         await UploadWaiver(data);
         if (Object.keys(errors).length === 0) {
           const resp = await RegisterSelf();
-          if (resp == "User updated successfully"){
+          if (resp == "User updated successfully") {
             setUserData({ ...userData, registration_status: "registered" })
           }
         }
-        
+
         //window.location.reload();
 
       } catch (error) {
@@ -278,7 +280,10 @@ export default function Dashboard() {
 
         const haswaiver = await GetWaiverInfo();
         setWaiverState(haswaiver.response.hasUploaded);
-        
+
+        const pointResp = await GetPoints();
+        setPoints(pointResp.response)
+
       } catch (error) {
         console.log(error);
       }
@@ -317,7 +322,7 @@ export default function Dashboard() {
     );
   }
 
-  
+
   if (userData?.role['organizer']) {
     return (<OrganizerView />)
   }
@@ -337,9 +342,11 @@ export default function Dashboard() {
             waiverState={waiverState}
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
+            points={points}
           />
 
-          {userData?.registration_status === "checked-in" &&
+          {/*Getting ride of house info as well */}
+          {userData?.registration_status === "checked_in" && false &&
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>House Information</CardTitle>
@@ -358,7 +365,7 @@ export default function Dashboard() {
           }
 
           {/* we are doing "&& false" because we're disabling the team form. */}
-          {userData?.registration_status === "checked-in" && false &&
+          {userData?.registration_status === "checked_in" && false &&
             (<Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Team Creation</CardTitle>
@@ -378,7 +385,7 @@ export default function Dashboard() {
                   </CardContent>
                 )
               }
-              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked-in" &&
+              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked_in" &&
                 <CardContent>
                   <form id="team-creation-form" onSubmit={handleSubmitTeam(onTeamSubmit)}>
                     <div>
@@ -411,7 +418,7 @@ export default function Dashboard() {
                       className="mt-10"
                     >{
                         submittingTeamForm ? "Submitting..." : "Submit Team"
-                     }</Button>
+                      }</Button>
                     <PopupDialog
                       open={displayTeamFormFinalSubmissionWarning}
                       setOpen={setDisplayTeamFormFinalSubmissionWarning}
@@ -468,7 +475,7 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <DiscordAuth userData={userData} code ={searchParams.get('code')}/>
+              <DiscordAuth userData={userData} code={searchParams.get('code')} />
             </CardContent>
           </Card>
 
@@ -528,39 +535,39 @@ export default function Dashboard() {
                 <div className="space-y-2">
                   <Label htmlFor="major">Major *</Label>
 
-                      <select
-                        id="major"
-                        value={selectedMajor}
-                        {...register("major")}
-                        onChange={(e) => {
-                        const selected = e.target.value;
-                        setSelectedMajor(selected);
-                        if (selected != 'Other') {
+                  <select
+                    id="major"
+                    value={selectedMajor}
+                    {...register("major")}
+                    onChange={(e) => {
+                      const selected = e.target.value;
+                      setSelectedMajor(selected);
+                      if (selected != 'Other') {
                         setUserData({ ...userData, major: selected });
                       }
                     }}
-                        className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
-                      >
-                {majors.map((major, index) => (
-                  <option key={index} value={major}>{major}</option>
-                ))}
-                <option value="Other">Other</option>
-                </select>
+                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                  >
+                    {majors.map((major, index) => (
+                      <option key={index} value={major}>{major}</option>
+                    ))}
+                    <option value="Other">Other</option>
+                  </select>
 
-              {selectedMajor === 'Other' && (
-                <Input
-                  placeholder="Enter major here"
-                  id="otherMajor"
-                  value={otherMajor}
-                  onChange={(e) => {
-                    const newMajor = e.target.value;
-                    setUserData({ ...userData, major: newMajor });
-                    setOtherMajor(newMajor);
-                  }}
-                />
-              )}
-                  
-                  
+                  {selectedMajor === 'Other' && (
+                    <Input
+                      placeholder="Enter major here"
+                      id="otherMajor"
+                      value={otherMajor}
+                      onChange={(e) => {
+                        const newMajor = e.target.value;
+                        setUserData({ ...userData, major: newMajor });
+                        setOtherMajor(newMajor);
+                      }}
+                    />
+                  )}
+
+
                   {errors.major && (<p className="text-xs italic text-red-500 mt-2">{errors.major?.message}</p>)}
                 </div>
                 <div className="space-y-2">
