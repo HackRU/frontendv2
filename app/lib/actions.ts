@@ -245,8 +245,8 @@ export async function GetUser(email: string) {
         if (res_json.error != '' ) {
           resp.response = res_json
         } else {
-          if (res_json.body) {
-            resp.response = res_json.body;
+          if (res_json.email) {
+            resp.response = res_json;
           } else {
             resp.error = 'Unexpected Error';
           }
@@ -328,9 +328,11 @@ export async function GetPoints() {
     })
       .then(async (res) => {
         let res_json = await res.json();
-        console.log(res_json)
         if (res_json?.total_points) {
           resp.response = res_json.total_points;
+        }
+        else if (res_json.statusCode == 200){
+          resp.response = "0"
         }
       })
       .catch((error) => {

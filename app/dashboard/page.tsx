@@ -345,7 +345,8 @@ export default function Dashboard() {
             points={points}
           />
 
-          {userData?.registration_status === "checked_in" &&
+          {/*Getting ride of house info as well */}
+          {userData?.registration_status === "checked_in" && false &&
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>House Information</CardTitle>
