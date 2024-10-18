@@ -57,7 +57,20 @@ const ENDPOINTS = {
    */
   discord: BASE + '/discord',
 
+  /**
+   * Get buy-ins for user
+   */
   getBuyIns: BASE + '/get-buy-ins',
+
+  /**
+    Update the buy ins for the user
+  */
+  updateBuyIns: BASE + '/update-buy-ins',
+
+  /**
+   * Get the points for the user
+   */
+  points: BASE + '/points',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -815,7 +828,7 @@ export async function GetBuyIns() {
       if (res.status !== 200) {
         resp.error = 'Error Getting Buy-Ins';
       } else {
-        resp.response = resJSON.body;
+        resp.response = resJSON;
       }
     });
   } else {
@@ -824,4 +837,75 @@ export async function GetBuyIns() {
   return resp;
 }
 
-export async function UpdateBuyIns() {}
+export async function UpdateBuyIns(
+  buyIns: {
+    prize_id: string;
+    buy_in: number;
+  }[],
+) {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  console.log(buyIns);
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.updateBuyIns, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        auth_token: session.user.name,
+        buy_ins: buyIns,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      console.log(resJSON);
+      if (res.status !== 200) {
+        resp.error = 'Error Updating Buy-Ins';
+      } else {
+        resp.response = resJSON;
+      }
+    });
+  } else {
+    resp.error = 'User not authenticated';
+  }
+  return resp;
+}
+
+export async function GetPoints() {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.points, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        auth_token: session.user.name,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !== 200) {
+        resp.error = 'Error Getting Points';
+      } else {
+        resp.response = resJSON;
+      }
+    });
+  } else {
+    resp.error = 'User not authenticated';
+  }
+  return resp;
+}
