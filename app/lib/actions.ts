@@ -56,7 +56,6 @@ const ENDPOINTS = {
    * get discord auth token, then send that to backend to set a role
    */
   discord: BASE + '/discord',
-
   /**
    * Get buy-ins for user
    */
@@ -89,7 +88,7 @@ export async function authenticate(email: string, password: string) {
         case 'CredentialsSignin':
           return 'Invalid credentials.';
         default:
-          return 'Something went wrong.';
+          return error.message;
       }
     }
     redirect('/dashboard');
@@ -192,24 +191,23 @@ export async function SignUp(
       }),
     })
       .then(async (res) => {
-        let res_json = await res.json();
-
-        if (res_json.statusCode === 200) {
-          resp.response = '200';
-          try {
-            await signIn('credentials', {
-              email: email,
-              password: password,
-              redirectTo: '/dashboard',
-            });
-          } catch (error) {
-            if (error instanceof AuthError) {
-              switch (error.type) {
-                case 'CredentialsSignin':
-                  resp.error = 'Invalid credentials.';
-                default:
-                  resp.error = 'Something went wrong.';
-              }
+      let res_json = await res.json();
+      
+      if (res_json.statusCode === 200) {
+        resp.response = '200';
+        try {
+          await signIn('credentials', {
+            email: email,
+            password: password,
+            redirectTo: '/dashboard',
+          });
+        } catch (error) {
+          if (error instanceof AuthError) {
+            switch (error.type) {
+              case 'CredentialsSignin':
+                resp.error = 'Invalid credentials.';
+              default:
+                resp.error = error.message;
             }
           }
         } else {
@@ -257,8 +255,8 @@ export async function GetUser(email: string) {
         if (res_json.error != '') {
           resp.response = res_json;
         } else {
-          if (res_json.body) {
-            resp.response = res_json.body;
+          if (res_json.email) {
+            resp.response = res_json;
           } else {
             resp.error = 'Unexpected Error';
           }
@@ -317,6 +315,45 @@ export async function SetUser(data: any, user_email_to_update: string) {
 
   return resp;
 }
+
+export async function GetPoints() {
+  let resp = {
+    error: '',
+    response: '',
+  };
+  noStore();
+  const session = await auth();
+
+  if (session?.user) {
+    await fetch(ENDPOINTS.points, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+        auth_token: session.user.name,
+      }),
+    })
+      .then(async (res) => {
+        let res_json = await res.json();
+        if (res_json?.total_points) {
+          resp.response = res_json.total_points;
+        }
+        else if (res_json.statusCode == 200){
+          resp.response = "0"
+        }
+      })
+      .catch((error) => {
+        resp.error = error + 'An error occured retrieving data';
+      });
+  } else {
+    resp.error = 'Please log in';
+  }
+  return resp;
+}
+
+
 export async function Forgot(email: string) {
   noStore();
   let message = '';
@@ -589,6 +626,8 @@ export async function AttendEventScan(
   event: string,
   points: number,
   again: boolean = false,
+  limit:number,
+  sponsor:boolean = false,
 ): Promise<{
   error: string;
   response: string;
@@ -602,17 +641,29 @@ export async function AttendEventScan(
   let response_status = 0;
   let count = 0;
 
+  let limitChange = limit
+  let eventChange = event
+
   if (session?.user) {
     const { email, name } = session.user;
     /* For some reason, name IS THE TOKEN.... hmmm.?? */
 
-    const body = {
+    if(again){
+      limitChange = limit + 999
+    }
+
+    if(sponsor){
+      eventChange = email + event
+    }
+
+
+    let body = {
       auth_email: email,
       auth_token: name,
       qr: scannedEmail,
-      event: event,
-      again: again,
-      point: points,
+      event: eventChange,
+      limit: limitChange,
+      points: points,
     };
 
     const resp = await fetch(ENDPOINTS.attend, {
@@ -623,8 +674,8 @@ export async function AttendEventScan(
       },
       body: JSON.stringify(body),
     });
-
-    if (!resp.ok) {
+    //console.log(resp)
+    if (false) {
       error_message = `An error occured when attempting to attend event. Invalid response.`;
       return {
         error: error_message,
@@ -638,19 +689,19 @@ export async function AttendEventScan(
     const { statusCode, body: jsonBody } = json as AttendEventResponse;
 
     if (typeof jsonBody !== 'string') {
-      count = jsonBody!.new_count;
+      count = 1;
     }
-    console.log(jsonBody);
+    //console.log(jsonBody);
     response_status = statusCode;
     if (statusCode === 404) {
       error_message = `User ${scannedEmail} not found. Please try again.`;
-    } else if (statusCode === 402) {
+    } else if (statusCode === 409) {
       error_message = `User ${scannedEmail} is already checked in to ${event}!`;
     }
 
     if (statusCode === 200 && typeof jsonBody !== 'string') {
       response_message = `${
-        jsonBody!.email
+      scannedEmail
       } successfully logged in to ${event}!`;
     }
   } else {

@@ -28,11 +28,14 @@ export default function SignupPage() {
   });
 
   const [submit_errors, setErrors] = useState("");
+  const [loading, setLoading] = useState(false);
   const [submitErrors, setSubmitErrors] = useState<string[]>([]);
   const router = useRouter();
 
   const onSubmit = async (data: SignUp) => {
+    setLoading(true);
     const resp = await SignUp(data.first_name, data.last_name, data.email, data.password, data.confirm_password);
+    setLoading(false);
     if (resp) {
       setErrors(resp.error);
     }
@@ -178,7 +181,8 @@ export default function SignupPage() {
           </div>
         </div>
         <div className="text-center">
-          <Button type="submit" className="mt-4 justify-self-stretch">Sign Up</Button>
+          <Button type="submit" className="mt-4 justify-self-stretch">
+            {loading ? 'Loading...' : 'Sign Up'} </Button>
         </div>
         <p className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>
           Already a member? Log In!

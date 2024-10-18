@@ -160,7 +160,19 @@ function Navbar() {
               >
                 {section}
               </button>
+              
             ))}
+            <button
+              style={{
+                  color: '#536F91',
+                  textTransform: 'lowercase',
+                }}
+              className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
+              onClick={() => router.push('/leaderboard')}
+            >
+                Leaderboard
+              </button>
+
             <Link href="https://linktr.ee/thehackru">
               <button
                 style={{

@@ -21,11 +21,13 @@ export default function ProfileHeader(props: {
   onWaiverSubmit: any;
   handleChangingFile: any;
   waiverState: any;
+  points: string;
 }) {
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
   const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] =
     useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onConfirmationChange = async (isComing: boolean) => {
     setUploadingNewConfirmationStatus(true);
@@ -53,15 +55,12 @@ export default function ProfileHeader(props: {
             {userData?.last_name[0]}
           </AvatarInitials>
         </Avatar>
-        <div className="grid w-full gap-0.5 overflow-ellipsis text-xs">
-          <div className="text-xl font-medium ">
-            {userData?.first_name} {userData?.last_name}
-          </div>
-          <div className="text-lg font-medium ">
-            {userData &&
-              Object.keys(userData.role).find((key) => userData.role[key])}
-          </div>
+        <div className="grid gap-0.5 text-xs overflow-ellipsis w-full">
+          <div className="font-medium text-xl ">{userData?.first_name} {userData?.last_name}</div>
+          <div className="font-medium text-lg ">{userData && Object.keys(userData.role).find(key => userData.role[key])}</div>
+<!--           <div className=" font-medium text-xl">{points}</div> -->
           <div className=" dark:text-gray-400">{userData?.email}</div>
+
           <Button
             className="my-2 h-8 w-24"
             onClick={async () => {
@@ -80,7 +79,13 @@ export default function ProfileHeader(props: {
       </div>
 
       <Card className="w-full max-w-2xl">
-        <form onSubmit={onWaiverSubmit}>
+        <form
+          onSubmit={async (e) => {
+            setLoading(true);
+            await onWaiverSubmit(e);
+            setLoading(false);
+          }}
+        >
           <CardHeader>
             <CardTitle>Registration</CardTitle>
             <CardDescription>Check your registration status.</CardDescription>

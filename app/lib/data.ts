@@ -100,26 +100,30 @@ interface LeaderboardEntry {
   logo: string;
 }
 export async function getLeaderboard() {
-  unstable_noStore();
-  const res = await fetch(BASE + '/get-house_points', {
-    cache: 'no-store',
-  });
-  const leaderboardData = await res.json();
-  const housesData = Object.entries(leaderboardData['houses']);
-  if (!leaderboardData || !leaderboardData['houses']) {
-    throw new Error('Invalid data');
-  }
-  const LeaderBoard: LeaderboardEntry[] = housesData.map(
-    ([house, points], index: number) => ({
-      place: '',
-      points: points as number,
-      house: house,
-      logo: '',
-    }),
-  );
+  const baseUrl = BASE || 'https://api.hackru.org/dev';
 
-  return LeaderBoard;
+  unstable_noStore();
+
+  try {
+    const res = await fetch(`${baseUrl}/leaderboard`, {
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch: ${res.status}`);
+    }
+
+    const leaderboardData = await res.json();
+
+    return leaderboardData;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error fetching leaderboard:', error.message);
+    }
+    return null;
+  }
 }
+
 export async function getSelf(): Promise<{
   error: string;
   response: Record<string, any>;
@@ -290,7 +294,7 @@ export async function getUsers() {
     'waitlist',
     'confirmed',
     'rejected',
-    'checked-in',
+    'checked_in',
     'registered',
   ];
 

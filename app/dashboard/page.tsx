@@ -3,8 +3,6 @@
 import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
 import { useState, useEffect, Suspense } from 'react';
 
-import { GetPoints } from '../lib/actions';
-
 import {
   AvatarImage,
   AvatarInitials,
@@ -30,11 +28,13 @@ import {
   GetResume,
   UploadResume,
   UploadTeamSubmission,
+  GetPoints
 } from '../lib/actions';
 import QRCode from 'react-qr-code';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { set, z } from 'zod';
 import Cursor from '../ui/cursor';
 import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
@@ -158,7 +158,6 @@ export default function Dashboard() {
   const [resumeExists, setResumeExists] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
-
   const onTeamSubmit = async (data: TeamSubmit) => {
     setSubmittingTeamForm(true);
 
@@ -395,7 +394,9 @@ export default function Dashboard() {
 
         const haswaiver = await GetWaiverInfo();
         setWaiverState(haswaiver.response.hasUploaded);
-        //   setLoading(false);
+        const pointResp = await GetPoints();
+        setPoints(pointResp.response)
+
       } catch (error) {
         console.log(error);
       }
@@ -429,7 +430,6 @@ export default function Dashboard() {
       </main>
     );
   }
-
   if (userData?.role['organizer']) {
     return <OrganizerView />;
   } else if (userData?.role['director']) {
@@ -447,8 +447,10 @@ export default function Dashboard() {
             waiverState={waiverState}
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
+            points={points}
           />
-          {userData?.registration_status === 'checked-in' && (
+          {/*Getting ride of house info as well */}
+          {userData?.registration_status === "checked_in" && false &&
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>House Information</CardTitle>
@@ -465,10 +467,8 @@ export default function Dashboard() {
               </CardHeader>
             </Card>
           )}
-
-          {/* we are doing "&& false" because we're disabling the team form. */}
-          {userData?.registration_status === 'checked-in' && false && (
-            <Card className="w-full max-w-2xl">
+          {userData?.registration_status === "checked_in" && false &&
+            (<Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Team Creation</CardTitle>
                 <CardDescription>
@@ -486,7 +486,14 @@ export default function Dashboard() {
                   to see their team id.
                 </CardDescription>
               </CardHeader>
-              {submittingTeamForm && (
+              {
+                submittingTeamForm && (
+                  <CardContent>
+                    <p>Submitting team information.</p>
+                  </CardContent>
+                )
+              }
+              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked_in" &&
                 <CardContent>
                   <p>Submitting team information.</p>
                 </CardContent>
@@ -776,7 +783,7 @@ export default function Dashboard() {
                   <select
                     id="major"
                     value={selectedMajor}
-                    {...register('major')}
+                    {...register("major")}
                     onChange={(e) => {
                       const selected = e.target.value;
                       setSelectedMajor(selected);
@@ -787,9 +794,7 @@ export default function Dashboard() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                   >
                     {majors.map((major, index) => (
-                      <option key={index} value={major}>
-                        {major}
-                      </option>
+                      <option key={index} value={major}>{major}</option>
                     ))}
                     <option value="Other">Other</option>
                   </select>
@@ -806,7 +811,6 @@ export default function Dashboard() {
                       }}
                     />
                   )}
-
                   {errors.major && (
                     <p className="mt-2 text-xs italic text-red-500">
                       {errors.major?.message}
