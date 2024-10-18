@@ -106,7 +106,6 @@ export default function RafflePage() {
           (sum, item) => sum + item.userBuyIn,
           0,
         );
-
         setRaffleItems(prizeData);
         setTotalPoints(pointsResponseBody.total_points);
         setCurrentBuyPoints(totalUserBuyIns);

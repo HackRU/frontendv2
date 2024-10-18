@@ -2,6 +2,9 @@
 
 import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
 import { useState, useEffect, Suspense } from 'react';
+
+import { GetPoints } from '../lib/actions';
+
 import {
   AvatarImage,
   AvatarInitials,
@@ -48,6 +51,15 @@ import { useSearchParams } from 'next/navigation';
 let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
 const numOfMinsUntilTeamCreation =
   (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
+
+interface PointsRequestResponse {
+  balance: number;
+  total_points: number;
+  buy_ins: {
+    buy_in: number;
+    prize_id: string;
+  }[];
+}
 
 const UserUpdateSchema = z.object({
   first_name: z.string().min(1, 'Field cannot be empty'),
@@ -103,6 +115,12 @@ export default function Dashboard() {
   const [countries, setCountries] = useState<string[]>([]);
   const [userData, setUserData] = useState<any>(null);
   const [teamFormData, setTeamFormData] = useState<any>(null);
+
+  const [pointsData, setPointsData] = useState<{
+    balance: number;
+    total_points: number;
+  } | null>(null);
+
   const [waiverState, setWaiverState] = useState<any>(null);
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
@@ -359,6 +377,18 @@ export default function Dashboard() {
     async function fetchUser() {
       try {
         const data = await getSelf();
+        const points = await GetPoints();
+
+        const pointsResponseBody =
+          points.response as unknown as PointsRequestResponse;
+
+        setPointsData({
+          balance: pointsResponseBody.balance ? pointsResponseBody.balance : 0,
+          total_points: pointsResponseBody.total_points
+            ? pointsResponseBody.total_points
+            : 0,
+        });
+
         setUserData(data.response);
         const resumeInfo = await GetResume();
         setResumeExists(resumeInfo.response.hasUploaded);
@@ -418,7 +448,6 @@ export default function Dashboard() {
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
           />
-
           {userData?.registration_status === 'checked-in' && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
@@ -581,6 +610,35 @@ export default function Dashboard() {
               )}
             </Card>
           )}
+          {pointsData && (
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>Points Information</CardTitle>
+                <CardDescription>
+                  Your current points balance and total earned points. At the
+                  end of the hackathon, there will be a grand raffle for prized
+                  based on the total number of points you have ever earned. Stay
+                  tuned until the end.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <p className="text-lg">
+                    Current Balance:{' '}
+                    <span className="font-bold">
+                      {pointsData.balance} points
+                    </span>
+                  </p>
+                  <p className="text-lg">
+                    Total Points Earned:{' '}
+                    <span className="font-bold">
+                      {pointsData.total_points} points
+                    </span>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
@@ -598,6 +656,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
+
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
@@ -619,7 +678,6 @@ export default function Dashboard() {
               />
             </CardContent>
           </Card>
-
           <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
               <CardHeader>

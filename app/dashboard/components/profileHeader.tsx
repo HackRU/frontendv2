@@ -12,6 +12,7 @@ import { handleSignOut } from '@/app/lib/actions';
 import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import { ConfirmComingOrNot } from '@/app/lib/data';
+import Link from 'next/link';
 
 //TODO: coming and not-coming should be ENUMS!!!!
 
@@ -71,7 +72,11 @@ export default function ProfileHeader(props: {
             Log Out
           </Button>
         </div>
-        {/* Add component to log out */}
+        {/* <div className="mb-8 text-center">
+          <Link href="/dashboard/raffle">
+            <Button className="text-lg">Enter Raffle Dashboard</Button>
+          </Link>
+        </div> */}
       </div>
 
       <Card className="w-full max-w-2xl">
