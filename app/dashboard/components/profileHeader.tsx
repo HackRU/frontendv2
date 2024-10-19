@@ -267,7 +267,7 @@ export default function ProfileHeader(props: {
                           </Button>
                         </>
                       )}
-                      {userData.registration_status == 'not-coming' && (
+                      {userData.registration_status == 'not_coming' && (
                         <>
                           <CardTitle>
                             You are not coming. Thanks for letting us know.
