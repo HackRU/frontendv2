@@ -620,7 +620,7 @@ export default function Dashboard() {
                 <CardTitle>Points Information</CardTitle>
                 <CardDescription>
                   Your current points balance and total earned points. At the
-                  end of the hackathon, there will be a grand raffle for prized
+                  end of the hackathon, there will be a grand raffle for prizes
                   based on the total number of points you have ever earned. Stay
                   tuned until the end.
                 </CardDescription>
@@ -639,6 +639,11 @@ export default function Dashboard() {
                       {pointsData.total_points} points
                     </span>
                   </p>
+                </div>
+                <div className="mt-4">
+                  <Button asChild>
+                    <a href="/dashboard/raffle">Go to Raffle</a>
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -688,7 +693,9 @@ export default function Dashboard() {
                 <div className="flex flex-row items-center justify-center">
                   <div className="flex flex-col">
                     <CardTitle>Profile</CardTitle>
-                    <CardDescription>Update your profile information. * fields are required</CardDescription>
+                    <CardDescription>
+                      Update your profile information. * fields are required
+                    </CardDescription>
                   </div>
                   <Button type="submit" className="ml-auto">
                     {savingUserProfile ? 'Saving...' : userProfileSubmitText}
@@ -1225,7 +1232,11 @@ export default function Dashboard() {
                   {savingUserProfile ? 'Saving...' : userProfileSubmitText}
                 </Button>
               </CardFooter>
-              {(userData.registration_status == "unregistered") && <p className='p-3'>Make to register at the top after saving your profile!</p>}
+              {userData.registration_status == 'unregistered' && (
+                <p className="p-3">
+                  Make to register at the top after saving your profile!
+                </p>
+              )}
             </form>
           </Card>
         </div>

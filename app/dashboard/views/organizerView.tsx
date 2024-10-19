@@ -6,7 +6,7 @@ import QrReaderWrapper from '../components/QRreader';
 import CheckInScan from './checkInScan';
 import EventScan from './eventScan';
 import { AttendEventScan, GetUser, SetUser } from '@/app/lib/actions';
-import { handleSignOut } from "@/app/lib/actions";
+import { handleSignOut } from '@/app/lib/actions';
 import PopupDialog from '../components/dialog';
 import { set } from 'zod';
 import Page from '@/app/(pre-dashboard)/(landing)/page';
@@ -57,7 +57,7 @@ const eventPoints = {
   'lunch-sunday': 0,
   'chess-win': 15,
   'found-douglass': 15,
-  'tshirts': 0,
+  tshirts: 0,
 };
 
 function ScanStatus(props: {
@@ -113,15 +113,15 @@ function OrganizerView() {
 
   const [manualEmail, setManualEmail] = useState<string>('');
   const [manualPoints, setManualPoints] = useState<number>(0);
-
+  const [pointOperation, setPointOperation] = useState<'add' | 'subtract'>(
+    'add',
+  );
   const resetScanLog = () => {
     setScannedName('');
     setLatestScannedEmail('');
     setScanResponse('');
     setStatus('AWAITING SCAN');
   };
-
-
 
   const handleOnScan = async (
     result: string,
@@ -160,8 +160,8 @@ function OrganizerView() {
           setStatus('FAILED');
           setScanResponse(
             resp.error +
-            ' : Registration Status: ' +
-            userData.registration_status,
+              ' : Registration Status: ' +
+              userData.registration_status,
           );
           return;
         }
@@ -180,7 +180,7 @@ function OrganizerView() {
         selectedEvent,
         eventPoints[selectedEvent as keyof typeof eventPoints],
         forceAttendance,
-        1
+        1,
       );
 
       /**
@@ -190,7 +190,7 @@ function OrganizerView() {
       const multipleAttendanceStatus = 409;
 
       if (resp.status == multipleAttendanceStatus && !forceAttendance) {
-        console.log("HI")
+        console.log('HI');
         setShowForceAttendance(true);
         return;
       }
@@ -203,10 +203,8 @@ function OrganizerView() {
 
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
-    }
-    else if (scannerTab === 'SPONSOR') {
-
-      const eventName = selectedABList ? "SponsorA" : "SponsorB";
+    } else if (scannerTab === 'SPONSOR') {
+      const eventName = selectedABList ? 'SponsorA' : 'SponsorB';
 
       const resp = await AttendEventScan(
         result,
@@ -214,7 +212,7 @@ function OrganizerView() {
         0,
         forceAttendance,
         1,
-        true
+        true,
       );
 
       /**
@@ -224,7 +222,7 @@ function OrganizerView() {
       const multipleAttendanceStatus = 409;
 
       if (resp.status == multipleAttendanceStatus && !forceAttendance) {
-        console.log("HI")
+        console.log('HI');
         setShowForceAttendance(true);
         return;
       }
@@ -237,14 +235,15 @@ function OrganizerView() {
 
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
-    }
-    else {
+    } else {
+      const operationToApply = pointOperation === 'add' ? 1 : -1;
+
       const resp = await AttendEventScan(
         result,
-        "Manual",
-        manualPoints,
+        'Manual',
+        manualPoints * operationToApply,
         true,
-        999
+        999,
       );
 
       /**
@@ -292,8 +291,9 @@ function OrganizerView() {
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
             <div className="flex justify-center space-x-4">
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -302,8 +302,9 @@ function OrganizerView() {
                 Check In
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -312,8 +313,9 @@ function OrganizerView() {
                 Event
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();
@@ -322,8 +324,9 @@ function OrganizerView() {
                 Manual
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('SPONSOR');
                   resetScanLog();
@@ -335,14 +338,12 @@ function OrganizerView() {
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                 onClick={async () => {
                   await handleSignOut();
-                  window.location.href = "/";
+                  window.location.href = '/';
                 }}
               >
                 Logout
               </button>
             </div>
-
-
           </div>
           {showForceAttendance && (
             <PopupDialog
@@ -382,56 +383,70 @@ function OrganizerView() {
             />
             {scannerTab === 'CHECK IN' ? (
               <CheckInScan status={status} />
+            ) : scannerTab === 'EVENT' ? (
+              <EventScan
+                selectedEvent={selectedEvent}
+                events={events}
+                onChange={handleEventSelectChange}
+              />
+            ) : scannerTab === 'SPONSOR' ? (
+              <div>
+                <button
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    selectedABList ? 'bg-blue-700' : ''
+                  }`}
+                  onClick={() => {
+                    setSelectedABList(true);
+                    resetScanLog();
+                  }}
+                >
+                  A
+                </button>
+                <button
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    !selectedABList ? 'bg-blue-700' : ''
+                  }`}
+                  onClick={() => {
+                    setSelectedABList(false);
+                    resetScanLog();
+                  }}
+                >
+                  B
+                </button>
+              </div>
             ) : (
-              scannerTab === 'EVENT' ?
-                (
-                  <EventScan
-                    selectedEvent={selectedEvent}
-                    events={events}
-                    onChange={handleEventSelectChange}
-                  />) :
-                (scannerTab === 'SPONSOR' ? (
-                  <div>
-                    <button
-                      className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${selectedABList ? 'bg-blue-700' : ''
-                        }`}
-                      onClick={() => {
-                        setSelectedABList(true);
-                        resetScanLog();
-                      }}
-                    >
-                      A
-                    </button>
-                    <button
-                      className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${!selectedABList ? 'bg-blue-700' : ''
-                        }`}
-                      onClick={() => {
-                        setSelectedABList(false);
-                        resetScanLog();
-                      }}
-                    >
-                      B
-                    </button>
-                  </div>
-
-                ) :
-
-                  (<div className="mt-4">
-                    Manual Points:
-                    <input
-                      type="number"
-                      value={manualPoints}
-                      onChange={(e) => setManualPoints(Number(e.target.value))}
-                      placeholder="Enter points"
-                      className="mr-2 rounded border p-2 text-black"
-                    />
-
-                  </div>))
-
+              <div className="mt-4">
+                Manual Points:
+                <input
+                  type="number"
+                  value={manualPoints}
+                  onChange={(e) => setManualPoints(Number(e.target.value))}
+                  placeholder="Enter points"
+                  className="mr-2 rounded border p-2 text-black"
+                />
+                <div className="mt-2 flex justify-center">
+                  <button
+                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${
+                      pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
+                    }`}
+                    onClick={() => setPointOperation('add')}
+                  >
+                    +
+                  </button>
+                  <button
+                    className={`rounded px-4 py-2 font-bold text-white ${
+                      pointOperation === 'subtract'
+                        ? 'bg-red-500'
+                        : 'bg-gray-500'
+                    }`}
+                    onClick={() => setPointOperation('subtract')}
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
             )}
-            <p className="text-center">
-              {scanResponse}
-            </p>
+            <p className="text-center">{scanResponse}</p>
             <button
               className="mt-10 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
               onClick={() => setOpenScanner(!openScanner)}

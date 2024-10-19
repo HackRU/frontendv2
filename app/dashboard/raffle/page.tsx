@@ -173,6 +173,9 @@ export default function RafflePage() {
       });
     } catch (error) {
       console.error(error);
+      console.error(
+        "Check the user's prize document. Make sure the array of prize_ids are the same as what is included in the request.",
+      );
       setSubmitMessage({
         type: 'error',
         text: 'Failed to submit entries. Please try again.',
