@@ -189,7 +189,7 @@ export async function ConfirmComingOrNot(isComing: boolean): Promise<{
   response: Record<string, any>;
 }> {
   const session = await auth();
-  const status = isComing ? 'coming' : 'not-coming';
+  const status = isComing ? 'coming' : 'not_coming';
   let error = undefined;
 
   if (session?.user && session?.user?.email) {
