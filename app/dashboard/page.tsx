@@ -614,7 +614,7 @@ export default function Dashboard() {
               )}
             </Card>
           )}
-          {pointsData && (
+          {pointsData && userData.registration_status == 'checked_in' && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Points Information</CardTitle>
