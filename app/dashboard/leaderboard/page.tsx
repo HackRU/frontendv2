@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { getLeaderboard } from '@/app/lib/data';
-import GenericSection from '../(landing)/sections/GenericSection';
+import GenericSection from '@/app/(pre-dashboard)/(landing)/sections/GenericSection';
 import Image from 'next/image';
 import { fuzzy } from '@/app/ui/fonts';
 
