@@ -7,6 +7,8 @@ import { fuzzy } from '@/app/ui/fonts';
 
 interface LeaderboardEntry {
   id: string;
+  first_name:string;
+  last_name:string;
   points: number;
 }
 
@@ -41,10 +43,10 @@ function partition(arr: LeaderboardEntry[], low: number, high: number): number {
 
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([
-    { id: 'Loading...', points: 0 },
-    { id: 'Loading...', points: 0 },
-    { id: 'Loading...', points: 0 },
-    { id: 'Loading...', points: 0 },
+    { id: 'Loading...', points: 0 , first_name: "Loading", last_name: "..."},
+    { id: 'Loading...', points: 0 , first_name: "Loading", last_name: "..."},
+    { id: 'Loading...', points: 0 , first_name: "Loading", last_name: "..."},
+    { id: 'Loading...', points: 0 , first_name: "Loading", last_name: "..."},
   ]);
 
 
@@ -54,6 +56,8 @@ const Leaderboard = () => {
       const mappedData = data.map((entry: any) => ({
         id: entry._id,
         points: entry.total_points,
+        first_name: entry.first_name,
+        last_name: entry.last_name
       }));
 
       const sortedData = quickSort(mappedData, 0, mappedData.length - 1);
@@ -88,7 +92,6 @@ const Leaderboard = () => {
           </thead>
           <tbody className="rounded-3xl ring-1 ring-pink-100 sm:ring-4">
             {leaderboard.map((Leaderboard, index) => {
-              console.log(Leaderboard);
               if (Leaderboard.id === 'Loading...') {
                 return (
                   
@@ -113,7 +116,7 @@ const Leaderboard = () => {
                   <td className="text-center font-extrabold">
                     <div className="flex flex-row justify-center">
                       <div className="flex w-[75%] flex-row items-center justify-between">
-                        {Leaderboard.id}
+                        {Leaderboard.first_name + " " + Leaderboard.last_name}
                         <div className="relative h-[100px] w-[100px]">
 
                         </div>
