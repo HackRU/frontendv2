@@ -191,23 +191,23 @@ export async function SignUp(
       }),
     })
       .then(async (res) => {
-      let res_json = await res.json();
-      
-      if (res_json.statusCode === 200) {
-        resp.response = '200';
-        try {
-          await signIn('credentials', {
-            email: email,
-            password: password,
-            redirectTo: '/dashboard',
-          });
-        } catch (error) {
-          if (error instanceof AuthError) {
-            switch (error.type) {
-              case 'CredentialsSignin':
-                resp.error = 'Invalid credentials.';
-              default:
-                resp.error = error.message;
+        let res_json = await res.json();
+        if (res_json.statusCode === 200) {
+          resp.response = '200';
+          try {
+            await signIn('credentials', {
+              email: email,
+              password: password,
+              redirectTo: '/dashboard',
+            });
+          } catch (error) {
+            if (error instanceof AuthError) {
+              switch (error.type) {
+                case 'CredentialsSignin':
+                  resp.error = 'Invalid credentials.';
+                default:
+                  resp.error = error.message;
+              }
             }
           }
         } else {
@@ -315,44 +315,6 @@ export async function SetUser(data: any, user_email_to_update: string) {
 
   return resp;
 }
-
-export async function GetPoints() {
-  let resp = {
-    error: '',
-    response: '',
-  };
-  noStore();
-  const session = await auth();
-
-  if (session?.user) {
-    await fetch(ENDPOINTS.points, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: session.user.email,
-        auth_token: session.user.name,
-      }),
-    })
-      .then(async (res) => {
-        let res_json = await res.json();
-        if (res_json?.total_points) {
-          resp.response = res_json.total_points;
-        }
-        else if (res_json.statusCode == 200){
-          resp.response = "0"
-        }
-      })
-      .catch((error) => {
-        resp.error = error + 'An error occured retrieving data';
-      });
-  } else {
-    resp.error = 'Please log in';
-  }
-  return resp;
-}
-
 
 export async function Forgot(email: string) {
   noStore();
@@ -626,8 +588,8 @@ export async function AttendEventScan(
   event: string,
   points: number,
   again: boolean = false,
-  limit:number,
-  sponsor:boolean = false,
+  limit: number,
+  sponsor: boolean = false,
 ): Promise<{
   error: string;
   response: string;
@@ -641,21 +603,20 @@ export async function AttendEventScan(
   let response_status = 0;
   let count = 0;
 
-  let limitChange = limit
-  let eventChange = event
+  let limitChange = limit;
+  let eventChange = event;
 
   if (session?.user) {
     const { email, name } = session.user;
     /* For some reason, name IS THE TOKEN.... hmmm.?? */
 
-    if(again){
-      limitChange = limit + 999
+    if (again) {
+      limitChange = limit + 999;
     }
 
-    if(sponsor){
-      eventChange = email + event
+    if (sponsor) {
+      eventChange = email + event;
     }
-
 
     let body = {
       auth_email: email,
@@ -700,9 +661,7 @@ export async function AttendEventScan(
     }
 
     if (statusCode === 200 && typeof jsonBody !== 'string') {
-      response_message = `${
-      scannedEmail
-      } successfully logged in to ${event}!`;
+      response_message = `${scannedEmail} successfully logged in to ${event}!`;
     }
   } else {
     error_message = 'Invalid user session. Please login.';

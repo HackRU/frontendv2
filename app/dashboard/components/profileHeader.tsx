@@ -21,7 +21,6 @@ export default function ProfileHeader(props: {
   onWaiverSubmit: any;
   handleChangingFile: any;
   waiverState: any;
-  points: string;
 }) {
   const { userData, onWaiverSubmit, handleChangingFile, waiverState } = props;
   const [uploadingNewConfirmationStatus, setUploadingNewConfirmationStatus] =
@@ -55,10 +54,14 @@ export default function ProfileHeader(props: {
             {userData?.last_name[0]}
           </AvatarInitials>
         </Avatar>
-        <div className="grid gap-0.5 text-xs overflow-ellipsis w-full">
-          <div className="font-medium text-xl ">{userData?.first_name} {userData?.last_name}</div>
-          <div className="font-medium text-lg ">{userData && Object.keys(userData.role).find(key => userData.role[key])}</div>
-<!--           <div className=" font-medium text-xl">{points}</div> -->
+        <div className="grid w-full gap-0.5 overflow-ellipsis text-xs">
+          <div className="text-xl font-medium ">
+            {userData?.first_name} {userData?.last_name}
+          </div>
+          <div className="text-lg font-medium ">
+            {userData &&
+              Object.keys(userData.role).find((key) => userData.role[key])}
+          </div>
           <div className=" dark:text-gray-400">{userData?.email}</div>
 
           <Button

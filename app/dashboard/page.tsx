@@ -28,7 +28,7 @@ import {
   GetResume,
   UploadResume,
   UploadTeamSubmission,
-  GetPoints
+  GetPoints,
 } from '../lib/actions';
 import QRCode from 'react-qr-code';
 
@@ -395,8 +395,6 @@ export default function Dashboard() {
         const haswaiver = await GetWaiverInfo();
         setWaiverState(haswaiver.response.hasUploaded);
         const pointResp = await GetPoints();
-        setPoints(pointResp.response)
-
       } catch (error) {
         console.log(error);
       }
@@ -447,10 +445,9 @@ export default function Dashboard() {
             waiverState={waiverState}
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
-            points={points}
           />
           {/*Getting ride of house info as well */}
-          {userData?.registration_status === "checked_in" && false &&
+          {userData?.registration_status === 'checked_in' && false && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>House Information</CardTitle>
@@ -467,8 +464,8 @@ export default function Dashboard() {
               </CardHeader>
             </Card>
           )}
-          {userData?.registration_status === "checked_in" && false &&
-            (<Card className="w-full max-w-2xl">
+          {userData?.registration_status === 'checked_in' && false && (
+            <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Team Creation</CardTitle>
                 <CardDescription>
@@ -486,18 +483,18 @@ export default function Dashboard() {
                   to see their team id.
                 </CardDescription>
               </CardHeader>
-              {
-                submittingTeamForm && (
-                  <CardContent>
-                    <p>Submitting team information.</p>
-                  </CardContent>
-                )
-              }
-              {currentTeam === 0 && numOfMinsUntilTeamCreation <= 0 && userData?.registration_status == "checked_in" &&
+              {submittingTeamForm && (
                 <CardContent>
                   <p>Submitting team information.</p>
                 </CardContent>
               )}
+              {currentTeam === 0 &&
+                numOfMinsUntilTeamCreation <= 0 &&
+                userData?.registration_status == 'checked_in' && (
+                  <CardContent>
+                    <p>Submitting team information.</p>
+                  </CardContent>
+                )}
               {currentTeam === 0 &&
                 numOfMinsUntilTeamCreation <= 0 &&
                 userData?.registration_status == 'checked-in' && (
@@ -783,7 +780,7 @@ export default function Dashboard() {
                   <select
                     id="major"
                     value={selectedMajor}
-                    {...register("major")}
+                    {...register('major')}
                     onChange={(e) => {
                       const selected = e.target.value;
                       setSelectedMajor(selected);
@@ -794,7 +791,9 @@ export default function Dashboard() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                   >
                     {majors.map((major, index) => (
-                      <option key={index} value={major}>{major}</option>
+                      <option key={index} value={major}>
+                        {major}
+                      </option>
                     ))}
                     <option value="Other">Other</option>
                   </select>
