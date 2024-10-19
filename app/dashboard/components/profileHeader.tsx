@@ -102,8 +102,17 @@ export default function ProfileHeader(props: {
                   </p>
                 )}
                 <div className="flex flex-row items-center justify-center">
-                  <p>Click 
-                    <a className="hover:underline" href="https://docs.google.com/document/d/10lLW1txoODd2ZVVNkj5mPeOYJWQ8_WflHi6cwo5I_b8/copy" rel="noopener noreferrer" target="_blank"> HERE </a> 
+                  <p>
+                    Click
+                    <a
+                      className="hover:underline"
+                      href="https://docs.google.com/document/d/10lLW1txoODd2ZVVNkj5mPeOYJWQ8_WflHi6cwo5I_b8/copy"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {' '}
+                      HERE{' '}
+                    </a>
                     for waiver
                   </p>
                   <input
@@ -198,7 +207,7 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             )}
-            {userData.registration_status == 'checked-in' && (
+            {userData.registration_status == 'checked_in' && (
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>You are now checked in!</CardTitle>
@@ -216,7 +225,7 @@ export default function ProfileHeader(props: {
             )}
             {(userData.registration_status == 'confirmation' ||
               userData.registration_status == 'coming' ||
-              userData.registration_status == 'not-coming') && (
+              userData.registration_status == 'not_coming') && (
               <>
                 <div className="flex flex-row items-center justify-center">
                   {uploadingNewConfirmationStatus && (
