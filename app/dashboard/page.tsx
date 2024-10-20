@@ -388,6 +388,11 @@ export default function Dashboard() {
             : 0,
         });
 
+        if (data.error != ''){
+          alert(data.error.message)
+
+        }
+
         setUserData(data.response);
         const resumeInfo = await GetResume();
         setResumeExists(resumeInfo.response.hasUploaded);
