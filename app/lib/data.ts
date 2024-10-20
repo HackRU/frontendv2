@@ -125,7 +125,7 @@ export async function getLeaderboard() {
 }
 
 export async function getSelf(): Promise<{
-  error: string;
+  error: any;
   response: Record<string, any>;
 }> {
   const session = await auth();
@@ -133,20 +133,21 @@ export async function getSelf(): Promise<{
   if (session?.user && session?.user?.email) {
     const resp = await GetUser(session.user.email);
 
-    if (typeof resp.response === 'string') {
-      if (resp.response.includes('error')) {
-        return {
-          error: 'Something went wrong',
-          response: {},
-        };
-      }
-    }
+    console.log(resp)
+
+
 
     if (resp.error === '') {
       return {
         response: resp.response as unknown as Record<any, any>,
         error: '',
       };
+    }
+    else if (resp.error){
+      return {
+        error: resp.error ,
+        response: {},
+      }
     }
   }
 

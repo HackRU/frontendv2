@@ -252,14 +252,11 @@ export async function GetUser(email: string) {
     })
       .then(async (res) => {
         let res_json = await res.json();
-        if (res_json.error != '') {
-          resp.response = res_json;
-        } else {
-          if (res_json.email) {
-            resp.response = res_json;
-          } else {
-            resp.error = 'Unexpected Error';
-          }
+        if (res.status == 200){
+          resp.response = res_json
+        }
+        else{
+          resp.error = res_json
         }
       })
       .catch((error) => {
