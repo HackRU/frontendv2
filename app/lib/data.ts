@@ -133,8 +133,7 @@ export async function getSelf(): Promise<{
   if (session?.user && session?.user?.email) {
     const resp = await GetUser(session.user.email);
 
-    console.log(resp)
-
+    //console.log(resp)
 
 
     if (resp.error === '') {
