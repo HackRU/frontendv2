@@ -312,7 +312,7 @@ function OrganizerView() {
             <h1 className="text-center text-3xl">Organizer View</h1>
 
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
-            <div className="flex justify-center space-x-4">
+            <div className="grid md:grid-cols-5 justify-center space-x-4">
               <button
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
