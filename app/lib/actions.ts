@@ -576,7 +576,7 @@ interface AttendEventResponse {
     | string
     | {
         email: string;
-        new_count: number;
+        attendance: number;
       };
 }
 
@@ -647,7 +647,7 @@ export async function AttendEventScan(
     const { statusCode, body: jsonBody } = json as AttendEventResponse;
 
     if (typeof jsonBody !== 'string') {
-      count = 1;
+      count = json?.attendance;
     }
     //console.log(jsonBody);
     response_status = statusCode;
