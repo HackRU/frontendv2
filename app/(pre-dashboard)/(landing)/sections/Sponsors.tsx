@@ -8,7 +8,9 @@ export default async function Sponsors() {
      '/sponsors/CAIT2.png',
      '/sponsors/iCIMSWhite.png',
      '/sponsors/GoogleCloud.png',
-     '/sponsors/RGC_Logo_Default.png'
+     '/sponsors/RGC_Logo_Default.png',
+     '/sponsors/godspeed.png',
+     '/sponsors/saily-logo-yellow_2.png'
   ];
 
   const sponsorsLinks = [
@@ -17,7 +19,9 @@ export default async function Sponsors() {
     'https://cait.rutgers.edu/about/',
     'https://www.icims.com',
     'https://cloud.google.com',
-    'https://rutgers.campuslabs.com/engage/organization/rgc'
+    'https://rutgers.campuslabs.com/engage/organization/rgc',
+    'https://godspeedapp.com/',
+    'https://saily.com/',
  ];
 
   return (
