@@ -85,8 +85,8 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
-export const PrintPlayerInMap = (player, map) => {
-  var newMap = map.map((arr) => arr.slice());
+export const PrintPlayerInMap = (player:any, map:any) => {
+  var newMap = map.map((arr:any) => arr.slice());
   for (let y = 0; y < player.bloco.bloco.length; y++)
     for (let x = 0; x < player.bloco.bloco.length; x++)
       if (player.bloco.bloco[y][x] === 1) {
@@ -103,8 +103,8 @@ export const PrintPlayerInMap = (player, map) => {
 
 import { useEffect, useRef, useState } from 'react';
 
-export function useInterval(callback, delay) {
-  const savedCallback = useRef();
+export function useInterval(callback:any, delay:any) {
+  const savedCallback = useRef<any>();
 
   // Remember the latest callback.
   useEffect(() => {
@@ -114,7 +114,9 @@ export function useInterval(callback, delay) {
   // Set up the interval.
   useEffect(() => {
     function tick() {
-      savedCallback.current();
+      if(savedCallback.current){
+        savedCallback.current();
+      }
     }
     if (delay !== null) {
       let id = setInterval(tick, delay);
