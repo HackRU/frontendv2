@@ -223,6 +223,29 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             )}
+            {userData.registration_status == 'waitlisted' && (
+              <>
+                <div className="flex flex-col">
+                  <CardTitle>Delayed Entry</CardTitle>
+                  <div>
+                    <CardDescription>
+                      You will be able to check in after 10:45am on a first come
+                      first server basis. Please be there as soon as possible to
+                      secure your spot.
+                    </CardDescription>
+                  </div>
+                </div>
+              </>
+            )}
+            {userData.registration_status == 'confirmed' && (
+              <>
+                <CardTitle>
+                  You are confirmed! You are guaranteed entry if you check in
+                  between 9am to 10:45am. Aftwards, 10:45 will be check in
+                  acceptance on a first come first serve basis.
+                </CardTitle>
+              </>
+            )}
             {(userData.registration_status == 'confirmation' ||
               userData.registration_status == 'coming' ||
               userData.registration_status == 'not_coming') && (
@@ -257,10 +280,10 @@ export default function ProfileHeader(props: {
                       {userData.registration_status == 'coming' && (
                         <>
                           <CardTitle>
-                            You have indicated you are coming. Between 9am to
-                            10:45am, if your status changes to confirmed you are
-                            guaranteed entry. After 10:45am, check in will be
-                            first come first serve.
+                            You have indicated you are coming. If your status
+                            changes to confirmed you are guaranteed entry
+                            between 9am and 10:45am. After 10:45am, check in
+                            will be first come first serve.
                           </CardTitle>
                           <Button
                             className="ml-auto"
