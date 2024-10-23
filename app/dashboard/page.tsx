@@ -665,7 +665,7 @@ export default function Dashboard() {
 
                 <div className="m-4">
                   <Button >
-                    <a href="/games/tetris">Go to Tetris</a>
+                    <a href="/games">Go to Tetris</a>
                   </Button>
                   <Button className='mx-2'>
                     <a href="https://rsvp.withgoogle.com/events/coe-general-form_577b9e/sessions/rutgers-ru-hack">Google Interest Form </a>
