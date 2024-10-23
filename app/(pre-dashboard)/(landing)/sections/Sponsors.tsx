@@ -20,8 +20,8 @@ export default async function Sponsors() {
     'https://www.icims.com',
     'https://cloud.google.com',
     'https://rutgers.campuslabs.com/engage/organization/rgc',
+    'https://godspeedapp.com/',
     'https://saily.com/',
-    'https://godspeedapp.com/'
  ];
 
   return (
