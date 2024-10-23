@@ -257,9 +257,9 @@ export default function ProfileHeader(props: {
                       {userData.registration_status == 'coming' && (
                         <>
                           <CardTitle>
-                            You have indicated you are coming. HOWEVER, this
-                            does not gaurantee entry. When your status is
-                            confirmed, you are gauranteed entry into HackRU.
+                            You have indicated you are coming. Between 9am to
+                            10:45am, you are guaranteed a spot. After 10:45am,
+                            check in will be first come first serve.
                           </CardTitle>
                           <Button
                             className="ml-auto"
