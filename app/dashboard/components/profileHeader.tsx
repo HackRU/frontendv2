@@ -257,7 +257,9 @@ export default function ProfileHeader(props: {
                       {userData.registration_status == 'coming' && (
                         <>
                           <CardTitle>
-                            You are confirmed to be coming to HackRU!
+                            You have indicated you are coming. HOWEVER, this
+                            does not gaurantee entry. When your status is
+                            confirmed, you are gauranteed entry into HackRU.
                           </CardTitle>
                           <Button
                             className="ml-auto"
