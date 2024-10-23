@@ -84,3 +84,66 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export const PrintPlayerInMap = (player, map) => {
+  var newMap = map.map((arr) => arr.slice());
+  for (let y = 0; y < player.bloco.bloco.length; y++)
+    for (let x = 0; x < player.bloco.bloco.length; x++)
+      if (player.bloco.bloco[y][x] === 1) {
+        const pixelY = player.pos[0] + y;
+        const pixelX = player.pos[1] + x;
+        newMap[pixelY][pixelX] = {
+          fill: 1,
+          color: player.bloco.color,
+          catloc: player.bloco.catloc[y][x],
+        };
+      }
+  return newMap;
+};
+
+import { useEffect, useRef, useState } from 'react';
+
+export function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions(),
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
