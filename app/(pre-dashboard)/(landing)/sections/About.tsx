@@ -165,11 +165,10 @@ export default function About() {
             </p>
 
             <div className="pt-6">
-              <p className="inline  text-pink-100">Health:</p>
+              <p className="inline  text-pink-100">NeuroTech presented by NTICe:</p>
               <p className="inline pb-4">
                 {' '}
-                Hacks that improve the mind or body, aiding with health,
-                wellness, and fitness.
+                Hacks that advance technology for treating brain dysfunction.
               </p>
             </div>
 
@@ -183,8 +182,7 @@ export default function About() {
 
             <div className="pt-6">
               <p className="inline   text-pink-100">Maverick:</p>
-              <p className="inline pb-4"> Any other hack! The</p>
-              <p>opportunities are limitless.</p>
+              <p className="inline pb-4"> Any other hack! The opportunities are limitless.</p>
             </div>
 
             <div className="pt-6">

@@ -63,7 +63,7 @@ function CollapsedMenu() {
   return (
     <div
       className={clsx(
-        'bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right md:hidden',
+        'bg-f23-mediumGreen absolute right-28 top-4 z-40 rounded-md text-right lg:hidden',
         {
           hidden: pathname !== '/',
         },
@@ -109,11 +109,11 @@ function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === '/';
-  const sections = ['Home', 'About', 'Schedule', 'FAQ'];
+  const sections = ['About', 'Schedule', 'FAQ'];
 
   return (
     <div
-      className={`z-40 flex w-full justify-end md:fixed bg-gradient-to-b from-blue-500 to-transparent ${longCang.className}`}
+      className={`z-40 flex w-full justify-end bg-gradient-to-b from-blue-500 to-transparent md:fixed ${longCang.className}`}
       id="navbar"
     >
       <div
@@ -144,7 +144,7 @@ function Navbar() {
       <CollapsedMenu />
       <div
         className="text-mediumBlue absolute right-20 top-0 z-40 hidden
-        w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:flex md:pr-6 md:pt-8 md:text-lg lg:pr-8 lg:pt-10 lg:text-xl"
+        w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
           <div className="flex items-center justify-start">
@@ -161,7 +161,18 @@ function Navbar() {
                 {section}
               </button>
             ))}
-            <Link href="/contact">
+            <button
+              style={{
+                color: '#536F91',
+                textTransform: 'lowercase',
+              }}
+              className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
+              onClick={() => router.push('/leaderboard')}
+            >
+              Leaderboard
+            </button>
+
+            <Link href="https://linktr.ee/thehackru">
               <button
                 style={{
                   color: '#536F91',
