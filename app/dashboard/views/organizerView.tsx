@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './organizerView.css';
 import QrReaderWrapper from '../components/QRreader';
 import CheckInScan from './checkInScan';
 import EventScan from './eventScan';
 import { AttendEventScan, GetUser, SetUser } from '@/app/lib/actions';
 import { handleSignOut } from '@/app/lib/actions';
+import { getSelf } from '@/app/lib/data';
 import PopupDialog from '../components/dialog';
 import { set } from 'zod';
 import Page from '@/app/(pre-dashboard)/(landing)/page';
@@ -116,6 +117,8 @@ function OrganizerView() {
   const [pointOperation, setPointOperation] = useState<'add' | 'subtract'>(
     'add',
   );
+  const [isSponsor, setIsSponsor] = useState<boolean>(false);
+
   const resetScanLog = () => {
     setScannedName('');
     setLatestScannedEmail('');
@@ -281,6 +284,26 @@ function OrganizerView() {
     setManualEmail('');
   };
 
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const data = await getSelf();
+
+        const domain = data.response.email.slice(-11)
+        setIsSponsor(domain == "sponsor.com")
+        if (domain == "sponsor.com"){
+          setScannerTab("SPONSOR")
+          resetScanLog();
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
   return (
     <main>
       <div className="flex w-full items-center justify-center text-white">
@@ -289,11 +312,12 @@ function OrganizerView() {
             <h1 className="text-center text-3xl">Organizer View</h1>
 
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
-            <div className="flex justify-center space-x-4">
+            <div className="grid md:grid-cols-5 justify-center space-x-4">
               <button
+                disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                }`}
+                } ${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -302,9 +326,10 @@ function OrganizerView() {
                 Check In
               </button>
               <button
+                disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }`}
+                }${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -313,9 +338,10 @@ function OrganizerView() {
                 Event
               </button>
               <button
+                disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                }`}
+                }${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();

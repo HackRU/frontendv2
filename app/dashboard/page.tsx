@@ -653,6 +653,27 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
+          {true && (
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>Links</CardTitle>
+                <CardDescription>
+                  Links to various things
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+
+                <div className="m-4">
+                  <Button >
+                    <a href="/games">Go to Tetris</a>
+                  </Button>
+                  <Button className='mx-2'>
+                    <a href="https://rsvp.withgoogle.com/events/coe-general-form_577b9e/sessions/rutgers-ru-hack">Google Interest Form </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
