@@ -241,7 +241,7 @@ export default function ProfileHeader(props: {
               <>
                 <CardTitle>
                   You are confirmed! You are guaranteed entry if you check in
-                  between 9am to 10:45am. Aftwards, 10:45 will be check in
+                  between 9am to 10:45am. Afterwards, 10:45am will be check in
                   acceptance on a first come first serve basis.
                 </CardTitle>
               </>
