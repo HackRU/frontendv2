@@ -258,8 +258,9 @@ export default function ProfileHeader(props: {
                         <>
                           <CardTitle>
                             You have indicated you are coming. Between 9am to
-                            10:45am, you are guaranteed a spot. After 10:45am,
-                            check in will be first come first serve.
+                            10:45am, if your status changes to confirmed you are
+                            guaranteed entry. After 10:45am, check in will be
+                            first come first serve.
                           </CardTitle>
                           <Button
                             className="ml-auto"
