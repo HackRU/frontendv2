@@ -230,7 +230,7 @@ export default function ProfileHeader(props: {
                   <div>
                     <CardDescription>
                       You will be able to check in after 10:45am on a first come
-                      first server basis. Please be there as soon as possible to
+                      first serve basis. Please be there as soon as possible to
                       secure your spot.
                     </CardDescription>
                   </div>
