@@ -48,6 +48,8 @@ import { majors as majorConstants } from '@/app/lib/constants';
 
 import { useSearchParams } from 'next/navigation';
 
+import { OptInSelf } from '@/app/lib/data';
+
 let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
 const numOfMinsUntilTeamCreation =
   (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
@@ -465,6 +467,39 @@ export default function Dashboard() {
                     height={200}
                     priority
                   />
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          )}
+          {userData?.opt_in == null && (
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <CardTitle>Opt in or out to mlh emails!</CardTitle>
+                <CardDescription>
+                  <Button
+                    onClick={async () => {
+                      const resp = await OptInSelf(true)
+                      if (resp == "GOOD"){
+                        setUserData({ ...userData, opt_in: true })
+                      }
+                    }}
+                    type="button"
+                    className="mt-10"
+                  >
+                    OPT IN
+                  </Button>
+                  <Button
+                    onClick={async () => {
+                      const resp = await OptInSelf(false)
+                      if (resp == "GOOD"){
+                        setUserData({ ...userData, opt_in: false })
+                      }
+                    }}
+                    type="button"
+                    className="mx-10"
+                  >
+                    OPT OUT
+                  </Button>
                 </CardDescription>
               </CardHeader>
             </Card>

@@ -188,6 +188,24 @@ export async function RegisterSelf() {
   return 'Something went wrong';
 }
 
+export async function OptInSelf(stat:boolean) {
+  const session = await auth();
+  console.log('Register Self');
+  if (session?.user && session?.user?.email) {
+    const resp = await SetUser(
+      { opt_in:  stat},
+      session.user.email,
+    );
+
+    if (resp.error === '') {
+      return "GOOD";
+    }
+    return resp.error;
+  }
+
+  return 'Something went wrong';
+}
+
 export async function ConfirmComingOrNot(isComing: boolean): Promise<{
   error: string | undefined;
   response: Record<string, any>;
