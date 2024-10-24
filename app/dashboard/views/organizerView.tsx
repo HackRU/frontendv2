@@ -74,7 +74,7 @@ function ScanStatus(props: {
         Scan QR to {scanType === 'CHECK IN' ? 'check in' : 'scan for an event'}
       </p>
       <p className="">Status: </p>
-      <p>{fullName && <p className="text-green-500">Scanned: {fullName}</p>}</p>
+      <p>{fullName && <p className="text-white">Found User: {fullName}</p>}</p>
       <p className="">
         {status === 'SUCCESSFUL' && (
           <p className="text-green-500">Successful.</p>
@@ -147,32 +147,21 @@ function OrganizerView() {
     setScannedName(userData.first_name + ' ' + userData.last_name);
 
     if (scannerTab === 'CHECK IN') {
-      if (
-        userData.registration_status === 'confirmed' ||
-        userData.registration_status == 'checked_in' ||
-        userData.registration_status == 'coming' ||
-        (now > timeWhenAllHackersCanComeThrough &&
-          userData.registration_status !== 'unregistered')
-      ) {
-        const resp = await SetUser(
-          { registration_status: 'checked_in' },
-          result,
-        );
+      const resp = await SetUser({ registration_status: 'checked_in' }, result);
 
-        if (resp.error !== '') {
-          setStatus('FAILED');
-          setScanResponse(
-            resp.error +
-              ' : Registration Status: ' +
-              userData.registration_status,
-          );
-          return;
-        }
-
-        setStatus('SUCCESSFUL');
-      } else {
-        setStatus('PENDING');
+      if (!resp) {
+        setStatus('FAILED');
+        setScanResponse('Failed to check in user.');
       }
+
+      if (resp.error !== '') {
+        setStatus('FAILED');
+        setScanResponse(resp.response + '; ' + resp.error);
+        return;
+      }
+
+      setScanResponse(resp.response);
+      setStatus('SUCCESSFUL');
     } else if (scannerTab === 'EVENT') {
       if (selectedEvent == '') {
         alert('Please select an event first!');
@@ -193,14 +182,13 @@ function OrganizerView() {
       const multipleAttendanceStatus = 409;
 
       if (resp.status == multipleAttendanceStatus && !forceAttendance) {
-        console.log('HI');
         setShowForceAttendance(true);
         return;
       }
 
       if (resp.error !== '') {
         setStatus('FAILED');
-        setScanResponse(resp.error);
+        setScanResponse(resp.error + '; ' + resp.response);
         return;
       }
 
@@ -232,7 +220,7 @@ function OrganizerView() {
 
       if (resp.error !== '') {
         setStatus('FAILED');
-        setScanResponse(resp.error);
+        setScanResponse(resp.error + '; ' + resp.response);
         return;
       }
 
@@ -262,7 +250,7 @@ function OrganizerView() {
 
       if (resp.error !== '') {
         setStatus('FAILED');
-        setScanResponse(resp.error);
+        setScanResponse(resp.error + '; ' + resp.response);
         return;
       }
 
@@ -289,13 +277,12 @@ function OrganizerView() {
       try {
         const data = await getSelf();
 
-        const domain = data.response.email.slice(-11)
-        setIsSponsor(domain == "sponsor.com")
-        if (domain == "sponsor.com"){
-          setScannerTab("SPONSOR")
+        const domain = data.response.email.slice(-11);
+        setIsSponsor(domain == 'sponsor.com');
+        if (domain == 'sponsor.com') {
+          setScannerTab('SPONSOR');
           resetScanLog();
         }
-
       } catch (error) {
         console.log(error);
       }
@@ -312,12 +299,12 @@ function OrganizerView() {
             <h1 className="text-center text-3xl">Organizer View</h1>
 
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
-            <div className="grid md:grid-cols-5 justify-center space-x-4">
+            <div className="grid justify-center space-x-4 md:grid-cols-5">
               <button
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                } ${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
+                } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -329,7 +316,7 @@ function OrganizerView() {
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
+                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -341,7 +328,7 @@ function OrganizerView() {
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                }${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
+                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();

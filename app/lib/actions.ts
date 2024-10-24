@@ -252,11 +252,10 @@ export async function GetUser(email: string) {
     })
       .then(async (res) => {
         let res_json = await res.json();
-        if (res.status == 200){
-          resp.response = res_json
-        }
-        else{
-          resp.error = res_json
+        if (res.status == 200) {
+          resp.response = res_json;
+        } else {
+          resp.error = res_json;
         }
       })
       .catch((error) => {
@@ -299,9 +298,8 @@ export async function SetUser(data: any, user_email_to_update: string) {
           } else {
             resp.error = 'Unexpected Error';
           }
-        } else {
-          resp.response = resJSON.message;
         }
+        resp.response = resJSON.message;
       })
       .catch((error) => {
         resp.error = error + '; An error occurred retrieving data';
@@ -654,7 +652,7 @@ export async function AttendEventScan(
     if (statusCode === 404) {
       error_message = `User ${scannedEmail} not found. Please try again.`;
     } else if (statusCode === 409) {
-      error_message = `User ${scannedEmail} is already checked in to ${event}!`;
+      error_message = json.message;
     }
 
     if (statusCode === 200 && typeof jsonBody !== 'string') {
