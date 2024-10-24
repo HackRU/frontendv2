@@ -114,6 +114,7 @@ function OrganizerView() {
 
   const [manualEmail, setManualEmail] = useState<string>('');
   const [manualPoints, setManualPoints] = useState<number>(0);
+  const [manualPointsInput, setManualPointsInput] = useState<string>('');
   const [pointOperation, setPointOperation] = useState<'add' | 'subtract'>(
     'add',
   );
@@ -289,13 +290,12 @@ function OrganizerView() {
       try {
         const data = await getSelf();
 
-        const domain = data.response.email.slice(-11)
-        setIsSponsor(domain == "sponsor.com")
-        if (domain == "sponsor.com"){
-          setScannerTab("SPONSOR")
+        const domain = data.response.email.slice(-11);
+        setIsSponsor(domain == 'sponsor.com');
+        if (domain == 'sponsor.com') {
+          setScannerTab('SPONSOR');
           resetScanLog();
         }
-
       } catch (error) {
         console.log(error);
       }
@@ -317,7 +317,7 @@ function OrganizerView() {
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                } ${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
+                } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -329,7 +329,7 @@ function OrganizerView() {
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
+                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -341,7 +341,7 @@ function OrganizerView() {
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
                   scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                }${isSponsor ? "bg-blue-500 hover:bg-blue-500": ""}`}
+                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();
@@ -444,9 +444,18 @@ function OrganizerView() {
               <div className="mt-4">
                 Manual Points:
                 <input
-                  type="number"
-                  value={manualPoints}
-                  onChange={(e) => setManualPoints(Number(e.target.value))}
+                  type="text"
+                  value={manualPointsInput}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setManualPointsInput(value);
+                    const numValue = parseFloat(value);
+                    if (!isNaN(numValue)) {
+                      setManualPoints(numValue);
+                    } else {
+                      setManualPoints(0);
+                    }
+                  }}
                   placeholder="Enter points"
                   className="mr-2 rounded border p-2 text-black"
                 />
