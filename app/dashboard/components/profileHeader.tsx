@@ -223,20 +223,21 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             )}
-            {userData.registration_status == 'waitlisted' && (
-              <>
-                <div className="flex flex-col">
-                  <CardTitle>Delayed Entry</CardTitle>
-                  <div>
-                    <CardDescription>
-                      You will be able to check in after 10:45am on a first come
-                      first serve basis. Please be there as soon as possible to
-                      secure your spot.
-                    </CardDescription>
+            {userData.registration_status == 'waitlisted' &&
+              userData.registration_status == 'waitlisted' && (
+                <>
+                  <div className="flex flex-col">
+                    <CardTitle>Delayed Entry</CardTitle>
+                    <div>
+                      <CardDescription>
+                        You will be able to check in after 10:45am on a first
+                        come first serve basis. Please be there as soon as
+                        possible to secure your spot.
+                      </CardDescription>
+                    </div>
                   </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
             {userData.registration_status == 'confirmed' && (
               <>
                 <CardTitle>
