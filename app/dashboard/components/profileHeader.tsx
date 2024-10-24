@@ -223,8 +223,7 @@ export default function ProfileHeader(props: {
                 </div>
               </>
             )}
-            {(userData.registration_status == 'waitlisted' ||
-              userData.registration_status == 'waitlisted') && (
+            {userData.registration_status == 'waitlist' && (
               <>
                 <div className="flex flex-col">
                   <CardTitle>Delayed Entry</CardTitle>
