@@ -474,7 +474,7 @@ export default function Dashboard() {
           {userData?.opt_in == null && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
-                <CardTitle>Opt in or out to mlh emails!</CardTitle>
+                <CardTitle>Would you like to opt-in to Major League Hacking emails</CardTitle>
                 <CardDescription>
                   <Button
                     onClick={async () => {
