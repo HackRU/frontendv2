@@ -229,7 +229,7 @@ export default function ProfileHeader(props: {
                   <CardTitle>Delayed Entry</CardTitle>
                   <div>
                     <CardDescription>
-                      You will be able to check in after 10:45am on a first come
+                      You will be able to check in after 10:30am on a first come
                       first serve basis. Please be there as soon as possible to
                       secure your spot.
                     </CardDescription>
@@ -241,7 +241,7 @@ export default function ProfileHeader(props: {
               <>
                 <CardTitle>
                   You are confirmed! You are guaranteed entry if you check in
-                  between 9am to 10:45am. Afterwards, 10:45am will be check in
+                  between 9am to 10:30am. Afterwards, 10:30am will be check in
                   acceptance on a first come first serve basis.
                 </CardTitle>
               </>
@@ -282,7 +282,7 @@ export default function ProfileHeader(props: {
                           <CardTitle>
                             You have indicated you are coming. If your status
                             changes to confirmed you are guaranteed entry
-                            between 9am and 10:45am. After 10:45am, check in
+                            between 9am and 10:30am. After 10:30am, check in
                             will be first come first serve.
                           </CardTitle>
                           <Button
