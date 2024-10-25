@@ -51,7 +51,7 @@ const schedule = {
       { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
       { time: '1:00 PM', event: 'Github Copilot', location: '108' },
       { time: '2:00 PM', event: 'iCIMS', location: '108' },
-      { time: '2:40 PM', event: 'NTICE', location: '108' },
+      { time: '2:30 PM', event: 'NTICE', location: '108' },
       { time: '4:00 PM', event: 'USACS Resume Workshop', location: '108' },
       { time: '5:00 PM', event: 'Figma workshop', location: '108' },
       { time: '6:00 PM', event: 'NJT', location: '108' },
