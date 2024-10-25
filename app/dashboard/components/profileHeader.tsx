@@ -96,6 +96,13 @@ export default function ProfileHeader(props: {
           <CardContent className="space-y-4">
             {userData.registration_status == 'unregistered' && (
               <>
+                <div className="flex flex-row items-center">
+                  <CardTitle>Unregistered – at this point, you will not be able to attend HackRU, we hope to see you in the spring!</CardTitle>
+                </div>
+              </>
+            )}
+            {false && userData.registration_status == 'unregistered' && (
+              <>
                 {waiverState && (
                   <p className="mt-2 text-xs italic text-green-500">
                     {'Waiver Uploaded'}
