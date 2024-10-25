@@ -218,7 +218,7 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>
-                    Registered! You will be emailed about acceptance soon.
+                  Registered! There is an extremely high chance that you do not have space for you this fall, we hope to see you in spring! Registrations open at least a full month before the event and are first come first serve.
                   </CardTitle>
                 </div>
               </>
