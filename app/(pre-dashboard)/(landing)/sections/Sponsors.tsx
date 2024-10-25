@@ -10,7 +10,8 @@ export default async function Sponsors() {
      '/sponsors/GoogleCloud.png',
      '/sponsors/RGC_Logo_Default.png',
      '/sponsors/godspeed.png',
-     '/sponsors/saily-logo-yellow_2.png'
+     '/sponsors/saily-logo-yellow_2.png',
+     '/sponsors/CVLT_Logo_RGB_R_Croc_7.png'
   ];
 
   const sponsorsLinks = [
@@ -22,6 +23,7 @@ export default async function Sponsors() {
     'https://rutgers.campuslabs.com/engage/organization/rgc',
     'https://godspeedapp.com/',
     'https://saily.com/',
+    'https://www.commvault.com/'
  ];
 
   return (
