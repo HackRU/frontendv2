@@ -442,6 +442,12 @@ export default function Dashboard() {
     if (userData?.opt_in == null) {
       return (
         <div className="flex flex-col items-center justify-center space-y-8 p-4">
+          <ProfileHeader
+            userData={userData}
+            waiverState={waiverState}
+            handleChangingFile={handleChangingFile}
+            onWaiverSubmit={onWaiverSubmit}
+          />
           <Card className="mt-32 w-full max-w-2xl">
             <CardHeader>
               <CardTitle>
