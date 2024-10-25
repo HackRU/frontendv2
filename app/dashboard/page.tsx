@@ -390,9 +390,8 @@ export default function Dashboard() {
             : 0,
         });
 
-        if (data.error != ''){
-          alert(data.error.message)
-
+        if (data.error != '') {
+          alert(data.error.message);
         }
 
         setUserData(data.response);
@@ -440,6 +439,52 @@ export default function Dashboard() {
   } else if (userData?.role['director']) {
     return <DirectorView userData={userData} />;
   } else if (userData?.role.hacker) {
+    if (userData?.opt_in == null) {
+      return (
+        <div className="flex flex-col items-center justify-center space-y-8 p-4">
+          <ProfileHeader
+            userData={userData}
+            waiverState={waiverState}
+            handleChangingFile={handleChangingFile}
+            onWaiverSubmit={onWaiverSubmit}
+          />
+          <Card className="mt-32 w-full max-w-2xl">
+            <CardHeader>
+              <CardTitle>
+                Would you like to opt-in to Major League Hacking emails? You
+                must choose before you can proceed.
+              </CardTitle>
+              <CardDescription>
+                <Button
+                  onClick={async () => {
+                    const resp = await OptInSelf(true);
+                    if (resp == 'GOOD') {
+                      setUserData({ ...userData, opt_in: true });
+                    }
+                  }}
+                  type="button"
+                  className="mt-10"
+                >
+                  OPT IN
+                </Button>
+                <Button
+                  onClick={async () => {
+                    const resp = await OptInSelf(false);
+                    if (resp == 'GOOD') {
+                      setUserData({ ...userData, opt_in: false });
+                    }
+                  }}
+                  type="button"
+                  className="mx-10"
+                >
+                  OPT OUT
+                </Button>
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      );
+    }
     return (
       <main>
         <Navbar />
@@ -467,39 +512,6 @@ export default function Dashboard() {
                     height={200}
                     priority
                   />
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          )}
-          {userData?.opt_in == null && (
-            <Card className="w-full max-w-2xl">
-              <CardHeader>
-                <CardTitle>Would you like to opt-in to Major League Hacking emails</CardTitle>
-                <CardDescription>
-                  <Button
-                    onClick={async () => {
-                      const resp = await OptInSelf(true)
-                      if (resp == "GOOD"){
-                        setUserData({ ...userData, opt_in: true })
-                      }
-                    }}
-                    type="button"
-                    className="mt-10"
-                  >
-                    OPT IN
-                  </Button>
-                  <Button
-                    onClick={async () => {
-                      const resp = await OptInSelf(false)
-                      if (resp == "GOOD"){
-                        setUserData({ ...userData, opt_in: false })
-                      }
-                    }}
-                    type="button"
-                    className="mx-10"
-                  >
-                    OPT OUT
-                  </Button>
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -692,23 +704,23 @@ export default function Dashboard() {
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Links</CardTitle>
-                <CardDescription>
-                  Links to various things
-                </CardDescription>
+                <CardDescription>Links to various things</CardDescription>
               </CardHeader>
               <CardContent>
-
                 <div className="m-4">
-                  <Button >
+                  <Button>
                     <a href="/games">Go to Tetris</a>
                   </Button>
-                  <Button className='mx-2'>
-                    <a href="https://rsvp.withgoogle.com/events/coe-general-form_577b9e/sessions/rutgers-ru-hack">Google Interest Form </a>
+                  <Button className="mx-2">
+                    <a href="https://rsvp.withgoogle.com/events/coe-general-form_577b9e/sessions/rutgers-ru-hack">
+                      Google Interest Form{' '}
+                    </a>
                   </Button>
                 </div>
               </CardContent>
             </Card>
           )}
+          (
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
@@ -726,7 +738,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
-
+          )
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
