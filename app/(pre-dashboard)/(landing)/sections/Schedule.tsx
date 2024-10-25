@@ -49,10 +49,8 @@ const schedule = {
       { time: '12:00 PM', event: 'Team Building', location: 'tbd' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '1:00 PM', event: 'Lunch', location: 'In Front of MPR' },
-      { time: 'TBD', event: 'Coming Soon!', location: 'TBD' },
-      { time: 'TBD', event: 'Coming Soon!', location: 'TBD' },
-      { time: 'TBD', event: 'Coming Soon!', location: 'TBD' },
-      { time: 'TBD', event: 'Coming Soon!', location: 'TBD' },
+      { time: '1:00 PM - 7:00PM', event: 'Partner Workshops! NTICE, iCIMS, MLH (Github, Figma)', location: '108' },
+      { time: '4:00 PM', event: 'Aracde Suprise', location: 'tbd' },
       // {
       //   time: '2:00 PM',
       //   event: 'Wakefern Tech Talk',
