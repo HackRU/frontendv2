@@ -43,12 +43,14 @@ const events = [
   'winning-trivia',
   'participating-trivia',
   'printing-photo',
-  'stickers',
+  'stickers-pin',
   'lotion',
   'tote-bag',
   'playing-cards',
-  'stuffed-animals',
   'lego-sets',
+  'small-cat-stuffed-animals',
+  'medium-stuffed-animals',
+  'squishmallow',
 ];
 
 const eventPoints = {
@@ -73,14 +75,14 @@ const eventPoints = {
   'winning-trivia': 50,
   'participating-trivia': 15,
   'printing-photo': -10,
-  stickers: -10,
+  'stickers-pin': -10,
   lotion: -15,
   'tote-bag': -35,
   'playing-cards': -35,
-  'small-stuffed-animals': -25,
+  'small-cat-stuffed-animals': -25,
   'medium-stuffed-animals': -50,
-  'large-stuffed-animals': -70,
-  'lego-sets': -120,
+  squishmallow: -80,
+  'lego-sets': -110,
 };
 
 function ScanStatus(props: {
