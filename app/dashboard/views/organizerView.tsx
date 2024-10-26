@@ -75,7 +75,7 @@ const eventPoints = {
   'winning-trivia': 50,
   'participating-trivia': 15,
   'printing-photo': -10,
-  'stickers-pin': -10,
+  'stickers-pin': -3,
   lotion: -15,
   'tote-bag': -35,
   'playing-cards': -35,
