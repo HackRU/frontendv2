@@ -388,9 +388,9 @@ function OrganizerView() {
               }}
               setOpen={setShowForceAttendance}
               open={showForceAttendance}
-              content={`This hacker has already attended this event.
-                Are you sure you want to force another attendance count?`}
-              title={'Multiple attendance detected for this event.'}
+              content={`Either this student has reached event attendance limit or the student is not checked in.
+                Do you want to force attendance? (If they are not checked in, scan in will fail.)`}
+              title={`An error occurred.`}
             />
           )}
           {confirmation && (
