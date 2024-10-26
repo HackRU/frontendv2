@@ -669,7 +669,7 @@ export default function Dashboard() {
           {pointsData && userData.registration_status == 'checked_in' && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
-                <CardTitle>Points Information</CardTitle>
+                <CardTitle className = "text-green-500">Points Information</CardTitle>
                 <CardDescription>
                   Your current points balance and total earned points. At the
                   end of the hackathon, there will be a grand raffle for prizes
@@ -681,13 +681,13 @@ export default function Dashboard() {
                 <div className="space-y-2">
                   <p className="text-lg">
                     Current Balance:{' '}
-                    <span className="font-bold">
+                    <span className="text-green-500 font-bold">
                       {pointsData.balance} points
                     </span>
                   </p>
                   <p className="text-lg">
                     Total Points Earned:{' '}
-                    <span className="font-bold">
+                    <span className="text-green-500 font-bold">
                       {pointsData.total_points} points
                     </span>
                   </p>
