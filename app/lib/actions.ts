@@ -873,6 +873,7 @@ export async function UpdateBuyIns(
       console.log(resJSON);
       if (res.status !== 200) {
         resp.error = 'Error Updating Buy-Ins';
+        resp.response = resJSON;
       } else {
         resp.response = resJSON;
       }

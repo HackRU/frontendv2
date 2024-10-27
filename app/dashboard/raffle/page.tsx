@@ -163,6 +163,7 @@ export default function RafflePage() {
       }));
 
       const response = await UpdateBuyIns(buyIns);
+      console.log(response.response);
       if (response.error) {
         throw new Error(response.error);
       }
