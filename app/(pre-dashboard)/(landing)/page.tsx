@@ -12,6 +12,7 @@ import FAQ from './sections/FAQ/FAQ';
 import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
 import React from 'react';
+import Team from './sections/Team/Team';
 
 export default async function Page() {
   return (
@@ -20,7 +21,10 @@ export default async function Page() {
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
-        <h1 className={`text-center bg-blue-500 ${fuzzy.className}`} style={{ fontSize: '96px' }}>
+        <h1
+          className={`bg-blue-500 text-center ${fuzzy.className}`}
+          style={{ fontSize: '96px' }}
+        >
           ABOUT
         </h1>
 
@@ -35,9 +39,12 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">{<Sponsors /> }</GenericSection>
+        <GenericSection title="Sponsors">{<Sponsors />}</GenericSection>
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
+        </GenericSection>
+        <GenericSection title="Meet the Team">
+          <Team />
         </GenericSection>
         {/* <GenericSection title="Team">
           <Team />
