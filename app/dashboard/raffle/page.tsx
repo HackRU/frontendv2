@@ -39,17 +39,17 @@ interface PrizeInfo {
 }
 
 const prizeMapping: Record<string, PrizeInfo> = {
-  prizeA: {
-    name: 'XBOX',
-    description: '1TB',
+  amazon: {
+    name: 'Amazon Gift Card',
+    description: '$50 Dollar Amazon Gift Card',
   },
-  prizeB: {
-    name: 'Backpack',
-    description: 'Holloway Backpack',
+  matcha: {
+    name: 'Matcha Kit',
+    description: 'Starter Matcha Kit with Matcha Powder and Whisker',
   },
-  prizeC: {
-    name: 'Backpack 2',
-    description: 'Spiderman backpack',
+  blanket: {
+    name: 'Weighted Blanket',
+    description: '20 Pound Weighted Blanket',
   },
 };
 
@@ -163,6 +163,7 @@ export default function RafflePage() {
       }));
 
       const response = await UpdateBuyIns(buyIns);
+      console.log(response.response);
       if (response.error) {
         throw new Error(response.error);
       }
