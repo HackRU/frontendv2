@@ -439,7 +439,9 @@ export default function Dashboard() {
   } else if (userData?.role['director']) {
     return <DirectorView userData={userData} />;
   } else if (userData?.role.hacker) {
-    if (userData?.opt_in == null) {
+    //FALSE SINCE WE WANT TO OPT IN ON REGISTRATION
+    //REMOVE ONCE OPTIN WORKING AS EXPECTED
+    if (false && userData?.opt_in == null) {
       return (
         <div className="flex flex-col items-center justify-center space-y-8 p-4">
           <ProfileHeader
