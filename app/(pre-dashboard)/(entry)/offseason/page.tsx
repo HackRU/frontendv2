@@ -14,7 +14,7 @@ export default function OffseasonPage() {
           HackRU Offseason
         </h1>
         <p className="mt-4 text-2xl text-gray-300 drop-shadow-md">
-          Thanks for your interest in HackRU! Our registrations aren't open yet, but you can follow us on our social channels to stay updated.
+          Thanks for your interest in HackRU! Our registrations are not open yet, but you can follow us on our social channels to stay updated.
         </p>
         <Button
           className="text-s text-grey-500 mt-2 hover:text-blue-500 cursor-pointer"
