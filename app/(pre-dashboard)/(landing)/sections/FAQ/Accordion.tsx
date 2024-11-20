@@ -6,6 +6,7 @@ type propType = {
   setActiveAccordion: (value: number | ((prevVar: number) => number)) => void;
   index: number;
   answer: string;
+  textcolor: string;
 };
 
 export default function Accordion(props: propType) {
@@ -24,7 +25,7 @@ export default function Accordion(props: propType) {
         }}
         className="flex w-full justify-between items-center pt-5"
       >
-        <span className="text-3xl text-orange-100 text-left font-bold">{props.question}</span>
+        <span className={`text-3xl ${props.textcolor} text-left font-bold`}>{props.question}</span>
         <svg
           className="ml-8 shrink-0 fill-orange-100"
           width="16"

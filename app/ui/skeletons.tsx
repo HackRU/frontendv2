@@ -1,4 +1,6 @@
-import Navbar from "../(pre-dashboard)/(landing)/sections/Hero/Navbar";
+import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
+import { handleSignOut } from '@/app/lib/actions';
+import { Button } from './button';
 
 // Loading animation
 export const shimmer =
@@ -63,18 +65,28 @@ export function InvoiceSkeleton() {
 
 export function HackerDashboardSkeleton() {
   return (
-    <div className={`w-screen h-screen  ${shimmer} relative`} >
+    <div className={`h-screen w-screen  ${shimmer} relative`}>
       <div className="flex flex-col items-center pt-[10rem] ">
+        <div className="text-white">Experiencing issues?</div>
+        <Button
+          className="my-3 h-fit w-fit border border-white text-black hover:bg-black hover:text-white"
+          onClick={async () => {
+            await handleSignOut();
+            window.location.href = '/';
+          }}
+        >
+          Click Here to Log Out
+        </Button>
         <div className="h-[10rem] w-[10rem] rounded-full bg-gray-600 opacity-40" />
-        <div className="flex flex-col items-center gap-3 w-full h-fit mt-20">
-          <div className="w-[25rem] h-[10rem] rounded bg-gray-600 opacity-40" />
-          <div className="w-[25rem] h-[30rem] rounded bg-gray-600 opacity-40" />
+        <div className="mt-20 flex h-fit w-full flex-col items-center gap-3">
+          <div className="h-[10rem] w-[25rem] rounded bg-gray-600 opacity-40" />
+          <div className="h-[30rem] w-[25rem] rounded bg-gray-600 opacity-40" />
         </div>
       </div>
       {/* <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton /> */}
-    </div >
+    </div>
   );
 }
 

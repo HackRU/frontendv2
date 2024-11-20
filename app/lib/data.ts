@@ -100,28 +100,32 @@ interface LeaderboardEntry {
   logo: string;
 }
 export async function getLeaderboard() {
-  unstable_noStore();
-  const res = await fetch(BASE + '/get-house_points', {
-    cache: 'no-store',
-  });
-  const leaderboardData = await res.json();
-  const housesData = Object.entries(leaderboardData['houses']);
-  if (!leaderboardData || !leaderboardData['houses']) {
-    throw new Error('Invalid data');
-  }
-  const LeaderBoard: LeaderboardEntry[] = housesData.map(
-    ([house, points], index: number) => ({
-      place: '',
-      points: points as number,
-      house: house,
-      logo: '',
-    }),
-  );
+  const baseUrl = BASE || 'https://api.hackru.org/dev';
 
-  return LeaderBoard;
+  unstable_noStore();
+
+  try {
+    const res = await fetch(`${baseUrl}/leaderboard`, {
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch: ${res.status}`);
+    }
+
+    const leaderboardData = await res.json();
+
+    return leaderboardData;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error fetching leaderboard:', error.message);
+    }
+    return null;
+  }
 }
+
 export async function getSelf(): Promise<{
-  error: string;
+  error: any;
   response: Record<string, any>;
 }> {
   const session = await auth();
@@ -129,20 +133,20 @@ export async function getSelf(): Promise<{
   if (session?.user && session?.user?.email) {
     const resp = await GetUser(session.user.email);
 
-    if (typeof resp.response === 'string') {
-      if (resp.response.includes('error')) {
-        return {
-          error: 'Something went wrong',
-          response: {},
-        };
-      }
-    }
+    //console.log(resp)
+
 
     if (resp.error === '') {
       return {
         response: resp.response as unknown as Record<any, any>,
         error: '',
       };
+    }
+    else if (resp.error){
+      return {
+        error: resp.error ,
+        response: {},
+      }
     }
   }
 
@@ -181,9 +185,25 @@ export async function RegisterSelf() {
     return resp.error;
   }
 
-  return {
-    error: 'Something went wrong',
-  };
+  return 'Something went wrong';
+}
+
+export async function OptInSelf(stat:boolean) {
+  const session = await auth();
+  console.log('Register Self');
+  if (session?.user && session?.user?.email) {
+    const resp = await SetUser(
+      { opt_in:  stat},
+      session.user.email,
+    );
+
+    if (resp.error === '') {
+      return "GOOD";
+    }
+    return resp.error;
+  }
+
+  return 'Something went wrong';
 }
 
 export async function ConfirmComingOrNot(isComing: boolean): Promise<{
@@ -191,7 +211,7 @@ export async function ConfirmComingOrNot(isComing: boolean): Promise<{
   response: Record<string, any>;
 }> {
   const session = await auth();
-  const status = isComing ? 'coming' : 'not-coming';
+  const status = isComing ? 'coming' : 'not_coming';
   let error = undefined;
 
   if (session?.user && session?.user?.email) {
@@ -292,7 +312,7 @@ export async function getUsers() {
     'waitlist',
     'confirmed',
     'rejected',
-    'checked-in',
+    'checked_in',
     'registered',
   ];
 

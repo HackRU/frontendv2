@@ -59,11 +59,11 @@ const Cursor = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const YSize = isPointer ? -100 : 100;
-  const XSize = isPointer ? -100 : 20;
+  const YSize = isPointer ? -150 : 120;
+  const XSize = isPointer ? -150 : 30;
   const rotationAngle = isPointer ? 0 : 315;
-  const topPos = (position.y - YSize / 4) + 10;
-  const leftPos = (position.x - XSize / 4) + 30;
+  const topPos = (position.y - YSize / 4) + 15;
+  const leftPos = (position.x - XSize / 4) - 5;
 
   const hasNotMoved = position.x === 0 && position.y === 0;
 
@@ -71,7 +71,7 @@ const Cursor = () => {
     <>
       <TrailEffect />
       <Image
-        src={"/landing/wand.png"}
+        src={"/landing/pawcursor_2.png"}
         alt="Custom Cursor"
         width={XSize}
         height={YSize}
