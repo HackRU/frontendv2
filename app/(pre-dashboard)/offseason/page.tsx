@@ -6,7 +6,7 @@ import { Button } from '@/app/ui/button';
  
 export default function OffseasonPage() {
   return (
-    <main className="flex flex-col items-center justify-center  relative">
+    <main className="flex h-[100vh] w-[100vw] flex-col items-center justify-center  relative">
       
       {/* HackRU Information Section */}
       <section className="relative z-10 mt-20 text-center">
