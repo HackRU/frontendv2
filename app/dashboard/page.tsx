@@ -29,7 +29,7 @@ import {
   UploadResume,
   UploadTeamSubmission,
   GetPoints,
-} from '../lib/actions';
+} from '../lib/api/actions';
 import QRCode from 'react-qr-code';
 
 import { useForm } from 'react-hook-form';

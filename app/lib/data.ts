@@ -2,7 +2,7 @@
 import { unstable_noStore } from 'next/cache';
 import { auth } from '../../auth';
 
-import { GetUser, SetUser } from './actions';
+import { GetUser, SetUser } from './api/actions';
 import { BASE } from './definitions';
 
 export async function getSchedule() {

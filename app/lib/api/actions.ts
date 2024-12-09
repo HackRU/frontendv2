@@ -5,11 +5,11 @@ import { z } from 'zod';
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
-import { auth } from '../../auth';
+import { auth } from '../../../auth';
 
 import { redirect } from 'next/navigation';
-import { BASE, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from './definitions';
-import { TeamSubmit } from '../dashboard/page';
+import { BASE, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from '../definitions';
+import { TeamSubmit } from '../../dashboard/page';
 
 const ENDPOINTS = {
   login: BASE + '/authorize',

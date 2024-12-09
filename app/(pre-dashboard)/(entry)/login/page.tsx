@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/ui/button';
 
-import { authenticate, authUser } from '../../../lib/actions';
+import { authenticate, authUser } from '../../../lib/api/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

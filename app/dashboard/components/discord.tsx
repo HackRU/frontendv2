@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/ui/button';
 
-import { getOAuthUrl, setDiscord } from '@/app/lib/actions';
+import { getOAuthUrl, setDiscord } from '@/app/lib/api/actions';
 
 import {UpdateSelf} from '@/app/lib/data';
 

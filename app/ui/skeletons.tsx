@@ -1,5 +1,5 @@
 import Navbar from '../(pre-dashboard)/(landing)/sections/Hero/Navbar';
-import { handleSignOut } from '@/app/lib/actions';
+import { handleSignOut } from '@/app/lib/api/actions';
 import { Button } from './button';
 
 // Loading animation

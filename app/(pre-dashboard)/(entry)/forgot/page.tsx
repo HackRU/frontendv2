@@ -4,7 +4,7 @@ import { Button } from '@/app/ui/button';
 import Image from 'next/image';
 
 
-import { Forgot } from '../../../lib/actions';
+import { Forgot } from '../../../lib/api/actions';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import { z } from 'zod';
 import { authConfig } from './auth.config';
 
-import { authUser } from './app/lib/actions';
+import { authUser } from './app/lib/api/actions';
 
 //https://api.hackru.org/dev/authorize
 

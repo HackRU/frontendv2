@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardContent,
 } from './card';
-import { handleSignOut } from '@/app/lib/actions';
+import { handleSignOut } from '@/app/lib/api/actions';
 import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import { ConfirmComingOrNot } from '@/app/lib/data';

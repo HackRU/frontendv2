@@ -44,7 +44,7 @@
     "react-scripts": "^3.4.0",
     "react-spinners": "^0.8.1",
     "react-spring": "^8.0.27",
-    "react-switch": "^5.0.1",
+    "react-switch": "^7.0.0",
     "react-toggle": "^4.1.1",
     "react-use-gesture": "^7.0.5",
     "styled-components": "4.3.2",
@@ -70,6 +70,5 @@
   "packageManager": "pnpm@9.4.0",
   "engines": {
     "node": ">=18.17.0"
-  },
-  "packageManager": "pnpm@9.4.0"
+  }
 }

@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/app/dashboard/components/card';
 import { Input } from '@/app/dashboard/components/input';
-import { GetBuyIns, GetPoints, UpdateBuyIns } from '@/app/lib/actions';
+import { GetBuyIns, GetPoints, UpdateBuyIns } from '@/app/lib/api/actions';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
