@@ -1,6 +1,6 @@
 import { BASE } from '../definitions';
 
-const ENDPOINTS = {
+export const ENDPOINTS = {
     login: BASE + '/authorize',
     /**
      * Default signup url, expects
