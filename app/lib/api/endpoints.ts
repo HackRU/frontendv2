@@ -59,4 +59,9 @@ export const ENDPOINTS = {
      * Get the points for the user
      */
     points: BASE + '/points',
+
+    /**
+     * Default hello 
+     */
+    hello: BASE + '/hello',
   };
