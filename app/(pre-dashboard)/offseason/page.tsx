@@ -58,7 +58,7 @@ export default function OffseasonPage() {
         </Button>
         <Button
           className="text-s text-grey-500  m-2 cursor-pointer bg-green-600"
-          onClick={() => window.open('https://github.com/MLH/mlh-policies/blob/main/member-event-guidelines.md', '_blank')}
+          onClick={() => window.open('http://mlh.io/code-of-conduct', '_blank')}
         >
           Code of Conduct
         </Button>
