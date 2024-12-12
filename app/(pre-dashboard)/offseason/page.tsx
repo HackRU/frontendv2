@@ -51,10 +51,16 @@ export default function OffseasonPage() {
           Check out all our links and resources on our Linktree!
         </p>
         <Button
-          className="text-s text-grey-500 mt-2 cursor-pointer bg-green-600"
+          className="text-s text-grey-500 m-2 cursor-pointer bg-green-600"
           onClick={() => window.open('https://linktr.ee/thehackru', '_blank')}
         >
           Visit Our Linktree
+        </Button>
+        <Button
+          className="text-s text-grey-500  m-2 cursor-pointer bg-green-600"
+          onClick={() => window.open('https://github.com/MLH/mlh-policies/blob/main/member-event-guidelines.md', '_blank')}
+        >
+          Code of Conduct
         </Button>
       </section>
     </main>
