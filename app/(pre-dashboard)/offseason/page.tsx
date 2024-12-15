@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
+import TeamRoster from '../(landing)/sections/Roster';
 
 export default function ComingSoonPage() {
   return (
@@ -51,9 +52,11 @@ export default function ComingSoonPage() {
         </div>
       </div>
 
+      <TeamRoster />
+
       <div className="mt-12 px-4 text-center">
         <Button
-          className="mt-4 mb-8 rounded-full bg-blue-500 px-6 py-3 font-medium text-white shadow-lg transition duration-300 hover:bg-blue-400 hover:shadow-2xl"
+          className="mb-8 mt-4 rounded-full bg-blue-500 px-6 py-3 font-medium text-white shadow-lg transition duration-300 hover:bg-blue-400 hover:shadow-2xl"
           onClick={() => window.open('http://mlh.io/code-of-conduct', '_blank')}
         >
           MLH Code of Conduct
