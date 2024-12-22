@@ -29,6 +29,30 @@ const config: Config = {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
       colors: {
+        cyan:{
+          100:"37888B"
+        },
+        redorange:{
+          100:"AC3F00"
+        },
+        yellow:{
+          100:"#FFBC21"
+        },
+        jade:{
+          100:"#4C855A"
+        },
+        dark_red:{
+          100:"#6D1E00"
+        },
+        off_white:{
+          100:"#F9F3E9"
+        },
+        tan:{
+          100:"#C49D52"
+        },
+        green:{
+          100:"#358300"
+        },
         blue: {
           100: '#1ED4FE',
           200: '#536F91',
