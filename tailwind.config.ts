@@ -30,10 +30,10 @@ const config: Config = {
       },
       colors: {
         cyan:{
-          100:"37888B"
+          100:"#37888B"
         },
         redorange:{
-          100:"AC3F00"
+          100:"#AC3F00"
         },
         yellow:{
           100:"#FFBC21"
@@ -52,6 +52,9 @@ const config: Config = {
         },
         green:{
           100:"#358300"
+        },
+        s2025black:{
+          100:"#1E1E1E"
         },
         blue: {
           100: '#1ED4FE',
