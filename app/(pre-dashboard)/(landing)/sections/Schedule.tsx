@@ -18,7 +18,7 @@ function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
             className="mt-2 flex w-full flex-row pr-4 text-xl md:my-5 md:px-3"
             key={`${day}-${index}`}
           >
-            <div className="h-fit w-2/5 pr-2 text-right font-black text-pink-100">
+            <div className="h-fit w-2/5 pr-2 text-right font-black text-white-100">
               {timeInfo.time}
             </div>
             <div className="flex w-3/5 pl-20 flex-col">
@@ -49,17 +49,8 @@ const schedule = {
       { time: '12:00 PM', event: 'Team Building', location: 'tbd' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
-      { time: '1:00 PM', event: 'Github Copilot', location: 'CASC 108' },
-      { time: '2:00 PM', event: 'iCIMS', location: 'CASC 108' },
-      { time: '2:30 PM', event: 'NTICE', location: 'CASC 108' },
-      { time: '4:00 PM', event: 'USACS Resume Workshop', location: 'CASC 108' },
-      { time: '5:00 PM', event: 'Figma workshop', location: 'CASC 108' },
-      { time: '6:00 PM', event: 'NJT Mini Game', location: 'MPR' },
-      //{ time: '6:00 PM', event: 'Dogs', location: '' },
-      { time: '4:00 PM', event: 'Aracde Suprise', location: 'tbd' },
 
       { time: '8:00 PM', event: 'Dinner', location: 'In Front of MPR' },
-      { time: '10:30 PM', event: 'NJT Mini Game', location: 'MPR' },
     ],
   },
 
@@ -96,10 +87,10 @@ export default function Schedule() {
       className="relative z-10 mb-20 flex w-full justify-center"
       id="Schedule"
     >
-      <div className="flex h-fit w-full max-w-7xl flex-col items-center">
+      <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
-          className="bg-gradient-to-b from-offblack-100 to-[#453148] text-text relative flex
-                              w-full flex-col items-center rounded-3xl md:flex-row md:items-start"
+          className="bg-[url('/landing/S2025/chalk1.png')] bg-no-repeat bg-cover bg-center text-text relative flex
+                              w-full flex-col items-center md:flex-row md:items-start"
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
@@ -122,10 +113,10 @@ export default function Schedule() {
       </div>
 
       <Image
-        src={"/landing/cat poker cards 1.png"}
+        src={"/landing/S2025/foodplaceholder.png"}
         width="300"
         height="300"
-        className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[500px] lg:-bottom-[700px] z-30"
+        className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[200px] lg:-bottom-[300px] z-30"
         alt={'cool'}
         quality={50}
       />

@@ -19,6 +19,16 @@ export const fuzzy = localFont({
   variable: '--font-fuzzy'
 })
 
+export const brush = localFont({
+  src: [
+    {
+      path: '../../public/fonts/CaveatBrush-Regular.ttf',
+      weight: '400'
+    },
+  ],
+  variable: '--font-fuzzy'
+})
+
 export const inter = Inter({ subsets: ['latin'] });
 
 export const bigelowRules = Bigelow_Rules({

@@ -3,27 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link'
 export default async function Sponsors() {
   const sponsors = [
-     '/sponsors/NJTRANSIT.png',
-     '/sponsors/RHNIC_RED_WHITE_RBG.png',
-     '/sponsors/CAIT2.png',
-     '/sponsors/iCIMSWhite.png',
-     '/sponsors/GoogleCloud.png',
-     '/sponsors/RGC_Logo_Default.png',
-     '/sponsors/godspeed.png',
-     '/sponsors/saily-logo-yellow_2.png',
-     '/sponsors/CVLT_Logo_RGB_R_Croc_7.png'
+     '/landing/S2025/foodplaceholderflat.png',
   ];
 
   const sponsorsLinks = [
-    'https://www.njtransit.com/innovation',
-    'https://www.canva.com/design/DAGSRyhN4jE/q65xcClKrYfxJka-VgXBwA/watch?utm_content=DAGSRyhN4jE&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel',
-    'https://cait.rutgers.edu/about/',
-    'https://www.icims.com',
-    'https://cloud.google.com',
-    'https://rutgers.campuslabs.com/engage/organization/rgc',
-    'https://godspeedapp.com/',
-    'https://saily.com/',
-    'https://www.commvault.com/'
+    'https://www.hackru.org',
  ];
 
   return (
@@ -78,10 +62,10 @@ export default async function Sponsors() {
         </div>
       </div>
       <Image
-        src={"/landing/cat poker cards 2.png"}
+        src={"/landing/S2025/foodplaceholder.png"}
         width="300"
         height="300"
-        className="w-[300px] lg:w-[400px] absolute left-0 -bottom-[500px] lg:-bottom-[700px] z-30"
+        className="w-[300px] lg:w-[400px] absolute left-0 -bottom-[200px] lg:-bottom-[300px] z-30"
         alt={'cool'}
         quality={50}
       />
