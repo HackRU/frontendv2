@@ -16,10 +16,10 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
-  redirect('/offseason');
+  // redirect('/offseason');
   return (
     <main
-      className={`relative flex h-fit flex-col ${fuzzy.className} text-blue-200`}
+      className={` h-fit flex-col ${fuzzy.className} text-blue-200`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
@@ -38,7 +38,7 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">{<Sponsors /> }</GenericSection>
+        <GenericSection title="Sponsors">{<Sponsors />}</GenericSection>
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>

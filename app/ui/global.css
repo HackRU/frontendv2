@@ -66,13 +66,14 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 #Home {
-  /* radial gradient */
-  background-image: radial-gradient(circle, #141719, #141719,#141719,#141719, #141719);
+  /* radial gradient what is this code?!*/
+  /* background-image: radial-gradient(circle, #141719, #141719,#141719,#141719, #141719); */
+  background-color: #ddc78b;
 }
 
 #entry-radial {
   background-image: radial-gradient(circle, #141719, #141719);
-} 
+}
 
 @keyframes twinkling {
   0% {

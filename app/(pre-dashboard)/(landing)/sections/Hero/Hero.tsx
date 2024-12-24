@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { getSelf } from '@/app/lib/data';
 import { bigelowRules, fuzzy } from '@/app/ui/fonts';
 
-const FIRE_IMG = ['/landing/logo_f24_2.png'];
-const POKER_IMG = ['/landing/hackru_asset.png'];
+const FIRE_IMG = ['/landing/S2025/HACKRU_main_title.png'];
+const POKER_IMG = ['/landing/S2025/hero-main-art.png'];
 
 const animationTime = 800;
 const fireImageQuality = 10;
@@ -54,25 +54,31 @@ export default function Hero() {
     <>
       <Navbar />
       <div
-        className="relative flex w-full flex-col items-center justify-center overflow-hidden md:flex md:h-[100vh] md:flex-row-reverse"
+        className="relative flex w-full flex-col items-center justify-center overflow-hidden sm:flex sm:h-[100vh] sm:flex-row-reverse"
         id="Home"
       >
         <div className='relative flex w-full justify-center'>
-          <div className = 'h-auto w-[790px] xs:max-w-[400px] sm:max-w-[500px] md:w-[600px] md:min-w-[700px] lg:w-[800px] xl:w-[900px] z-10'>
-        <Image
-          src={POKER_IMG[0]}
-          alt="Poker"
-          width="900"
-          height="900"
-          className={'relative right-0 top-0'}
-          priority
-        />
+          <div className='flex w-full items-end justify-end'>
+            <div className='h-auto w-[790px] xs:max-w-[400px] md:w-[800px] lg:w-[900px] xl:w-[1000px] relative'>
+
+              <div className="md:absolute -bottom-[200px] right-[100px] md:right-[0px] z-10">
+                <Image
+                  src={POKER_IMG[0]}
+                  alt="Poker"
+                  width="1000"
+                  height="1000"
+                  priority
+                />
+              </div>
+
+            </div>
+          </div>
+
         </div>
-        </div>
-        <div className="relative flex flex-col items-center justify-center min-h-[400px] z-20">
+        <div className="relative flex flex-col items-center justify-center h-auto z-20">
           <div
             className="relative left-0 top-0 h-auto w-[790px]
-        xs:max-w-[320px] sm:max-w-[576px] md:w-[500px] md:min-w-[600px]
+        xs:max-w-[320px] sm:max-w-[576px] md:w-[500px]
         md:pl-8 lg:w-[700px] xl:w-[800px]"
           >
             <Image
@@ -87,17 +93,17 @@ export default function Hero() {
               priority
             />
           </div>
-          <div className="items-left flex-col  ">
+          <div className="items-left flex-col">
             <p
               className={`${fuzzy.className} text-2xl`}
             >
-              <span className = "text-[#536F91]">THE GAMES ARE </span>
-              <span className = "text-[#ADD8E6]">ON!</span>
+              <span className="text-[#536F91]">THE GAMES ARE </span>
+              <span className="text-[#ADD8E6]">ON!</span>
             </p>
             <p
               className={`${fuzzy.className} text-2xl`}
             >
-              <span className = "text-[#ADD8E6]">Oct 26-27! </span>
+              <span className="text-[#ADD8E6]">Oct 26-27! </span>
             </p>
             <div className="mt-10 flex justify-center space-x-4">
               <button
