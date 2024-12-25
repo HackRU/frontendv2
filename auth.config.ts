@@ -11,6 +11,7 @@ export const authConfig = {
   session:{
     maxAge: 259200,
   },
+  secret: process.env.AUTH_SECRET,
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
