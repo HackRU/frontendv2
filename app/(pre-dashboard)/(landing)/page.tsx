@@ -1,4 +1,3 @@
-import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { fuzzy } from '@/app/ui/fonts';
@@ -14,7 +13,10 @@ import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
 import React from 'react';
 
+import { redirect } from 'next/navigation';
+
 export default async function Page() {
+  redirect('/offseason');
   return (
     <main
       className={`relative flex h-fit flex-col ${fuzzy.className} text-blue-200`}
