@@ -22,9 +22,7 @@ export default async function Page() {
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
-        <h1 className={`text-center  ${brush.className}`} style={{ fontSize: '96px' }}>
-          ABOUT
-        </h1>
+
 
         <About />
         {/**
