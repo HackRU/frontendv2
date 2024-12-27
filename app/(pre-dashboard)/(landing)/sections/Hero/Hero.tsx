@@ -62,7 +62,7 @@ export default function Hero() {
           <div className='relative flex w-full justify-center'>
             <div className='flex w-full items-end justify-end'>
               <div className='h-auto w-[790px] xs:w-[400px] md:w-[400px] lg:w-[500px] relative'>
-                <div className="md:absolute md:w-[500px] -bottom-[200px] lg:w-[700px] lg:-bottom-[550px] right-[100px] md:right-[0px] md:-bottom-[300px] z-10">
+                <div className="-mb-10 mt-20 md:-mb-0 md:mt-0 md:absolute md:w-[500px] -bottom-[200px] lg:w-[700px] lg:-bottom-[350px] right-[100px] md:right-[0px] md:-bottom-[200px] z-10">
                   <Image
                     src={POKER_IMG[0]}
                     alt="Poker"
@@ -97,19 +97,18 @@ export default function Hero() {
               <p
                 className={`${fuzzy.className} text-2xl`}
               >
-                <span className="text-[#536F91]">THE GAMES ARE </span>
-                <span className="text-[#ADD8E6]">ON!</span>
+                <span className="text-[#536F91]">it&apos;s time to cook! </span>
+                {/* <span className="text-[#ADD8E6]">ON!</span> */}
               </p>
               <p
                 className={`${fuzzy.className} text-2xl`}
               >
-                <span className="text-[#ADD8E6]">Oct 26-27! </span>
+                <span className="text-[#ADD8E6]">February 1st to 2nd! </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
                 <button
-                  className="z-30 items-center justify-center
-                rounded-lg border-x-4 border-y-2 border-solid
-                border-[#C3557D] bg-transparent text-sm text-[#C3557D]
+                  className="z-30 items-center justify-center relative
+                bg-transparent text-sm text-[#C3557D]
                 transition-all duration-100 hover:drop-shadow-[0_0_20px_#C3557D]
                 xs:h-[26px] xs:w-[99px]
                 sm:h-[45px] sm:w-[179px]
@@ -118,12 +117,18 @@ export default function Hero() {
                 lg:w-[168px]"
                   onClick={() => router.push('/signup')}
                 >
-                  SIGN UP
+                  <Image
+                    src="/landing/S2025/signup-button.png"
+                    alt="Sign up icon"
+                    width={400}
+                    height={400}
+                    className="absolute top-0 "
+                  />
+                  {/* SIGN UP */}
                 </button>
                 <button
-                  className="z-30 items-center justify-center
-                rounded-lg border-x-4 border-y-2 border-solid
-                border-[#EC9655] bg-transparent text-sm text-[#EC9655]
+                  className="z-30 items-center justify-center relative
+                bg-transparent text-sm text-[#EC9655]
                 transition-all duration-100 hover:drop-shadow-[0_0px_20px_#EC9655]
                 xs:h-[26px] xs:w-[99px]
                 sm:h-[45px] sm:w-[179px]
@@ -138,7 +143,14 @@ export default function Hero() {
                     }
                   }}
                 >
-                  {!isLogged ? 'LOG IN' : 'DASHBOARD'}
+                  <Image
+                    src="/landing/S2025/login-button.png"
+                    alt="Sign up icon"
+                    width={400}
+                    height={400}
+                    className="absolute top-0 "
+                  />
+                  <div className="">{!isLogged ? 'LOG IN' : 'DASHBOARD'}</div >
                 </button>
               </div>
             </div>
