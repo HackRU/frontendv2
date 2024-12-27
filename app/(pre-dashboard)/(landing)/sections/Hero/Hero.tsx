@@ -53,10 +53,13 @@ export default function Hero() {
   return (
     <>
       <Navbar />
-      <div className="w-full h-full bg-[#ddc78b] flex justify-center items-center">
+      <div
+        className="w-full h-full flex justify-center items-center
+        bg-[url('/landing/S2025/texture-background.png')] bg-cover bg-center bg-no-repeat"
+      >
         <div
           className="relative flex w-full flex-col items-center justify-center
-           overflow-hidden sm:flex sm:h-[100vh] sm:flex-row-reverse max-w-[1100px]"
+           sm:flex sm:h-[100vh] sm:flex-row-reverse max-w-[1100px]"
           id="Home"
         >
           <div className='relative flex w-full justify-center'>
@@ -70,12 +73,19 @@ export default function Hero() {
                     height="2000"
                     priority
                   />
+                  <Image
+                    src="/landing/S2025/smoke.png"
+                    alt="smoke"
+                    width="2000"
+                    height="2000"
+                    className="absolute -top-0 -left-32  sm:scale-[1.8] sm:-top-48 sm:-left-72 md:scale-[1.8]"
+                  />
                 </div>
               </div>
             </div>
 
           </div>
-          <div className="relative flex flex-col items-center justify-center h-auto z-20">
+          <div className="relative flex flex-col items-center justify-center h-auto z-20 mb-40">
             <div
               className="relative left-0 top-0 h-auto w-[790px]
             xs:max-w-[320px] sm:max-w-[576px] md:w-[500px]
@@ -109,7 +119,7 @@ export default function Hero() {
                 <button
                   className="z-30 items-center justify-center relative
                 bg-transparent text-sm text-[#C3557D]
-                transition-all duration-100 hover:drop-shadow-[0_0_20px_#C3557D]
+                transition-all duration-100 hover:drop-shadow-[0_0_10px_#62a99d]
                 xs:h-[26px] xs:w-[99px]
                 sm:h-[45px] sm:w-[179px]
                 sm:text-lg md:h-[37px]

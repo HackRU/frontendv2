@@ -68,7 +68,7 @@ input[type='number']::-webkit-outer-spin-button {
 #Home {
   /* radial gradient what is this code?!*/
   /* background-image: radial-gradient(circle, #141719, #141719,#141719,#141719, #141719); */
-  background-color: #ddc78b;
+  /* background-color: #ddc78b; */
 }
 
 #entry-radial {

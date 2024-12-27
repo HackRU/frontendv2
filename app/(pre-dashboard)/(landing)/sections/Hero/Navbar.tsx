@@ -111,7 +111,7 @@ function Navbar() {
 
   return (
     <div
-      className={`z-40 flex w-full justify-end bg-gradient-to-b from-blue-500 to-transparent
+      className={`z-40 flex w-full justify-end
         md:fixed ${longCang.className}`}
       id="navbar"
     >
@@ -146,7 +146,14 @@ function Navbar() {
         w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
-          <div className="flex items-center justify-start">
+          <div className="flex items-center justify-start relative">
+            <Image
+              src="/landing/S2025/navbar-header.png"
+              alt="Navigation background"
+              width={1200}
+              height={150}
+              className="absolute -z-10 right-0 -top-10 scale-110"
+            />
             {sections.map((section) => (
               <button
                 style={{
