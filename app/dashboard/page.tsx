@@ -720,10 +720,10 @@ export default function Dashboard() {
             <Card className="w-full max-w-2xl">
             <CardHeader>
               <CardTitle>Pre Event Team</CardTitle>
-              <CardDescription>Please enter your teammates' emails in the fields below. 
+              <CardDescription>Please enter your teammates emails in the fields below. 
                 This hackathon is first come first serve, but we will try to make sure that full teams make it through if they are listed here. 
                 This does not guarantee a full team to be able to join. 
-                The teammates you list here don't have to be final, you are allowed to change your team members before submission of your hack. 
+                The teammates you list here do not have to be final, you are allowed to change your team members before submission of your hack. 
                 After you have confirmed your attendance, you will no longer be allowed to change this field.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -758,12 +758,12 @@ export default function Dashboard() {
                   />
               </div>
               <Button
-              onClick={() => {
-                setTeamConfimWarning(true);
-              }}
-              type="button"
-              className="mt-10"
-            >
+                onClick={() => {
+                  setTeamConfimWarning(true);
+                }}
+                type="button"
+                className="mt-10"
+              >
               {submittingPreEventTeamForm}
             </Button>
             <PopupDialog
