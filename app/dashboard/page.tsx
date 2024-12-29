@@ -126,6 +126,7 @@ export default function Dashboard() {
   const [waiverState, setWaiverState] = useState<any>(null);
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
+  const [submittingPreEventTeamForm, setSubmittingPreEventTeamForm] = useState<string>('Submit Team');
   const [userProfileSubmitText, setUserProfileSubmitText] =
     useState<string>('Save');
 
@@ -133,6 +134,7 @@ export default function Dashboard() {
     displayTeamFormFinalSubmissionWarning,
     setDisplayTeamFormFinalSubmissionWarning,
   ] = useState<boolean>(false);
+  const [displayTeamConfimWarning, setTeamConfimWarning] = useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>('');
   const [currentTeam, setCurrentTeam] = useState<number>(0);
 
@@ -338,6 +340,18 @@ export default function Dashboard() {
       }
     }
   };
+
+  const updateTeam = async() =>{
+    const resp = await UpdateSelf({team_member_1 : userData.team_member_1, team_member_2 : userData.team_member_2, team_member_3 : userData.team_member_3})
+    console.log(resp)
+    if (resp === "User updated successfully") {
+      setSubmittingPreEventTeamForm("Saved!");
+    }
+    else{
+      setSubmittingPreEventTeamForm("Failed");
+    }
+    
+  }
 
   // First useEffect to fetch and set schools data
   useEffect(() => {
@@ -702,7 +716,73 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-          {true && (
+          {
+            <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <CardTitle>Pre Event Team</CardTitle>
+              <CardDescription>Please enter your teammates' emails in the fields below. 
+                This hackathon is first come first serve, but we will try to make sure that full teams make it through if they are listed here. 
+                This does not guarantee a full team to be able to join. 
+                The teammates you list here don't have to be final, you are allowed to change your team members before submission of your hack. 
+                After you have confirmed your attendance, you will no longer be allowed to change this field.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="m-4">
+                <Label htmlFor="team_member_1">Team Member 1</Label>
+                  <Input
+                    id="team_member_1"
+                    value={userData?.team_member_1}
+                    onChange={(e) =>
+                      setUserData({ ...userData, team_member_1: e.target.value })
+                    }
+                  />
+              </div>
+              <div className="m-4">
+                <Label htmlFor="team_member_2">Team Member 2</Label>
+                  <Input
+                    id="team_member_2"
+                    value={userData?.team_member_2}
+                    onChange={(e) =>
+                      setUserData({ ...userData, team_member_2: e.target.value })
+                    }
+                  />
+              </div>
+              <div className="m-4">
+                <Label htmlFor="team_member_3">Team Member 3</Label>
+                  <Input
+                    id="team_member_3"
+                    value={userData?.team_member_3}
+                    onChange={(e) =>
+                      setUserData({ ...userData, team_member_3: e.target.value })
+                    }
+                  />
+              </div>
+              <Button
+              onClick={() => {
+                setTeamConfimWarning(true);
+              }}
+              type="button"
+              className="mt-10"
+            >
+              {submittingPreEventTeamForm}
+            </Button>
+            <PopupDialog
+              open={displayTeamConfimWarning}
+              setOpen={setTeamConfimWarning}
+              onYes={() => {
+                setSubmittingPreEventTeamForm('Submitting...')
+                updateTeam()
+              }}
+              onNo={() => {}}
+              title="Submission Warning"
+ 
+              content={"Are you sure you want the following emails on your team " + userData?.team_member_1 + " " + userData?.team_member_2 + " " + userData?.team_member_3}
+            />
+
+            </CardContent>
+          </Card>
+          }
+          {false && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Links</CardTitle>
@@ -722,7 +802,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-          (
+          
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
@@ -740,7 +820,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
-          )
+          
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
