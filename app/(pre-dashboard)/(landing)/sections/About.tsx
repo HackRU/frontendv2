@@ -15,6 +15,7 @@ function AboutInfo({
   alt,
   reverse,
   titleColor = '#C3557D',
+  downsize = false
 }: {
   children: React.ReactNode;
   title: string;
@@ -22,6 +23,7 @@ function AboutInfo({
   alt: string;
   reverse?: boolean;
   titleColor: string;
+  downsize?: boolean;
 }) {
   const size = useWindowSize();
   /* Defined in tailwind.config.ts file. Probably better to have some common area for constants. */
@@ -64,7 +66,10 @@ function AboutInfo({
           src={imageSrc}
           width="400"
           height="400"
-          className="w-[600px] lg:w-[800px]"
+          className={clsx("w-[600px]", {
+            "lg:w-[400px]": downsize,
+            "lg:w-[800px]": !downsize
+          })}
           alt={alt}
           quality={animalQuality}
         />
@@ -114,10 +119,10 @@ export default function About() {
           quality={50}
         />
       </div>
-      
+
       <div
         className="from-dark_blue_figma relative flex  h-fit w-full
-        flex-col flex-wrap 
+        flex-col flex-wrap
          pb-20 text-base
         md:flex-row md:px-4 md:text-lg xl:text-xl 2xl:text-2xl"
 
@@ -127,7 +132,7 @@ export default function About() {
 
 
         </div>
-        <AboutInfo title="WHAT" imageSrc="/landing/S2025/foodplaceholderflat.png" alt="Python" reverse titleColor='s2025black'>
+        <AboutInfo title="WHAT" imageSrc="/landing/S2025/minichef 2.png" downsize={true} alt="Python" reverse titleColor='s2025black'>
           <div className="pt-6 border-t-8 border-cyan-100">
             <p className="inline">HackRU is a</p>
             <p className="inline "> 24-hour hackathon </p>
@@ -205,10 +210,11 @@ export default function About() {
 
         <AboutInfo
           title="JOIN US"
-          imageSrc="/landing/S2025/foodplaceholderflat.png"
+          imageSrc="/landing/S2025/minichef 5.png"
           alt="Python"
           reverse
           titleColor="s2025black"
+          downsize={true}
         >
           <div className="pb-6 pt-6 border-t-8 border-cyan-100">
             <p className="inline  ">Apply</p>

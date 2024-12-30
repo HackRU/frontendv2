@@ -18,7 +18,7 @@ import { redirect } from 'next/navigation';
 export default async function Page() {
   return (
     <main
-      className={`relative flex h-fit flex-col ${brush.className} text-s2025black-100 bg-gradient-to-b from-tan-100 to-off_white-100`}
+      className={`relative flex h-fit flex-col ${brush.className} text-s2025black-100 bg-gradient-to-b from-tan_2-100 to-off_white-100`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
@@ -35,7 +35,7 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">{<Sponsors />}</GenericSection>
+        {/* <GenericSection title="Sponsors">{<Sponsors />}</GenericSection> */}
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>

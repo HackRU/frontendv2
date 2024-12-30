@@ -90,7 +90,8 @@ export default function Schedule() {
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
           className="bg-[url('/landing/S2025/chalk1.png')] bg-no-repeat bg-cover bg-center text-text relative flex
-                              w-full flex-col items-center md:flex-row md:items-start"
+                              p-20
+                              w-full flex-col items-center md:flex-row md:items-start md:bg-[length:100%_100%] xs:bg-[length:100%_110%]"
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
