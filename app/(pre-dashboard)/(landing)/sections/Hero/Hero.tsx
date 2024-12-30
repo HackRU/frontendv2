@@ -59,7 +59,7 @@ export default function Hero() {
       >
         <div
           className="relative flex w-full flex-col items-center justify-center
-           sm:flex sm:h-[100vh] sm:flex-row-reverse max-w-[1100px]"
+           sm:flex sm:h-[100vh] md:flex-row-reverse max-w-[1100px]"
           id="Home"
         >
           <div className='relative flex w-full justify-center'>
@@ -78,7 +78,7 @@ export default function Hero() {
                     alt="smoke"
                     width="2000"
                     height="2000"
-                    className="absolute -top-0 -left-32  sm:scale-[1.8] sm:-top-48 sm:-left-72 md:scale-[1.8]"
+                    className="absolute top-5 -left-32 scale-[1.8] sm:scale-[2.8] sm:-top-14 sm:-left-72 md:scale-[3] md:-top-20"
                   />
                 </div>
               </div>
@@ -135,7 +135,7 @@ export default function Hero() {
                       height={400}
                       className="absolute top-0"
                     />
-                    <p className="relative text-white text-lg pt-2 md:pt-4 md:text-2xl lg:text-4xl">SIGN UP</p>
+                    <p className="relative text-white text-lg pt-2 md:pt-4 sm:text-4xl md:text-2xl lg:text-4xl">SIGN UP</p>
                   </div>
                 </button>
                 <button
@@ -162,7 +162,7 @@ export default function Hero() {
                     height={400}
                     className="absolute top-0 "
                   />
-                  <p className="relative text-white text-lg pt-2 md:pt-4 md:text-2xl lg:text-4xl">
+                  <p className="relative text-white text-lg pt-2 md:pt-4 sm:text-4xl md:text-2xl lg:text-4xl">
                     {!isLogged ? 'LOG IN' : 'DASHBOARD'}
                   </p>
                 </button>

@@ -113,14 +113,14 @@ export default function Schedule() {
         </div>
       </div>
 
-      <Image
+      {/* <Image
         src={"/landing/S2025/foodplaceholder.png"}
         width="300"
         height="300"
         className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[200px] lg:-bottom-[300px] z-30"
         alt={'cool'}
         quality={50}
-      />
+      /> */}
 
       <Transition appear show={mapOpen} as={Fragment}>
         <Dialog

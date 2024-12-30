@@ -7,9 +7,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <main className="relative h-fit w-fit ">
         <Navbar />
-        <Suspense>
+        {/* <Suspense>
           <Cursor />
-        </Suspense>
+        </Suspense> */}
         {children}
         <Suspense></Suspense>
       </main>

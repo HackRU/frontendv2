@@ -142,7 +142,7 @@ function Navbar() {
       </a>
       <CollapsedMenu />
       <div
-        className="text-mediumBlue absolute right-20 top-0 z-40 hidden
+        className="text-dark_red-100 absolute right-20 top-0 z-40 hidden
         w-full justify-end pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
@@ -157,7 +157,7 @@ function Navbar() {
             {sections.map((section) => (
               <button
                 style={{
-                  color: '#536F91',
+                  color: '#6D1E00',
                   textTransform: 'lowercase',
                 }}
                 className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
@@ -169,7 +169,7 @@ function Navbar() {
             ))}
             <button
               style={{
-                color: '#536F91',
+                color: '#6D1E00',
                 textTransform: 'lowercase',
               }}
               className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
@@ -181,7 +181,7 @@ function Navbar() {
             <Link href="https://linktr.ee/thehackru">
               <button
                 style={{
-                  color: '#536F91',
+                  color: '#6D1E00',
                   textTransform: 'lowercase',
                 }}
                 className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
