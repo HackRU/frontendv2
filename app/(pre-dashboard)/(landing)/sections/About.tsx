@@ -104,6 +104,17 @@ function AboutInfo({
 export default function About() {
   return (
     <>
+      <div className='flex  justify-center items-center p-4'>
+        <Image
+          src={"/landing/S2025/aboutbanner.png"}
+          width="300"
+          height="300"
+          className="w-[400px]  z-30"
+          alt={'about'}
+          quality={50}
+        />
+      </div>
+      
       <div
         className="from-dark_blue_figma relative flex  h-fit w-full
         flex-col flex-wrap 

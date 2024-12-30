@@ -24,9 +24,8 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${
-            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-          }
+          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+            }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -43,9 +42,8 @@ function OtherPageMenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${
-            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-          }
+          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+            }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
             history.push('/contact');
@@ -113,18 +111,19 @@ function Navbar() {
 
   return (
     <div
-      className={`z-40 flex w-full justify-end bg-gradient-to-b from-blue-500 to-transparent md:fixed ${longCang.className}`}
+      className={`z-40 flex w-full justify-end
+        md:fixed ${longCang.className}`}
       id="navbar"
     >
       <div
         style={{ left: '5%', top: '24px' }}
-        className="hover:drop-shadow-inner absolute z-50 w-12 hover:scale-105 sm:w-16 md:w-20 lg:w-24"
+        className="hover:drop-shadow-inner absolute z-50 w-16 hover:scale-105 sm:w-16 md:w-24 lg:w-24"
         onClick={() => router.push('/')}
       >
         <Image
-          width={84}
-          height={84}
-          src="/landing/hrulogo_2.png"
+          width={100}
+          height={100}
+          src="/landing/S2025/HackRU_stamp.png"
           alt="neon hackru logo"
         />
       </div>
@@ -147,7 +146,14 @@ function Navbar() {
         w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
-          <div className="flex items-center justify-start">
+          <div className="flex items-center justify-start relative">
+            <Image
+              src="/landing/S2025/navbar-header.png"
+              alt="Navigation background"
+              width={1200}
+              height={150}
+              className="absolute -z-10 right-0 -top-10 scale-110"
+            />
             {sections.map((section) => (
               <button
                 style={{

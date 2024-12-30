@@ -22,9 +22,7 @@ export default async function Page() {
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
-        <h1 className={`text-center  ${brush.className}`} style={{ fontSize: '96px' }}>
-          ABOUT
-        </h1>
+
 
         <About />
         {/**
@@ -37,7 +35,7 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        <GenericSection title="Sponsors">{<Sponsors /> }</GenericSection>
+        <GenericSection title="Sponsors">{<Sponsors />}</GenericSection>
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>
