@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { fuzzy } from '@/app/ui/fonts';
+import { brush } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Hero from './sections/Hero/Hero';
 import Schedule from './sections/Schedule';
@@ -16,16 +16,13 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
-  // redirect('/offseason');
   return (
     <main
-      className={` h-fit flex-col ${fuzzy.className} text-blue-200`}
+      className={`relative flex h-fit flex-col ${brush.className} text-s2025black-100 bg-gradient-to-b from-tan-100 to-off_white-100`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
-        <h1 className={`text-center bg-blue-500 ${fuzzy.className}`} style={{ fontSize: '96px' }}>
-          ABOUT
-        </h1>
+
 
         <About />
         {/**
@@ -45,9 +42,9 @@ export default async function Page() {
         {/* <GenericSection title="Team">
           <Team />
         </GenericSection> */}
-        <div className="bg-gradient-to-b from-blue-500 to-blue-500">
+        <div className="">
           <Image
-            src="/landing/machine.png"
+            src="/landing/S2025/bottomofpage.png"
             alt="bottom image"
             object-fit="cover"
             style={{
