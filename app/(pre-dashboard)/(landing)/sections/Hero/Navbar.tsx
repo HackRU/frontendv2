@@ -143,7 +143,7 @@ function Navbar() {
       <CollapsedMenu />
       <div
         className="text-mediumBlue absolute right-20 top-0 z-40 hidden
-        w-full justify-end bg-gradient-to-b pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
+        w-full justify-end pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
           <div className="flex items-center justify-start relative">

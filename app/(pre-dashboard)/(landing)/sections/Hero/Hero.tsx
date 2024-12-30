@@ -107,13 +107,13 @@ export default function Hero() {
               <p
                 className={`${brush.className} text-2xl`}
               >
-                <span className="text-[#536F91]">it&apos;s time to cook! </span>
+                <span className="text-[#6D1E00]">it&apos;s time to cook! </span>
                 {/* <span className="text-[#ADD8E6]">ON!</span> */}
               </p>
               <p
                 className={`${brush.className} text-2xl`}
               >
-                <span className="text-[#ADD8E6]">February 1st to 2nd! </span>
+                <span className="text-white">February 1st to 2nd! </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
                 <button
@@ -127,14 +127,16 @@ export default function Hero() {
                 lg:w-[168px]"
                   onClick={() => router.push('/signup')}
                 >
-                  <Image
-                    src="/landing/S2025/signup-button.png"
-                    alt="Sign up icon"
-                    width={400}
-                    height={400}
-                    className="absolute top-0 "
-                  />
-                  {/* SIGN UP */}
+                  <div className="relative w-full h-full">
+                    <Image
+                      src="/landing/S2025/signup-button.png"
+                      alt="Sign up icon"
+                      width={400}
+                      height={400}
+                      className="absolute top-0"
+                    />
+                    <p className="relative text-white text-lg pt-2 md:pt-4 md:text-2xl lg:text-4xl">SIGN UP</p>
+                  </div>
                 </button>
                 <button
                   className="z-30 items-center justify-center relative
@@ -160,7 +162,9 @@ export default function Hero() {
                     height={400}
                     className="absolute top-0 "
                   />
-                  <div className="">{!isLogged ? 'LOG IN' : 'DASHBOARD'}</div >
+                  <p className="relative text-white text-lg pt-2 md:pt-4 md:text-2xl lg:text-4xl">
+                    {!isLogged ? 'LOG IN' : 'DASHBOARD'}
+                  </p>
                 </button>
               </div>
             </div>
