@@ -2,8 +2,6 @@
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
-import GenericSection from './GenericSection';
-import SectionTitle from './SectionTitle';
 import { longCang, brush } from '@/app/ui/fonts';
 
 const animalQuality = 100;
@@ -15,7 +13,6 @@ function AboutInfo({
   alt,
   reverse,
   titleColor = '#C3557D',
-  downsize = false
 }: {
   children: React.ReactNode;
   title: string;
@@ -23,7 +20,6 @@ function AboutInfo({
   alt: string;
   reverse?: boolean;
   titleColor: string;
-  downsize?: boolean;
 }) {
   const size = useWindowSize();
   /* Defined in tailwind.config.ts file. Probably better to have some common area for constants. */
@@ -66,10 +62,7 @@ function AboutInfo({
           src={imageSrc}
           width="400"
           height="400"
-          className={clsx("w-[600px]", {
-            "lg:w-[400px]": downsize,
-            "lg:w-[800px]": !downsize
-          })}
+          className="w-[600px] lg:w-[700px]"
           alt={alt}
           quality={animalQuality}
         />
@@ -132,7 +125,7 @@ export default function About() {
 
 
         </div>
-        <AboutInfo title="WHAT" imageSrc="/landing/S2025/minichef 2.png" downsize={true} alt="Python" reverse titleColor='s2025black'>
+        <AboutInfo title="WHAT" imageSrc="/landing/S2025/lumpia.png" alt="Python" reverse titleColor='s2025black'>
           <div className="pt-6 border-t-8 border-cyan-100">
             <p className="inline">HackRU is a</p>
             <p className="inline "> 24-hour hackathon </p>
@@ -210,11 +203,11 @@ export default function About() {
 
         <AboutInfo
           title="JOIN US"
-          imageSrc="/landing/S2025/minichef 5.png"
+          imageSrc="/landing/S2025/ratatoullie.png"
           alt="Python"
           reverse
           titleColor="s2025black"
-          downsize={true}
+
         >
           <div className="pb-6 pt-6 border-t-8 border-cyan-100">
             <p className="inline  ">Apply</p>

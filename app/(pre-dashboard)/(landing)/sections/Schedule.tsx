@@ -122,6 +122,15 @@ export default function Schedule() {
         quality={50}
       /> */}
 
+      <Image
+        src={"/landing/S2025/lightsv2.png"}
+        width="600"
+        height="600"
+        className="w-[1000px] md:w-[1200px] absolute -bottom-[300px] md:-bottom-[400px] lg:-bottom-[550px]"
+        alt={'cool'}
+        quality={50}
+      />
+
       <Transition appear show={mapOpen} as={Fragment}>
         <Dialog
           as="div"
