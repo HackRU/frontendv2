@@ -66,13 +66,14 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 #Home {
-  /* radial gradient */
-  background-image: radial-gradient(circle, #141719, #141719,#141719,#141719, #141719);
+  /* radial gradient what is this code?!*/
+  /* background-image: radial-gradient(circle, #141719, #141719,#141719,#141719, #141719); */
+  /* background-color: #ddc78b; */
 }
 
 #entry-radial {
   background-image: radial-gradient(circle, #141719, #141719);
-} 
+}
 
 @keyframes twinkling {
   0% {
@@ -90,19 +91,6 @@ input[type='number']::-webkit-outer-spin-button {
   animation: twinkling 1s infinite;
 }
 
-#Home::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 150%;
-  height: 35%;
-  background-color: #141719;
-  border-radius: 50%;
-  transform: translateX(-50%) translateY(50%);
-  z-index: 4;
-}
-
 .sections::after {
   content: '';
   position: absolute;
@@ -114,5 +102,5 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 #navbar {
-  z-index: 10000;
+  z-index: 100;
 }

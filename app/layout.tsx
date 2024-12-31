@@ -1,5 +1,5 @@
 import '@/app/ui/global.css';
-import { inter, fuzzy } from '@/app/ui/fonts';
+import { inter, brush } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import { Analytics } from "@vercel/analytics/react"
 
@@ -31,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${fuzzy.className} antialiased`}>
+      <body className={`${brush.className} antialiased`}>
         <Analytics />
         <main>{children}</main>
       </body>
