@@ -170,7 +170,7 @@ export default function About() {
             <p className="inline ">Social Good:</p>
             <p className="inline pb-4 pt-4">
               {' '}
-              Hacks that betters the community.
+              Hacks that better the community
             </p>
 
             <div className="pt-6">
@@ -212,11 +212,11 @@ export default function About() {
           <div className="pb-6 pt-6 border-t-8 border-cyan-100">
             <p className="inline  ">Apply</p>
             <p className="inline"> to attend our </p>
-            <p className="inline   ">Fall 2024 HackRU!</p>
+            <p className="inline   ">Spring 2025 HackRU!</p>
             <p className="inline"> The event will be on</p>
-            <p className="inline   "> October 26th-27th</p>
+            <p className="inline   "> February 1 - 2</p>
             <p className="inline"> at the</p>
-            <p className="inline   "> College Ave Student Center.</p>
+            <p className="inline   "> Busch Student Center.</p>
           </div>
 
           <div className="pb-6">

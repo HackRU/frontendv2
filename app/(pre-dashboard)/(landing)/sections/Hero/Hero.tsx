@@ -113,7 +113,7 @@ export default function Hero() {
               <p
                 className={`${brush.className} text-2xl`}
               >
-                <span className="text-white">February 1st to 2nd! </span>
+                <span className="text-white">February 1 - 2, Busch Student Center </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
                 <button
