@@ -94,14 +94,14 @@ export default function ProfileHeader(props: {
             <CardDescription>Check your registration status.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {userData.registration_status == 'unregistered' && (
+            {/* {userData.registration_status == 'unregistered' && (
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>Unregistered – at this point, you will not be able to attend HackRU, we hope to see you in the spring!</CardTitle>
                 </div>
               </>
-            )}
-            {false && userData.registration_status == 'unregistered' && (
+            )} */}
+            {userData.registration_status == 'unregistered' && (
               <>
                 {waiverState && (
                   <p className="mt-2 text-xs italic text-green-500">
@@ -225,7 +225,7 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>
-                  Registered! There is an extremely high chance that you do not have space for you this fall, we hope to see you in spring! Registrations open at least a full month before the event and are first come first serve.
+                    Registered! There is an extremely high chance that you do not have space for you this fall, we hope to see you in spring! Registrations open at least a full month before the event and are first come first serve.
                   </CardTitle>
                 </div>
               </>
@@ -256,68 +256,68 @@ export default function ProfileHeader(props: {
             {(userData.registration_status == 'confirmation' ||
               userData.registration_status == 'coming' ||
               userData.registration_status == 'not_coming') && (
-              <>
-                <div className="flex flex-row items-center justify-center">
-                  {uploadingNewConfirmationStatus && (
-                    <p className="">Loading confirmation status...</p>
-                  )}
-                  {errorMessage && (
-                    <p className="text-red-500">{errorMessage}</p>
-                  )}
+                <>
+                  <div className="flex flex-row items-center justify-center">
+                    {uploadingNewConfirmationStatus && (
+                      <p className="">Loading confirmation status...</p>
+                    )}
+                    {errorMessage && (
+                      <p className="text-red-500">{errorMessage}</p>
+                    )}
 
-                  {!uploadingNewConfirmationStatus && (
-                    <>
-                      {userData.registration_status == 'confirmation' && (
-                        <>
-                          <CardTitle>Confirmation</CardTitle>
-                          <Button
-                            className="ml-auto"
-                            onClick={() => onConfirmationChange(true)}
-                          >
-                            Coming
-                          </Button>
-                          <Button
-                            className="ml-auto"
-                            onClick={() => onConfirmationChange(false)}
-                          >
-                            Not Coming
-                          </Button>
-                        </>
-                      )}
-                      {userData.registration_status == 'coming' && (
-                        <>
-                          <CardTitle>
-                            You have indicated you are coming. If your status
-                            changes to confirmed you are guaranteed entry
-                            between 9am and 10:30am. After 10:30am, check in
-                            will be first come first serve.
-                          </CardTitle>
-                          <Button
-                            className="ml-auto"
-                            onClick={() => onConfirmationChange(false)}
-                          >
-                            Not Coming
-                          </Button>
-                        </>
-                      )}
-                      {userData.registration_status == 'not_coming' && (
-                        <>
-                          <CardTitle>
-                            You are not coming. Thanks for letting us know.
-                          </CardTitle>
-                          <Button
-                            className="ml-auto"
-                            onClick={() => onConfirmationChange(true)}
-                          >
-                            Coming
-                          </Button>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-              </>
-            )}
+                    {!uploadingNewConfirmationStatus && (
+                      <>
+                        {userData.registration_status == 'confirmation' && (
+                          <>
+                            <CardTitle>Confirmation</CardTitle>
+                            <Button
+                              className="ml-auto"
+                              onClick={() => onConfirmationChange(true)}
+                            >
+                              Coming
+                            </Button>
+                            <Button
+                              className="ml-auto"
+                              onClick={() => onConfirmationChange(false)}
+                            >
+                              Not Coming
+                            </Button>
+                          </>
+                        )}
+                        {userData.registration_status == 'coming' && (
+                          <>
+                            <CardTitle>
+                              You have indicated you are coming. If your status
+                              changes to confirmed you are guaranteed entry
+                              between 9am and 10:30am. After 10:30am, check in
+                              will be first come first serve.
+                            </CardTitle>
+                            <Button
+                              className="ml-auto"
+                              onClick={() => onConfirmationChange(false)}
+                            >
+                              Not Coming
+                            </Button>
+                          </>
+                        )}
+                        {userData.registration_status == 'not_coming' && (
+                          <>
+                            <CardTitle>
+                              You are not coming. Thanks for letting us know.
+                            </CardTitle>
+                            <Button
+                              className="ml-auto"
+                              onClick={() => onConfirmationChange(true)}
+                            >
+                              Coming
+                            </Button>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </>
+              )}
           </CardContent>
         </form>
       </Card>

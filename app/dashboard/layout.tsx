@@ -15,9 +15,9 @@ export default function Layout({ children
         id="entry-radial"
       >
         <Navbar />
-        <Suspense>
+        {/* <Suspense>
           <Cursor />
-        </Suspense>
+        </Suspense> */}
         {children}
         <Suspense>
           {/* <StarryBackground /> */}
