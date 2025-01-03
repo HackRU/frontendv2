@@ -3,11 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link'
 export default async function Sponsors() {
   const sponsors = [
-     '/landing/S2025/foodplaceholderflat.png',
+     '/sponsors/stand-out-stickers-logo.png',
+     '/sponsors/NJTRANSIT.png'
   ];
 
   const sponsorsLinks = [
-    'https://www.hackru.org',
+    'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro',
+    "https://www.njtransit.com/"
+
  ];
 
   return (
@@ -61,14 +64,14 @@ export default async function Sponsors() {
           </div>
         </div>
       </div>
-      <Image
+      {/* <Image
         src={"/landing/S2025/foodplaceholder.png"}
         width="300"
         height="300"
         className="w-[300px] lg:w-[400px] absolute left-0 -bottom-[200px] lg:-bottom-[300px] z-30"
         alt={'cool'}
         quality={50}
-      />
+      /> */}
     </div>
   );
 }
