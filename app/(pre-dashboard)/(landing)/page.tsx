@@ -35,7 +35,7 @@ export default async function Page() {
             <Schedule />
           </Suspense>
         </GenericSection>
-        {/* <GenericSection title="Sponsors">{<Sponsors />}</GenericSection> */}
+         <GenericSection title="Sponsors">{<Sponsors />}</GenericSection> 
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>
