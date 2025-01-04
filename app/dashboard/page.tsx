@@ -765,16 +765,11 @@ export default function Dashboard() {
           <Card className="w-full max-w-2xl">
             <form onSubmit={handleSubmit(onSubmit)}>
               <CardHeader>
-                <div className="flex flex-row items-center justify-center">
-                  <div className="flex flex-col">
-                    <CardTitle>Profile</CardTitle>
-                    <CardDescription>
-                      Update your profile information. * fields are required
-                    </CardDescription>
-                  </div>
-                  <Button type="submit" className="ml-auto">
-                    {savingUserProfile ? 'Saving...' : userProfileSubmitText}
-                  </Button>
+                <div className="flex flex-col items-start">
+                  <CardTitle>Profile</CardTitle>
+                  <CardDescription>
+                    Update your profile information. * fields are required
+                  </CardDescription>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">

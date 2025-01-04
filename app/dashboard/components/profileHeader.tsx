@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar } from '@radix-ui/react-avatar';
 import { AvatarInitials } from './avatar';
 import { Button } from './button';
@@ -8,6 +10,7 @@ import {
   CardDescription,
   CardContent,
 } from './card';
+import { Input } from './input';
 import { handleSignOut } from '@/app/lib/actions';
 import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
@@ -15,6 +18,22 @@ import { ConfirmComingOrNot } from '@/app/lib/data';
 import Link from 'next/link';
 
 //TODO: coming and not-coming should be ENUMS!!!!
+
+function CollapsibleSection({ title, children }: { title: string; children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="mb-4">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full text-left font-medium text-blue-500"
+      >
+        {title} {isOpen ? "▲" : "▼"}
+      </button>
+      {isOpen && <div className="mt-2">{children}</div>}
+    </div>
+  );
+}
 
 export default function ProfileHeader(props: {
   userData: any;
