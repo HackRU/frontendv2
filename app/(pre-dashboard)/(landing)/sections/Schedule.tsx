@@ -84,14 +84,14 @@ export default function Schedule() {
   const [mapOpen, setMapOpen] = useState(false);
   return (
     <div
-      className="relative z-10 mb-20 flex w-full justify-center"
+      className="relative z-10 mb-20 flex w-full max-w-7xl justify-center mx-auto"
       id="Schedule"
     >
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
           className="bg-[url('/landing/S2025/chalk1.png')] bg-no-repeat bg-cover bg-center text-text relative flex
-                              p-20
-                              w-full flex-col items-center md:flex-row md:items-start md:bg-[length:100%_100%] xs:bg-[length:100%_110%]"
+                                p-20
+                                w-full flex-col items-center md:flex-row md:items-start md:bg-[length:100%_100%] xs:bg-[length:100%_110%]"
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
@@ -102,10 +102,10 @@ export default function Schedule() {
                 setMapOpen(true);
               }}
               className="items-center justify-center
-            rounded-lg border-x-4 border-y-2 border-solid
-            border-orange-500 bg-transparent text-xl text-orange-500
-            transition-all duration-100 hover:drop-shadow-[0_0_8px_orange] hidden
-                         "
+              rounded-lg border-x-4 border-y-2 border-solid
+              border-orange-500 bg-transparent text-xl text-orange-500
+              transition-all duration-100 hover:drop-shadow-[0_0_8px_orange] hidden
+                           "
             >
               <strong>Show Event Map</strong>
             </button>
@@ -114,18 +114,38 @@ export default function Schedule() {
       </div>
 
       {/* <Image
-        src={"/landing/S2025/foodplaceholder.png"}
-        width="300"
-        height="300"
-        className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[200px] lg:-bottom-[300px] z-30"
+          src={"/landing/S2025/foodplaceholder.png"}
+          width="300"
+          height="300"
+          className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[200px] lg:-bottom-[300px] z-30"
+          alt={'cool'}
+          quality={50}
+        /> */}
+
+
+      <Image
+        src={"/landing/S2025/minichef 2.png"}
+        width="600"
+        height="600"
+        className="absolute -top-44 right-14 w-[150px] invisible md:visible"
         alt={'cool'}
         quality={50}
-      /> */}
+      />
+
+      <Image
+        src={"/landing/S2025/minichef 3.png"}
+        width="600"
+        height="600"
+        className="absolute -top-64 left-14 w-[200px] invisible md:visible"
+        alt={'cool'}
+        quality={50}
+      />
+
 
       <Image
         src={"/landing/S2025/lightsv2.png"}
-        width="600"
-        height="600"
+        width="1000"
+        height="1000"
         className="w-[1000px] md:w-[1200px] absolute -bottom-[300px] md:-bottom-[400px] lg:-bottom-[550px]"
         alt={'cool'}
         quality={50}
@@ -183,6 +203,7 @@ export default function Schedule() {
           </div>
         </Dialog>
       </Transition>
+
     </div>
   );
 }

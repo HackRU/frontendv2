@@ -3,15 +3,15 @@ import Image from 'next/image';
 import Link from 'next/link'
 export default async function Sponsors() {
   const sponsors = [
-     '/sponsors/stand-out-stickers-logo.png',
-     '/sponsors/NJTRANSIT.png'
+    '/sponsors/stand-out-stickers-logo.png',
+    '/sponsors/NJTRANSIT.png'
   ];
 
   const sponsorsLinks = [
     'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro',
     "https://www.njtransit.com/"
 
- ];
+  ];
 
   return (
     <div
@@ -20,6 +20,8 @@ export default async function Sponsors() {
     >
       <div className="flex h-fit w-[100vw] flex-col items-center">
         <div className="transparent-black-background text-text relative flex w-full flex-col items-center rounded-3xl md:flex-row md:items-start justify-evenly">
+
+
           <div className="mx-2">
             {sponsors
               .filter((_, index) => index % 2 != 0)
@@ -29,13 +31,13 @@ export default async function Sponsors() {
                     key={index}
                     className="relative mb-4 h-[30vh] md:w-[40vw] w-[80vw]"
                   >
-                    <Link href={sponsorsLinks[(index*2)+1]}>
-                    <Image
-                      src={sponsorURL}
-                      alt="Sponsor Logo"
-                      layout="fill"
-                      objectFit="contain"
-                    />
+                    <Link href={sponsorsLinks[(index * 2) + 1]}>
+                      <Image
+                        src={sponsorURL}
+                        alt="Sponsor Logo"
+                        layout="fill"
+                        objectFit="contain"
+                      />
                     </Link>
                   </div>
                 );
@@ -50,13 +52,13 @@ export default async function Sponsors() {
                     key={index}
                     className="relative mb-4 h-[30vh] md:w-[30vw] w-[70vw]"
                   >
-                    <Link href={sponsorsLinks[index*2]}>
-                    <Image
-                      src={sponsorURL}
-                      alt="Sponsor Logo"
-                      layout="fill"
-                      objectFit="contain"
-                    />
+                    <Link href={sponsorsLinks[index * 2]}>
+                      <Image
+                        src={sponsorURL}
+                        alt="Sponsor Logo"
+                        layout="fill"
+                        objectFit="contain"
+                      />
                     </Link>
                   </div>
                 );
