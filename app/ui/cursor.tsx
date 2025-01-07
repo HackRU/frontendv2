@@ -59,11 +59,11 @@ const Cursor = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const YSize = isPointer ? -150 : 120;
-  const XSize = isPointer ? -150 : 30;
+  const YSize = isPointer ? -150 : 480;
+  const XSize = isPointer ? -150 : 120;
   const rotationAngle = isPointer ? 0 : 315;
-  const topPos = (position.y - YSize / 4) + 7;
-  const leftPos = (position.x - XSize / 4) - 15;
+  const topPos = (position.y - YSize / 4) + 20 ;
+  const leftPos = (position.x - XSize / 4) - 70;
 
   const hasNotMoved = position.x === 0 && position.y === 0;
 
