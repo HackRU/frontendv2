@@ -62,8 +62,8 @@ const Cursor = () => {
   const YSize = isPointer ? -150 : 120;
   const XSize = isPointer ? -150 : 30;
   const rotationAngle = isPointer ? 0 : 315;
-  const topPos = (position.y - YSize / 4) + 15;
-  const leftPos = (position.x - XSize / 4) - 5;
+  const topPos = (position.y - YSize / 4) + 7;
+  const leftPos = (position.x - XSize / 4) - 15;
 
   const hasNotMoved = position.x === 0 && position.y === 0;
 
@@ -71,7 +71,7 @@ const Cursor = () => {
     <>
       <TrailEffect />
       <Image
-        src={"/landing/pawcursor_2.png"}
+        src={"/landing/cursor1.png"}
         alt="Custom Cursor"
         width={XSize}
         height={YSize}
