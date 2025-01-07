@@ -578,8 +578,7 @@ export default function Dashboard() {
                   <br />
                   <br />
                   NO ONE else BUT the team leader of the team needs to submit
-                  this form. Once submitted, team members can refresh their page
-                  to see their team id.
+                  this form. 
                   <br /><br />
                   All team members must be registered by January 15th, 2025. Failure to do so may lead to
                   incomplete team acceptances.
