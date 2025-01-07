@@ -71,7 +71,7 @@ const Cursor = () => {
     <>
       <TrailEffect />
       <Image
-        src={"/landing/cursor1.png"}
+        src={"/landing/cursor.png"}
         alt="Custom Cursor"
         width={XSize}
         height={YSize}
