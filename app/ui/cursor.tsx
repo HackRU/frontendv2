@@ -62,7 +62,7 @@ const Cursor = () => {
   const YSize = isPointer ? -150 : 480;
   const XSize = isPointer ? -150 : 120;
   const rotationAngle = isPointer ? 0 : 315;
-  const topPos = (position.y - YSize / 4) + 20 ;
+  const topPos = (position.y - YSize / 4) + 20;
   const leftPos = (position.x - XSize / 4) - 70;
 
   const hasNotMoved = position.x === 0 && position.y === 0;
@@ -75,7 +75,7 @@ const Cursor = () => {
         alt="Custom Cursor"
         width={XSize}
         height={YSize}
-        className="select-none z-50"
+        className="select-none"
         style={{
           display: hasNotMoved || isTouchDevice ? "none" : "block",
           transform: `rotate(${rotationAngle}deg)`,
@@ -83,6 +83,7 @@ const Cursor = () => {
           left: `${leftPos}px`,
           top: `${topPos}px`,
           pointerEvents: "none",
+          zIndex: 10000,
         }}
       />
     </>
