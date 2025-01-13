@@ -70,6 +70,12 @@ const ENDPOINTS = {
    * Get the points for the user
    */
   points: BASE + '/points',
+
+  
+  /**
+   * verify email after being given a code
+   */
+  verify: BASE + '/verify-email'
 };
 
 export async function authenticate(email: string, password: string) {
@@ -913,5 +919,38 @@ export async function GetPoints() {
   } else {
     resp.error = 'User not authenticated';
   }
+  return resp;
+}
+
+export async function Verify(code: string) {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  await fetch(ENDPOINTS.verify, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      code: code,
+    }),
+  }).then(async (res) => {
+    let resJSON = await res.json();
+    if (resJSON.statusCode === 403) {
+      resp.error = 'Invalid code';
+    } else if (resJSON.statusCode === 200) {
+      resp.response = resJSON.message;
+    } else {
+      if (resJSON.message) {
+        resp.error = resJSON.message;
+      } else {
+        resp.error = 'Unexpected Error';
+      }
+    }
+  });
+
   return resp;
 }
