@@ -326,9 +326,8 @@ function OrganizerView() {
             <div className="grid justify-center space-x-4 md:grid-cols-5">
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                  } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -338,9 +337,8 @@ function OrganizerView() {
               </button>
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                  }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -350,9 +348,8 @@ function OrganizerView() {
               </button>
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
+                  }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();
@@ -361,9 +358,8 @@ function OrganizerView() {
                 Manual
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('SPONSOR');
                   resetScanLog();
@@ -429,9 +425,8 @@ function OrganizerView() {
             ) : scannerTab === 'SPONSOR' ? (
               <div>
                 <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    selectedABList ? 'bg-blue-700' : ''
-                  }`}
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${selectedABList ? 'bg-blue-700' : ''
+                    }`}
                   onClick={() => {
                     setSelectedABList(true);
                     resetScanLog();
@@ -440,9 +435,8 @@ function OrganizerView() {
                   A
                 </button>
                 <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    !selectedABList ? 'bg-blue-700' : ''
-                  }`}
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${!selectedABList ? 'bg-blue-700' : ''
+                    }`}
                   onClick={() => {
                     setSelectedABList(false);
                     resetScanLog();
@@ -463,19 +457,17 @@ function OrganizerView() {
                 />
                 <div className="mt-2 flex justify-center">
                   <button
-                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${
-                      pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
-                    }`}
+                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
+                      }`}
                     onClick={() => setPointOperation('add')}
                   >
                     +
                   </button>
                   <button
-                    className={`rounded px-4 py-2 font-bold text-white ${
-                      pointOperation === 'subtract'
-                        ? 'bg-red-500'
-                        : 'bg-gray-500'
-                    }`}
+                    className={`rounded px-4 py-2 font-bold text-white ${pointOperation === 'subtract'
+                      ? 'bg-red-500'
+                      : 'bg-gray-500'
+                      }`}
                     onClick={() => setPointOperation('subtract')}
                   >
                     -
@@ -510,9 +502,10 @@ function OrganizerView() {
 
           {openScanner && (
             <QrReaderWrapper
+              qrScanEnabled={!confirmation}
               onScan={(text: string) => {
-                setLatestScannedEmail(text);
                 setConfirmation(true);
+                setLatestScannedEmail(text);
               }}
             />
           )}
