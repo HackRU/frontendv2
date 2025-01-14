@@ -1516,6 +1516,7 @@ export const mlhSchools = `
   S A Engineering College
   S G Balekundri Institute of Technology
   Sachdeva Institute of Technology
+  Sacred Heart University
   Sagar Institute of Science & Technology (SISTec)
   Saginaw Valley State University
   Sahrdaya College of Engineering and Technology
