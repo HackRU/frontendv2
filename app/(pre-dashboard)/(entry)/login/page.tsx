@@ -46,7 +46,6 @@ export default function LoginPage() {
           {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
           <div>
           <p className = "text-s italic  text-white">Press Login or Press Enter to Login</p>
-          <p className = "text-s italic  text-white">Login is not working right now, we are woking on a fix!</p>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-white"
               htmlFor="email"
