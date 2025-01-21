@@ -206,6 +206,26 @@ export async function OptInSelf(stat:boolean) {
   return 'Something went wrong';
 }
 
+export async function TransportMethodSelf(method:string) {
+  const session = await auth();
+  console.log('Tansport Self');
+  if (session?.user && session?.user?.email) {
+    const resp = await SetUser(
+      { transportation_method:  method},
+      session.user.email,
+    );
+
+    console.log(resp);
+
+    if (resp.error === '') {
+      return "GOOD";
+    }
+    return resp.error;
+  }
+
+  return 'Something went wrong';
+}
+
 export async function ConfirmComingOrNot(isComing: boolean): Promise<{
   error: string | undefined;
   response: Record<string, any>;
