@@ -456,7 +456,7 @@ export default function Dashboard() {
   } else if (userData?.role.hacker) {
     //FALSE SINCE WE WANT TO OPT IN ON REGISTRATION
     //REMOVE ONCE OPTIN WORKING AS EXPECTED
-    if (false && userData?.opt_in == null) {
+    if (userData?.opt_in == null) {
       return (
         <div className="flex flex-col items-center justify-center space-y-8 p-4">
           <ProfileHeader
@@ -715,7 +715,7 @@ export default function Dashboard() {
             <CardHeader>
               <div className="flex flex-col ">
                 <div className="flex flex-col">
-                  <CardTitle>QR Code</CardTitle>
+                  <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
                   <CardDescription>
                     Use this QR code to check-in or scan-in for events!
                   </CardDescription>
