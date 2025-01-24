@@ -225,7 +225,7 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>
-                    Registered! 
+                    Registered!
                   </CardTitle>
                 </div>
               </>
@@ -269,7 +269,11 @@ export default function ProfileHeader(props: {
                       <>
                         {userData.registration_status == 'confirmation' && (
                           <>
-                            <CardTitle>Confirmation</CardTitle>
+                            <CardTitle>RSVP: We&apos;re ready to begin moving hackers to acceptance! Please confirm your availability and let
+                              us know if you&apos;re &quot;Coming.&quot; We will begin moving hackers to acceptance on a first-come, first-served basis.
+                              If your teammates haven&apos;t registered yet, tell them to do so ASAP! We admit individual hackers based on FCFS priority and
+                              use team formations for waitlist priority.
+                            </CardTitle>
                             <Button
                               className="ml-auto"
                               onClick={() => onConfirmationChange(true)}
@@ -287,10 +291,8 @@ export default function ProfileHeader(props: {
                         {userData.registration_status == 'coming' && (
                           <>
                             <CardTitle>
-                              You have indicated you are coming. If your status
-                              changes to confirmed you are guaranteed entry
-                              between 9am and 10:30am. After 10:30am, check in
-                              will be first come first serve.
+                              Thanks for letting us know you can make it!
+                              We&apos;re slowly moving hackers into the final confirmation stage based on first-come first-serve responses.
                             </CardTitle>
                             <Button
                               className="ml-auto"
