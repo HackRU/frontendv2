@@ -182,6 +182,7 @@ export const mlhSchools = `
   Bergen Community College
   Bergen County Academies
   Bergen County Technical High School - Teterboro
+  Bergenfield High School
   Berkshire Community College
   Bhagalpur College of Engineering
   Bhagwan Parshuram Institute of Technology
