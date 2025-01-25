@@ -6,14 +6,18 @@ export default async function Sponsors() {
     '/sponsors/stand-out-stickers-logo.png',
     '/sponsors/NJTRANSIT.png',
     '/sponsors/saily-logo-yellow_2.png',
-    '/sponsors/dorahacks.png'
+    '/sponsors/dorahacks.png',
+    '/sponsors/icims.png',
+    '/sponsors/wakefern.png'
   ];
 
   const sponsorsLinks = [
     'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro',
     "https://www.njtransit.com/",
     'https://saily.com/',
-    'https://dorahacks.io/'
+    'https://dorahacks.io/',
+    'https://www2.wakefern.com/',
+    'https://www.icims.com/'
   ];
 
   return (
