@@ -4,7 +4,6 @@ import Link from 'next/link'
 export default async function Sponsors() {
   const sponsors = [
     '/sponsors/stand-out-stickers-logo.png',
-    '/sponsors/NJTRANSIT.png',
     '/sponsors/saily-logo-yellow_2.png',
     '/sponsors/dorahacks.png',
     '/sponsors/icims.png',
