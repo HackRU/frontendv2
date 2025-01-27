@@ -49,6 +49,7 @@ import { majors as majorConstants } from '@/app/lib/constants';
 import { useSearchParams } from 'next/navigation';
 
 import { OptInSelf } from '@/app/lib/data';
+import { TransportMethodSelf } from '@/app/lib/data';
 
 let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
 const numOfMinsUntilTeamCreation =
@@ -455,7 +456,7 @@ export default function Dashboard() {
   } else if (userData?.role.hacker) {
     //FALSE SINCE WE WANT TO OPT IN ON REGISTRATION
     //REMOVE ONCE OPTIN WORKING AS EXPECTED
-    if (false && userData?.opt_in == null) {
+    if (userData?.opt_in == null) {
       return (
         <div className="flex flex-col items-center justify-center space-y-8 p-4">
           <ProfileHeader
@@ -532,6 +533,54 @@ export default function Dashboard() {
               </CardHeader>
             </Card>
           )}
+          { userData?.transportation_method == null && (
+            <Card className="mt-32 w-full max-w-2xl">
+            <CardHeader>
+              <CardTitle>
+                How did you get to hackRU?
+              </CardTitle>
+              <CardDescription>
+                <Button
+                  onClick={async () => {
+                    const resp = await TransportMethodSelf("drive");
+                    if (resp == 'GOOD') {
+                      setUserData({ ...userData, transportation_method: "drive" });
+                    }
+                  }}
+                  type="button"
+                  className="mt-10 mr-4"
+                >
+                  Drive
+                </Button>
+                <Button
+                  onClick={async () => {
+                    const resp = await TransportMethodSelf("walk");
+                    console.log(resp)
+                    if (resp == 'GOOD') {
+                      setUserData({ ...userData, transportation_method: "walk" });
+                    }
+                  }}
+                  type="button"
+                  className={`mt-10 mr-4`}
+                >
+                  Walk
+                </Button>
+                <Button
+                  onClick={async () => {
+                    const resp = await TransportMethodSelf("public_transit");
+                    if (resp == 'GOOD') {
+                      setUserData({ ...userData, transportation_method: "public_transit" });
+                    }
+                  }}
+                  type="button"
+                  className="mt-10 mr-4 "
+                >
+                  Public Transit
+                </Button>
+              </CardDescription>
+            </CardHeader>
+          </Card>)
+          }
           {pointsData && userData.registration_status == 'checked_in' && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
@@ -665,7 +714,7 @@ export default function Dashboard() {
             <CardHeader>
               <div className="flex flex-col ">
                 <div className="flex flex-col">
-                  <CardTitle>QR Code</CardTitle>
+                  <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
                   <CardDescription>
                     Use this QR code to check-in or scan-in for events!
                   </CardDescription>
