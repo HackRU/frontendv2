@@ -1,4 +1,4 @@
-import { MdScience } from "react-icons/md";
+import { MdScience } from 'react-icons/md';
 
 export const hackRUFAQ = {
   'What is HackRU?': `HackRU is a 24-hour hackathon at Rutgers University. We welcome hundreds of students to join us in building
@@ -6,17 +6,27 @@ export const hackRUFAQ = {
   an environment that fosters an atmosphere of learning through teck talks and one-on-one guidance.
   We encourage beginner and advanced hackers alike to challenge themselves and expand their skills.`,
 
-  'What is the application process like?': `We will be accepting anywhere between 300-500 hackers based on
-  when you register for the event. After you register, you'll get a notification 1-2 weeks before the hackathon whether we have accepted you or
-  not to the hackathon. You will then have to let us know if you plan on coming or not and then you're all set!`,
+  'What is the application process like?': `We will be accepting anywhere between 300-500 hackers based on when you register for the event. After you register, you'll get a notification 1-2 weeks before the hackathon whether we have accepted you or not to the hackathon. You will then have to let us know if you plan on coming or not and then you're all set!
+
+  Here are the Hacker Stages:
+  Unregistered: You haven't finished your profile! Register now for this semester's hackathon.
+
+  Registered: Thank you for completing your profile! We'll respond shortly with your status. In the meantime, make sure your teammates are registered! We admit individual hackers on a first-come, first-served basis and use team formations for waitlist priority.
+
+  RSVP: We're ready to begin moving hackers to acceptance! Please confirm your availability and let us know if you're “Coming.” We will begin moving hackers to acceptance on a first-come, first-served basis. If your teammates haven't registered yet, tell them to do so ASAP! We admit individual hackers based on FCFS priority and use team formations for waitlist priority.
+
+  Coming: Thanks for letting us know you can make it! We're slowly moving hackers into the final confirmation stage based on FCFS responses.
+
+  Confirmed: Get ready to code! You're fully signed up and ready to show up on February 1st.
+
+  Delayed Entry Waitlist: Unfortunately, we've had to place you on our waitlist. Show up closer to our delayed check-in phase where hackers will be checked in based on remaining availability! In the meantime, any confirmed teammates can wait in the venue.
+  `,
 
   'Can I win anything?':
     "Yes! We'll release more information about prizes as the event draws near.",
 
   'What are the rules and policies that I need to follow?':
-    'HackRU follows the MLH Code of Conduct: "Be respectful. Harassment and abuse are never tolerated. If you are in a situation that makes you uncomfortable at an MLH Member Event, if the event itself is creating an unsafe or inappropriate environment, or if interacting with a MLH representative or event organizer makes you uncomfortable, please report it using the procedures included in the document provided below". You can read the full MLH Code of Conduct here: https://static.mlh.io/docs/mlh-code-of-conduct.pdf'
-    ,
-
+    'HackRU follows the MLH Code of Conduct: "Be respectful. Harassment and abuse are never tolerated. If you are in a situation that makes you uncomfortable at an MLH Member Event, if the event itself is creating an unsafe or inappropriate environment, or if interacting with a MLH representative or event organizer makes you uncomfortable, please report it using the procedures included in the document provided below". You can read the full MLH Code of Conduct here: https://static.mlh.io/docs/mlh-code-of-conduct.pdf',
   'Who can come?': `HackRU welcomes undergraduate and graduate students of all majors, backgrounds, and skill level to come create. Additionally, high
   school students who will be 18 by HackRU are allowed to register. Unfortunately, if you are under 18, you will not be able to attend.`,
 
@@ -1546,7 +1556,7 @@ export const mlhSchools = `
   Santa Clara University
   Santa Margarita Catholic High School
   Santa Rosa Junior College
-  Sapthagiri College of Engineering 
+  Sapthagiri College of Engineering
   Saratoga High School
   Sardar Patel Institute Of Technology
   Sardar Patel University

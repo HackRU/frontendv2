@@ -225,7 +225,7 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>
-                    Registered! 
+                    Registered!
                   </CardTitle>
                 </div>
               </>
@@ -236,9 +236,9 @@ export default function ProfileHeader(props: {
                   <CardTitle>Delayed Entry</CardTitle>
                   <div>
                     <CardDescription>
-                      You will be able to check in after 10:30am on a first come
-                      first serve basis. Please be there as soon as possible to
-                      secure your spot.
+                      Unfortunately, we&apos;ve had to place you on our waitlist.
+                      Show up closer to our delayed check-in phase where hackers will be checked in based on remaining availability!
+                      In the meantime, any confirmed teammates can wait in the venue.
                     </CardDescription>
                   </div>
                 </div>
@@ -247,9 +247,8 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'confirmed' && (
               <>
                 <CardTitle>
-                  You are confirmed! You are guaranteed entry if you check in
-                  between 9am to 10:30am. Afterwards, 10:30am will be check in
-                  acceptance on a first come first serve basis.
+                  Get ready to code! You&apos;re fully signed up and ready to
+                  show up on February 1st.
                 </CardTitle>
               </>
             )}

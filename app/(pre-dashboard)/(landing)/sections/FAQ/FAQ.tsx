@@ -8,7 +8,7 @@ function QuestionContainer() {
   const [activeAccordion, setActiveAccordion] = useState(-1);
 
   return (
-    <div className="w-full">
+    <div className="w-full whitespace-pre-line">
       {Object.keys(hackRUFAQ).map((question: string, i: number) => (
         <Accordian
           key={i}
