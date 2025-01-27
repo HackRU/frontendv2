@@ -8,7 +8,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { bizUdg } from '@/app/ui/fonts';
-import { longCang } from '@/app/ui/fonts';
+import { longCang, brush } from '@/app/ui/fonts';
 import clsx from 'clsx';
 
 function scrollToSectionName(sectionName: string) {
@@ -112,7 +112,7 @@ function Navbar() {
   return (
     <div
       className={`z-40 flex w-full justify-end
-        md:fixed ${longCang.className}`}
+        md:fixed ${brush.className}`}
       id="navbar"
     >
       <div
