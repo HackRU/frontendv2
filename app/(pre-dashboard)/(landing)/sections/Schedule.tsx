@@ -63,12 +63,12 @@ const schedule = {
         location: 'Hacking Area',
       },
       { time: '8:15 AM', event: 'Breakfast', location: 'In Front of MPR' },
+      { time: '11:00 AM', event: 'Lunch', location: 'In Front of MPR' },
       {
         time: '12:00 PM',
         event: 'Submissions Due',
         location: 'Hacking Area',
       },
-      { time: '11:00 PM', event: 'Lunch', location: 'In Front of MPR' },
       { time: '12:30 PM', event: 'Judging Begins', location: 'Hacking Area' },
       { time: '2:30 PM', event: 'Judging Ends', location: 'Hacking Area' },
       {
