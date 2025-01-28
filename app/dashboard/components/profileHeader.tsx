@@ -237,7 +237,7 @@ export default function ProfileHeader(props: {
                   <div>
                     <CardDescription>
                       Unfortunately, we&apos;ve had to place you on our waitlist.
-                      Show up closer to our delayed check-in phase where hackers will be checked in based on remaining availability!
+                      Show up closer to our delayed check-in phase at 10:45am where hackers will be checked in based on remaining availability!
                       In the meantime, any confirmed teammates can wait in the venue.
                     </CardDescription>
                   </div>
@@ -247,9 +247,12 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'confirmed' && (
               <>
                 <CardTitle>
-                  Get ready to code! You&apos;re fully signed up and ready to
-                  show up on February 1st.
+                  Confirmed
                 </CardTitle>
+                <CardDescription>
+                  Get ready to code! You&apos;re fully signed up and ready to
+                  show up on February 1st. You are guarenteed entry if you show up before 10:45am, at which point it will be first come first served. 
+                </CardDescription>
               </>
             )}
             {(userData.registration_status == 'confirmation' ||
