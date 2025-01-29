@@ -65,6 +65,11 @@ const schedule = {
       { time: '8:15 AM', event: 'Breakfast', location: 'In Front of MPR' },
       { time: '11:00 AM', event: 'Lunch', location: 'In Front of MPR' },
       {
+        time: '10:00 AM',
+        event: 'Dorahacks Submissions Due',
+        location: 'Hacking Area',
+      },
+      {
         time: '12:00 PM',
         event: 'Submissions Due',
         location: 'Hacking Area',
