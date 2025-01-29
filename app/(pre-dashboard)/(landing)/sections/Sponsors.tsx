@@ -4,18 +4,18 @@ import Link from 'next/link'
 export default async function Sponsors() {
   const sponsors = [
     '/sponsors/stand-out-stickers-logo.png',
+    '/sponsors/wakefern2.png',
     '/sponsors/saily-logo-yellow_2.png',
     '/sponsors/dorahacks.png',
     '/sponsors/icims.png',
-    '/sponsors/wakefern.png'
   ];
 
   const sponsorsLinks = [
     'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro',
+    'https://www2.wakefern.com/',
     'https://saily.com/',
     'https://dorahacks.io/',
-    'https://www2.wakefern.com/',
-    'https://www.icims.com/'
+    'https://www.icims.com/',
   ];
 
   return (
