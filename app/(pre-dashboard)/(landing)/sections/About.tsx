@@ -177,13 +177,13 @@ export default function About() {
               Hacks that better the community
             </p>
 
-            <div className="pt-6">
+            {/* <div className="pt-6">
               <p className="inline ">NeuroTech presented by NTICe:</p>
               <p className="inline pb-4">
                 {' '}
                 Hacks that advance technology for treating brain dysfunction.
               </p>
-            </div>
+            </div> */}
 
             <div className="pt-6">
               <p className="inline   ">Education:</p>
