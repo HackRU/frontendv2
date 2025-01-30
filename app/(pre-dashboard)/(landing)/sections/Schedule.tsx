@@ -9,7 +9,7 @@ function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
   const { day, times } = dayInfo;
   return (
     <div className="my-5 flex w-full flex-col text-white">
-      <div className="glow-subtitles text-textSubtitle mb-4 w-full text-center text-3xl font-semibold md:text-5xl">
+      <div className="glow-subtitles text-textSubtitle mb-4 w-full text-center text-xl font-semibold md:text-5xl">
         {dayInfo.day}
       </div>
       <div className="w-full">
@@ -42,6 +42,11 @@ const schedule = {
         location: 'Center Lobby',
       },
       {
+        time: '11:45 AM',
+        event: 'Delayed Check-in',
+        location: 'Center Lobby',
+      },
+      {
         time: '11:00 AM',
         event: 'Opening Ceremony',
         location: 'Hacking Area',
@@ -49,7 +54,11 @@ const schedule = {
       { time: '12:00 PM', event: 'Team Building', location: 'tbd' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
-
+      { time: '1:30 PM', event: 'Wakefern Cafe + Arcade', location: '174' },
+      { time: '2:30 PM', event: 'Wakefern Coffee Chats', location: 'tbd' },
+      { time: '4:00 PM', event: 'MLH Workshop: Github Copilot', location: 'tbd' },
+      { time: '5:00 PM', event: 'iCIMS talk', location: 'tbd' },
+      { time: '6:00 PM', event: 'MLH Workshop: Building with Figma', location: 'tbd' },
       { time: '8:00 PM', event: 'Dinner', location: 'In Front of MPR' },
     ],
   },
