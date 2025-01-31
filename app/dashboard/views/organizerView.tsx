@@ -21,68 +21,38 @@ type STATUS =
 type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
-const events = [
-  'lunch-saturday',
-  'github-copilot',
-  'icims-tech-talk',
-  'NTICE-talk',
-  'usacs-resume-workshop',
-  'figma-workshop',
-  'NJT-metro',
-  'dinner-saturday',
-  'breakfast-sunday',
-  'lunch-sunday',
-  'cat-attire',
-  'hidden-cat',
-  'win-blackjack',
-  'minigold-ho1',
-  'winning-videogame',
-  'participating-videogame',
-  'winning-slots',
-  'participating-slots',
-  'winning-trivia',
-  'participating-trivia',
-  'printing-photo',
-  'stickers-pin',
-  'lotion',
-  'tote-bag',
-  'playing-cards',
-  'lego-sets',
-  'small-cat-stuffed-animals',
-  'medium-stuffed-animals',
-  'squishmallow',
-];
-
 const eventPoints = {
-  'lunch-saturday': 0,
-  'github-copilot': 15,
-  'icims-tech-talk': 15,
-  'NTICE-talk': 15,
-  'usacs-resume-workshop': 15,
-  'figma-workshop': 15,
-  'NJT-metro': 15,
-  'dinner-saturday': 0,
-  'breakfast-sunday': 0,
-  'lunch-sunday': 0,
-  'cat-attire': 15,
-  'hidden-cat': 15,
-  'win-blackjack': 10,
-  'minigold-ho1': 20,
-  'winning-videogame': 15,
-  'participating-videogame': 5,
-  'winning-slots': 15,
-  'participating-slots': -5,
-  'winning-trivia': 50,
-  'participating-trivia': 15,
-  'printing-photo': -10,
-  'stickers-pin': -3,
-  lotion: -15,
-  'tote-bag': -35,
-  'playing-cards': -35,
-  'small-cat-stuffed-animals': -25,
-  'medium-stuffed-animals': -50,
-  squishmallow: -80,
-  'lego-sets': -110,
+  "github-copilot": 15,
+  "figma-workshop": 15,
+  "wakefern-coffee-chat": 15,
+  "wakefern-cafe": 15,
+  "midnight-surprise": 15,
+  "icims-tech-talk": 15,
+  "lunch-saturday": 0,
+  "dinner-saturday": 0,
+  "breakfast-sunday": 0,
+  "lunch-sunday": 0,
+  "meal-placeholder": 0,
+  "overcookd-4person-3-stars": 20,
+  "overcookd-4person-2-stars": 15,
+  "overcookd-4person-1-star": 10,
+  "overcookd-2v2-winner": 10,
+  "food-texture-guess": 15,
+  "cup-stacking-under-time": 10,
+  "cup-stack-win": 20,
+  "jellybean-first-place": 75,
+  "jellybean-second-place": 50,
+  "jellybean-third-place": 30,
+  "shop-food-keychains": 10,
+  "shop-small-squishmallows": 25,
+  "shop-dumpling-night-light": 80,
+  "shop-toast-plushie": 70,
+  "shop-pb-and-j-plushie": 80,
+  "shop-city-tea-house-building-set": 80,
+  "shop-40-inch-baguette-plush": 150,
+  "shop-fruit-snacks": 10,
+  "shop-boba-keychain": 70,
+  "shop-nelayo-plushies-bag-of-cookies": 25
 };
 
 function ScanStatus(props: {
@@ -326,9 +296,8 @@ function OrganizerView() {
             <div className="grid justify-center space-x-4 md:grid-cols-5">
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                  } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -338,9 +307,8 @@ function OrganizerView() {
               </button>
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                  }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -350,9 +318,8 @@ function OrganizerView() {
               </button>
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
+                  }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();
@@ -361,9 +328,8 @@ function OrganizerView() {
                 Manual
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
-                }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
+                  }`}
                 onClick={() => {
                   setScannerTab('SPONSOR');
                   resetScanLog();
@@ -423,15 +389,14 @@ function OrganizerView() {
             ) : scannerTab === 'EVENT' ? (
               <EventScan
                 selectedEvent={selectedEvent}
-                events={events}
+                events={Object.keys(eventPoints)}
                 onChange={handleEventSelectChange}
               />
             ) : scannerTab === 'SPONSOR' ? (
               <div>
                 <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    selectedABList ? 'bg-blue-700' : ''
-                  }`}
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${selectedABList ? 'bg-blue-700' : ''
+                    }`}
                   onClick={() => {
                     setSelectedABList(true);
                     resetScanLog();
@@ -440,9 +405,8 @@ function OrganizerView() {
                   A
                 </button>
                 <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    !selectedABList ? 'bg-blue-700' : ''
-                  }`}
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${!selectedABList ? 'bg-blue-700' : ''
+                    }`}
                   onClick={() => {
                     setSelectedABList(false);
                     resetScanLog();
@@ -463,19 +427,17 @@ function OrganizerView() {
                 />
                 <div className="mt-2 flex justify-center">
                   <button
-                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${
-                      pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
-                    }`}
+                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
+                      }`}
                     onClick={() => setPointOperation('add')}
                   >
                     +
                   </button>
                   <button
-                    className={`rounded px-4 py-2 font-bold text-white ${
-                      pointOperation === 'subtract'
-                        ? 'bg-red-500'
-                        : 'bg-gray-500'
-                    }`}
+                    className={`rounded px-4 py-2 font-bold text-white ${pointOperation === 'subtract'
+                      ? 'bg-red-500'
+                      : 'bg-gray-500'
+                      }`}
                     onClick={() => setPointOperation('subtract')}
                   >
                     -
