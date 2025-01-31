@@ -38,6 +38,7 @@ const eventPoints = {
   "overcookd-4person-1-star": 10,
   "overcookd-2v2-winner": 10,
   "food-texture-guess": 15,
+  "tea-tasting-guess": 15,
   "cup-stacking-under-time": 10,
   "cup-stack-win": 20,
   "jellybean-first-place": 75,
@@ -389,7 +390,7 @@ function OrganizerView() {
             ) : scannerTab === 'EVENT' ? (
               <EventScan
                 selectedEvent={selectedEvent}
-                events={Object.keys(eventPoints)}
+                events={Object.keys(eventPoints).sort()}
                 onChange={handleEventSelectChange}
               />
             ) : scannerTab === 'SPONSOR' ? (
