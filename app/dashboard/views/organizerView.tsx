@@ -39,8 +39,12 @@ const eventPoints = {
   "overcookd-2v2-winner": 10,
   "food-texture-guess": 15,
   "tea-tasting-guess": 15,
-  "cup-stacking-under-time": 10,
-  "cup-stack-win": 20,
+
+  "cup-stack-large-win": 15,
+  "cup-stack-large-under-time": 5,
+  "cup-stack-small-win": 15,
+  "cup-stack-small-under-time": 10,
+
   "jellybean-first-place": 75,
   "jellybean-second-place": 50,
   "jellybean-third-place": 30,
