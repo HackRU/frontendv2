@@ -40,6 +40,8 @@ const eventPoints = {
   "food-texture-guess": 15,
   "tea-tasting-guess": 15,
 
+  "chess": 5,
+
   "cup-stack-large-win": 15,
   "cup-stack-large-under-time": 5,
   "cup-stack-small-win": 15,
