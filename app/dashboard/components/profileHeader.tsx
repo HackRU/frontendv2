@@ -225,7 +225,7 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>
-                    Registered!
+                    Registered! WE DO NOT HAVE ANY MORE SPACE EVEN FOR PEOPLE WHOS TEAM IS ALREADY IN
                   </CardTitle>
                 </div>
               </>
@@ -233,7 +233,7 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'waitlist' && (
               <>
                 <div className="flex flex-col">
-                  <CardTitle>Delayed Entry</CardTitle>
+                  <CardTitle>Delayed Entry WE DO NOT HAVE ANY MORE SPACE EVEN FOR PEOPLE WHOS TEAM IS ALREADY IN</CardTitle>
                   <div>
                     <CardDescription>
                       Unfortunately, we&apos;ve had to place you on our waitlist.
@@ -247,7 +247,7 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'confirmed' && (
               <>
                 <CardTitle>
-                  Confirmed
+                  Confirmed WE DO NOT HAVE ANY MORE SPACE EVEN FOR PEOPLE WHOS TEAM IS ALREADY IN
                 </CardTitle>
                 <CardDescription>
                   Get ready to code! You&apos;re fully signed up and ready to
