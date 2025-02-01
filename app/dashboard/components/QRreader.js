@@ -34,8 +34,7 @@ function QrScannerWrapper(props) {
           delayBetweenScanAttempts: 1000,
         }}
         onScan={(result) => {
-          console.log('result', result);
-          onScan(result);
+          onScan(result[0].rawValue);
         }}
       />
     </div>
