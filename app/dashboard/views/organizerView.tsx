@@ -50,16 +50,18 @@ const eventPoints = {
   "jellybean-first-place": 75,
   "jellybean-second-place": 50,
   "jellybean-third-place": 30,
-  "shop-food-keychains": -10,
-  "shop-small-squishmallows": -25,
+
+  "shop-food-keychains": -15,
+  "shop-small-squishmallows": -70,
+  "shop-boba-keychain": -50,
+  "shop-scented-candles": -60,
+  "shop-hackru-mugs": -75,
   "shop-dumpling-night-light": -80,
-  "shop-toast-plushie": -70,
-  "shop-pb-and-j-plushie": -80,
-  "shop-city-tea-house-building-set": -80,
-  "shop-40-inch-baguette-plush": -150,
-  "shop-fruit-snacks": -10,
-  "shop-boba-keychain": -70,
-  "shop-nelayo-plushies-bag-of-cookies": -25
+  "shop-toast-plushie": -80,
+  "shop-tea-house-set": -90,
+  "shop-avocado-rug": -120,
+  "shop-boba": 0,
+  "shop-giant-baguette": -150,
 };
 
 function ScanStatus(props: {
