@@ -54,7 +54,7 @@ const schedule = {
       { time: '12:00 PM', event: 'Team Building', location: 'tbd' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
-      { time: '1:30 PM', event: 'Wakefern Cafe + Arcade', location: '174' },
+      { time: '1:30 PM', event: 'Wakefern Cafe + Arcade', location: 'The Cove' },
       { time: '2:30 PM', event: 'Wakefern Coffee Chats', location: 'tbd' },
       { time: '4:00 PM', event: 'MLH Workshop: Github Copilot', location: 'tbd' },
       { time: '5:00 PM', event: 'iCIMS talk', location: 'tbd' },
