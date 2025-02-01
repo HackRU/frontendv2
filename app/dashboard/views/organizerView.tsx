@@ -473,9 +473,10 @@ function OrganizerView() {
 
           {openScanner && (
             <QrReaderWrapper
+              qrScanEnabled={!confirmation}
               onScan={(text: string) => {
-                setLatestScannedEmail(text);
                 setConfirmation(true);
+                setLatestScannedEmail(text);
               }}
             />
           )}
