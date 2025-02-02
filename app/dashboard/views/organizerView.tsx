@@ -22,6 +22,8 @@ type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const eventPoints = {
+  "breakfast-sunday-real": 0,
+  "lunch-sunday-real": 0,
   "github-copilot": 25,
   "figma-workshop": 25,
   "wakefern-coffee-chat": 15,
