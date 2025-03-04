@@ -3,7 +3,7 @@
 import { ENDPOINTS } from './endpoints';
 
 // Returns true if backend API is up and running, false otherwise
-export async function ping(): Promise<boolean> {
+export async function ping(): Promise<{ statusCode: number; response: string; error: string }> {
   const payload = { name: "Anything" }; 
 
   try {
@@ -15,21 +15,23 @@ export async function ping(): Promise<boolean> {
       body: JSON.stringify(payload), 
     });
 
-    if (!resp.ok) {
-      return false; // Return false if the response status is not OK
-    }
-
     const data = await resp.json();
     console.log('Server Response:', data);
 
-    // Check if the message contains the expected greeting
-    if (data.message && data.message.includes("Hello Anything")) {
-      return true;  // Return true if the response is valid
-    } else {
-        return false;  // Return false if the response is unexpected
+    if (data?.statusCode == 200) {
+      return {statusCode: data.statusCode, response: data.message, error:""};  
+    } 
+
+    else if (data?.message) {
+      return {statusCode: data.statusCode, response: "", error:data.message}; 
     }
+
+    else {
+      return {statusCode: 400, response: "", error:"Something went wrong, no message"}; 
+    }
+
   } catch (error) {
     console.error('Error sending request:', error);
-    return false;  // Return false if an error occurs
+    return {statusCode: 400, response: "", error:"Something went wrong"};  
   }
 }
