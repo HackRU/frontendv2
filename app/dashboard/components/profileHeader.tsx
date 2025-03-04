@@ -225,7 +225,8 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-row items-center">
                   <CardTitle>
-                    Registered! WE DO NOT HAVE ANY MORE SPACE EVEN FOR PEOPLE WHOSE TEAM IS ALREADY IN
+
+                    Registered!
                   </CardTitle>
                 </div>
               </>
@@ -237,7 +238,9 @@ export default function ProfileHeader(props: {
                   <div>
                     <CardDescription>
                       Unfortunately, we&apos;ve had to place you on our waitlist.
-                      Show up closer to our delayed check-in phase at 10:45am where hackers will be checked in based on remaining availability!
+
+                      Show up closer to our delayed check-in phase where hackers will be checked in based on remaining availability!
+
                       In the meantime, any confirmed teammates can wait in the venue.
                     </CardDescription>
                   </div>
@@ -247,7 +250,10 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'confirmed' && (
               <>
                 <CardTitle>
-                  Confirmed WE DO NOT HAVE ANY MORE SPACE EVEN FOR PEOPLE WHOSE TEAM IS ALREADY IN
+
+                  Get ready to code! You&apos;re fully signed up and ready to
+                  show up on February 1st.
+
                 </CardTitle>
                 <CardDescription>
                   Get ready to code! You&apos;re fully signed up and ready to

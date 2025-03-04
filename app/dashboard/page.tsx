@@ -728,6 +728,23 @@ export default function Dashboard() {
           )}
 
 
+          <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <div className="flex flex-col ">
+                <div className="flex flex-col">
+                  <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
+                  <CardDescription>
+                    Use this QR code to check-in or scan-in for events!
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
+                <QRCode value={userData?.email} size={256} />
+              </div>
+            </CardContent>
+          </Card>
 
           <Card className="w-full max-w-2xl">
             <CardHeader>
