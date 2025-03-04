@@ -121,10 +121,14 @@ export default function About() {
 
         id="About"
       >
-        <div>
-
-
-        </div>
+        <Image
+          src={"/landing/S2025/minichef 5.png"}
+          width="600"
+          height="600"
+          className="absolute -top-36 right-14 w-[140px] invisible md:visible"
+          alt={'chef decoration'}
+          quality={50}
+        />
         <AboutInfo title="WHAT" imageSrc="/landing/S2025/lumpia.png" alt="Python" reverse titleColor='s2025black'>
           <div className="pt-6 border-t-8 border-cyan-100">
             <p className="inline">HackRU is a</p>
@@ -173,13 +177,13 @@ export default function About() {
               Hacks that better the community
             </p>
 
-            <div className="pt-6">
+            {/* <div className="pt-6">
               <p className="inline ">NeuroTech presented by NTICe:</p>
               <p className="inline pb-4">
                 {' '}
                 Hacks that advance technology for treating brain dysfunction.
               </p>
-            </div>
+            </div> */}
 
             <div className="pt-6">
               <p className="inline   ">Education:</p>
