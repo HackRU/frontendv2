@@ -6,7 +6,12 @@ export default function Layout({ children
 }) {
   return (
     <>
-      <main className="w-fit h-fit ">
+      <main className="w-fit h-fit "
+      style={{
+        '--bg-color': '#C49D52',
+        '--text-color': '#1E1E1E',
+        '--border-color': '#4C855A',
+      } as React.CSSProperties}>
         {children}
         <div
           id="entry-radial"
