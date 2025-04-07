@@ -95,9 +95,9 @@ const UserUpdateSchema = z.object({
 export type UserUpdate = z.infer<typeof UserUpdateSchema>;
 
 const TeamSubmitSchema = z.object({
-  team_member_A: z.string().email(),
-  team_member_B: z.string().optional(),
-  team_member_C: z.string().optional(),
+  team_member_A: z.string().email("Please enter a valid email address for Team Member A").nonempty("Email for Team Member A is required"),
+  team_member_B: z.string().email("Please enter a valid email address for Team Member B").optional(),
+  team_member_C: z.string().email("Please enter a valid email address for Team Member C").optional(),
 });
 
 const logoImage = {
@@ -130,6 +130,11 @@ export default function Dashboard() {
   const [submittingPreEventTeamForm, setSubmittingPreEventTeamForm] = useState<string>('Submit Team');
   const [userProfileSubmitText, setUserProfileSubmitText] =
     useState<string>('Save');
+  const [teamMemberErrors, setTeamMemberErrors] = useState({
+    team_member_1: "",
+    team_member_2: "",
+    team_member_3: ""
+  });
 
   const [
     displayTeamFormFinalSubmissionWarning,
@@ -352,6 +357,12 @@ export default function Dashboard() {
       setSubmittingPreEventTeamForm("Failed");
     }
 
+  }
+
+  const validateEmail = (email: string) => {
+    if (!email) return true; // Empty is valid as it's optional
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 
   // First useEffect to fetch and set schools data
