@@ -16,7 +16,10 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
+  redirect("/offseason")
+
   return (
+
     <main
       className={`relative flex h-fit flex-col ${brush.className} text-s2025black-100 bg-gradient-to-b from-tan_2-100 to-off_white-100`}
     >
