@@ -1,3 +1,4 @@
+import StatusBar from '@/app/dashboard/components/StatusBar';
 import { Avatar } from '@radix-ui/react-avatar';
 import { AvatarInitials } from './avatar';
 import { Button } from './button';
@@ -92,6 +93,7 @@ export default function ProfileHeader(props: {
           <CardHeader>
             <CardTitle>Registration</CardTitle>
             <CardDescription>Check your registration status.</CardDescription>
+            <StatusBar status={userData.registration_status} />
           </CardHeader>
           <CardContent className="space-y-4">
             {/* {userData.registration_status == 'unregistered' && (

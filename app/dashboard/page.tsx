@@ -50,7 +50,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { OptInSelf } from '@/app/lib/data';
 import { TransportMethodSelf } from '@/app/lib/data';
-
+import StatusBar from '@/app/dashboard/components/StatusBar';
 let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
 const numOfMinsUntilTeamCreation =
   (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
