@@ -19,7 +19,7 @@ const STAGES: Status[] = [
   'confirmed',
   'checked_in',
 ];
-
+//basically just for confirmation being RSVP ->
 const STAGE_LABELS: Record<Status, string> = {
   unregistered: 'Unregistered',
   registered: 'Registered',
@@ -57,7 +57,7 @@ export default function StatusBar({ status }: { status: Status }) {
   return (
     <div className="flex items-center justify-between w-full max-w-4xl mx-auto mt-6 px-4">
       {STAGES.map((stage, index) => {
-        const isCompleted = index < currentIndex;
+        const isCompleted = index <= currentIndex;
         const isCurrent = index === currentIndex;
         const isFuture = index > currentIndex;
         const isWaitlistMarker = isWaitlist && stage === 'confirmed';
@@ -65,17 +65,32 @@ export default function StatusBar({ status }: { status: Status }) {
         return (
           <div key={stage} className="flex flex-col items-center relative w-full">
             {/* Connector Line */}
-            {index !== 0 && (
-              <div
-                className={`absolute top-2 -left-1/2 w-full h-1 z-0 ${
-                  isCompleted
-                    ? 'bg-white animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.6)]'
-                    : isWaitlist && stage === 'confirmed'
-                    ? 'bg-yellow-300 border-dashed border-2 border-yellow-400'
-                    : 'bg-blue-500/30'
-                }`}
-              />
-            )}
+            {/* Left Line */}
+                {index !== 0 && (
+                <div
+                    className={`absolute top-2 left-0 w-1/2 h-1 z-0 ${
+                    index <= currentIndex
+                        ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] animate-pulse'
+                        : isWaitlist && stage === 'confirmed'
+                        ? 'bg-yellow-300 border-dashed border-2 border-yellow-400'
+                        : 'bg-blue-500/30'
+                    }`}
+                />
+                )}
+
+                {/* Right Line */}
+                {index !== STAGES.length - 1 && (
+                <div
+                    className={`absolute top-2 left-1/2 w-1/2 h-1 z-0 ${
+                    index < currentIndex
+                        ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)] animate-pulse'
+                        : isWaitlist && STAGES[index + 1] === 'confirmed'
+                        ? 'bg-yellow-300 border-dashed border-2 border-yellow-400'
+                        : 'bg-blue-500/30'
+                    }`}
+                />
+                )}
+
 
             {/* Status Dot */}
             <div
