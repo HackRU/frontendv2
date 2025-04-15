@@ -58,13 +58,13 @@ export default function SignupPage() {
   return (
 
     <main className="flex items-center justify-center w-screen h-screen">
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="bg-gradient-to-b from-offblack-100 to-[#453148] p-20 rounded-xl">
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="bg-gradient-to-b from-[var(--bg-color)] to-[var(--bg-color2)] p-20 rounded-xl">
         <div className="w-full grid gap-0 items-center">
-          {submit_errors && (<p className="text-xs italic text-red-500 ">{submit_errors}</p>)}
-          <p className="text-s italic text-white">Press Sign up Button or Enter to Sign up</p>
+          {submit_errors && (<p className="text-xs italic text-[var(--error-color)] ">{submit_errors}</p>)}
+          <p className="text-s italic text-[var(--mainText-color)]">Press Sign up Button or Enter to Sign up</p>
           <div>
             <label
-              className="mb-3 mt-4 block text-xs font-medium text-white"
+              className="mb-3 mt-4 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="email"
             >
               Email
@@ -72,14 +72,14 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("email")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="email"
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
               />
               {errors.email && (
-                <p className="text-xs italic text-red-500 mt-2">
+                <p className="text-xs italic text-[var(--error-color)] mt-2">
                   {errors.email.message}
                 </p>
               )}
@@ -88,7 +88,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="first_name"
             >
               First Name
@@ -96,13 +96,13 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("first_name")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="first_name"
                 name="first_name"
                 placeholder="First"
               />
               {errors.first_name && (
-                <p className="text-xs italic text-red-500 mt-2">
+                <p className="text-xs italic text-[var(--error-color)] mt-2">
                   {errors.first_name.message}
                 </p>
               )}
@@ -111,7 +111,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="last_name"
             >
               Last Name
@@ -119,13 +119,13 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("last_name")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="last_name"
                 name="last_name"
                 placeholder="Last"
               />
               {errors.last_name && (
-                <p className="text-xs italic text-red-500 mt-2">
+                <p className="text-xs italic text-[var(--error-color)] mt-2">
                   {errors.last_name.message}
                 </p>
               )}
@@ -134,7 +134,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="password"
             >
               Password
@@ -142,14 +142,14 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("password")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="password"
                 name="password"
                 type="password"
                 placeholder="Enter password"
               />
               {errors.password && (
-                <p className="text-xs italic text-red-500 mt-2">
+                <p className="text-xs italic text-[var(--error-color)] mt-2">
                   {errors.password.message}
                 </p>
               )}
@@ -158,7 +158,7 @@ export default function SignupPage() {
 
           <div className="">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="confirm_password"
             >
               Confirm Password
@@ -166,14 +166,14 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("confirm_password")}
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="confirm_password"
                 name="confirm_password"
                 type="password"
                 placeholder="Enter password again"
               />
               {errors.confirm_password && (
-                <p className="text-xs italic text-red-500 mt-2">
+                <p className="text-xs italic text-[var(--error-color)] mt-2">
                   {errors.confirm_password.message}
                 </p>
               )}
@@ -184,7 +184,7 @@ export default function SignupPage() {
           <Button type="submit" className="mt-4 justify-self-stretch">
             {loading ? 'Loading...' : 'Sign Up'} </Button>
         </div>
-        <p className="text-s italic text-white mt-2 text-center hover:text-blue-500 cursor-pointer" onClick={() => router.push('/login')}>
+        <p className="text-s italic text-[var(--mainText-color)] mt-2 text-center hover:text-[var(--hover-color)] cursor-pointer" onClick={() => router.push('/login')}>
           Already a member? Log In!
         </p>
       </form>

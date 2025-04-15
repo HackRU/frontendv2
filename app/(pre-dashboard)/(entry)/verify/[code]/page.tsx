@@ -57,10 +57,10 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
-      <form onSubmit={handleSubmit(onSubmit)} className='bg-gradient-to-b from-offblack-100 to-[#453148] p-20 rounded-xl'>
+      <form onSubmit={handleSubmit(onSubmit)} className='bg-gradient-to-b from-[var(--bg-color)] to-[var(--bg-color2)] p-20 rounded-xl'>
         <div className="w-full">
-          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
-          {(<p className="text-xs italic text-green-500 mt-2">{success}</p>)}
+          {(<p className="text-xs italic text-[var(--error-color)] mt-2">{submit_errors}</p>)}
+          {(<p className="text-xs italic text-[var(--success-color)] mt-2">{success}</p>)}
 
 
         </div>

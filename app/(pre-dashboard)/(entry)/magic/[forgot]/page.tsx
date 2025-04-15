@@ -64,13 +64,13 @@ export default function SignupPage() {
 
   return (
     <main className="flex items-center justify-center md:h-screen w-screen">
-      <form onSubmit={handleSubmit(onSubmit)} className='bg-gradient-to-b from-offblack-100 to-[#453148] p-20 rounded-xl'>
+      <form onSubmit={handleSubmit(onSubmit)} className='bg-gradient-to-b from-[var(--bg-color)] to-[var(--bg-color2)] p-20 rounded-xl'>
         <div className="w-full">
-          {(<p className="text-xs italic text-red-500 mt-2">{submit_errors}</p>)}
-          {(<p className="text-xs italic text-green-500 mt-2">{success}</p>)}
+          {(<p className="text-xs italic text-[var(--error-color)] mt-2">{submit_errors}</p>)}
+          {(<p className="text-xs italic text-[var(--success-color)] mt-2">{success}</p>)}
           <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="email"
             >
               Email
@@ -78,20 +78,20 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("email")}
-                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="email"
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
                 required
               />
-              {errors.email && (<p className="text-xs italic text-red-500 mt-2">{errors.email?.message}</p>)}
+              {errors.email && (<p className="text-xs italic text-[var(--error-color)] mt-2">{errors.email?.message}</p>)}
             </div>
           </div>
 
           <div className="mt-4">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="password"
             >
               Password
@@ -99,19 +99,19 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("password")}
-                className="peer block w-96 rounded-md border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="password"
                 type="password"
                 name="password"
                 placeholder="Enter password"
                 required
               />
-              {errors.password && (<p className="text-xs italic text-red-500 mt-2">{errors.password?.message}</p>)}
+              {errors.password && (<p className="text-xs italic text-[var(--error-color)] mt-2">{errors.password?.message}</p>)}
             </div>
           </div>
           <div className="mt-4">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-white"
+              className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"
               htmlFor="confirm_password"
             >
               Confim Password
@@ -119,14 +119,14 @@ export default function SignupPage() {
             <div className="relative">
               <input
                 {...register("confirm_password")}
-                className="peer block w-96 rounded-md mb-4 border border-gray-200 py-[9px] pl-4 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-96 rounded-md mb-4 border border-var(--border-color)] py-[9px] pl-4 text-sm outline-2 placeholder:text-[var(--placeholder-color)]"
                 id="confirm_password"
                 type="password"
                 name="confirm_password"
                 placeholder="Enter password again"
                 required
               />
-              {errors.confirm_password && (<p className="text-xs italic text-red-500 mt-2">{errors.confirm_password?.message}</p>)}
+              {errors.confirm_password && (<p className="text-xs italic text-[var(--error-color)] mt-2">{errors.confirm_password?.message}</p>)}
             </div>
           </div>
 

@@ -4,18 +4,19 @@ export default function Layout({ children
 }) {
   return (
     <>
-      <main className="w-fit h-fit "
-      style={{
-        '--bg-color': 'offblack-100',
-        '--bg-color2': 'offblack-100',
-        '--mainHeading-color': '#1E1E1E',
-        '--subHeading-color': '#4C855A',
-        '--InputBorder-color': '#4C855A',
-        '--InputPlaceholder-color': '#4C855A',
-        '--error-color': '#4C855A',
-        '--redirect-color': '#4C855A',
-        '--hover-color': '#4C855A',
-      } as React.CSSProperties}>
+      <main
+        className="w-fit h-fit "
+        style={{
+        '--bg-color': '#172335',
+        '--bg-color2': '#453148',
+        '--mainText-color': '#FFFFFF',
+        '--border-color': '#e5e7eb',
+        '--placeholder-color': '#6b7280',
+        '--error-color': '#ef4444',
+        '--hover-color': '#141719',
+        backgroundImage: 'url("/backgrounds/hero.jpg")',
+      } as React.CSSProperties}
+      >
         {children}
         <div
           id="entry-radial"
