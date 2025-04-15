@@ -16,7 +16,11 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
-  redirect('/offseason');
+<<<<<<< HEAD
+  //redirect('/offseason');
+=======
+  //redirect("/offseason")
+>>>>>>> b721c2b99762df9aef733c5fcee593bd3b658150
 
   return (
     <main
