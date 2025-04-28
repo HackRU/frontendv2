@@ -1,12 +1,10 @@
 export default function FAQ() {
   return (
     <div
-      className="bg-gray-400 w-full h-fit
-      flex flex-col justify-center items-center"
+      className="flex h-fit w-full
+      flex-col items-center justify-center bg-gray-400"
     >
-      <h1 className="font-extrabold text-5xl">
-        FAQ
-      </h1>
+      <h1 className="text-5xl font-extrabold">FAQ</h1>
     </div>
   );
 }
