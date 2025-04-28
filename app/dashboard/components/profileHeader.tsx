@@ -13,6 +13,7 @@ import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import { ConfirmComingOrNot } from '@/app/lib/data';
 import Link from 'next/link';
+import { dateInfo } from '@/app/lib/centralizedDate';
 
 //TODO: coming and not-coming should be ENUMS!!!!
 
@@ -252,12 +253,12 @@ export default function ProfileHeader(props: {
                 <CardTitle>
 
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on February 1st.
+                  show up on {dateInfo.confirmedDateText}.
 
                 </CardTitle>
                 <CardDescription>
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on February 1st. You are guarenteed entry if you show up before 10:45am, at which point it will be first come first served. 
+                  show up on {dateInfo.confirmedDateText}. You are guarenteed entry if you show up before 10:45am, at which point it will be first come first served. 
                 </CardDescription>
               </>
             )}

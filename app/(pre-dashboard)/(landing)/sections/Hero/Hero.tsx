@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSelf } from '@/app/lib/data';
 import { bigelowRules, brush } from '@/app/ui/fonts';
+import { dateInfo } from "@/app/lib/centralizedDate";
+
 
 const FIRE_IMG = ['/landing/S2025/HACKRU_main_title.png'];
 const POKER_IMG = ['/landing/S2025/hero-main-art.png'];
@@ -113,7 +115,7 @@ export default function Hero() {
               <p
                 className={`${brush.className} text-2xl`}
               >
-                <span className="text-white">February 1 - 2, Busch Student Center </span>
+                <span className="text-white">{dateInfo.month} {dateInfo.startday} - {dateInfo.endday}, {dateInfo.location} </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
                 <button

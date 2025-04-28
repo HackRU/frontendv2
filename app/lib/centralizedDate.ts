@@ -8,6 +8,7 @@ export type DateInfo = {
     endday: number;
     time: string;
     location: string;
+    confirmedDateText: string;
 };
 
 export const dateInfo: DateInfo = {
@@ -18,6 +19,8 @@ export const dateInfo: DateInfo = {
     monthnumber: -1,
     startday: -1,
     endday: -1,
-    time: "12:00",
-    location:"Busch Student Center"
+    time: '12:00',
+    location:"Busch Student Center",
+    confirmedDateText: "month #th"
+
 };
