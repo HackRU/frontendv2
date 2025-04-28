@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { bizUdg } from '@/app/ui/fonts';
 import { longCang, brush } from '@/app/ui/fonts';
 import clsx from 'clsx';
+import { dateInfo } from "@/app/lib/centralizedDate";
+
 
 function scrollToSectionName(sectionName: string) {
   const section = document.getElementById(sectionName);
@@ -137,7 +139,7 @@ function Navbar() {
           width={100}
           height={100}
           src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
-          alt="Major League Hacking 2024 Hackathon Season"
+          alt={`Major League Hacking ${dateInfo.year} Hackathon Season`}
         />
       </a>
       <CollapsedMenu />

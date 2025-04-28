@@ -3,6 +3,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
 import { longCang, brush } from '@/app/ui/fonts';
+import { dateInfo } from "@/app/lib/centralizedDate";
 
 const animalQuality = 100;
 
@@ -216,11 +217,11 @@ export default function About() {
           <div className="pb-6 pt-6 border-t-8 border-cyan-100">
             <p className="inline  ">Apply</p>
             <p className="inline"> to attend our </p>
-            <p className="inline   ">Spring 2025 HackRU!</p>
+            <p className="inline">{dateInfo.season} {dateInfo.year} HackRU!</p>
             <p className="inline"> The event will be on</p>
-            <p className="inline   "> February 1 - 2</p>
+            <p className="inline   "> {dateInfo.month} {dateInfo.startday} - {dateInfo.endday}</p>
             <p className="inline"> at the</p>
-            <p className="inline   "> Busch Student Center.</p>
+            <p className="inline   "> {dateInfo.location}.</p>
           </div>
 
           <div className="pb-6">
