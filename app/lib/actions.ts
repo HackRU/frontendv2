@@ -71,11 +71,10 @@ const ENDPOINTS = {
    */
   points: BASE + '/points',
 
-  
   /**
    * verify email after being given a code
    */
-  verify: BASE + '/verify-email'
+  verify: BASE + '/verify-email',
 };
 
 export async function authenticate(email: string, password: string) {

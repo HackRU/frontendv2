@@ -24,8 +24,9 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -42,8 +43,9 @@ function OtherPageMenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
             history.push('/contact');
@@ -142,17 +144,17 @@ function Navbar() {
       </a>
       <CollapsedMenu />
       <div
-        className="text-dark_red-100 absolute right-20 top-0 z-40 hidden
-        w-full justify-end pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
+        className="absolute right-20 top-0 z-40 hidden w-full
+        justify-end pr-2 pt-4 text-sm font-light text-dark_red-100 sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
-          <div className="flex items-center justify-start relative">
+          <div className="relative flex items-center justify-start">
             <Image
               src="/landing/S2025/navbar-header.png"
               alt="Navigation background"
               width={1200}
               height={150}
-              className="absolute -z-10 right-0 -top-10 scale-110"
+              className="absolute -top-10 right-0 -z-10 scale-110"
             />
             {sections.map((section) => (
               <button

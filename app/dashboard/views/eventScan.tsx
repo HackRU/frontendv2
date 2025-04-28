@@ -1,10 +1,8 @@
-
 export default function EventScan(props: {
   events: string[];
   selectedEvent: string;
   onChange: (event: string) => void;
 }) {
-
   const { events, onChange, selectedEvent } = props;
 
   return (
@@ -17,12 +15,12 @@ export default function EventScan(props: {
         className="w-full text-black"
       >
         <option value="">Select an event</option>
-        {
-          events.map((event, index) => (
-            <option key={index} value={event}>{event}</option>
-          ))
-        }
+        {events.map((event, index) => (
+          <option key={index} value={event}>
+            {event}
+          </option>
+        ))}
       </select>
     </div>
-  )
+  );
 }

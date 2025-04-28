@@ -1,14 +1,14 @@
 import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
-   pages: {
-     signIn: '/login',
-   },
+  pages: {
+    signIn: '/login',
+  },
   providers: [
     // added later in auth.ts since it requires bcrypt which is only compatible with Node.js
     // while this file is also used in non-Node.js environments
   ],
-  session:{
+  session: {
     maxAge: 259200,
   },
   callbacks: {
@@ -18,9 +18,9 @@ export const authConfig = {
       if (isOnDashboard) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
-      } 
+      }
       const isOnLogin = nextUrl.pathname.startsWith('/login');
-      if (isOnLogin && isLoggedIn){
+      if (isOnLogin && isLoggedIn) {
         return Response.redirect(new URL('/dashboard', nextUrl));
       }
       return true;

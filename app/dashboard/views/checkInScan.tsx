@@ -1,13 +1,12 @@
-
-
 export default function CheckInScan(props: {
-  status: "SUCCESSFUL" | "PENDING" | "FAILED" | "AWAITING SCAN" | "AWAITING RESPONSE";
+  status:
+    | 'SUCCESSFUL'
+    | 'PENDING'
+    | 'FAILED'
+    | 'AWAITING SCAN'
+    | 'AWAITING RESPONSE';
 }) {
   const { status } = props;
 
-  return (
-    <div className="w-full text-center">
-
-    </div>
-  );
+  return <div className="w-full text-center"></div>;
 }

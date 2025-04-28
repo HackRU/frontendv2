@@ -135,18 +135,16 @@ export async function getSelf(): Promise<{
 
     //console.log(resp)
 
-
     if (resp.error === '') {
       return {
         response: resp.response as unknown as Record<any, any>,
         error: '',
       };
-    }
-    else if (resp.error){
+    } else if (resp.error) {
       return {
-        error: resp.error ,
+        error: resp.error,
         response: {},
-      }
+      };
     }
   }
 
@@ -188,17 +186,14 @@ export async function RegisterSelf() {
   return 'Something went wrong';
 }
 
-export async function OptInSelf(stat:boolean) {
+export async function OptInSelf(stat: boolean) {
   const session = await auth();
   console.log('Register Self');
   if (session?.user && session?.user?.email) {
-    const resp = await SetUser(
-      { opt_in:  stat},
-      session.user.email,
-    );
+    const resp = await SetUser({ opt_in: stat }, session.user.email);
 
     if (resp.error === '') {
-      return "GOOD";
+      return 'GOOD';
     }
     return resp.error;
   }
@@ -206,19 +201,19 @@ export async function OptInSelf(stat:boolean) {
   return 'Something went wrong';
 }
 
-export async function TransportMethodSelf(method:string) {
+export async function TransportMethodSelf(method: string) {
   const session = await auth();
   console.log('Tansport Self');
   if (session?.user && session?.user?.email) {
     const resp = await SetUser(
-      { transportation_method:  method},
+      { transportation_method: method },
       session.user.email,
     );
 
     console.log(resp);
 
     if (resp.error === '') {
-      return "GOOD";
+      return 'GOOD';
     }
     return resp.error;
   }

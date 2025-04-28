@@ -18,10 +18,10 @@ function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
             className="mt-2 flex w-full flex-row pr-4 text-xl md:my-5 md:px-3"
             key={`${day}-${index}`}
           >
-            <div className="h-fit w-2/5 pr-2 text-right font-black text-white-100">
+            <div className="text-white-100 h-fit w-2/5 pr-2 text-right font-black">
               {timeInfo.time}
             </div>
-            <div className="flex w-3/5 pl-20 flex-col">
+            <div className="flex w-3/5 flex-col pl-20">
               <div className="text-md w-3/5">{timeInfo.event}</div>
               <div className="w-3/5 text-sm">{timeInfo.location}</div>
             </div>
@@ -54,11 +54,23 @@ const schedule = {
       { time: '12:00 PM', event: 'Team Building', location: 'tbd' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
-      { time: '1:30 PM', event: 'Wakefern Cafe + Arcade', location: 'The Cove' },
+      {
+        time: '1:30 PM',
+        event: 'Wakefern Cafe + Arcade',
+        location: 'The Cove',
+      },
       { time: '2:30 PM', event: 'Wakefern Coffee Chats', location: 'tbd' },
-      { time: '4:00 PM', event: 'MLH Workshop: Github Copilot', location: 'tbd' },
+      {
+        time: '4:00 PM',
+        event: 'MLH Workshop: Github Copilot',
+        location: 'tbd',
+      },
       { time: '5:00 PM', event: 'iCIMS talk', location: 'tbd' },
-      { time: '6:00 PM', event: 'MLH Workshop: Building with Figma', location: 'tbd' },
+      {
+        time: '6:00 PM',
+        event: 'MLH Workshop: Building with Figma',
+        location: 'tbd',
+      },
       { time: '8:00 PM', event: 'Dinner', location: 'In Front of MPR' },
     ],
   },
@@ -98,14 +110,14 @@ export default function Schedule() {
   const [mapOpen, setMapOpen] = useState(false);
   return (
     <div
-      className="relative z-10 mb-20 flex w-full max-w-7xl justify-center mx-auto"
+      className="relative z-10 mx-auto mb-20 flex w-full max-w-7xl justify-center"
       id="Schedule"
     >
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
-          className="bg-[url('/landing/S2025/chalk1.png')] bg-no-repeat bg-cover bg-center text-text relative flex
-                                p-20
-                                w-full flex-col items-center md:flex-row md:items-start md:bg-[length:100%_100%] xs:bg-[length:100%_110%]"
+          className="text-text relative flex w-full flex-col items-center bg-[url('/landing/S2025/chalk1.png')]
+                                bg-cover
+                                bg-center bg-no-repeat p-20 xs:bg-[length:100%_110%] md:flex-row md:items-start md:bg-[length:100%_100%]"
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
@@ -115,10 +127,10 @@ export default function Schedule() {
               onClick={() => {
                 setMapOpen(true);
               }}
-              className="items-center justify-center
-              rounded-lg border-x-4 border-y-2 border-solid
-              border-orange-500 bg-transparent text-xl text-orange-500
-              transition-all duration-100 hover:drop-shadow-[0_0_8px_orange] hidden
+              className="hidden items-center
+              justify-center rounded-lg border-x-4 border-y-2
+              border-solid border-orange-500 bg-transparent text-xl
+              text-orange-500 transition-all duration-100 hover:drop-shadow-[0_0_8px_orange]
                            "
             >
               <strong>Show Event Map</strong>
@@ -136,31 +148,29 @@ export default function Schedule() {
           quality={50}
         /> */}
 
-
       <Image
-        src={"/landing/S2025/minichef 2.png"}
+        src={'/landing/S2025/minichef 2.png'}
         width="600"
         height="600"
-        className="absolute -top-44 right-14 w-[150px] invisible md:visible"
+        className="invisible absolute -top-44 right-14 w-[150px] md:visible"
         alt={'cool'}
         quality={50}
       />
 
       <Image
-        src={"/landing/S2025/minichef 3.png"}
+        src={'/landing/S2025/minichef 3.png'}
         width="600"
         height="600"
-        className="absolute -top-64 left-14 w-[200px] invisible md:visible"
+        className="invisible absolute -top-64 left-14 w-[200px] md:visible"
         alt={'cool'}
         quality={50}
       />
 
-
       <Image
-        src={"/landing/S2025/lightsv2.png"}
+        src={'/landing/S2025/lightsv2.png'}
         width="1000"
         height="1000"
-        className="w-[1000px] md:w-[1200px] absolute -bottom-[300px] md:-bottom-[400px] lg:-bottom-[550px]"
+        className="absolute -bottom-[300px] w-[1000px] md:-bottom-[400px] md:w-[1200px] lg:-bottom-[550px]"
         alt={'cool'}
         quality={50}
       />
@@ -217,7 +227,6 @@ export default function Schedule() {
           </div>
         </Dialog>
       </Transition>
-
     </div>
   );
 }
