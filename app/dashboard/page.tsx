@@ -380,10 +380,24 @@ export default function Dashboard() {
     }
   }
 
-  const validateEmail = (email: string) => {
+  const validateEmail = async (email: string): Promise<boolean> => {
     if (!email) return true; // Empty is valid as it's optional
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+
+    // Check if email exists in database
+  try {
+    // Use an existing API function to check if the email exists
+    // You need to either find an existing API call or add a new one
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/exists?email=${encodeURIComponent(email)}`);
+    const data = await response.json();
+    return data.exists === true;
+  } catch (error) {
+    console.error("Error checking email existence:", error);
+    return false; // Fail closed for safety
+  }
   }
 
   // First useEffect to fetch and set schools data
@@ -683,6 +697,32 @@ export default function Dashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+              {/* Team members display section */}
+              {(userData?.team_member_1 || userData?.team_member_2 || userData?.team_member_3) && (
+                <div className="mb-6 p-4 bg-gray-800 rounded-md">
+                  <h3 className="text-lg font-semibold mb-2">Your Team Members</h3>
+                  <ul className="space-y-2">
+                    {userData?.team_member_1 && (
+                      <li className="flex items-center">
+                        <span className="text-green-400 mr-2">✓</span>
+                        {userData.team_member_1}
+                      </li>
+                    )}
+                    {userData?.team_member_2 && (
+                      <li className="flex items-center">
+                        <span className="text-green-400 mr-2">✓</span>
+                        {userData.team_member_2}
+                      </li>
+                    )}
+                    {userData?.team_member_3 && (
+                      <li className="flex items-center">
+                        <span className="text-green-400 mr-2">✓</span>
+                        {userData.team_member_3}
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
               <div className="m-4">
                 <Label htmlFor="team_member_1">Team Member 1</Label>
                 <Input
