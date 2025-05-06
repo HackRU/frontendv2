@@ -16,6 +16,8 @@ import { Suspense } from 'react';
 import { getSelf, getUsers } from '@/app/lib/data';
 import { generatePagination } from '@/app/lib/utils';
 import { useState, useEffect } from 'react';
+import { GetAllUsers } from '@/app/lib/actions';
+import { set } from 'zod';
 
 function DirectorView(userData: any) {
 
@@ -28,11 +30,12 @@ function DirectorView(userData: any) {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const data = await getUsers()
-        // console.log(data)
-        setAllUsers(data);
-        setUsers(data);
-        setTotal(Math.ceil(Object.keys(data).length / 10))
+        const data = await GetAllUsers();
+        const users = data.response;
+        console.log(users)
+        setAllUsers(users);
+        setUsers(users);
+        setTotal(Math.ceil(Object.keys(users).length / 10));
         //   setLoading(false);
       } catch (error) {
         console.log(error);
@@ -42,29 +45,45 @@ function DirectorView(userData: any) {
 
     fetchUsers();
   }, []);
-
+  
   useEffect(() => {
-    if (query === "") {
-      setUsers(allUsers)
-      allUsers && setTotal(Math.ceil(Object.keys(allUsers).length / 10))
-      setPage(1)
+    // don’t even try to filter until allUsers has loaded
+    if (!allUsers) return;
+  
+    const q = query.toLowerCase();
+  
+    if (q === "") {
+      setUsers(allUsers);
+      setTotal(Math.ceil(Object.keys(allUsers).length / 10));
+      setPage(1);
+      return;
     }
-    else {
-      const filteredUsers = Object.keys(allUsers)
-        .filter(email =>
-          (allUsers[email].first_name.toLowerCase().includes(query.toLowerCase())
-            || allUsers[email].last_name.toLowerCase().includes(query.toLowerCase())
-            || email.split('@')[0].toLowerCase().includes(query.toLowerCase()))
-          || (allUsers[email].registration_status.toLowerCase() === query.toLowerCase())
-        )
-        .reduce((res: Record<string, typeof allUsers[keyof typeof allUsers]>, email) => (res[email] = allUsers[email], res), {})
-
-      setUsers(filteredUsers);
-      // console.log(filteredUsers)
-      setTotal(Math.ceil(Object.keys(filteredUsers).length / 10))
-      setPage(1)
-    }
-  }, [query])
+  
+    const filtered = Object.keys(allUsers)
+      .filter(email => {
+        const user = allUsers[email];
+        // safely default each field to '' if undefined
+        const firstName = user.first_name?.toLowerCase()        || "";
+        const lastName  = user.last_name?.toLowerCase()         || "";
+        const namePart  = email.split("@")[0].toLowerCase()     || "";
+        const status    = user.registration_status?.toLowerCase()|| "";
+  
+        return (
+          firstName.includes(q) ||
+          lastName.includes(q)  ||
+          namePart.includes(q)  ||
+          status === q
+        );
+      })
+      .reduce((acc, email) => {
+        acc[email] = allUsers[email];
+        return acc;
+      }, {} as Record<string, typeof allUsers[keyof typeof allUsers]>);
+  
+    setUsers(filtered);
+    setTotal(Math.ceil(Object.keys(filtered).length / 10));
+    setPage(1);
+  }, [query, allUsers]);
 
   const allPages = generatePagination(currentPage, totalPages);
 
@@ -190,7 +209,7 @@ function DirectorView(userData: any) {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-3">
-                        {email}
+                        {users[email].email}
                       </td>
                       <td className="whitespace-nowrap px-3 py-3">
                         {users[email].registration_status}
