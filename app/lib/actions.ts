@@ -75,7 +75,12 @@ const ENDPOINTS = {
   /**
    * verify email after being given a code
    */
-  verify: BASE + '/verify-email'
+  verify: BASE + '/verify-email',
+
+  /**
+   * Deletes a user
+   */
+  deleteUser : BASE + '/delete'
 };
 
 export async function authenticate(email: string, password: string) {
@@ -979,6 +984,39 @@ export async function GetAllUsers() {
       let resJSON = await res.json();
       if (res.status !== 200) {
         resp.error = 'Error Getting All Users';
+      } else {
+        resp.response = resJSON;
+      }
+    });
+  } else {
+    resp.error = 'User not authenticated';
+  }
+  return resp;
+}
+
+export async function DeleteUser(email: string) {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.userData, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        auth_email: session.user.email,
+        email: email,
+        auth_token: session.user.name,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !== 200) {
+        resp.error = `Error Deleting User ${email}`;
       } else {
         resp.response = resJSON;
       }

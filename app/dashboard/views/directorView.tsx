@@ -230,7 +230,7 @@ function DirectorView(userData: any) {
                           </Link>
 
                           {/* <form> */}
-                          <button onClick={() => (document.getElementById(email) as HTMLDialogElement)?.showModal()} className="rounded-md border p-2 hover:bg-gray-100">
+                          <button onClick={() => (document.getElementById(users[email].email) as HTMLDialogElement)?.showModal()} className="rounded-md border p-2 hover:bg-gray-100">
                             <span className="sr-only">Delete</span>
                             <TrashIcon className="w-5" />
                           </button>
@@ -246,10 +246,10 @@ function DirectorView(userData: any) {
         </div>
 
         {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email: string) => (
-          <dialog key={email} id={email} className="modal bg-transparent">
+          <dialog key={users[email].email} id={users[email].email} className="modal bg-transparent">
             <div className="p-8 border bg-card text-card-foreground shadow-sm rounded-3xl bg-gray-50">
               <div className="modal-box">
-                <h3 className="font-bold text-3xl">Confirm delete user {email}?</h3>
+                <h3 className="font-bold text-3xl">Confirm delete user {users[email].email}?</h3>
                 <hr className="h-px bg-gray-50 border-0 w-full"></hr>
 
                 <p className="py-4 text-xl">This action cannot be undone</p>
