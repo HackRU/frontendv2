@@ -28,7 +28,7 @@ export default function UpdateUserModal({
     school: user.school || '',
     grad_year: user.grad_year || '',
     shirt_size: user.shirt_size || '',
-    short_answer: user.short_answer || '',    // <--- added
+    short_answer: user.short_answer || '',    
     dietary_restrictions: user.dietary_restrictions || '',
     special_needs: user.special_needs || '',
     date_of_birth: user.date_of_birth || '',
@@ -52,7 +52,7 @@ export default function UpdateUserModal({
       school: user.school || '',
       grad_year: user.grad_year || '',
       shirt_size: user.shirt_size || '',
-      short_answer: user.short_answer || '',    // <--- added
+      short_answer: user.short_answer || '',   
       dietary_restrictions: user.dietary_restrictions || '',
       special_needs: user.special_needs || '',
       date_of_birth: user.date_of_birth || '',
@@ -273,8 +273,8 @@ export default function UpdateUserModal({
 
           <div>
             <label className="block text-sm">Short Answer</label>
-            <textarea
-              name="short_answer"                           // <--- added field
+            <input
+              name="short_answer"                           
               value={formData.short_answer}
               onChange={handleChange}
               className="mt-1 block w-full border rounded px-2 py-1"
