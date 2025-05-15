@@ -20,6 +20,8 @@ import { GetAllUsers } from '@/app/lib/actions';
 import { DeleteUser } from '@/app/lib/actions';
 import { set } from 'zod';
 import ConfirmDeleteModal from '@/app/ui/confirmDeleteModal';
+import UpdateUserModal from '@/app/ui/updateUserModal';
+
 
 function DirectorView(userData: any) {
 
@@ -29,6 +31,7 @@ function DirectorView(userData: any) {
   const [currentPage, setPage] = useState<number>(1);
   const [totalPages, setTotal] = useState<number>(1);
   const [pendingDeleteEmail, setPendingDeleteEmail] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
 
 
   const fetchUsers = async () => {
@@ -55,6 +58,12 @@ function DirectorView(userData: any) {
     }
       
   }
+
+  const openUpdateModal = (email: string) => {
+    const user = users[email];
+    setSelectedUser(user);
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -234,12 +243,11 @@ function DirectorView(userData: any) {
                   </td> */}
                       <td className="whitespace-nowrap py-3 pl-6 pr-3">
                         <div className="flex justify-end gap-3">
-                          <Link
-                            href={`/dashboard`}
+                          <button onClick={() => openUpdateModal(email)}
                             className="rounded-md border p-2 hover:bg-gray-100"
                           >
-                            <PencilIcon className="w-5" />
-                          </Link>
+                            <PencilIcon className="w-5 hover:text-blue-600" />
+                          </button>
 
                          {/* <form> */}
                         <button
@@ -329,6 +337,15 @@ function DirectorView(userData: any) {
         }}
         onCancel={() => setPendingDeleteEmail(null)}
        />;
+      <UpdateUserModal
+        isOpen={!!selectedUser}
+        user={selectedUser}
+        onClose={() => setSelectedUser(null)}
+        onUpdated={() => {
+          fetchUsers();
+          setSelectedUser(null);
+        }}
+      />
     </div>
   )
 
