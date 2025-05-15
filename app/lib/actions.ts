@@ -304,8 +304,8 @@ export async function SetUser(data: any, user_email_to_update: string) {
       .then(async (res) => {
         let resJSON = await res.json();
         if (resJSON.statusCode !== 200) {
-          if (resJSON?.error) {
-            resp.error = resJSON.error;
+          if (resJSON?.message) {
+            resp.error = resJSON.message;
           } else {
             resp.error = 'Unexpected Error';
           }

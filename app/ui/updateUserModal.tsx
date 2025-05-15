@@ -28,6 +28,7 @@ export default function UpdateUserModal({
     school: user.school || '',
     grad_year: user.grad_year || '',
     shirt_size: user.shirt_size || '',
+    short_answer: user.short_answer || '',    // <--- added
     dietary_restrictions: user.dietary_restrictions || '',
     special_needs: user.special_needs || '',
     date_of_birth: user.date_of_birth || '',
@@ -41,7 +42,6 @@ export default function UpdateUserModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Keep form in sync when user prop changes
   useEffect(() => {
     setFormData({
       first_name: user.first_name || '',
@@ -52,6 +52,7 @@ export default function UpdateUserModal({
       school: user.school || '',
       grad_year: user.grad_year || '',
       shirt_size: user.shirt_size || '',
+      short_answer: user.short_answer || '',    // <--- added
       dietary_restrictions: user.dietary_restrictions || '',
       special_needs: user.special_needs || '',
       date_of_birth: user.date_of_birth || '',
@@ -76,7 +77,6 @@ export default function UpdateUserModal({
     setError('');
     try {
       const resp = await SetUser(formData, user.email);
-      console.log(resp);
       if (resp.error) {
         setError(resp.error);
       } else {
@@ -84,6 +84,7 @@ export default function UpdateUserModal({
         onClose();
       }
     } catch (e) {
+      console.error(e);
       setError('Failed to update user');
     }
     setLoading(false);
@@ -269,6 +270,17 @@ export default function UpdateUserModal({
               className="mt-1 block w-full border rounded px-2 py-1"
             />
           </div>
+
+          <div>
+            <label className="block text-sm">Short Answer</label>
+            <textarea
+              name="short_answer"                           // <--- added field
+              value={formData.short_answer}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded px-2 py-1"
+            />
+          </div>
+
         </div>
 
         <div className="mt-6 flex justify-end gap-3">
