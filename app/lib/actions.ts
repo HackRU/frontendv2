@@ -1003,26 +1003,28 @@ export async function DeleteUser(email: string) {
 
   const session = await auth();
   if (session?.user) {
-    await fetch(ENDPOINTS.userData, {
+    await fetch(ENDPOINTS.deleteUser, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        user_email: email,
         auth_email: session.user.email,
-        email: email,
         auth_token: session.user.name,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
       if (res.status !== 200) {
-        resp.error = `Error Deleting User ${email}`;
+        resp.error = resJSON.message;
       } else {
+        console.log(`Deleted user ${email}`);
         resp.response = resJSON;
       }
     });
   } else {
-    resp.error = 'User not authenticated';
+    resp.error = 'Unknown error';
   }
+  console.log(resp);
   return resp;
 }

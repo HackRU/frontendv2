@@ -247,7 +247,7 @@ function DirectorView(userData: any) {
         </div>
 
         {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email: string) => (
-          <dialog key={users[email].email} id={users[email].email} className="modal bg-transparent">
+          <dialog key={users[email].email} id={users[email].email} className="modal modal-open bg-transparent z-50">
             <div className="p-8 border bg-card text-card-foreground shadow-sm rounded-3xl bg-gray-50">
               <div className="modal-box">
                 <h3 className="font-bold text-3xl">Confirm delete user {users[email].email}?</h3>
@@ -269,7 +269,6 @@ function DirectorView(userData: any) {
           </dialog>
 
         ))}
-
 
         <div className="mt-5 flex w-full justify-center">
           <div className="inline-flex">
