@@ -19,6 +19,7 @@ import { useState, useEffect } from 'react';
 import { GetAllUsers } from '@/app/lib/actions';
 import { DeleteUser } from '@/app/lib/actions';
 import { set } from 'zod';
+import ConfirmDeleteModal from '@/app/ui/confirmDeleteModal';
 
 function DirectorView(userData: any) {
 
@@ -27,6 +28,8 @@ function DirectorView(userData: any) {
   const [query, setQuery] = useState<String>("");
   const [currentPage, setPage] = useState<number>(1);
   const [totalPages, setTotal] = useState<number>(1);
+  const [pendingDeleteEmail, setPendingDeleteEmail] = useState<string | null>(null);
+
 
   const fetchUsers = async () => {
       try {
@@ -131,7 +134,7 @@ function DirectorView(userData: any) {
               <div className="md:hidden">
                 {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email: string) => (
                   <div
-                    key={email}
+                    key={users[email].email}
                     className="mb-2 w-full rounded-md bg-white p-4"
                   >
                     <div className="flex items-center justify-between border-b pb-4">
@@ -146,7 +149,7 @@ function DirectorView(userData: any) {
                       /> */}
                           <p>{users[email].first_name} {users[email].last_name}</p>
                         </div>
-                        <p className="text-sm text-gray-500">{email}</p>
+                        <p className="text-sm text-gray-500">{users[email].email}</p>
                       </div>
                       {/* <InvoiceStatus status={invoice.status} /> */}
                     </div>
@@ -165,12 +168,11 @@ function DirectorView(userData: any) {
                         </Link>
 
                         {/* <form> */}
-                        <button onClick={() => (document.getElementById(email) as HTMLDialogElement)?.showModal()} className="rounded-md border p-2 hover:bg-gray-100">
-                          <span className="sr-only">Delete</span>
-                          <TrashIcon className="w-5" />
+                       <button onClick={() => setPendingDeleteEmail(email)}>
+                          <TrashIcon className="w-5 hover:text-red-600" />
                         </button>
                         {/* </form> */}
-
+                        
                       </div>
 
                     </div>
@@ -239,12 +241,14 @@ function DirectorView(userData: any) {
                             <PencilIcon className="w-5" />
                           </Link>
 
-                          {/* <form> */}
-                          <button onClick={() => (document.getElementById(users[email].email) as HTMLDialogElement)?.showModal()} className="rounded-md border p-2 hover:bg-gray-100">
-                            <span className="sr-only">Delete</span>
-                            <TrashIcon className="w-5" />
-                          </button>
-                          {/* </form> */}
+                         {/* <form> */}
+                        <button
+                          onClick={() => setPendingDeleteEmail(users[email].email)}
+                          className="rounded-md border p-2 hover:bg-gray-100"
+                        >
+                          <TrashIcon className="w-5" />
+                        </button>
+                        {/* </form> */}
                         </div>
                       </td>
                     </tr>
@@ -316,6 +320,15 @@ function DirectorView(userData: any) {
           </div>
         </div>
       </div>
+      <ConfirmDeleteModal
+        isOpen={pendingDeleteEmail !== null}
+        email={pendingDeleteEmail || ''}
+        onConfirm={() => {
+          if (pendingDeleteEmail) handleDelete(pendingDeleteEmail);
+          setPendingDeleteEmail(null);
+        }}
+        onCancel={() => setPendingDeleteEmail(null)}
+       />;
     </div>
   )
 
