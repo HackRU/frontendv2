@@ -64,6 +64,11 @@ function DirectorView(userData: any) {
     setSelectedUser(user);
   };
 
+  const handleUpdateSuccess = () => {
+    fetchUsers();
+    setSelectedUser(null);
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -342,10 +347,7 @@ function DirectorView(userData: any) {
         isOpen={!!selectedUser}
         user={selectedUser}
         onClose={() => setSelectedUser(null)}
-        onUpdated={() => {
-          fetchUsers();
-          setSelectedUser(null);
-        }}
+        onUpdated={handleUpdateSuccess}
       />
     </div>
   )

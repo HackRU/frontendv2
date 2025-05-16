@@ -73,23 +73,42 @@ export default function UpdateUserModal({
     setFormData((fd) => ({ ...fd, [name]: value }));
   };
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const resp = await SetUser(formData, user.email);
-      if (resp.error) {
-        setError(resp.error);
-      } else {
-        onUpdated();
-        onClose();
-      }
-    } catch (e) {
-      console.error(e);
-      setError('Failed to update user');
+const handleSubmit = async () => {
+  setLoading(true);
+  setError('');
+
+  // Gather only the changed fields:
+  const changed: Record<string, any> = {};
+  Object.keys(formData).forEach((key) => {
+    // @ts-ignore
+    if (formData[key] !== user?.[key]) {
+      // @ts-ignore
+      changed[key] = formData[key];
     }
+  });
+
+  // If nothing changed, just close the modal:
+  if (Object.keys(changed).length === 0) {
+    onClose();
     setLoading(false);
-  };
+    return;
+  }
+
+  try {
+    const resp = await SetUser(changed, user.email);
+    if (resp.error) {
+      setError(resp.error);
+    } else {
+      onUpdated();
+      onClose();
+    }
+  } catch (e) {
+    console.error(e);
+    setError('Failed to update user');
+  }
+
+  setLoading(false);
+};
 
   return createPortal(
     <div className="fixed inset-0 z-40 flex items-center justify-center">
