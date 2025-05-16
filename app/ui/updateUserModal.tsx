@@ -17,7 +17,7 @@ export default function UpdateUserModal({
   onClose,
   onUpdated,
 }: UpdateUserModalProps) {
-  if (!isOpen) return null;
+ 
 
   const [formData, setFormData] = useState({
     first_name: user.first_name || '',
@@ -65,6 +65,7 @@ export default function UpdateUserModal({
     });
   }, [user]);
 
+  if (!isOpen) return null;
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {

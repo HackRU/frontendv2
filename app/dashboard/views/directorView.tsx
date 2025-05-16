@@ -243,7 +243,8 @@ function DirectorView(userData: any) {
                   </td> */}
                       <td className="whitespace-nowrap py-3 pl-6 pr-3">
                         <div className="flex justify-end gap-3">
-                          <button onClick={() => openUpdateModal(email)}
+                          <button
+                            onClick={() => openUpdateModal(email)}
                             className="rounded-md border p-2 hover:bg-gray-100"
                           >
                             <PencilIcon className="w-5 hover:text-blue-600" />
@@ -336,7 +337,7 @@ function DirectorView(userData: any) {
           setPendingDeleteEmail(null);
         }}
         onCancel={() => setPendingDeleteEmail(null)}
-       />;
+      />;
       <UpdateUserModal
         isOpen={!!selectedUser}
         user={selectedUser}
