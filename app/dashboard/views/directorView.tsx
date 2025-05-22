@@ -16,6 +16,12 @@ import { Suspense } from 'react';
 import { getSelf, getUsers } from '@/app/lib/data';
 import { generatePagination } from '@/app/lib/utils';
 import { useState, useEffect } from 'react';
+import { GetAllUsers } from '@/app/lib/actions';
+import { DeleteUser } from '@/app/lib/actions';
+import { set } from 'zod';
+import ConfirmDeleteModal from '@/app/ui/confirmDeleteModal';
+import UpdateUserModal from '@/app/ui/updateUserModal';
+
 
 function DirectorView(userData: any) {
   const [allUsers, setAllUsers] = useState<any>(null);
@@ -23,15 +29,18 @@ function DirectorView(userData: any) {
   const [query, setQuery] = useState<String>('');
   const [currentPage, setPage] = useState<number>(1);
   const [totalPages, setTotal] = useState<number>(1);
+  const [pendingDeleteEmail, setPendingDeleteEmail] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
 
-  useEffect(() => {
-    async function fetchUsers() {
+
+  const fetchUsers = async () => {
       try {
-        const data = await getUsers();
-        // console.log(data)
-        setAllUsers(data);
-        setUsers(data);
-        setTotal(Math.ceil(Object.keys(data).length / 10));
+        const data = await GetAllUsers();
+        const users = data.response;
+        console.log(users)
+        setAllUsers(users);
+        setUsers(users);
+        setTotal(Math.ceil(Object.keys(users).length / 10));
         //   setLoading(false);
       } catch (error) {
         console.log(error);
@@ -39,42 +48,68 @@ function DirectorView(userData: any) {
       }
     }
 
+  const handleDelete = async (email: string) => {
+    try { 
+      await DeleteUser(email);
+      await fetchUsers();
+    } catch(error) {
+      console.log(error);
+    }
+      
+  }
+
+  const openUpdateModal = (email: string) => {
+    const user = users[email];
+    setSelectedUser(user);
+  };
+
+  const handleUpdateSuccess = () => {
     fetchUsers();
-  }, []);
+    setSelectedUser(null);
+  };
 
   useEffect(() => {
-    if (query === '') {
+    fetchUsers();
+  }, []);
+  
+  useEffect(() => {
+    // don’t even try to filter until allUsers has loaded
+    if (!allUsers) return;
+  
+    const q = query.toLowerCase();
+  
+    if (q === "") {
       setUsers(allUsers);
-      allUsers && setTotal(Math.ceil(Object.keys(allUsers).length / 10));
+      setTotal(Math.ceil(Object.keys(allUsers).length / 10));
       setPage(1);
-    } else {
-      const filteredUsers = Object.keys(allUsers)
-        .filter(
-          (email) =>
-            allUsers[email].first_name
-              .toLowerCase()
-              .includes(query.toLowerCase()) ||
-            allUsers[email].last_name
-              .toLowerCase()
-              .includes(query.toLowerCase()) ||
-            email.split('@')[0].toLowerCase().includes(query.toLowerCase()) ||
-            allUsers[email].registration_status.toLowerCase() ===
-              query.toLowerCase(),
-        )
-        .reduce(
-          (
-            res: Record<string, (typeof allUsers)[keyof typeof allUsers]>,
-            email,
-          ) => ((res[email] = allUsers[email]), res),
-          {},
-        );
-
-      setUsers(filteredUsers);
-      // console.log(filteredUsers)
-      setTotal(Math.ceil(Object.keys(filteredUsers).length / 10));
-      setPage(1);
+      return;
     }
-  }, [query]);
+  
+    const filtered = Object.keys(allUsers)
+      .filter(email => {
+        const user = allUsers[email];
+        // safely default each field to '' if undefined
+        const firstName = user.first_name?.toLowerCase()        || "";
+        const lastName  = user.last_name?.toLowerCase()         || "";
+        const namePart  = email.split("@")[0].toLowerCase()     || "";
+        const status    = user.registration_status?.toLowerCase()|| "";
+  
+        return (
+          firstName.includes(q) ||
+          lastName.includes(q)  ||
+          namePart.includes(q)  ||
+          status === q
+        );
+      })
+      .reduce((acc, email) => {
+        acc[email] = allUsers[email];
+        return acc;
+      }, {} as Record<string, typeof allUsers[keyof typeof allUsers]>);
+  
+    setUsers(filtered);
+    setTotal(Math.ceil(Object.keys(filtered).length / 10));
+    setPage(1);
+  }, [query, allUsers]);
 
   const allPages = generatePagination(currentPage, totalPages);
 
@@ -106,18 +141,15 @@ function DirectorView(userData: any) {
           <div className="inline-block min-w-full align-middle">
             <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
               <div className="md:hidden">
-                {users &&
-                  Object.keys(users)
-                    .slice((currentPage - 1) * 10, currentPage * 10)
-                    .map((email: string) => (
-                      <div
-                        key={email}
-                        className="mb-2 w-full rounded-md bg-white p-4"
-                      >
-                        <div className="flex items-center justify-between border-b pb-4">
-                          <div>
-                            <div className="mb-2 flex items-center">
-                              {/* <Image
+                {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email: string) => (
+                  <div
+                    key={users[email].email}
+                    className="mb-2 w-full rounded-md bg-white p-4"
+                  >
+                    <div className="flex items-center justify-between border-b pb-4">
+                      <div>
+                        <div className="mb-2 flex items-center">
+                          {/* <Image
                           src={users[email].image_url}
                           className="mr-2 rounded-full"
                           width={28}
@@ -164,6 +196,30 @@ function DirectorView(userData: any) {
                             {/* </form> */}
                           </div>
                         </div>
+                        <p className="text-sm text-gray-500">{users[email].email}</p>
+                      </div>
+                      {/* <InvoiceStatus status={invoice.status} /> */}
+                    </div>
+                    <div className="flex w-full items-center justify-between pt-4">
+                      <div>
+                        <p className="text-xl font-medium">
+                          {users[email].registration_status}
+                        </p>
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <Link
+                          href={`/dashboard`}
+                          className="rounded-md border p-2 hover:bg-gray-100"
+                        >
+                          <PencilIcon className="w-5" />
+                        </Link>
+
+                        {/* <form> */}
+                       <button onClick={() => setPendingDeleteEmail(email)}>
+                          <TrashIcon className="w-5 hover:text-red-600" />
+                        </button>
+                        {/* </form> */}
+                        
                       </div>
                     ))}
               </div>
@@ -208,84 +264,71 @@ function DirectorView(userData: any) {
                           height={28}
                           alt={`${users[email].first_name}'s profile picture`}
                       /> */}
-                              <p>
-                                {users[email].first_name}{' '}
-                                {users[email].last_name}
-                              </p>
-                            </div>
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-3">
-                            {email}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-3">
-                            {users[email].registration_status}
-                          </td>
-                          {/* <td className="whitespace-nowrap px-3 py-3">
+                          <p>{users[email].first_name} {users[email].last_name}</p>
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-3">
+                        {users[email].email}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-3">
+                        {users[email].registration_status}
+                      </td>
+                      {/* <td className="whitespace-nowrap px-3 py-3">
                       {formatDateToLocal(invoice.date)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                       <InvoiceStatus status={invoice.status} />
                   </td> */}
-                          <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                            <div className="flex justify-end gap-3">
-                              <Link
-                                href={`/dashboard`}
-                                className="rounded-md border p-2 hover:bg-gray-100"
-                              >
-                                <PencilIcon className="w-5" />
-                              </Link>
+                      <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                        <div className="flex justify-end gap-3">
+                          <button
+                            onClick={() => openUpdateModal(email)}
+                            className="rounded-md border p-2 hover:bg-gray-100"
+                          >
+                            <PencilIcon className="w-5 hover:text-blue-600" />
+                          </button>
 
-                              {/* <form> */}
-                              <button
-                                onClick={() =>
-                                  (
-                                    document.getElementById(
-                                      email,
-                                    ) as HTMLDialogElement
-                                  )?.showModal()
-                                }
-                                className="rounded-md border p-2 hover:bg-gray-100"
-                              >
-                                <span className="sr-only">Delete</span>
-                                <TrashIcon className="w-5" />
-                              </button>
-                              {/* </form> */}
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                         {/* <form> */}
+                        <button
+                          onClick={() => setPendingDeleteEmail(users[email].email)}
+                          className="rounded-md border p-2 hover:bg-gray-100"
+                        >
+                          <TrashIcon className="w-5" />
+                        </button>
+                        {/* </form> */}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
 
-        {users &&
-          Object.keys(users)
-            .slice((currentPage - 1) * 10, currentPage * 10)
-            .map((email: string) => (
-              <dialog key={email} id={email} className="modal bg-transparent">
-                <div className="bg-card text-card-foreground rounded-3xl border bg-gray-50 p-8 shadow-sm">
-                  <div className="modal-box">
-                    <h3 className="text-3xl font-bold">
-                      Confirm delete user {email}?
-                    </h3>
-                    <hr className="h-px w-full border-0 bg-gray-50"></hr>
+        {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email: string) => (
+          <dialog key={users[email].email} id={users[email].email} className="modal modal-open bg-transparent z-50">
+            <div className="p-8 border bg-card text-card-foreground shadow-sm rounded-3xl bg-gray-50">
+              <div className="modal-box">
+                <h3 className="font-bold text-3xl">Confirm delete user {users[email].email}?</h3>
+                <hr className="h-px bg-gray-50 border-0 w-full"></hr>
 
-                    <p className="py-4 text-xl">This action cannot be undone</p>
-                  </div>
+                <p className="py-4 text-xl">This action cannot be undone</p>
+              </div>
 
-                  <form method="dialog" className="modal-backdrop">
-                    <button className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground mr-2 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      Cancel
-                    </button>
-                    <button className="ring-offset-background focus-visible:ring-ring text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      Delete
-                    </button>
-                  </form>
-                </div>
-              </dialog>
-            ))}
+              <form method="dialog" className="modal-backdrop">
+                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 mr-2">
+                  Cancel
+                </button>
+                <button onClick={() => handleDelete(users[email].email)} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-blue-600 border-blue-600">
+                  Delete
+                </button>
+              </form>
+            </div>
+
+          </dialog>
+
+        ))}
 
         <div className="mt-5 flex w-full justify-center">
           <div className="inline-flex">
@@ -329,6 +372,21 @@ function DirectorView(userData: any) {
           </div>
         </div>
       </div>
+      <ConfirmDeleteModal
+        isOpen={pendingDeleteEmail !== null}
+        email={pendingDeleteEmail || ''}
+        onConfirm={() => {
+          if (pendingDeleteEmail) handleDelete(pendingDeleteEmail);
+          setPendingDeleteEmail(null);
+        }}
+        onCancel={() => setPendingDeleteEmail(null)}
+      />;
+      <UpdateUserModal
+        isOpen={!!selectedUser}
+        user={selectedUser}
+        onClose={() => setSelectedUser(null)}
+        onUpdated={handleUpdateSuccess}
+      />
     </div>
   );
 

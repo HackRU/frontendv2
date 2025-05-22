@@ -75,6 +75,11 @@ const ENDPOINTS = {
    * verify email after being given a code
    */
   verify: BASE + '/verify-email',
+
+  /**
+   * Deletes a user
+   */
+  deleteUser : BASE + '/delete'
 };
 
 export async function authenticate(email: string, password: string) {
@@ -298,8 +303,8 @@ export async function SetUser(data: any, user_email_to_update: string) {
       .then(async (res) => {
         let resJSON = await res.json();
         if (resJSON.statusCode !== 200) {
-          if (resJSON?.error) {
-            resp.error = resJSON.error;
+          if (resJSON?.message) {
+            resp.error = resJSON.message;
           } else {
             resp.error = 'Unexpected Error';
           }
@@ -951,5 +956,74 @@ export async function Verify(code: string) {
     }
   });
 
+  return resp;
+}
+
+export async function GetAllUsers() {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.userData, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        auth_email: session.user.email,
+        email: session.user.email,
+        auth_token: session.user.name,
+        all: true
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !== 200) {
+        resp.error = 'Error Getting All Users';
+      } else {
+        resp.response = resJSON;
+      }
+    });
+  } else {
+    resp.error = 'User not authenticated';
+  }
+  return resp;
+}
+
+export async function DeleteUser(email: string) {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.deleteUser, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_email: email,
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !== 200) {
+        resp.error = resJSON.message;
+      } else {
+        console.log(`Deleted user ${email}`);
+        resp.response = resJSON;
+      }
+    });
+  } else {
+    resp.error = 'Unknown error';
+  }
+  console.log(resp);
   return resp;
 }

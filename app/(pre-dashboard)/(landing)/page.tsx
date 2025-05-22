@@ -16,6 +16,10 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
+
+  redirect('/offseason');
+
+
   return (
     <main
       className={`relative flex h-fit flex-col ${brush.className} bg-gradient-to-b from-tan_2-100 to-off_white-100 text-s2025black-100`}
@@ -45,15 +49,11 @@ export default async function Page() {
           <Image
             src="/landing/S2025/bottomofpage.png"
             alt="bottom image"
-            object-fit="cover"
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
+            layout="responsive"
+            objectFit="cover"
             width={400}
             height={300}
-            quality={100}
-            unoptimized
+            loading="lazy"
           />
         </div>
       </div>
