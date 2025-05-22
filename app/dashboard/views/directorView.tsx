@@ -1,6 +1,6 @@
-'use client';
+"use client"
 
-import React from 'react';
+import React from 'react'
 import Image from 'next/image';
 import Pagination from '@/app/dashboard/components/pagination';
 import Search from '@/app/dashboard/components/search';
@@ -24,9 +24,10 @@ import UpdateUserModal from '@/app/ui/updateUserModal';
 
 
 function DirectorView(userData: any) {
+
   const [allUsers, setAllUsers] = useState<any>(null);
   const [users, setUsers] = useState<any>(null);
-  const [query, setQuery] = useState<String>('');
+  const [query, setQuery] = useState<String>("");
   const [currentPage, setPage] = useState<number>(1);
   const [totalPages, setTotal] = useState<number>(1);
   const [pendingDeleteEmail, setPendingDeleteEmail] = useState<string | null>(null);
@@ -120,6 +121,8 @@ function DirectorView(userData: any) {
           <h1 className={`text-2xl`}>Hackers</h1>
         </div>
         <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+
+
           <div className="relative flex flex-1 flex-shrink-0">
             <label htmlFor="search" className="sr-only">
               Search
@@ -136,6 +139,8 @@ function DirectorView(userData: any) {
 
           {/* <CreateInvoice /> */}
         </div>
+
+
 
         <div className="mt-6 flow-root">
           <div className="inline-block min-w-full align-middle">
@@ -156,45 +161,7 @@ function DirectorView(userData: any) {
                           height={28}
                           alt={`${users[email].first_name}'s profile picture`}
                       /> */}
-                              <p>
-                                {users[email].first_name}{' '}
-                                {users[email].last_name}
-                              </p>
-                            </div>
-                            <p className="text-sm text-gray-500">{email}</p>
-                          </div>
-                          {/* <InvoiceStatus status={invoice.status} /> */}
-                        </div>
-                        <div className="flex w-full items-center justify-between pt-4">
-                          <div>
-                            <p className="text-xl font-medium">
-                              {users[email].registration_status}
-                            </p>
-                          </div>
-                          <div className="flex justify-end gap-2">
-                            <Link
-                              href={`/dashboard`}
-                              className="rounded-md border p-2 hover:bg-gray-100"
-                            >
-                              <PencilIcon className="w-5" />
-                            </Link>
-
-                            {/* <form> */}
-                            <button
-                              onClick={() =>
-                                (
-                                  document.getElementById(
-                                    email,
-                                  ) as HTMLDialogElement
-                                )?.showModal()
-                              }
-                              className="rounded-md border p-2 hover:bg-gray-100"
-                            >
-                              <span className="sr-only">Delete</span>
-                              <TrashIcon className="w-5" />
-                            </button>
-                            {/* </form> */}
-                          </div>
+                          <p>{users[email].first_name} {users[email].last_name}</p>
                         </div>
                         <p className="text-sm text-gray-500">{users[email].email}</p>
                       </div>
@@ -221,7 +188,10 @@ function DirectorView(userData: any) {
                         {/* </form> */}
                         
                       </div>
-                    ))}
+
+                    </div>
+                  </div>
+                ))}
               </div>
               <table className="hidden min-w-full text-gray-900 md:table">
                 <thead className="rounded-lg text-left text-sm font-normal">
@@ -247,17 +217,14 @@ function DirectorView(userData: any) {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {users &&
-                    Object.keys(users)
-                      .slice((currentPage - 1) * 10, currentPage * 10)
-                      .map((email: string) => (
-                        <tr
-                          key={email}
-                          className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                        >
-                          <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                            <div className="flex items-center gap-3">
-                              {/* <Image
+                  {users && Object.keys(users).slice((currentPage - 1) * 10, currentPage * 10).map((email: string) => (
+                    <tr
+                      key={email}
+                      className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                    >
+                      <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                        <div className="flex items-center gap-3">
+                          {/* <Image
                           src={users[email].image_url}
                           className="rounded-full"
                           width={28}
@@ -340,12 +307,7 @@ function DirectorView(userData: any) {
 
             <div className="flex -space-x-px">
               {allPages.map((page, index) => {
-                let position:
-                  | 'first'
-                  | 'last'
-                  | 'single'
-                  | 'middle'
-                  | undefined;
+                let position: 'first' | 'last' | 'single' | 'middle' | undefined;
 
                 if (index === 0) position = 'first';
                 if (index === allPages.length - 1) position = 'last';
@@ -388,7 +350,7 @@ function DirectorView(userData: any) {
         onUpdated={handleUpdateSuccess}
       />
     </div>
-  );
+  )
 
   function PaginationNumber({
     page,
@@ -413,12 +375,7 @@ function DirectorView(userData: any) {
     return isActive || position === 'middle' ? (
       <div className={className}>{page}</div>
     ) : (
-      <div
-        onClick={() => {
-          setPage(Number(page));
-        }}
-        className={className}
-      >
+      <div onClick={() => { setPage(Number(page)) }} className={className}>
         {page}
       </div>
     );
@@ -451,18 +408,13 @@ function DirectorView(userData: any) {
     return isDisabled ? (
       <div className={className}>{icon}</div>
     ) : (
-      <div
-        onClick={() => {
-          direction === 'left'
-            ? setPage(currentPage - 1)
-            : setPage(currentPage + 1);
-        }}
-        className={className}
-      >
+      <div onClick={() => { direction === 'left' ? setPage(currentPage - 1) : setPage(currentPage + 1) }} className={className}>
         {icon}
       </div>
     );
   }
 }
 
-export default DirectorView;
+
+
+export default DirectorView
