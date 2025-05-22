@@ -16,16 +16,17 @@ export default function Accordion(props: propType) {
     <div>
       <button
         onClick={() => {
-          if(props.active){
-            props.setActiveAccordion(-1)
-          }
-          else{
-            props.setActiveAccordion(props.index)
+          if (props.active) {
+            props.setActiveAccordion(-1);
+          } else {
+            props.setActiveAccordion(props.index);
           }
         }}
-        className="flex w-full justify-between items-center pt-5"
+        className="flex w-full items-center justify-between pt-5"
       >
-        <span className={`text-3xl ${props.textcolor} text-left font-bold`}>{props.question}</span>
+        <span className={`text-3xl ${props.textcolor} text-left font-bold`}>
+          {props.question}
+        </span>
         <svg
           className="ml-8 shrink-0 fill-orange-100"
           width="16"
@@ -53,7 +54,7 @@ export default function Accordion(props: propType) {
         </svg>
       </button>
       <div
-        className={`pb-3  grid overflow-hidden text-sm text-s2025black-100 transition-all duration-300 ease-in-out ${
+        className={`grid  overflow-hidden pb-3 text-sm text-s2025black-100 transition-all duration-300 ease-in-out ${
           props.active
             ? 'grid-rows-[1fr] opacity-100'
             : 'grid-rows-[0fr] opacity-0'

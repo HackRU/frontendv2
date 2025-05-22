@@ -71,7 +71,6 @@ const ENDPOINTS = {
    */
   points: BASE + '/points',
 
-  
   /**
    * verify email after being given a code
    */
