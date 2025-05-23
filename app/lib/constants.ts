@@ -17,7 +17,7 @@ export const hackRUFAQ = {
 
   Coming: Thanks for letting us know you can make it! We're slowly moving hackers into the final confirmation stage based on FCFS responses.
 
-  Confirmed: Get ready to code! You're fully signed up and ready to show up on February 1st.
+  Confirmed: Get ready to code! You're fully signed up and ready to show up on October 4th.
 
   Delayed Entry Waitlist: Unfortunately, we've had to place you on our waitlist. Show up closer to our delayed check-in phase where hackers will be checked in based on remaining availability! In the meantime, any confirmed teammates can wait in the venue.
   `,

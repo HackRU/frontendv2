@@ -704,14 +704,14 @@ export default function Dashboard() {
                   their team. The team leader (the person who fills out this
                   form) will type in the emails of their team members they used
                   to register. Incorrect emails will lead to incomplete team
-                  acceptances.
+                  acceptances. This is only so we can admit people as a team, you will still need to create a team on the submission platform
                   <br />
                   <br />
                   NO ONE else BUT the team leader of the team needs to submit
-                  this form.
+                  this form. 
                   <br />
                   <br />
-                  All team members must be registered by January 29th, 2025.
+                  All team members must be registered by Sep 30th
                   Failure to do so may lead to incomplete team acceptances.
                 </CardDescription>
               </CardHeader>

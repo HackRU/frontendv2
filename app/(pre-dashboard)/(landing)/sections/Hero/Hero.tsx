@@ -107,7 +107,7 @@ export default function Hero() {
               </p>
               <p className={`${brush.className} text-2xl`}>
                 <span className="text-white">
-                  February 1 - 2, Busch Student Center{' '}
+                  October 4th - 5th, TBD{' '}
                 </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">

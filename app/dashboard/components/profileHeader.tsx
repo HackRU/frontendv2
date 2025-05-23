@@ -234,8 +234,7 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-col">
                   <CardTitle>
-                    Delayed Entry WE DO NOT HAVE ANY MORE SPACE EVEN FOR PEOPLE
-                    WHOSE TEAM IS ALREADY IN
+                    Delayed Entry 
                   </CardTitle>
                   <div>
                     <CardDescription>
@@ -253,12 +252,12 @@ export default function ProfileHeader(props: {
               <>
                 <CardTitle>
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on February 1st.
+                  show up on October 4th.
                 </CardTitle>
                 <CardDescription>
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on February 1st. You are guarenteed entry if you show
-                  up before 10:45am, at which point it will be first come first
+                  show up on  October 4th. You are guarenteed entry if you show
+                  up before 10:30am, at which point it will be first come first
                   served.
                 </CardDescription>
               </>
