@@ -75,7 +75,12 @@ const ENDPOINTS = {
   /**
    * verify email after being given a code
    */
-  verify: BASE + '/verify-email'
+  verify: BASE + '/verify-email',
+
+    /**
+   * verify email after being given a code
+   */
+  userExists: BASE + '/user-exists'
 };
 
 export async function authenticate(email: string, password: string) {
@@ -952,5 +957,42 @@ export async function Verify(code: string) {
     }
   });
 
+  return resp;
+}
+
+export async function UserExists(email: string) {
+  let resp = {
+    error: '',
+    response: '',
+  };
+  noStore();
+  const session = await auth();
+
+  if (session?.user) {
+    await fetch(ENDPOINTS.userExists, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+        email: email,
+      }),
+    })
+      .then(async (res) => {
+        let res_json = await res.json();
+        if (res.status == 200) {
+          resp.response = res_json;
+        } else {
+          resp.error = res_json;
+        }
+      })
+      .catch((error) => {
+        resp.error = error + 'An error occured retrieving data';
+      });
+  } else {
+    resp.error = 'Please log in';
+  }
   return resp;
 }
