@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link'
+import Link from 'next/link';
 export default async function Sponsors() {
   const sponsors = [
     '/sponsors/icims.png',
@@ -15,7 +15,7 @@ export default async function Sponsors() {
     'https://www2.wakefern.com/',
     'https://saily.com/',
     'https://dorahacks.io/',
-    'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro'
+    'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro',
   ];
 
   return (
@@ -24,9 +24,7 @@ export default async function Sponsors() {
       id="Sponsors"
     >
       <div className="flex h-fit w-[100vw] flex-col items-center">
-        <div className="transparent-black-background text-text relative flex w-full flex-col items-center rounded-3xl md:flex-row md:items-start justify-evenly">
-
-
+        <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl md:flex-row md:items-start">
           <div className="mx-2">
             {sponsors
               .filter((_, index) => index % 2 != 0)
@@ -34,9 +32,9 @@ export default async function Sponsors() {
                 return (
                   <div
                     key={index}
-                    className="relative mb-4 h-[30vh] md:w-[40vw] w-[80vw]"
+                    className="relative mb-4 h-[30vh] w-[80vw] md:w-[40vw]"
                   >
-                    <Link href={sponsorsLinks[(index * 2) + 1]}>
+                    <Link href={sponsorsLinks[index * 2 + 1]}>
                       <Image
                         src={sponsorURL}
                         alt="Sponsor Logo"
@@ -55,7 +53,7 @@ export default async function Sponsors() {
                 return (
                   <div
                     key={index}
-                    className="relative mb-4 h-[30vh] md:w-[30vw] w-[70vw]"
+                    className="relative mb-4 h-[30vh] w-[70vw] md:w-[30vw]"
                   >
                     <Link href={sponsorsLinks[index * 2]}>
                       <Image

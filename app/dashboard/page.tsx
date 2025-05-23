@@ -51,7 +51,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { OptInSelf } from '@/app/lib/data';
 import { TransportMethodSelf } from '@/app/lib/data';
-
+import StatusBar from '@/app/dashboard/components/StatusBar';
 let whenTeamCreationBegins = new Date('March 23, 2024 12:00:00');
 const numOfMinsUntilTeamCreation =
   (whenTeamCreationBegins.getTime() - Date.now()) / 60000;
@@ -128,7 +128,8 @@ export default function Dashboard() {
   const [waiverState, setWaiverState] = useState<any>(null);
   const [savingUserProfile, setSavingUserProfile] = useState<boolean>(false);
   const [submittingTeamForm, setSubmittingTeamForm] = useState<boolean>(false);
-  const [submittingPreEventTeamForm, setSubmittingPreEventTeamForm] = useState<string>('Submit Team');
+  const [submittingPreEventTeamForm, setSubmittingPreEventTeamForm] =
+    useState<string>('Submit Team');
   const [userProfileSubmitText, setUserProfileSubmitText] =
     useState<string>('Save');
   const [teamMember1Errors, setTeamMember1Errors] = useState<string>();
@@ -140,7 +141,8 @@ export default function Dashboard() {
     displayTeamFormFinalSubmissionWarning,
     setDisplayTeamFormFinalSubmissionWarning,
   ] = useState<boolean>(false);
-  const [displayTeamConfimWarning, setTeamConfimWarning] = useState<boolean>(false);
+  const [displayTeamConfimWarning, setTeamConfimWarning] =
+    useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>('');
   const [currentTeam, setCurrentTeam] = useState<number>(0);
 
@@ -390,6 +392,7 @@ export default function Dashboard() {
   
   }
 
+
    const DBvalidateEmail = async (email: string) => {
     console.log(email)
     if (!email) return true;
@@ -554,7 +557,7 @@ export default function Dashboard() {
       );
     }
     return (
-      <main >
+      <main>
         <Navbar />
         {/* <Suspense>
           <Cursor />
@@ -604,55 +607,64 @@ export default function Dashboard() {
           {userData?.transportation_method == null && (
             <Card className="mt-32 w-full max-w-2xl">
               <CardHeader>
-                <CardTitle>
-                  How did you get to hackRU?
-                </CardTitle>
+                <CardTitle>How did you get to hackRU?</CardTitle>
                 <CardDescription>
                   <Button
                     onClick={async () => {
-                      const resp = await TransportMethodSelf("drive");
+                      const resp = await TransportMethodSelf('drive');
                       if (resp == 'GOOD') {
-                        setUserData({ ...userData, transportation_method: "drive" });
+                        setUserData({
+                          ...userData,
+                          transportation_method: 'drive',
+                        });
                       }
                     }}
                     type="button"
-                    className="mt-10 mr-4"
+                    className="mr-4 mt-10"
                   >
                     Drive
                   </Button>
                   <Button
                     onClick={async () => {
-                      const resp = await TransportMethodSelf("walk");
-                      console.log(resp)
+                      const resp = await TransportMethodSelf('walk');
+                      console.log(resp);
                       if (resp == 'GOOD') {
-                        setUserData({ ...userData, transportation_method: "walk" });
+                        setUserData({
+                          ...userData,
+                          transportation_method: 'walk',
+                        });
                       }
                     }}
                     type="button"
-                    className={`mt-10 mr-4`}
+                    className={`mr-4 mt-10`}
                   >
                     Walk
                   </Button>
                   <Button
                     onClick={async () => {
-                      const resp = await TransportMethodSelf("public_transit");
+                      const resp = await TransportMethodSelf('public_transit');
                       if (resp == 'GOOD') {
-                        setUserData({ ...userData, transportation_method: "public_transit" });
+                        setUserData({
+                          ...userData,
+                          transportation_method: 'public_transit',
+                        });
                       }
                     }}
                     type="button"
-                    className="mt-10 mr-4 "
+                    className="mr-4 mt-10 "
                   >
                     Public Transit
                   </Button>
                 </CardDescription>
               </CardHeader>
-            </Card>)
-          }
+            </Card>
+          )}
           {pointsData && userData.registration_status == 'checked_in' && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
-                <CardTitle className="text-green-500">Points Information</CardTitle>
+                <CardTitle className="text-green-500">
+                  Points Information
+                </CardTitle>
                 <CardDescription>
                   Your current points balance and total earned points. At the
                   end of the hackathon, there will be a grand raffle for prizes
@@ -664,13 +676,13 @@ export default function Dashboard() {
                 <div className="space-y-2">
                   <p className="text-lg">
                     Current Balance:{' '}
-                    <span className="text-green-500 font-bold">
+                    <span className="font-bold text-green-500">
                       {pointsData.balance} points
                     </span>
                   </p>
                   <p className="text-lg">
                     Total Points Earned:{' '}
-                    <span className="text-green-500 font-bold">
+                    <span className="font-bold text-green-500">
                       {pointsData.total_points} points
                     </span>
                   </p>
@@ -690,15 +702,17 @@ export default function Dashboard() {
                 <CardDescription>
                   <strong>READ CLOSELY</strong>: Only ONE person needs to submit
                   their team. The team leader (the person who fills out this
-                  form) will type in the emails of their team members they used to register. Incorrect
-                  emails will lead to incomplete team acceptances.
+                  form) will type in the emails of their team members they used
+                  to register. Incorrect emails will lead to incomplete team
+                  acceptances.
                   <br />
                   <br />
                   NO ONE else BUT the team leader of the team needs to submit
                   this form.
-                  <br /><br />
-                  All team members must be registered by January 29th, 2025. Failure to do so may lead to
-                  incomplete team acceptances.
+                  <br />
+                  <br />
+                  All team members must be registered by January 29th, 2025.
+                  Failure to do so may lead to incomplete team acceptances.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -839,15 +853,15 @@ export default function Dashboard() {
                     
                     setSubmittingPreEventTeamForm('Submitting...')
                     updateTeam()
+
                   }}
-                  onNo={() => { }}
+                  onNo={() => {}}
                   title="Submission Warning"
                   content={"Are you sure you want the following emails on your team: " + 
                     [userData?.team_member_1, userData?.team_member_2, userData?.team_member_3]
                     .filter(Boolean)
                     .join(", ")}
                 />
-
               </CardContent>
             </Card>
           }
@@ -871,7 +885,6 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-
 
           <Card className="w-full max-w-2xl">
             <CardHeader>

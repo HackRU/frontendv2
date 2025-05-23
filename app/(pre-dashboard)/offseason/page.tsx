@@ -11,10 +11,9 @@ export default function ComingSoonPage() {
         HackRU Coming Soon
       </h1>
       <p className="mt-4 px-4 text-center text-lg">
-        HackRU is back on{' '}
-        <span className="font-bold text-teal-400">February 1st-2nd</span> at the{' '}
-        <span className="font-bold text-teal-400">Busch Student Center</span>!
-        Registration will open soon, so stay tuned for more information.
+        HackRU is back in{' '}
+        <span className="font-bold text-teal-400">the Fall </span> 
+         Registration will open in the Fall, so stay tuned for more information.
       </p>
 
       <div className="mt-8 px-4 text-center">
@@ -53,7 +52,7 @@ export default function ComingSoonPage() {
 
       <div className="mt-12 px-4 text-center">
         <Button
-          className="mt-4 mb-8 rounded-full bg-blue-500 px-6 py-3 font-medium text-white shadow-lg transition duration-300 hover:bg-blue-400 hover:shadow-2xl"
+          className="mb-8 mt-4 rounded-full bg-blue-500 px-6 py-3 font-medium text-white shadow-lg transition duration-300 hover:bg-blue-400 hover:shadow-2xl"
           onClick={() => window.open('http://mlh.io/code-of-conduct', '_blank')}
         >
           MLH Code of Conduct

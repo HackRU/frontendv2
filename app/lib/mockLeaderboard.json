@@ -1,4 +1,8 @@
-{ "houses":{
-     "Roar.js": 20, "Bitsprout": 35, "Pseudoclaw": 50, "Python": 10 
-}
+{
+  "houses": {
+    "Roar.js": 20,
+    "Bitsprout": 35,
+    "Pseudoclaw": 50,
+    "Python": 10
+  }
 }
