@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/app/ui/button';
 import { mlhSchools, countries as countryConstants } from '@/app/lib/constants';
-import { BASE } from '@/app/lib/definitions';
+import { submitInterestForm } from '@/app/lib/actions';
 
 const InterestFormSchema = z.object({
     firstName: z.string().min(1, 'First name is required'),
@@ -44,20 +44,11 @@ export default function InterestForm() {
         setIsSubmitting(true);
         setSubmitMessage(null);
         try {
-            const response = await fetch(`${BASE}/interest-form`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
-            if (response.ok) {
-                setSubmitMessage({ type: 'success', text: "Thank you for your interest! We'll keep you updated on HackRU events." });
-                reset();
-            } else {
-                const errorData = await response.json().catch(() => ({}));
-                setSubmitMessage({ type: 'error', text: errorData.message || 'Something went wrong. Please try again.' });
-            }
-        } catch {
-            setSubmitMessage({ type: 'error', text: 'Network error. Please check your connection and try again.' });
+            await submitInterestForm(data);
+            setSubmitMessage({ type: 'success', text: 'Thank you for your interest! We will keep you updated on HackRU events.' });
+            reset();
+        } catch (error: any){
+            setSubmitMessage({ type: 'error', text: error.message });
         } finally {
             setIsSubmitting(false);
         }
@@ -189,3 +180,4 @@ export default function InterestForm() {
         </div>
     );
 }
+export type { InterestFormData };
