@@ -10,7 +10,7 @@ import { auth } from '../../auth';
 import { redirect } from 'next/navigation';
 import { BASE, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from './definitions';
 import { TeamSubmit } from '../dashboard/page';
-import type { InterestFormData } from '@/app/ui/InterestForm';
+import type { InterestFormData } from '@/app/ui/interestForm';
 
 const ENDPOINTS = {
   login: BASE + '/authorize',

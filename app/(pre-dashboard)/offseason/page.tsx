@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
-import InterestForm from '@/app/ui/InterestForm';
+import InterestForm from '@/app/ui/interestForm';
 
 export default function ComingSoonPage() {
   return (
