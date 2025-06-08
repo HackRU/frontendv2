@@ -10,6 +10,7 @@ import { auth } from '../../auth';
 import { redirect } from 'next/navigation';
 import { BASE, DISCORD_CLIENT_ID, DISCORD_REDIRECT_URI } from './definitions';
 import { TeamSubmit } from '../dashboard/page';
+import type { InterestFormData } from '@/app/ui/interestForm';
 
 const ENDPOINTS = {
   login: BASE + '/authorize',
@@ -1068,4 +1069,17 @@ export async function DeleteUser(email: string) {
   }
   console.log(resp);
   return resp;
+}
+
+export async function submitInterestForm(data: InterestFormData){
+  const response = await fetch(`${BASE}/interest-form`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Failed to submit interest form');
+  }
+  return response.json();
 }
