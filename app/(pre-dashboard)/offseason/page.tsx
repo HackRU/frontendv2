@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
+import InterestForm from '@/app/ui/interestForm';
 
 export default function ComingSoonPage() {
   return (
@@ -11,9 +12,9 @@ export default function ComingSoonPage() {
         HackRU Coming Soon
       </h1>
       <p className="mt-4 px-4 text-center text-lg">
-        HackRU is back in{' '}
-        <span className="font-bold text-teal-400">the Fall </span> 
-         Registration will open in the Fall, so stay tuned for more information.
+        HackRU is back on{' '}
+        <span className="font-bold text-teal-400">October 4th - 5th</span>
+        ! Registration will open in the Fall, so stay tuned for more information.
       </p>
 
       <div className="mt-8 px-4 text-center">
@@ -22,7 +23,7 @@ export default function ComingSoonPage() {
           miss an announcement!
         </p>
         <Button
-          className="mt-4 rounded-full bg-teal-500 px-6 py-3 font-medium text-white shadow-lg transition duration-300 hover:bg-teal-400 hover:shadow-2xl"
+          className="rounded-full bg-teal-500 px-6 py-3 font-medium text-white shadow-lg transition duration-300 hover:bg-teal-400 hover:shadow-2xl"
           onClick={() => window.open('https://linktr.ee/thehackru', '_blank')}
         >
           Visit Our Linktree
@@ -48,6 +49,11 @@ export default function ComingSoonPage() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Interest Form Section */}
+      <div className="mt-12 w-full max-w-4xl px-4">
+        <InterestForm />
       </div>
 
       <div className="mt-12 px-4 text-center">

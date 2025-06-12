@@ -125,8 +125,8 @@ function Navbar() {
         <Image
           width={100}
           height={100}
-          src="/landing/S2025/HackRU_stamp.png"
-          alt="neon hackru logo"
+          src="/landing/S2025/hackru-generic-logo.png"
+          alt="generic hackru logo"
         />
       </div>
       
