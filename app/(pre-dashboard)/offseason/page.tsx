@@ -12,9 +12,9 @@ export default function ComingSoonPage() {
         HackRU Coming Soon
       </h1>
       <p className="mt-4 px-4 text-center text-lg">
-        HackRU is back in{' '}
-        <span className="font-bold text-teal-400">the Fall </span>
-        Registration will open in the Fall, so stay tuned for more information.
+        HackRU is back on{' '}
+        <span className="font-bold text-teal-400">October 4th - 5th</span>
+        ! Registration will open in the Fall, so stay tuned for more information.
       </p>
 
       <div className="mt-8 px-4 text-center">
