@@ -129,8 +129,9 @@ function Navbar() {
           alt="neon hackru logo"
         />
       </div>
+      
       <a
-        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
         className="absolute right-2 top-0 z-50 w-12 sm:w-16 md:w-20 lg:w-24"
@@ -138,8 +139,8 @@ function Navbar() {
         <Image
           width={100}
           height={100}
-          src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
-          alt="Major League Hacking 2024 Hackathon Season"
+          src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-yellow.svg"
+          alt="Major League Hacking 2026 Hackathon Season"
         />
       </a>
       <CollapsedMenu />
