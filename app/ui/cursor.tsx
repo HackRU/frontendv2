@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import LugeReact from "./luge";
+import LugeReact from './luge';
 
 /**
  *
@@ -20,16 +20,22 @@ const TrailEffect = () => {
     <>
       <LugeReact />
       <div data-lg-cursor data-lg-cursor-hide>
-        <div data-lg-cursor-trail data-lg-cursor-trail-length="20" data-lg-cursor-inertia="0.4"></div>
+        <div
+          data-lg-cursor-trail
+          data-lg-cursor-trail-length="20"
+          data-lg-cursor-inertia="0.4"
+        ></div>
       </div>
     </>
   );
-}
+};
 
 function detectIfTouchDevice() {
-  return (('ontouchstart' in window) ||
-    (navigator.maxTouchPoints > 0) ||
-    (navigator.maxTouchPoints > 0));
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    navigator.maxTouchPoints > 0
+  );
 }
 
 const Cursor = () => {
@@ -44,7 +50,7 @@ const Cursor = () => {
     const target = e.target;
 
     setIsPointer(
-      window.getComputedStyle(target).getPropertyValue("cursor") === "pointer"
+      window.getComputedStyle(target).getPropertyValue('cursor') === 'pointer',
     );
     // target.style.cursor = "none";
 
@@ -52,18 +58,18 @@ const Cursor = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
 
     setIsTouchDevice(detectIfTouchDevice());
 
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const YSize = isPointer ? -150 : 480;
   const XSize = isPointer ? -150 : 120;
   const rotationAngle = isPointer ? 0 : 315;
-  const topPos = (position.y - YSize / 4) + 20;
-  const leftPos = (position.x - XSize / 4) - 70;
+  const topPos = position.y - YSize / 4 + 20;
+  const leftPos = position.x - XSize / 4 - 70;
 
   const hasNotMoved = position.x === 0 && position.y === 0;
 
@@ -71,18 +77,18 @@ const Cursor = () => {
     <>
       <TrailEffect />
       <Image
-        src={"/landing/cursor.png"}
+        src={'/landing/cursor.png'}
         alt="Custom Cursor"
         width={XSize}
         height={YSize}
         className="select-none"
         style={{
-          display: hasNotMoved || isTouchDevice ? "none" : "block",
+          display: hasNotMoved || isTouchDevice ? 'none' : 'block',
           transform: `rotate(${rotationAngle}deg)`,
-          position: "fixed",
+          position: 'fixed',
           left: `${leftPos}px`,
           top: `${topPos}px`,
-          pointerEvents: "none",
+          pointerEvents: 'none',
           zIndex: 10000,
         }}
       />

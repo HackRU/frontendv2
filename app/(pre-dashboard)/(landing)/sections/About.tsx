@@ -40,12 +40,8 @@ function AboutInfo({
           style={{ color: titleColor }}
         >
           {title}
-
         </h1>
-        <div className={clsx('text-2xl', brush.className)}>
-          {children}
-        </div>
-
+        <div className={clsx('text-2xl', brush.className)}>{children}</div>
       </div>
     );
   }
@@ -102,35 +98,40 @@ function AboutInfo({
 export default function About() {
   return (
     <>
-      <div className='flex  justify-center items-center p-4'>
+      <div className="flex  items-center justify-center p-4">
         <Image
-          src={"/landing/S2025/aboutbanner.png"}
+          src={'/landing/S2025/aboutbanner.png'}
           width="300"
           height="300"
-          className="w-[400px]  z-30"
+          className="z-30  w-[400px]"
           alt={'about'}
           quality={50}
         />
       </div>
 
       <div
-        className="from-dark_blue_figma relative flex  h-fit w-full
+        className="2xl:text-2xl relative flex  h-fit w-full
         flex-col flex-wrap
-         pb-20 text-base
-        md:flex-row md:px-4 md:text-lg xl:text-xl 2xl:text-2xl"
-
+         from-dark_blue_figma pb-20
+        text-base md:flex-row md:px-4 md:text-lg xl:text-xl"
         id="About"
       >
         <Image
-          src={"/landing/S2025/minichef 5.png"}
+          src={'/landing/S2025/minichef 5.png'}
           width="600"
           height="600"
-          className="absolute -top-36 right-14 w-[140px] invisible md:visible"
+          className="invisible absolute -top-36 right-14 w-[140px] md:visible"
           alt={'chef decoration'}
           quality={50}
         />
-        <AboutInfo title="WHAT" imageSrc="/landing/S2025/lumpia.png" alt="Python" reverse titleColor='s2025black'>
-          <div className="pt-6 border-t-8 border-cyan-100">
+        <AboutInfo
+          title="WHAT"
+          imageSrc="/landing/S2025/lumpia.png"
+          alt="Python"
+          reverse
+          titleColor="s2025black"
+        >
+          <div className="border-t-8 border-cyan-100 pt-6">
             <p className="inline">HackRU is a</p>
             <p className="inline "> 24-hour hackathon </p>
             <p className="inline">at Rutgers University. We welcome</p>
@@ -145,11 +146,8 @@ export default function About() {
             <p className="inline"> through</p>
             <p className="inline "> tech-talks</p>
             <p className="inline"> and</p>
-            <p className="inline ">
-              {' '}
-              one-on-one guidance.
-            </p>
-            <p className='inline '> We encourage</p>
+            <p className="inline "> one-on-one guidance.</p>
+            <p className="inline "> We encourage</p>
             <p className="inline "> all students,</p>
             <p className="inline">
               {' '}
@@ -170,12 +168,9 @@ export default function About() {
           alt="Python"
           titleColor="s2025black"
         >
-          <div className="pt-6 border-t-8 border-cyan-100">
+          <div className="border-t-8 border-cyan-100 pt-6">
             <p className="inline ">Social Good:</p>
-            <p className="inline pb-4 pt-4">
-              {' '}
-              Hacks that better the community
-            </p>
+            <p className="inline pb-4 pt-4"> Hacks that better the community</p>
 
             {/* <div className="pt-6">
               <p className="inline ">NeuroTech presented by NTICe:</p>
@@ -195,7 +190,10 @@ export default function About() {
 
             <div className="pt-6">
               <p className="inline   ">Maverick:</p>
-              <p className="inline pb-4"> Any other hack! The opportunities are limitless.</p>
+              <p className="inline pb-4">
+                {' '}
+                Any other hack! The opportunities are limitless.
+              </p>
             </div>
 
             <div className="pt-6">
@@ -211,16 +209,15 @@ export default function About() {
           alt="Python"
           reverse
           titleColor="s2025black"
-
         >
-          <div className="pb-6 pt-6 border-t-8 border-cyan-100">
+          <div className="border-t-8 border-cyan-100 pb-6 pt-6">
             <p className="inline  ">Apply</p>
             <p className="inline"> to attend our </p>
             <p className="inline   ">Spring 2025 HackRU!</p>
             <p className="inline"> The event will be on</p>
-            <p className="inline   "> February 1 - 2</p>
-            <p className="inline"> at the</p>
-            <p className="inline   "> Busch Student Center.</p>
+            <p className="inline   "> October 4th - 5th</p>
+            <p className="inline"> at</p>
+            <p className="inline   "> TBD</p>
           </div>
 
           <div className="pb-6">

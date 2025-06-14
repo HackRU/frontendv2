@@ -24,8 +24,9 @@ function MenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => scrollToSectionName(sectionName)}
         >
@@ -42,8 +43,9 @@ function OtherPageMenuItem(props: { sectionName: string }) {
     <Menu.Item>
       {({ active }) => (
         <button
-          className={`${active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
-            }
+          className={`${
+            active ? 'bg-f23-lightGreen text-white' : 'text-gray-900'
+          }
                     group flex w-full items-center rounded-md px-2 py-2 text-lg`}
           onClick={() => {
             history.push('/contact');
@@ -117,18 +119,19 @@ function Navbar() {
     >
       <div
         style={{ left: '5%', top: '24px' }}
-        className="hover:drop-shadow-inner absolute z-50 w-16 hover:scale-105 sm:w-16 md:w-24 lg:w-24"
+        className="hover:drop-shadow-inner absolute z-50 w-24 hover:scale-105 sm:w-24 md:w-36 lg:w-36"
         onClick={() => router.push('/')}
       >
         <Image
-          width={100}
-          height={100}
-          src="/landing/S2025/HackRU_stamp.png"
-          alt="neon hackru logo"
+          width={200}
+          height={200}
+          src="/landing/S2025/hackru-generic-logo.png"
+          alt="generic hackru logo"
         />
       </div>
+      
       <a
-        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2025-season&utm_content=yellow"
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=yellow"
         target="_blank"
         rel="noopener noreferrer"
         className="absolute right-2 top-0 z-50 w-12 sm:w-16 md:w-20 lg:w-24"
@@ -136,23 +139,23 @@ function Navbar() {
         <Image
           width={100}
           height={100}
-          src="https://s3.amazonaws.com/logged-assets/trust-badge/2025/mlh-trust-badge-2025-yellow.svg"
-          alt="Major League Hacking 2024 Hackathon Season"
+          src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-yellow.svg"
+          alt="Major League Hacking 2026 Hackathon Season"
         />
       </a>
       <CollapsedMenu />
       <div
-        className="text-dark_red-100 absolute right-20 top-0 z-40 hidden
-        w-full justify-end pr-2 pt-4 text-sm font-light sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
+        className="absolute right-20 top-0 z-40 hidden w-full
+        justify-end pr-2 pt-4 text-sm font-light text-dark_red-100 sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (
-          <div className="flex items-center justify-start relative">
+          <div className="relative flex items-center justify-start">
             <Image
               src="/landing/S2025/navbar-header.png"
               alt="Navigation background"
               width={1200}
               height={150}
-              className="absolute -z-10 right-0 -top-10 scale-110"
+              className="absolute -top-10 right-0 -z-10 scale-110"
             />
             {sections.map((section) => (
               <button
