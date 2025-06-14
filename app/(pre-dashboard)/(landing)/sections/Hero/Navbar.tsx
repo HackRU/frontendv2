@@ -119,12 +119,12 @@ function Navbar() {
     >
       <div
         style={{ left: '5%', top: '24px' }}
-        className="hover:drop-shadow-inner absolute z-50 w-16 hover:scale-105 sm:w-16 md:w-24 lg:w-24"
+        className="hover:drop-shadow-inner absolute z-50 w-24 hover:scale-105 sm:w-24 md:w-36 lg:w-36"
         onClick={() => router.push('/')}
       >
         <Image
-          width={100}
-          height={100}
+          width={200}
+          height={200}
           src="/landing/S2025/hackru-generic-logo.png"
           alt="generic hackru logo"
         />
