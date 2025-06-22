@@ -28,10 +28,10 @@ the rest of the pages are in `app\(pre-dashboard)\(entry)` they are
 
 
 ## Making Changes
-If you are a part of the frontend team, do not fork the project. Instead, use `git clone`, create a branch *from* the `dev` branch by typing
+If you are a part of the frontend team, do not fork the project. Instead, use `git clone`, then create and switch to a branch *from* the `dev` branch by typing
 ```
 git checkout dev
-git branch <your-feature-name>
+git checkout -b <your-feature-name>
 ```
 Then, you can submit changes via a pull request so that it can be merged to the `dev` branch.
 
