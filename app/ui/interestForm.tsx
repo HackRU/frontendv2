@@ -183,16 +183,20 @@ export default function InterestForm() {
           <label htmlFor="age" className="block text-sm font-medium text-white">
             Age *
           </label>
-          <input
+          <select
             {...register('age', { valueAsNumber: true })}
-            type="number"
             id="age"
-            min="13"
-            max="100"
             className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
-            placeholder="20"
             autoComplete="off"
-          />
+          >
+          <option value="">Select your age</option>
+          
+          {Array.from({ length: 13 }, (_, i) => i + 18).map((age) => (
+            <option key={age} value={age}>
+              {age}
+            </option>
+          ))}
+          </select>
           {errors.age && (
             <p className="mt-1 text-sm text-red-400">{errors.age.message}</p>
           )}
@@ -236,11 +240,29 @@ export default function InterestForm() {
               autoComplete="off"
             >
               <option value="">Select level of study</option>
-              <option value="High School">High School</option>
-              <option value="Undergraduate">Undergraduate</option>
-              <option value="Graduate">Graduate</option>
-              <option value="PhD">PhD</option>
+              <option value="Less than Secondary / High School">
+                Less than Secondary / High School
+              </option>
+              <option value="Secondary / High School">Secondary / High School</option>
+              <option value="Undergraduate University (2 year - community college or similar)">
+                Undergraduate University (2 year - community college or similar)
+              </option>
+              <option value="Undergraduate University (3+ year)">
+                Undergraduate University (3+ year)
+              </option>
+              <option value="Graduate University (Masters, Professional, Doctoral, etc)">
+                Graduate University (Masters, Professional, Doctoral, etc)
+              </option>
+              <option value="Code School / Bootcamp">Code School / Bootcamp</option>
+              <option value="Other Vocational / Trade Program or Apprenticeship">
+                Other Vocational / Trade Program or Apprenticeship
+              </option>
+              <option value="Post Doctorate">Post Doctorate</option>
               <option value="Other">Other</option>
+              <option value="I'm not currently a student">
+                I&apos;m not currently a student
+              </option>
+              <option value="Prefer not to answer">Prefer not to answer</option>
             </select>
             {errors.levelOfStudy && (
               <p className="mt-1 text-sm text-red-400">
