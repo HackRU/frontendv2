@@ -189,13 +189,13 @@ export default function InterestForm() {
             className="mt-1 block w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
             autoComplete="off"
           >
-          <option value="">Select your age</option>
-          
-          {Array.from({ length: 13 }, (_, i) => i + 18).map((age) => (
-            <option key={age} value={age}>
-              {age}
-            </option>
-          ))}
+            <option value="">Select your age</option>
+
+            {Array.from({ length: 13 }, (_, i) => i + 18).map((age) => (
+              <option key={age} value={age}>
+                {age}
+              </option>
+            ))}
           </select>
           {errors.age && (
             <p className="mt-1 text-sm text-red-400">{errors.age.message}</p>
@@ -243,7 +243,9 @@ export default function InterestForm() {
               <option value="Less than Secondary / High School">
                 Less than Secondary / High School
               </option>
-              <option value="Secondary / High School">Secondary / High School</option>
+              <option value="Secondary / High School">
+                Secondary / High School
+              </option>
               <option value="Undergraduate University (2 year - community college or similar)">
                 Undergraduate University (2 year - community college or similar)
               </option>
@@ -253,7 +255,9 @@ export default function InterestForm() {
               <option value="Graduate University (Masters, Professional, Doctoral, etc)">
                 Graduate University (Masters, Professional, Doctoral, etc)
               </option>
-              <option value="Code School / Bootcamp">Code School / Bootcamp</option>
+              <option value="Code School / Bootcamp">
+                Code School / Bootcamp
+              </option>
               <option value="Other Vocational / Trade Program or Apprenticeship">
                 Other Vocational / Trade Program or Apprenticeship
               </option>
