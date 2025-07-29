@@ -11,6 +11,7 @@ type GenericSectionProps = {
 export default function GenericSection(props: GenericSectionProps) {
   const defaultColor = 'yellow-100';
   const bgColorNew = props.color ? `${props.color}` : defaultColor;
+
   return (
     <div
       id={props.title}
@@ -42,15 +43,21 @@ export default function GenericSection(props: GenericSectionProps) {
               />
             </div>
           ) : (
-            <div className="flex  items-center justify-center p-4">
-              <Image
-                src={'/landing/S2025/faqflag.png'}
-                width="300"
-                height="300"
-                className="z-30  w-[400px]"
-                alt={'about'}
-                quality={50}
-              />
+            <div> 
+              {props.title == 'FAQ' ? (
+                <div className="flex  items-center justify-center p-4">
+                  <Image
+                    src={'/landing/S2025/faqflag.png'}
+                    width="300"
+                    height="300"
+                    className="z-30  w-[400px]"
+                    alt={'about'}
+                    quality={50}
+                  />
+                </div>
+              ) : (
+                <SectionTitle title={props.title} />
+              )}
             </div>
           )}
         </div>
