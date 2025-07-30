@@ -118,8 +118,13 @@ export default function Dashboard() {
   const [schools, setSchools] = useState<string[]>([]);
   const [countries, setCountries] = useState<string[]>([]);
   const [userData, setUserData] = useState<any>(null);
-  const [teamFormData, setTeamFormData] = useState<any>(null);
-
+  //const [teamFormData, setTeamFormData] = useState<any>(null);
+  // teamFormData initialization 
+  const [teamFormData, setTeamFormData] = useState<any>({
+    team_member_1: '',
+    team_member_2: '',
+    team_member_3: ''
+  });
   const [pointsData, setPointsData] = useState<{
     balance: number;
     total_points: number;
@@ -145,6 +150,32 @@ export default function Dashboard() {
     useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>('');
   const [currentTeam, setCurrentTeam] = useState<number>(0);
+
+  const RegexvalidateEmail =  (email: string) => {
+    console.log(email)
+    if (!email) return true; // Empty is valid as it's optional
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+    return true
+  
+  }
+
+  const DBvalidateEmail = async (email: string) => {
+    console.log(email)
+    if (!email) return true;
+    try {
+      // Use an existing API function to check if the email exists
+      // You need to either find an existing API call or add a new one
+      const response = await UserExists(email);
+      console.log(response)
+      return response.response != '';
+    } catch (error) {
+      console.error("Error checking email existence:", error);
+      return false; // Fail closed for safety
+    }
+    }
 
   const {
     register,
@@ -349,64 +380,28 @@ export default function Dashboard() {
     }
   };
 
-  const updateTeam = async () => {
-    // Validate all emails before submission (this is currently being done before this function is called)
-    
-    // const team_member_1= userData.team_member_1 && !DBvalidateEmail(userData.team_member_1) ? "Please enter a valid email address" : "";
-    // const team_member_2 = userData.team_member_2 && !DBvalidateEmail(userData.team_member_2) ? "Please enter a valid email address" : "";
-    // const team_member_3 =  userData.team_member_3 && !DBvalidateEmail(userData.team_member_3) ? "Please enter a valid email address" : "";
-    
-    
-    // setTeamMember1Errors(team_member_1);
-    // setTeamMember2Errors(team_member_2);
-    // setTeamMember3Errors(team_member_3);
-    
-    // // Check if there are any validation errors
-    // if (team_member_1 || team_member_2 || team_member_3) {
-    //   setSubmittingPreEventTeamForm("Invalid emails");
-    //   return;
-    // }
-    
-    const resp = await UpdateSelf({ 
-      team_member_1: userData.team_member_1, 
-      team_member_2: userData.team_member_2, 
-      team_member_3: userData.team_member_3 
-    });
-    
-    console.log(resp);
-    if (resp === "User updated successfully") {
-      setSubmittingPreEventTeamForm("Saved!");
-    } else {
-      setSubmittingPreEventTeamForm("Failed");
-    }
-  }
+    const updateTeam = async () => {
+      const resp = await UpdateSelf({ 
+        team_member_1: teamFormData.team_member_1, 
+        team_member_2: teamFormData.team_member_2, 
+        team_member_3: teamFormData.team_member_3 
+      });
 
-  const RegexvalidateEmail =  (email: string) => {
-    console.log(email)
-    if (!email) return true; // Empty is valid as it's optional
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return false;
+      if (resp === "User updated successfully") {
+        // Only update the display data after successful submission
+        setUserData({
+          ...userData,
+          team_member_1: teamFormData.team_member_1,
+          team_member_2: teamFormData.team_member_2,
+          team_member_3: teamFormData.team_member_3
+        });
+        setSubmittingPreEventTeamForm("Saved!");
+      } else {
+        setSubmittingPreEventTeamForm("Failed");
+      }
     }
-    return true
-  
-  }
 
 
-   const DBvalidateEmail = async (email: string) => {
-    console.log(email)
-    if (!email) return true;
-    try {
-      // Use an existing API function to check if the email exists
-      // You need to either find an existing API call or add a new one
-      const response = await UserExists(email);
-      console.log(response)
-      return response.response != '';
-    } catch (error) {
-      console.error("Error checking email existence:", error);
-      return false; // Fail closed for safety
-    }
-    }
 
   // First useEffect to fetch and set schools data
   useEffect(() => {
@@ -442,6 +437,20 @@ export default function Dashboard() {
       console.error('Error fetching or parsing country data:', error);
     }
   }, []);
+
+  // update useEffect that loads user data 
+  useEffect(() => {
+  if (userData && (userData.team_member_1 || userData.team_member_2 || userData.team_member_3)) {
+    // Initialize form data with existing team member data
+    setTeamFormData({
+      ...teamFormData,
+      team_member_1: userData.team_member_1 || '',
+      team_member_2: userData.team_member_2 || '',
+      team_member_3: userData.team_member_3 || ''
+    });
+  }
+}, [userData]);
+
 
   useEffect(() => {
     async function fetchUser() {
@@ -746,19 +755,16 @@ export default function Dashboard() {
                 <Label htmlFor="team_member_1">Team Member 1</Label>
                 <Input
                   id="team_member_1"
-                  value={userData?.team_member_1}
+                  value={teamFormData.team_member_1}
                   className={teamMember1Errors ? "border-red-500" : ""}
                   onChange={(e) => {
                     const email = e.target.value;
-                    setUserData({ ...userData, team_member_1: email });
+                    setTeamFormData({ ...teamFormData, team_member_1: email });
                     
                     // Validate email
                     if (email != "" && !RegexvalidateEmail(email)) {
-
-                      setTeamMember1Errors("Please enter a valid email address"
-                      );
+                      setTeamMember1Errors("Please enter a valid email address");
                     } else {
-
                       setTeamMember1Errors("");
                     }
                   }}
@@ -773,19 +779,17 @@ export default function Dashboard() {
                 <Label htmlFor="team_member_2">Team Member 2</Label>
                 <Input
                   id="team_member_2"
-                  value={userData?.team_member_2}
+                  value={teamFormData.team_member_2}
                   className={teamMember2Errors ? "border-red-500" : ""}
                   onChange={(e) => {
                     const email = e.target.value;
-                    setUserData({ ...userData, team_member_2: email });
+                    setTeamFormData({ ...teamFormData, team_member_2: email });
                     
                     // Validate email
-                    if (email && !RegexvalidateEmail(email)) {
-                      setTeamMember2Errors("Please enter a valid email address"
-                      );
+                    if (email != "" && !RegexvalidateEmail(email)) {
+                      setTeamMember2Errors("Please enter a valid email address");
                     } else {
-                      console.log(teamMember2Errors)
-                      setTeamMember2Errors( "");
+                      setTeamMember2Errors("");
                     }
                   }}
                 />
@@ -799,19 +803,17 @@ export default function Dashboard() {
                 <Label htmlFor="team_member_3">Team Member 3</Label>
                 <Input
                   id="team_member_3"
-                  value={userData?.team_member_3}
+                  value={teamFormData.team_member_3}
                   className={teamMember3Errors ? "border-red-500" : ""}
                   onChange={(e) => {
                     const email = e.target.value;
-                    setUserData({ ...userData, team_member_3: email });
+                    setTeamFormData({ ...teamFormData, team_member_3: email });
                     
                     // Validate email
-                    if (email && !RegexvalidateEmail(email)) {
-                      setTeamMember3Errors("Please enter a valid email address"
-                      );
+                    if (email != "" && !RegexvalidateEmail(email)) {
+                      setTeamMember3Errors("Please enter a valid email address");
                     } else {
-                      console.log(teamMember3Errors)
-                      setTeamMember3Errors( "");
+                      setTeamMember3Errors("");
                     }
                   }}
                 />
@@ -836,9 +838,9 @@ export default function Dashboard() {
                   onYes={async () => {
                     // Validate emails before showing confirmation
 
-                    const team_member_1= userData.team_member_1 && !(await DBvalidateEmail(userData.team_member_1)) ? "Make sure the person with this email has created an account" : "";
-                    const team_member_2 = userData.team_member_2 && !(await DBvalidateEmail(userData.team_member_2)) ? "Make sure the person with this email has created an account" : "";
-                    const team_member_3 =  userData.team_member_3 && !(await DBvalidateEmail(userData.team_member_3)) ? "Make sure the person with this email has created an account" : "";
+                    const team_member_1= teamFormData.team_member_1 && !(await DBvalidateEmail(teamFormData.team_member_1)) ? "Make sure the person with this email has created an account" : "";
+                    const team_member_2 = teamFormData.team_member_2 && !(await DBvalidateEmail(teamFormData.team_member_2)) ? "Make sure the person with this email has created an account" : "";
+                    const team_member_3 =  teamFormData.team_member_3 && !(await DBvalidateEmail(teamFormData.team_member_3)) ? "Make sure the person with this email has created an account" : "";
                     
                     
                     setTeamMember1Errors(team_member_1);
@@ -858,9 +860,9 @@ export default function Dashboard() {
                   onNo={() => {}}
                   title="Submission Warning"
                   content={"Are you sure you want the following emails on your team: " + 
-                    [userData?.team_member_1, userData?.team_member_2, userData?.team_member_3]
-                    .filter(Boolean)
-                    .join(", ")}
+                  [teamFormData?.team_member_1, teamFormData?.team_member_2, teamFormData?.team_member_3]
+                  .filter(Boolean)
+                  .join(", ")}
                 />
               </CardContent>
             </Card>
