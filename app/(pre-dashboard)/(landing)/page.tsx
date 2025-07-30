@@ -8,7 +8,8 @@ import { Suspense, useEffect } from 'react';
 import Sponsors from './sections/Sponsors';
 import About from './sections/About';
 import FAQ from './sections/FAQ/FAQ';
-//import Team from './sections/Team';
+import Team from './sections/Team/Team';
+import PastTeam from './sections/PastTeam/PastTeam';
 import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
 import React from 'react';
@@ -42,9 +43,12 @@ export default async function Page() {
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>
-        {/* <GenericSection title="Team">
+        { <GenericSection title="Meet the Team"> 
           <Team />
-        </GenericSection> */}
+        </GenericSection> }
+        { <GenericSection title="Past Team Members"> 
+          <PastTeam />
+        </GenericSection> }
         <div className="">
           <Image
             src="/landing/S2025/bottomofpage.png"
