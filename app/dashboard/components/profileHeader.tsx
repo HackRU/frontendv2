@@ -233,9 +233,7 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'waitlist' && (
               <>
                 <div className="flex flex-col">
-                  <CardTitle>
-                    Delayed Entry 
-                  </CardTitle>
+                  <CardTitle>Delayed Entry</CardTitle>
                   <div>
                     <CardDescription>
                       Unfortunately, we&apos;ve had to place you on our
@@ -256,7 +254,7 @@ export default function ProfileHeader(props: {
                 </CardTitle>
                 <CardDescription>
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on  October 4th. You are guarenteed entry if you show
+                  show up on October 4th. You are guarenteed entry if you show
                   up before 10:30am, at which point it will be first come first
                   served.
                 </CardDescription>

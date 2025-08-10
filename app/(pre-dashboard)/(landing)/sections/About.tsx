@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
-import { longCang, brush } from '@/app/ui/fonts';
+import { longCang, azeret } from '@/app/ui/fonts';
 
 const animalQuality = 100;
 
@@ -36,12 +36,12 @@ function AboutInfo({
         )}
       >
         <h1
-          className={clsx('text-3xl md:text-5xl', brush.className)}
+          className={clsx('text-3xl md:text-5xl', azeret.className)}
           style={{ color: titleColor }}
         >
           {title}
         </h1>
-        <div className={clsx('text-2xl', brush.className)}>{children}</div>
+        <div className={clsx('text-2xl', azeret.className)}>{children}</div>
       </div>
     );
   }
@@ -98,12 +98,15 @@ function AboutInfo({
 export default function About() {
   return (
     <>
-      <div className="flex  items-center justify-center p-4">
+      <div className="flex  items-center justify-center p-4 pt-36">
+        <p className="absolute text-lg text-gold-100 text-white sm:text-4xl md:pl-8 md:pt-2 md:text-2xl lg:text-5xl">
+          ABOUT
+        </p>
         <Image
-          src={'/landing/S2025/aboutbanner.png'}
+          src={'/landing/F2025/header1.png'}
           width="300"
           height="300"
-          className="z-30  w-[400px]"
+          className="w-[400px]"
           alt={'about'}
           quality={50}
         />
@@ -116,22 +119,14 @@ export default function About() {
         text-base md:flex-row md:px-4 md:text-lg xl:text-xl"
         id="About"
       >
-        <Image
-          src={'/landing/S2025/minichef 5.png'}
-          width="600"
-          height="600"
-          className="invisible absolute -top-36 right-14 w-[140px] md:visible"
-          alt={'chef decoration'}
-          quality={50}
-        />
         <AboutInfo
           title="WHAT"
-          imageSrc="/landing/S2025/lumpia.png"
+          imageSrc="/landing/F2025/HourglassAsset.png"
           alt="Python"
           reverse
           titleColor="s2025black"
         >
-          <div className="border-t-8 border-cyan-100 pt-6">
+          <div className="border-t-8 border-cyan-100 pt-6 text-white">
             <p className="inline">HackRU is a</p>
             <p className="inline "> 24-hour hackathon </p>
             <p className="inline">at Rutgers University. We welcome</p>
@@ -164,11 +159,11 @@ export default function About() {
 
         <AboutInfo
           title="TRACKS"
-          imageSrc="/landing/S2025/sushiAsset 1.png"
+          imageSrc="/landing/F2025/pocket_watch_f25.png"
           alt="Python"
           titleColor="s2025black"
         >
-          <div className="border-t-8 border-cyan-100 pt-6">
+          <div className="border-t-8 border-cyan-100 pt-6 text-white">
             <p className="inline ">Social Good:</p>
             <p className="inline pb-4 pt-4"> Hacks that better the community</p>
 
@@ -205,12 +200,12 @@ export default function About() {
 
         <AboutInfo
           title="JOIN US"
-          imageSrc="/landing/S2025/ratatoullie.png"
+          imageSrc="/landing/F2025/key-and-lock.PNG"
           alt="Python"
           reverse
           titleColor="s2025black"
         >
-          <div className="border-t-8 border-cyan-100 pb-6 pt-6">
+          <div className="border-t-8 border-cyan-100 pb-6 pt-6 text-white">
             <p className="inline  ">Apply</p>
             <p className="inline"> to attend our </p>
             <p className="inline   ">Spring 2025 HackRU!</p>
@@ -220,7 +215,7 @@ export default function About() {
             <p className="inline   "> TBD</p>
           </div>
 
-          <div className="pb-6">
+          <div className="pb-6 text-white">
             <p className="inline">Want to help? Sign up to</p>
             <p className="inline   "> volunteer</p>
             <p className="inline"> and/or</p>
@@ -231,7 +226,7 @@ export default function About() {
               newsletter!
             </p>
           </div>
-          <div className="pb-6">
+          <div className="pb-6 text-white">
             <p className="inline">Want to receive updates? </p>
             <a
               href="https://hackru.us3.list-manage.com/subscribe?u=457c42db47ebf530a0fc733fb&id=fb01885829"

@@ -21,10 +21,21 @@ export default function GenericSection(props: GenericSectionProps) {
       {props.title == 'Sponsors' ? (
         <div className="flex  items-center justify-center p-4">
           <Image
-            src={'/landing/S2025/sponsorsflag.png'}
+            src={'/landing/F2025/mini dragons/mini 1.png'}
             width="300"
             height="300"
-            className="z-30  w-[400px]"
+            className="absolute left-[200px] z-30 w-[400px]"
+            alt={'about'}
+            quality={50}
+          />
+          <p className="absolute z-50 text-lg text-gold-100 text-white sm:text-4xl md:pl-8 md:pt-2 md:text-2xl lg:text-4xl">
+            SPONSORS
+          </p>
+          <Image
+            src={'/landing/F2025/header1.png'}
+            width="300"
+            height="300"
+            className="absolute z-40 w-[400px]"
             alt={'about'}
             quality={50}
           />
@@ -34,23 +45,37 @@ export default function GenericSection(props: GenericSectionProps) {
           {props.title == 'Schedule' ? (
             <div className="flex  items-center justify-center p-4">
               <Image
-                src={'/landing/S2025/schedulebanner.png'}
+                src={'/landing/F2025/mini dragons/mini 4.png'}
                 width="300"
                 height="300"
                 className="z-30  w-[400px]"
                 alt={'about'}
                 quality={50}
               />
+              <p className="absolute z-50 text-lg text-gold-100 text-white sm:text-4xl md:pl-8 md:pt-2 md:text-2xl lg:text-4xl">
+                SCHEDULE
+              </p>
+              <Image
+                src={'/landing/F2025/header1.png'}
+                width="300"
+                height="300"
+                className="absolute z-40 w-[400px]"
+                alt={'about'}
+                quality={50}
+              />
             </div>
           ) : (
-            <div> 
+            <div>
               {props.title == 'FAQ' ? (
                 <div className="flex  items-center justify-center p-4">
+                  <p className="absolute z-50 text-lg text-gold-100 text-white sm:text-4xl md:pl-8 md:pt-2 md:text-2xl lg:text-4xl">
+                    FAQ
+                  </p>
                   <Image
-                    src={'/landing/S2025/faqflag.png'}
+                    src={'/landing/F2025/header1.png'}
                     width="300"
                     height="300"
-                    className="z-30  w-[400px]"
+                    className="absolute z-40 w-[400px]"
                     alt={'about'}
                     quality={50}
                   />

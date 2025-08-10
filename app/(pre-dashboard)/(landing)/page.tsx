@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { brush } from '@/app/ui/fonts';
+import { azeret } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Hero from './sections/Hero/Hero';
 import Schedule from './sections/Schedule';
@@ -17,13 +17,9 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
-
-  redirect('/offseason');
-
-
   return (
     <main
-      className={`relative flex h-fit flex-col ${brush.className} bg-gradient-to-b from-tan_2-100 to-off_white-100 text-s2025black-100`}
+      className={`relative flex h-fit flex-col ${azeret.className} bg-gradient-to-b from-[#DBF5F8] to-[#54A0A8] text-s2025black-100`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero />
@@ -43,15 +39,15 @@ export default async function Page() {
         <GenericSection title="FAQ" color="from-blue-500">
           <FAQ />
         </GenericSection>
-        { <GenericSection title="Meet the Team"> 
+        {/* { <GenericSection title="Meet the Team"> 
           <Team />
         </GenericSection> }
         { <GenericSection title="Past Team Members"> 
           <PastTeam />
-        </GenericSection> }
-        <div className="">
+        </GenericSection> } */}
+        <div className="absolute -bottom-[2000px]">
           <Image
-            src="/landing/S2025/bottomofpage.png"
+            src="/landing/F2025/bottom.png"
             alt="bottom image"
             layout="responsive"
             objectFit="cover"

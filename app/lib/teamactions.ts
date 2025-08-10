@@ -1,32 +1,34 @@
 'use server';
 import { unstable_noStore as noStore } from 'next/cache';
 
-
 import { auth } from '../../auth';
 
 import { BASE } from './definitions';
 
-const BASEteam = BASE + "/team"
-
+const BASEteam = BASE + '/team';
 
 const ENDPOINTS = {
-readTeam: BASEteam + '/read-confirmed',
-readPendingInvites: BASEteam + '/read-invites',
-createTeam: BASEteam + '/create',
-removeMember: BASEteam + '/team-member-removal',
-inviteMember: BASEteam + '/invite',
-acceptInvite: BASEteam + '/join',
-declineInvite: BASEteam + '/decline-invite',
-disbandTeam: BASEteam + '/disband',
-leaveTeam: BASEteam + '/leave',
+  readTeam: BASEteam + '/read-confirmed',
+  readPendingInvites: BASEteam + '/read-invites',
+  createTeam: BASEteam + '/create',
+  removeMember: BASEteam + '/team-member-removal',
+  inviteMember: BASEteam + '/invite',
+  acceptInvite: BASEteam + '/join',
+  declineInvite: BASEteam + '/decline-invite',
+  disbandTeam: BASEteam + '/disband',
+  leaveTeam: BASEteam + '/leave',
 };
 
-export async function CreateTeam(email: string, team_name:string, members: string[]) {
+export async function CreateTeam(
+  email: string,
+  team_name: string,
+  members: string[],
+) {
   noStore();
   let resp = {
     error: '',
     response: '',
-    team_id: ''
+    team_id: '',
   };
 
   const session = await auth();
@@ -39,8 +41,8 @@ export async function CreateTeam(email: string, team_name:string, members: strin
       body: JSON.stringify({
         auth_email: session.user.email,
         auth_token: session.user.name,
-        team_name: team_name, 
-        members: members
+        team_name: team_name,
+        members: members,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
@@ -58,7 +60,7 @@ export async function CreateTeam(email: string, team_name:string, members: strin
   return resp;
 }
 
-export async function InviteMember(email: string, team_id:string, invites: string[]) {
+export async function InviteMember(team_id: string, invites: string[]) {
   noStore();
   let resp = {
     error: '',
@@ -93,7 +95,7 @@ export async function InviteMember(email: string, team_id:string, invites: strin
   return resp;
 }
 
-export async function InviteAccept(email: string, team_id: string) {
+export async function InviteAccept(team_id: string) {
   noStore();
   let resp = {
     error: '',
@@ -127,7 +129,7 @@ export async function InviteAccept(email: string, team_id: string) {
   return resp;
 }
 
-export async function InviteDecline(email: string, team_id:string) {
+export async function InviteDecline(team_id: string) {
   noStore();
   let resp = {
     error: '',
@@ -161,7 +163,7 @@ export async function InviteDecline(email: string, team_id:string) {
   return resp;
 }
 
-export async function LeaveTeam(email: string, team_id:string) {
+export async function LeaveTeam(team_id: string) {
   noStore();
   let resp = {
     error: '',
@@ -195,7 +197,7 @@ export async function LeaveTeam(email: string, team_id:string) {
   return resp;
 }
 
-export async function TeamDisband(email: string, team_id:string) {
+export async function TeamDisband(team_id: string) {
   noStore();
   let resp = {
     error: '',
@@ -229,7 +231,7 @@ export async function TeamDisband(email: string, team_id:string) {
   return resp;
 }
 
-export async function RemoveMember(emails: string[], team_id:string) {
+export async function RemoveMember(emails: string[], team_id: string) {
   noStore();
   let resp = {
     error: '',
@@ -247,7 +249,7 @@ export async function RemoveMember(emails: string[], team_id:string) {
         team_id: team_id,
         auth_email: session.user.email,
         auth_token: session.user.name,
-        email: emails
+        email: emails,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();

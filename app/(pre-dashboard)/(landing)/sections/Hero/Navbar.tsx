@@ -8,7 +8,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { bizUdg } from '@/app/ui/fonts';
-import { longCang, brush } from '@/app/ui/fonts';
+import { longCang, azeret } from '@/app/ui/fonts';
 import clsx from 'clsx';
 
 function scrollToSectionName(sectionName: string) {
@@ -114,7 +114,7 @@ function Navbar() {
   return (
     <div
       className={`z-40 flex w-full justify-end
-        md:fixed ${brush.className}`}
+        md:fixed ${azeret.className}`}
       id="navbar"
     >
       <div
@@ -125,11 +125,11 @@ function Navbar() {
         <Image
           width={200}
           height={200}
-          src="/landing/S2025/hackru-generic-logo.png"
+          src="/landing/F2025/HackRU-logo-f25.png"
           alt="generic hackru logo"
         />
       </div>
-      
+
       <a
         href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=yellow"
         target="_blank"
@@ -150,17 +150,10 @@ function Navbar() {
       >
         {isHomePage && (
           <div className="relative flex items-center justify-start">
-            <Image
-              src="/landing/S2025/navbar-header.png"
-              alt="Navigation background"
-              width={1200}
-              height={150}
-              className="absolute -top-10 right-0 -z-10 scale-110"
-            />
             {sections.map((section) => (
               <button
                 style={{
-                  color: '#6D1E00',
+                  color: 'darkcyan',
                   textTransform: 'lowercase',
                 }}
                 className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
@@ -172,7 +165,7 @@ function Navbar() {
             ))}
             <button
               style={{
-                color: '#6D1E00',
+                color: 'darkcyan',
                 textTransform: 'lowercase',
               }}
               className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"
@@ -184,7 +177,7 @@ function Navbar() {
             <Link href="https://linktr.ee/thehackru">
               <button
                 style={{
-                  color: '#6D1E00',
+                  color: 'darkcyan',
                   textTransform: 'lowercase',
                 }}
                 className="glow-center ms-4 text-lg font-medium uppercase transition-shadow hover:drop-shadow-blueGlow sm:mr-3 sm:text-xl md:mr-4 md:text-2xl lg:mr-5 lg:text-3xl"

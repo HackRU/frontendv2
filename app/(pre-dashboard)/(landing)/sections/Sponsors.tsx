@@ -2,21 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 export default async function Sponsors() {
-  const sponsors = [
-    '/sponsors/icims.png',
-    '/sponsors/wakefern2.png',
-    '/sponsors/saily-logo-yellow_2.png',
-    '/sponsors/dorahacks.png',
-    '/sponsors/stand-out-stickers-logo.png',
-  ];
+  const sponsors = ['/landing/bitsprout.png'];
 
-  const sponsorsLinks = [
-    'https://www.icims.com/',
-    'https://www2.wakefern.com/',
-    'https://saily.com/',
-    'https://dorahacks.io/',
-    'https://www.standoutstickers.com/?utm_campaign=events-league-organizers-fall2023&utm_medium=email&utm_source=customerio-zoho_creator_-_standout_sticker_intro',
-  ];
+  const sponsorsLinks = ['https://www.hackru.org/'];
 
   return (
     <div
@@ -77,6 +65,15 @@ export default async function Sponsors() {
         alt={'cool'}
         quality={50}
       /> */}
+
+      <Image
+        src={'/landing/F2025/mini dragons/mini 3.png'}
+        width="500"
+        height="500"
+        className="absolute -bottom-[300px] w-[500px] md:right-[150px] md:w-[500px] lg:-bottom-[50px]"
+        alt={'cool'}
+        quality={50}
+      />
     </div>
   );
 }

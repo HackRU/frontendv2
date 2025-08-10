@@ -42,7 +42,7 @@ const schedule = {
         location: 'Center Lobby',
       },
       {
-        time: '11:45 AM',
+        time: '10:45 AM',
         event: 'Delayed Check-in',
         location: 'Center Lobby',
       },
@@ -115,9 +115,8 @@ export default function Schedule() {
     >
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
-          className="text-text relative flex w-full flex-col items-center bg-[url('/landing/S2025/chalk1.png')]
-                                bg-cover
-                                bg-center bg-no-repeat p-20 xs:bg-[length:100%_110%] md:flex-row md:items-start md:bg-[length:100%_100%]"
+          className="text-text relative flex w-full flex-col items-center bg-gray-900
+p-20  md:flex-row md:items-start "
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
@@ -149,28 +148,10 @@ export default function Schedule() {
         /> */}
 
       <Image
-        src={'/landing/S2025/minichef 2.png'}
-        width="600"
-        height="600"
-        className="invisible absolute -top-44 right-14 w-[150px] md:visible"
-        alt={'cool'}
-        quality={50}
-      />
-
-      <Image
-        src={'/landing/S2025/minichef 3.png'}
-        width="600"
-        height="600"
-        className="invisible absolute -top-64 left-14 w-[200px] md:visible"
-        alt={'cool'}
-        quality={50}
-      />
-
-      <Image
-        src={'/landing/S2025/lightsv2.png'}
-        width="1000"
-        height="1000"
-        className="absolute -bottom-[300px] w-[1000px] md:-bottom-[400px] md:w-[1200px] lg:-bottom-[550px]"
+        src={'/landing/F2025/mini dragons/mini 5.png'}
+        width="500"
+        height="500"
+        className="absolute -bottom-[300px] w-[500px] md:right-[150px] md:w-[500px] lg:-bottom-[50px]"
         alt={'cool'}
         quality={50}
       />
