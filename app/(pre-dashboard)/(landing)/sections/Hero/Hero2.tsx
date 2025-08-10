@@ -52,31 +52,8 @@ export default function Hero() {
 
   return (
     <>
-      <Navbar />
-      <div
-        className="flex h-full w-full items-center justify-center
-         bg-cover bg-center bg-no-repeat"
-      >
-        <div
-          className="relative flex w-full max-w-[1100px] flex-col items-center
-           justify-center sm:flex sm:h-[100vh] md:flex-row-reverse"
-          id="Home"
-        >
-          <div className="relative flex w-full justify-center">
-              <div className="h-auto w-[200px] s:w-[300px] md:w-[500px] lg:w-[1000px]"> 
-                {/* -bottom-[200px] right-[200px] z-10 -mb-10 mt-20 md:absolute md:-bottom-[500px] md:-right-[50px] md:-mb-0 md:mt-0 md:w-[500px] lg:-bottom-[700px] lg:-right-[400px] lg:w-[700px] */}
-                <div className="-z-50 h-[300px] md:h-[300px] lg:h-[500px]">
-                  <Image
-                    src={'/landing/F2025/dragon.png'}
-                    alt="Poker"
-                    width="2000"
-                    height="2000"
-                    priority
-                  />
-                </div>
-            </div>
-          </div>
-          <div className="relative z-200 flex h-auto flex-col items-center justify-center">
+    <div className="grid w-full items-center gap-0 lg:grid-cols-2">
+        <div className="z-200 flex h-auto flex-col items-center justify-top lg:-mt-[600px]">
             <div
               className="relative left-0 top-0 h-auto w-[790px]
             xs:max-w-[320px] sm:max-w-[576px]
@@ -95,11 +72,10 @@ export default function Hero() {
             <div className="items-left flex-col">
               <p className={`${azeret.className} text-2xl`}>
                 <span className="text-[#6D1E00]">
-                  it&apos;s time to steam!{' '}
                 </span>
                 {/* <span className="text-[#ADD8E6]">ON!</span> */}
               </p>
-              <p className={`${azeret.className} text-2xl`}>
+              <p className={`${azeret.className} text-center text-2xl`}>
                 <span className="text-black">October 4th - 5th, TBD </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
@@ -158,8 +134,16 @@ export default function Hero() {
               </div>
             </div>
           </div>
+        <div className='flex'>
+        <Image
+        src={'/landing/F2025/dragon.png'}
+        alt="Dragon"
+        width="1500"
+        height="1500"
+        priority
+        />
         </div>
-      </div>
+    </div>
     </>
-  );
+  ) 
 }

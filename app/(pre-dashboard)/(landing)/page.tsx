@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { azeret } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Hero from './sections/Hero/Hero';
+import Hero2 from './sections/Hero/Hero2';
 import Schedule from './sections/Schedule';
 import { Suspense, useEffect } from 'react';
 import Sponsors from './sections/Sponsors';
@@ -22,7 +23,7 @@ export default async function Page() {
       className={`relative flex h-fit flex-col ${azeret.className} bg-gradient-to-b from-[#DBF5F8] to-[#54A0A8] text-s2025black-100`}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
-        <Hero />
+        <Hero2 />
 
         <About />
         {/**
