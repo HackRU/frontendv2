@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="relative h-fit w-fit ">
         <Navbar />
         <Suspense>
-          {/* <Cursor /> */}{' '}
+          <Cursor />{' '}
           {/*<-- Custom cursor component for the pre-dashboard, uncomment if needed */}
         </Suspense>
         {children}
