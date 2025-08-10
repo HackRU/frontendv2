@@ -141,7 +141,13 @@ export default function Dashboard() {
     team_member_1: '',
     team_member_2: '',
     team_member_3: '',
+  });
+  const [teamStatus, setTeamStatus] = useState<any>({
+    team_member_1: '',
+    team_member_2: '',
+    team_member_3: '',
     team_id: '',
+    isLeader: true
   });
   const [pointsData, setPointsData] = useState<{
     balance: number;
@@ -486,6 +492,12 @@ export default function Dashboard() {
         team_member_1: userData.team_member_1 || '',
         team_member_2: userData.team_member_2 || '',
         team_member_3: userData.team_member_3 || '',
+      });
+      setTeamStatus({
+        ...teamStatus,
+        team_member_1: userData.team_member_1 || '',
+        team_member_2: userData.team_member_2 || '',
+        team_member_3: userData.team_member_3 || '',
         team_id: userData.team_id || '',
       });
     }
@@ -617,7 +629,7 @@ export default function Dashboard() {
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
           />
-          <Card className="w-full max-w-2xl">
+          { !(userData?.registration_status === "unregistered") && <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
                 <div className="flex flex-col">
@@ -634,6 +646,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
+    }
           {/*Getting ride of house info as well */}
           {userData?.registration_status === 'checked_in' && false && (
             <Card className="w-full max-w-2xl">
@@ -764,16 +777,16 @@ export default function Dashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button
+                {(teamStatus.team_id && teamStatus.isLeader) && <Button
                   onClick={() => {
-                    TeamDisband(teamFormData.team_id);
+                    TeamDisband(teamStatus.team_id);
                   }}
                   type="button"
                   className="text-red-400"
                 >
                   Disband Team
-                </Button>
-                <Button
+                </Button>}
+                  {teamStatus.team_id &&  <Button
                   onClick={() => {
                     LeaveTeam(teamFormData.team_id);
                   }}
@@ -781,7 +794,8 @@ export default function Dashboard() {
                   className="text-red-400"
                 >
                   Leave Team
-                </Button>
+                </Button>}
+
                 <p>Pending invite {pendingteam}</p>
                 <Button
                   onClick={() => {
@@ -864,6 +878,7 @@ export default function Dashboard() {
                     id="team_member_1"
                     value={teamFormData.team_member_1}
                     className={teamMember1Errors ? 'border-red-500' : ''}
+                    disabled={!teamStatus.isLeader}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -893,6 +908,7 @@ export default function Dashboard() {
                     id="team_member_2"
                     value={teamFormData.team_member_2}
                     className={teamMember2Errors ? 'border-red-500' : ''}
+                    disabled={!teamStatus.isLeader}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -922,6 +938,7 @@ export default function Dashboard() {
                     id="team_member_3"
                     value={teamFormData.team_member_3}
                     className={teamMember3Errors ? 'border-red-500' : ''}
+                    disabled={!teamStatus.isLeader}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -1026,7 +1043,7 @@ export default function Dashboard() {
             </Card>
           )}
 
-          <Card className="w-full max-w-2xl">
+          {!(userData?.registration_status === "unregistered") && <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
                 <div className="flex flex-col">
@@ -1042,7 +1059,7 @@ export default function Dashboard() {
                 <QRCode value={userData?.email} size={256} />
               </div>
             </CardContent>
-          </Card>
+          </Card>}
 
           <Card className="w-full max-w-2xl">
             <CardHeader>
