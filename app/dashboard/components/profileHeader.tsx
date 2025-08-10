@@ -47,14 +47,14 @@ export default function ProfileHeader(props: {
   };
 
   return (
-    <div className="mt-2 flex w-full max-w-2xl flex-col items-center justify-center space-y-8 text-white">
+    <div className="mt-2 flex w-full max-w-2xl flex-col items-center justify-center space-y-8 text-black">
       <div className="mt-20 flex h-fit w-full flex-col items-center gap-3">
-        <Avatar className="h-24 w-24">
+        {/* <Avatar className="h-24 w-24">
           <AvatarInitials>
             {userData?.first_name[0]}
             {userData?.last_name[0]}
           </AvatarInitials>
-        </Avatar>
+        </Avatar> */}
         <div className="grid w-full gap-0.5 overflow-ellipsis text-xs">
           <div className="text-xl font-medium ">
             {userData?.first_name} {userData?.last_name}
