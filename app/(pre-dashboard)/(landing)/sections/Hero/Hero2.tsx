@@ -52,35 +52,34 @@ export default function Hero() {
 
   return (
     <>
-    <div className="grid w-full items-center gap-0 lg:grid-cols-2">
-        <div className="z-200 flex h-auto flex-col items-center justify-top lg:-mt-[600px]">
-            <div
-              className="relative left-0 top-0 h-auto w-[790px]
+      <div className="grid w-full items-center gap-0 lg:grid-cols-2">
+        <div className="z-200 justify-top flex h-auto flex-col items-center lg:-mt-[600px]">
+          <div
+            className="relative left-0 top-0 h-auto w-[790px]
             xs:max-w-[320px] sm:max-w-[576px]
             md:w-[500px] md:pl-8 lg:w-[700px] xl:w-[800px]"
-            >
-              <Image
-                src={FIRE_IMG[0]}
-                quality={fireImageQuality}
-                width="900"
-                height="900"
-                alt="Fire"
-                className={'relative'}
-                priority
-              />
-            </div>
-            <div className="items-left flex-col">
-              <p className={`${azeret.className} text-2xl`}>
-                <span className="text-[#6D1E00]">
-                </span>
-                {/* <span className="text-[#ADD8E6]">ON!</span> */}
-              </p>
-              <p className={`${azeret.className} text-center text-2xl`}>
-                <span className="text-black">October 4th - 5th, TBD </span>
-              </p>
-              <div className="mt-10 flex justify-center space-x-4">
-                <button
-                  className="relative z-30 items-center justify-center
+          >
+            <Image
+              src={FIRE_IMG[0]}
+              quality={fireImageQuality}
+              width="900"
+              height="900"
+              alt="Fire"
+              className={'relative'}
+              priority
+            />
+          </div>
+          <div className="items-left flex-col">
+            <p className={`${azeret.className} text-2xl`}>
+              <span className="text-[#6D1E00]"></span>
+              {/* <span className="text-[#ADD8E6]">ON!</span> */}
+            </p>
+            <p className={`${azeret.className} text-center text-2xl`}>
+              <span className="text-black">October 4th - 5th, TBD </span>
+            </p>
+            <div className="mt-10 flex justify-center space-x-4">
+              <button
+                className="relative z-30 items-center justify-center
                 bg-transparent text-sm text-[#C3557D]
                 transition-all duration-100 hover:drop-shadow-[0_0_20px_#7F9901]
                 xs:h-[26px] xs:w-[99px]
@@ -88,23 +87,23 @@ export default function Hero() {
                 sm:text-lg md:h-[37px]
                 md:w-[145px] lg:h-[42px]
                 lg:w-[400px]"
-                  onClick={() => router.push('/signup')}
-                >
-                  <Image
-                    src="/landing/F2025/button1.png"
-                    alt="Sign up icon"
-                    width={900}
-                    height={400}
-                    className="absolute top-0"
-                  />
-                  <div className="relative h-full w-full">
-                    <p className="relative pt-6 text-l text-white sm:text-2xl md:pt-4 lg:pt-16 md:text-xl lg:text-4xl">
-                      SIGN UP
-                    </p>
-                  </div>
-                </button>
-                <button
-                  className="relative z-30 items-center justify-center
+                onClick={() => router.push('/signup')}
+              >
+                <Image
+                  src="/landing/F2025/button1.png"
+                  alt="Sign up icon"
+                  width={900}
+                  height={400}
+                  className="absolute top-0"
+                />
+                <div className="relative h-full w-full">
+                  <p className="text-l relative pt-6 text-white sm:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
+                    SIGN UP
+                  </p>
+                </div>
+              </button>
+              <button
+                className="relative z-30 items-center justify-center
                 bg-transparent text-sm text-[#EC9655]
                 transition-all duration-100 hover:drop-shadow-[0_0px_20px_#1A3127]
                 xs:h-[26px] xs:w-[99px]
@@ -112,38 +111,38 @@ export default function Hero() {
                 sm:text-lg md:h-[37px]
                 md:w-[145px] lg:h-[42px]
                 lg:w-[400px]"
-                  onClick={() => {
-                    if (isLogged) {
-                      router.push('/dashboard');
-                    } else {
-                      router.push('/login');
-                    }
-                  }}
-                >
-                  <Image
-                    src="/landing/F2025/button2.png"
-                    alt="Sign up icon"
-                    width={900}
-                    height={400}
-                    className="absolute top-0"
-                  />
-                  <p className="relative pt-6 text-l text-white sm:text-2xl md:pt-4 lg:pt-16 md:text-xl lg:text-4xl">
-                    {!isLogged ? 'LOG IN' : 'DASHBOARD'}
-                  </p>
-                </button>
-              </div>
+                onClick={() => {
+                  if (isLogged) {
+                    router.push('/dashboard');
+                  } else {
+                    router.push('/login');
+                  }
+                }}
+              >
+                <Image
+                  src="/landing/F2025/button2.png"
+                  alt="Sign up icon"
+                  width={900}
+                  height={400}
+                  className="absolute top-0"
+                />
+                <p className="text-l relative pt-6 text-white sm:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
+                  {!isLogged ? 'LOG IN' : 'DASHBOARD'}
+                </p>
+              </button>
             </div>
           </div>
-        <div className='flex'>
-        <Image
-        src={'/landing/F2025/dragon.png'}
-        alt="Dragon"
-        width="1500"
-        height="1500"
-        priority
-        />
         </div>
-    </div>
+        <div className="flex">
+          <Image
+            src={'/landing/F2025/dragon.png'}
+            alt="Dragon"
+            width="1500"
+            height="1500"
+            priority
+          />
+        </div>
+      </div>
     </>
-  ) 
+  );
 }

@@ -63,20 +63,20 @@ export default function Hero() {
           id="Home"
         >
           <div className="relative flex w-full justify-center">
-              <div className="h-auto w-[200px] s:w-[300px] md:w-[500px] lg:w-[1000px]"> 
-                {/* -bottom-[200px] right-[200px] z-10 -mb-10 mt-20 md:absolute md:-bottom-[500px] md:-right-[50px] md:-mb-0 md:mt-0 md:w-[500px] lg:-bottom-[700px] lg:-right-[400px] lg:w-[700px] */}
-                <div className="-z-50 h-[300px] md:h-[300px] lg:h-[500px]">
-                  <Image
-                    src={'/landing/F2025/dragon.png'}
-                    alt="Poker"
-                    width="2000"
-                    height="2000"
-                    priority
-                  />
-                </div>
+            <div className="s:w-[300px] h-auto w-[200px] md:w-[500px] lg:w-[1000px]">
+              {/* -bottom-[200px] right-[200px] z-10 -mb-10 mt-20 md:absolute md:-bottom-[500px] md:-right-[50px] md:-mb-0 md:mt-0 md:w-[500px] lg:-bottom-[700px] lg:-right-[400px] lg:w-[700px] */}
+              <div className="-z-50 h-[300px] md:h-[300px] lg:h-[500px]">
+                <Image
+                  src={'/landing/F2025/dragon.png'}
+                  alt="Poker"
+                  width="2000"
+                  height="2000"
+                  priority
+                />
+              </div>
             </div>
           </div>
-          <div className="relative z-200 flex h-auto flex-col items-center justify-center">
+          <div className="z-200 relative flex h-auto flex-col items-center justify-center">
             <div
               className="relative left-0 top-0 h-auto w-[790px]
             xs:max-w-[320px] sm:max-w-[576px]
@@ -122,7 +122,7 @@ export default function Hero() {
                     className="absolute top-0"
                   />
                   <div className="relative h-full w-full">
-                    <p className="relative pt-6 text-l text-white sm:text-2xl md:pt-4 lg:pt-16 md:text-xl lg:text-4xl">
+                    <p className="text-l relative pt-6 text-white sm:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
                       SIGN UP
                     </p>
                   </div>
@@ -151,7 +151,7 @@ export default function Hero() {
                     height={400}
                     className="absolute top-0"
                   />
-                  <p className="relative pt-6 text-l text-white sm:text-2xl md:pt-4 lg:pt-16 md:text-xl lg:text-4xl">
+                  <p className="text-l relative pt-6 text-white sm:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
                     {!isLogged ? 'LOG IN' : 'DASHBOARD'}
                   </p>
                 </button>
