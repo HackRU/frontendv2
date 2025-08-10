@@ -46,12 +46,11 @@ export default async function Page() {
         { <GenericSection title="Past Team Members"> 
           <PastTeam />
         </GenericSection> } */}
-        <div className="absolute -bottom-[2000px]">
+        <div className="-mt-[1000px]">
           <Image
             src="/landing/F2025/bottom.png"
             alt="bottom image"
             layout="responsive"
-            objectFit="cover"
             width={400}
             height={300}
             loading="lazy"

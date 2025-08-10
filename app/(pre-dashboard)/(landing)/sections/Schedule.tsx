@@ -151,7 +151,7 @@ p-20  md:flex-row md:items-start "
         src={'/landing/F2025/mini dragons/mini 5.png'}
         width="500"
         height="500"
-        className="absolute -bottom-[300px] w-[500px] md:right-[150px] md:w-[500px] lg:-bottom-[50px]"
+        className="absolute -bottom-[300px] w-[400px] md:right-[150px] md:w-[500px] lg:-bottom-[50px]"
         alt={'cool'}
         quality={50}
       />

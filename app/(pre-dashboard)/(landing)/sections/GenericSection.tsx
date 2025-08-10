@@ -24,7 +24,7 @@ export default function GenericSection(props: GenericSectionProps) {
             src={'/landing/F2025/mini dragons/mini 1.png'}
             width="300"
             height="300"
-            className="absolute left-[200px] z-30 w-[400px]"
+            className="absolute left-[200px] z-30 w-[200]px md:w-[400px]"
             alt={'about'}
             quality={50}
           />
