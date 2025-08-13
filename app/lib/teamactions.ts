@@ -20,7 +20,6 @@ const ENDPOINTS = {
 };
 
 export async function CreateTeam(
-  email: string,
   team_name: string,
   members: string[],
 ) {

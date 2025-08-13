@@ -8,6 +8,9 @@ import {
   InviteDecline,
   InviteAccept,
   LeaveTeam,
+  CreateTeam,
+  ReadConfirmed,
+  ReadPending
 } from '@/app/lib/teamactions';
 import { useState, useEffect, Suspense } from 'react';
 
@@ -173,7 +176,8 @@ export default function Dashboard() {
   const [displayTeamConfimWarning, setTeamConfimWarning] =
     useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>('');
-  const [currentTeam, setCurrentTeam] = useState<number>(0);
+  const [currentTeam, setCurrentTeam] = useState<string>('');
+  const [teamInfo, setTeamInfo] = useState<any>();
 
   const RegexvalidateEmail = (email: string) => {
     console.log(email);
@@ -250,7 +254,7 @@ export default function Dashboard() {
       const error = resp.error;
       setTeamSubmissionError(error);
     } else {
-      setCurrentTeam(team_id);
+      setCurrentTeam(team_id as unknown as string);
     }
 
     setSubmittingTeamForm(false);
@@ -405,14 +409,22 @@ export default function Dashboard() {
 
   const updateTeam = async () => {
     let memberstoadd: string[] = [];
-    if (teamFormData.team_member_1 != userData.team_member_1)
+    if (teamFormData.team_member_1 != teamInfo.members[0])
       memberstoadd.push(teamFormData.team_member_1);
-    if (teamFormData.team_member_2 != userData.team_member_1)
+    if (teamFormData.team_member_2 != teamInfo.members[1])
       memberstoadd.push(teamFormData.team_member_2);
-    if (teamFormData.team_member_3 != userData.team_member_1)
+    if (teamFormData.team_member_3 != teamInfo.members[2])
       memberstoadd.push(teamFormData.team_member_3);
 
-    const resp = await InviteMember(teamFormData.team_id, memberstoadd);
+    let resp;
+
+    if (!teamInfo?.team_id){
+      resp = await CreateTeam("team_name", memberstoadd)
+    }
+    else{
+      resp = await InviteMember(teamFormData.team_id, memberstoadd);
+    }
+
 
     if (resp.response === 'User updated successfully') {
       // Only update the display data after successful submission
@@ -436,12 +448,19 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    try {
-      setpendingteam('cool');
+    async function fetchTeam() { 
+          try {
+      setpendingteam(userData?.team_info?.pending_invites[0]?.team_id);
+      const resp = await ReadConfirmed()
+      setTeamInfo(resp.response)
+
     } catch (error) {
       console.error('Error fetching or parsing schools data:', error);
     }
-  }, []);
+    }
+    fetchTeam()
+
+  }, [userData]);
 
   // First useEffect to fetch and set schools data
   useEffect(() => {
@@ -482,23 +501,23 @@ export default function Dashboard() {
   useEffect(() => {
     if (
       userData &&
-      (userData.team_member_1 ||
-        userData.team_member_2 ||
-        userData.team_member_3)
+      (teamInfo.members[0] ||
+        teamInfo.members[1] ||
+        teamInfo.members[2])
     ) {
       // Initialize form data with existing team member data
       setTeamFormData({
         ...teamFormData,
-        team_member_1: userData.team_member_1 || '',
-        team_member_2: userData.team_member_2 || '',
-        team_member_3: userData.team_member_3 || '',
+        team_member_1: teamInfo.members[0] || '',
+        team_member_2: teamInfo.members[1] || '',
+        team_member_3: teamInfo.members[2] || '',
       });
       setTeamStatus({
         ...teamStatus,
-        team_member_1: userData.team_member_1 || '',
-        team_member_2: userData.team_member_2 || '',
-        team_member_3: userData.team_member_3 || '',
-        team_id: userData.team_id || '',
+        team_member_1: teamInfo.members[0] || '',
+        team_member_2: teamInfo.members[1] || '',
+        team_member_3: teamInfo.members[2] || '',
+        team_id: teamInfo?.team_id || '',
       });
     }
   }, [userData]);
@@ -540,10 +559,10 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (userData && userData.team_id) {
-      setCurrentTeam(userData.team_id);
+    if (teamInfo && teamInfo?.team_id) {
+      setCurrentTeam(teamInfo?.team_id);
     }
-  }, [userData]);
+  }, [teamInfo]);
 
   if (!userData || !userData.role) {
     return <HackerDashboardSkeleton />;
@@ -756,23 +775,22 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-          {
+          {pendingteam ? (
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Pre Event Team</CardTitle>
                 <CardDescription>
-                  <strong>READ CLOSELY</strong>: Only ONE person needs to submit
-                  their team. The team leader (the person who fills out this
-                  form) will type in the emails of their team members they used
+                  <strong>READ CLOSELY</strong>: Only ONE person needs to create
+                  the team. The team leader (the person who created the team) will type in the emails of their team members they used
                   to register. Those team members then need to accept the team
-                  invite This is only so we can admit people as a team, you will
+                  invite. This is only so we can admit people as a team, you will
                   still need to create a team on the submission platform during
                   the hackathon
                   <br />
                   <br />
                   <br />
                   <br />
-                  All team members must be registered by Sep 30th Failure to do
+                  All team members must be registered and accept their invite by Sep 30th Failure to do
                   so may lead to incomplete team acceptances.
                 </CardDescription>
               </CardHeader>
@@ -796,25 +814,6 @@ export default function Dashboard() {
                   Leave Team
                 </Button>}
 
-                <p>Pending invite {pendingteam}</p>
-                <Button
-                  onClick={() => {
-                    InviteAccept(pendingteam ?? '');
-                  }}
-                  type="button"
-                  className="text-green-400"
-                >
-                  Accept invite
-                </Button>
-                <Button
-                  onClick={() => {
-                    InviteDecline(pendingteam ?? '');
-                  }}
-                  type="button"
-                  className="text-red-400"
-                >
-                  Decline invite
-                </Button>
                 {/* Team members display section */}
                 {(userData?.team_member_1 ||
                   userData?.team_member_2 ||
@@ -836,7 +835,7 @@ export default function Dashboard() {
                           >
                             X
                           </Button>
-                          {userData.team_member_1}
+                          {teamInfo.members[0]}
                         </li>
                       )}
                       {userData?.team_member_2 && (
@@ -851,7 +850,7 @@ export default function Dashboard() {
                           >
                             X
                           </Button>
-                          {userData.team_member_2}
+                          {teamInfo.members[1]}
                         </li>
                       )}
                       {userData?.team_member_3 && (
@@ -866,7 +865,7 @@ export default function Dashboard() {
                           >
                             X
                           </Button>
-                          {userData.team_member_3}
+                          {teamInfo.members[2]}
                         </li>
                       )}
                     </ul>
@@ -1020,7 +1019,28 @@ export default function Dashboard() {
                   }
                 />
               </CardContent>
-            </Card>
+            </Card> ) :   (<div> <p>Pending invite {pendingteam}</p>
+                <Button
+                  onClick={() => {
+                    InviteAccept(pendingteam ?? '');
+                    setpendingteam('')
+                  }}
+                  type="button"
+                  className="text-green-400"
+                >
+                  Accept invite
+                </Button> 
+                                <Button
+                  onClick={() => {
+                    InviteDecline(pendingteam ?? '')
+                    setpendingteam('');
+                  }}
+                  type="button"
+                  className="text-red-400"
+                >
+                  Decline invite
+                </Button>
+                </div>)
           }
           {false && (
             <Card className="w-full max-w-2xl">
