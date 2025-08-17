@@ -5,13 +5,13 @@ import { auth } from '../../auth';
 
 import { BASE } from './definitions';
 
-const BASEteam = BASE + '/team';
+const BASEteam = BASE + '/teams';
 
 const ENDPOINTS = {
-  readTeam: BASEteam + '/read-confirmed',
+  readTeam: BASEteam + '/read',
   readPendingInvites: BASEteam + '/read-invites',
   createTeam: BASEteam + '/create',
-  removeMember: BASEteam + '/team-member-removal',
+  removeMember: BASEteam + '/member-removal',
   inviteMember: BASEteam + '/invite',
   acceptInvite: BASEteam + '/join',
   declineInvite: BASEteam + '/decline-invite',
@@ -248,7 +248,7 @@ export async function RemoveMember(emails: string[], team_id: string) {
         team_id: team_id,
         auth_email: session.user.email,
         auth_token: session.user.name,
-        email: emails,
+        member_emails: emails,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
@@ -282,13 +282,14 @@ export async function ReadConfirmed() {
       body: JSON.stringify({
         auth_email: session.user.email,
         auth_token: session.user.name,
+        member_email: session.user.email,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
       if (res.status !== 200) {
         resp.error = resJSON.message;
       } else {
-        resp.response = resJSON;
+        resp.response = resJSON.team;
       }
     });
   } else {
@@ -329,4 +330,11 @@ export async function ReadPending() {
   }
   console.log(resp);
   return resp;
+}
+
+export async function isLeaderCheck(leader_email: string){
+    const session = await auth();
+  if (session?.user) {
+    return leader_email === session.user.email
+  }
 }

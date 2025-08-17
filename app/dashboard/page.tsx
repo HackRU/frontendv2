@@ -10,7 +10,8 @@ import {
   LeaveTeam,
   CreateTeam,
   ReadConfirmed,
-  ReadPending
+  ReadPending,
+  isLeaderCheck
 } from '@/app/lib/teamactions';
 import { useState, useEffect, Suspense } from 'react';
 
@@ -150,7 +151,7 @@ export default function Dashboard() {
     team_member_2: '',
     team_member_3: '',
     team_id: '',
-    isLeader: true
+    isLeader: false
   });
   const [pointsData, setPointsData] = useState<{
     balance: number;
@@ -180,7 +181,6 @@ export default function Dashboard() {
   const [teamInfo, setTeamInfo] = useState<any>();
 
   const RegexvalidateEmail = (email: string) => {
-    console.log(email);
     if (!email) return true; // Empty is valid as it's optional
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -409,20 +409,23 @@ export default function Dashboard() {
 
   const updateTeam = async () => {
     let memberstoadd: string[] = [];
-    if (teamFormData.team_member_1 != teamInfo.members[0])
+    if ( teamFormData.team_member_1)
       memberstoadd.push(teamFormData.team_member_1);
-    if (teamFormData.team_member_2 != teamInfo.members[1])
+    if (teamFormData.team_member_2)
       memberstoadd.push(teamFormData.team_member_2);
-    if (teamFormData.team_member_3 != teamInfo.members[2])
+    if (teamFormData.team_member_3)
       memberstoadd.push(teamFormData.team_member_3);
 
     let resp;
 
     if (!teamInfo?.team_id){
+      console.log("CREATING")
+      console.log(memberstoadd)
       resp = await CreateTeam("team_name", memberstoadd)
+      console.log(resp)
     }
     else{
-      resp = await InviteMember(teamFormData.team_id, memberstoadd);
+      resp = await InviteMember(teamInfo.team_id, memberstoadd);
     }
 
 
@@ -442,7 +445,8 @@ export default function Dashboard() {
 
   const removeMember = async (email: string) => {
     if (email) {
-      const resp = await RemoveMember([email], teamFormData.team_id);
+      console.log(teamInfo.team_id)
+      const resp = await RemoveMember([email], teamInfo.team_id);
       console.log(resp);
     }
   };
@@ -452,7 +456,13 @@ export default function Dashboard() {
           try {
       setpendingteam(userData?.team_info?.pending_invites[0]?.team_id);
       const resp = await ReadConfirmed()
+      console.log("TEAM")
       setTeamInfo(resp.response)
+      console.log(teamInfo)
+            setTeamStatus({
+        ...teamStatus,
+        isLeader: isLeaderCheck(teamInfo?.leader_email)
+      });
 
     } catch (error) {
       console.error('Error fetching or parsing schools data:', error);
@@ -499,11 +509,23 @@ export default function Dashboard() {
 
   // update useEffect that loads user data
   useEffect(() => {
+      setTeamFormData({
+        ...teamFormData,
+        team_member_1: '',
+        team_member_2: '',
+        team_member_3: '',
+      });
+      setTeamStatus({
+        ...teamStatus,
+        team_member_1: '',
+        team_member_2: '',
+        team_member_3: '',
+        team_id: teamInfo?.team_id || '',
+      });
     if (
-      userData &&
-      (teamInfo.members[0] ||
-        teamInfo.members[1] ||
-        teamInfo.members[2])
+      (teamInfo?.members && (teamInfo?.members[0] ||
+        teamInfo?.members[1] ||
+        teamInfo?.members[2]))
     ) {
       // Initialize form data with existing team member data
       setTeamFormData({
@@ -520,7 +542,7 @@ export default function Dashboard() {
         team_id: teamInfo?.team_id || '',
       });
     }
-  }, [userData]);
+  }, [teamInfo]);
 
   useEffect(() => {
     async function fetchUser() {
@@ -543,6 +565,7 @@ export default function Dashboard() {
         }
 
         setUserData(data.response);
+        console.log(data.response)
         const resumeInfo = await GetResume();
         setResumeExists(resumeInfo.response.hasUploaded);
 
@@ -684,7 +707,7 @@ export default function Dashboard() {
               </CardHeader>
             </Card>
           )}
-          {userData?.transportation_method == null && (
+          {false && userData?.transportation_method == null && (
             <Card className="mt-32 w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>How did you get to hackRU?</CardTitle>
@@ -775,12 +798,13 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-          {pendingteam ? (
+          {!pendingteam ? (
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Pre Event Team</CardTitle>
                 <CardDescription>
-                  <strong>READ CLOSELY</strong>: Only ONE person needs to create
+                  <strong>READ CLOSELY</strong>: Team creation must be done after registration. 
+                  <br></br>Only ONE person needs to create
                   the team. The team leader (the person who created the team) will type in the emails of their team members they used
                   to register. Those team members then need to accept the team
                   invite. This is only so we can admit people as a team, you will
@@ -804,9 +828,9 @@ export default function Dashboard() {
                 >
                   Disband Team
                 </Button>}
-                  {teamStatus.team_id &&  <Button
+                  {(teamStatus.team_id && !teamStatus.isLeader) &&  <Button
                   onClick={() => {
-                    LeaveTeam(teamFormData.team_id);
+                    LeaveTeam(teamInfo.team_id);
                   }}
                   type="button"
                   className="text-red-400"
@@ -815,56 +839,65 @@ export default function Dashboard() {
                 </Button>}
 
                 {/* Team members display section */}
-                {(userData?.team_member_1 ||
-                  userData?.team_member_2 ||
-                  userData?.team_member_3) && (
+                {teamInfo?.members && (teamInfo.members[0] ||
+                  teamInfo.members[1] ||
+                  teamInfo.members[2]) && (
                   <div className="mb-6 rounded-md bg-gray-800 p-4">
                     <h3 className="mb-2 text-lg font-semibold">
                       Your Team Members
                     </h3>
                     <ul className="space-y-2">
-                      {userData?.team_member_1 && (
+                        {teamInfo.leader_email && (
                         <li className="flex items-center">
                           <span className="mr-2 text-green-400">✓</span>
+                          {teamInfo.leader_email}
+                        </li>
+                      )}
+                      {teamInfo.members[0] && (
+                        <li className="flex items-center">
+                          <span className="mr-2 text-green-400">✓</span>
+                          {teamStatus.isLeader &&
                           <Button
                             onClick={() => {
-                              removeMember(userData?.team_member_1);
+                              removeMember(teamInfo.members[0]);
                             }}
                             type="button"
                             className="text-red-400"
                           >
                             X
-                          </Button>
+                          </Button>}
                           {teamInfo.members[0]}
                         </li>
                       )}
-                      {userData?.team_member_2 && (
+                      {teamInfo.members[1] && (
                         <li className="flex items-center">
                           <span className="mr-2 text-green-400">✓</span>
+                          {teamStatus.isLeader &&
                           <Button
                             onClick={() => {
-                              removeMember(userData?.team_member_2);
+                              removeMember(teamInfo.members[1]);
                             }}
                             type="button"
                             className="text-red-400"
                           >
                             X
-                          </Button>
+                          </Button>}
                           {teamInfo.members[1]}
                         </li>
                       )}
-                      {userData?.team_member_3 && (
+                      {teamInfo.members[2] && (
                         <li className="flex items-center">
                           <span className="mr-2 text-green-400">✓</span>
+                          {teamStatus.isLeader &&
                           <Button
                             onClick={() => {
-                              removeMember(userData?.team_member_3);
+                              removeMember(teamInfo.members[2]);
                             }}
                             type="button"
                             className="text-red-400"
                           >
                             X
-                          </Button>
+                          </Button>}
                           {teamInfo.members[2]}
                         </li>
                       )}
@@ -979,17 +1012,17 @@ export default function Dashboard() {
                     const team_member_1 =
                       teamFormData.team_member_1 &&
                       !(await DBvalidateEmail(teamFormData.team_member_1))
-                        ? 'Make sure the person with this email has created an account'
+                        ? 'Make sure the person with this email has created an account and is registered'
                         : '';
                     const team_member_2 =
                       teamFormData.team_member_2 &&
                       !(await DBvalidateEmail(teamFormData.team_member_2))
-                        ? 'Make sure the person with this email has created an account'
+                        ? 'Make sure the person with this email has created an account and is registered'
                         : '';
                     const team_member_3 =
                       teamFormData.team_member_3 &&
                       !(await DBvalidateEmail(teamFormData.team_member_3))
-                        ? 'Make sure the person with this email has created an account'
+                        ? 'Make sure the person with this email has created an account and is registered'
                         : '';
 
                     setTeamMember1Errors(team_member_1);
