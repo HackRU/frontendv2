@@ -212,7 +212,7 @@ export default function About() {
             <p className="inline"> The event will be on</p>
             <p className="inline   "> October 4th - 5th</p>
             <p className="inline"> at</p>
-            <p className="inline   "> TBD</p>
+            <p className="inline   "> College Ave Student Center!</p>
           </div>
 
           <div className="pb-6 text-white">

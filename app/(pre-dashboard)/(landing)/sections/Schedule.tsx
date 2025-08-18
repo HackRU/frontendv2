@@ -55,21 +55,9 @@ const schedule = {
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
       {
-        time: '1:30 PM',
-        event: 'Wakefern Cafe + Arcade',
-        location: 'The Cove',
-      },
-      { time: '2:30 PM', event: 'Wakefern Coffee Chats', location: 'tbd' },
-      {
-        time: '4:00 PM',
-        event: 'MLH Workshop: Github Copilot',
-        location: 'tbd',
-      },
-      { time: '5:00 PM', event: 'iCIMS talk', location: 'tbd' },
-      {
-        time: '6:00 PM',
-        event: 'MLH Workshop: Building with Figma',
-        location: 'tbd',
+        time: 'TBD',
+        event: 'TBD',
+        location: 'TBD',
       },
       { time: '8:00 PM', event: 'Dinner', location: 'In Front of MPR' },
     ],
@@ -87,7 +75,7 @@ const schedule = {
       { time: '11:00 AM', event: 'Lunch', location: 'In Front of MPR' },
       {
         time: '10:00 AM',
-        event: 'Dorahacks Submissions Due',
+        event: 'Devpost Submissions Due',
         location: 'Hacking Area',
       },
       {

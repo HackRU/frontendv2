@@ -119,7 +119,7 @@ function Navbar() {
     >
       <div
         style={{ left: '5%', top: '24px' }}
-        className="hover:drop-shadow-inner absolute z-50 w-24 hover:scale-105 sm:w-24 md:w-36 lg:w-36"
+        className="hover:drop-shadow-inner absolute z-50 w-24 hover:scale-105 sm:w-24 md:w-36 lg:w-36 "
         onClick={() => router.push('/')}
       >
         <Image
@@ -145,7 +145,7 @@ function Navbar() {
       </a>
       <CollapsedMenu />
       <div
-        className="absolute right-20 top-0 z-40 hidden w-full
+        className="absolute right-20 top-0 z-40 hidden w-full bg-gradient-to-b from-gray-300
         justify-end pr-2 pt-4 text-sm font-light text-dark_red-100 sm:pr-4 sm:pt-6 sm:text-base md:pr-6 md:pt-8 md:text-lg lg:flex lg:pr-8 lg:pt-10 lg:text-xl"
       >
         {isHomePage && (

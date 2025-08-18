@@ -296,6 +296,40 @@ export async function ReadConfirmed() {
   return resp;
 }
 
+export async function ReadPendingOnTeam() {
+  noStore();
+  let resp = {
+    error: '',
+    response: '',
+  };
+
+  const session = await auth();
+  if (session?.user) {
+    await fetch(ENDPOINTS.readTeam, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        auth_email: session.user.email,
+        auth_token: session.user.name,
+        member_email: session.user.email,
+      }),
+    }).then(async (res) => {
+      let resJSON = await res.json();
+      if (res.status !== 200) {
+        resp.error = resJSON.message;
+      } else {
+        resp.response = resJSON.invitedUsers;
+      }
+    });
+  } else {
+    resp.error = 'Unknown error';
+  }
+  console.log(resp);
+  return resp;
+}
+
 export async function ReadPending() {
   noStore();
   let resp = {
@@ -332,6 +366,7 @@ export async function ReadPending() {
 export async function isLeaderCheck(leader_email: string) {
   const session = await auth();
   if (session?.user) {
+    console.log(leader_email === session.user.email)
     return leader_email === session.user.email;
   }
 }

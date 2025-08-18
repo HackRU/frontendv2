@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     default: 'HackRU F25',
   },
   description:
-    "HackRU is a 24-hour hackathon hosted at Rutgers University. Join us for HackRU's Spring 2024 edition!",
+    "HackRU is a 24-hour hackathon hosted at Rutgers University. Join us for HackRU's Fall 2025 edition!",
   metadataBase: new URL('https://hackru.org'),
   icons: {
     icon: '/icon.png',
