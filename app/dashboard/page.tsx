@@ -824,6 +824,7 @@ export default function Dashboard() {
                   <Button
                     onClick={() => {
                       TeamDisband(teamInfo?.team_id);
+                      fetchTeam()
                     }}
                     type="button"
                     className="text-red-400"
@@ -870,6 +871,8 @@ export default function Dashboard() {
                               <Button
                                 onClick={() => {
                                   removeMember(teamInfo.members[0]);
+                                  fetchTeam()
+
                                 }}
                                 type="button"
                                 className="text-red-400"
@@ -887,6 +890,8 @@ export default function Dashboard() {
                               <Button
                                 onClick={() => {
                                   removeMember(teamInfo.members[1]);
+                                  fetchTeam()
+                                  
                                 }}
                                 type="button"
                                 className="text-red-400"
@@ -904,6 +909,8 @@ export default function Dashboard() {
                               <Button
                                 onClick={() => {
                                   removeMember(teamInfo.members[2]);
+                                  fetchTeam()
+                                  
                                 }}
                                 type="button"
                                 className="text-red-400"
@@ -1076,6 +1083,8 @@ export default function Dashboard() {
                 onClick={() => {
                   InviteAccept(pendingteam ?? '');
                   setpendingteam('');
+                  fetchTeam()
+
                 }}
                 type="button"
                 className="text-green-400"
@@ -1086,6 +1095,8 @@ export default function Dashboard() {
                 onClick={() => {
                   InviteDecline(pendingteam ?? '');
                   setpendingteam('');
+                  fetchTeam()
+
                 }}
                 type="button"
                 className="text-red-400"
