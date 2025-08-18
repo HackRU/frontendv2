@@ -1,6 +1,18 @@
 'use client';
 
 import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
+import {
+  RemoveMember,
+  InviteMember,
+  TeamDisband,
+  InviteDecline,
+  InviteAccept,
+  LeaveTeam,
+  CreateTeam,
+  ReadConfirmed,
+  ReadPending,
+  isLeaderCheck,
+} from '@/app/lib/teamactions';
 import { useState, useEffect, Suspense } from 'react';
 
 import {
@@ -96,9 +108,18 @@ const UserUpdateSchema = z.object({
 export type UserUpdate = z.infer<typeof UserUpdateSchema>;
 
 const TeamSubmitSchema = z.object({
-  team_member_A: z.string().email("Please enter a valid email address for Team Member A").nonempty("Email for Team Member A is required"),
-  team_member_B: z.string().email("Please enter a valid email address for Team Member B").optional(),
-  team_member_C: z.string().email("Please enter a valid email address for Team Member C").optional(),
+  team_member_A: z
+    .string()
+    .email('Please enter a valid email address for Team Member A')
+    .nonempty('Email for Team Member A is required'),
+  team_member_B: z
+    .string()
+    .email('Please enter a valid email address for Team Member B')
+    .optional(),
+  team_member_C: z
+    .string()
+    .email('Please enter a valid email address for Team Member C')
+    .optional(),
 });
 
 const logoImage = {
@@ -118,8 +139,20 @@ export default function Dashboard() {
   const [schools, setSchools] = useState<string[]>([]);
   const [countries, setCountries] = useState<string[]>([]);
   const [userData, setUserData] = useState<any>(null);
-  const [teamFormData, setTeamFormData] = useState<any>(null);
-
+  //const [teamFormData, setTeamFormData] = useState<any>(null);
+  // teamFormData initialization
+  const [teamFormData, setTeamFormData] = useState<any>({
+    team_member_1: '',
+    team_member_2: '',
+    team_member_3: '',
+  });
+  const [teamStatus, setTeamStatus] = useState<any>({
+    team_member_1: '',
+    team_member_2: '',
+    team_member_3: '',
+    team_id: '',
+    isLeader: false,
+  });
   const [pointsData, setPointsData] = useState<{
     balance: number;
     total_points: number;
@@ -135,7 +168,7 @@ export default function Dashboard() {
   const [teamMember1Errors, setTeamMember1Errors] = useState<string>();
   const [teamMember2Errors, setTeamMember2Errors] = useState<string>();
   const [teamMember3Errors, setTeamMember3Errors] = useState<string>();
-
+  const [pendingteam, setpendingteam] = useState<string>();
 
   const [
     displayTeamFormFinalSubmissionWarning,
@@ -144,7 +177,32 @@ export default function Dashboard() {
   const [displayTeamConfimWarning, setTeamConfimWarning] =
     useState<boolean>(false);
   const [teamSubmissionError, setTeamSubmissionError] = useState<string>('');
-  const [currentTeam, setCurrentTeam] = useState<number>(0);
+  const [currentTeam, setCurrentTeam] = useState<string>('');
+  const [teamInfo, setTeamInfo] = useState<any>();
+
+  const RegexvalidateEmail = (email: string) => {
+    if (!email) return true; // Empty is valid as it's optional
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+    return true;
+  };
+
+  const DBvalidateEmail = async (email: string) => {
+    console.log(email);
+    if (!email) return true;
+    try {
+      // Use an existing API function to check if the email exists
+      // You need to either find an existing API call or add a new one
+      const response = await UserExists(email);
+      console.log(response);
+      return response.response != '';
+    } catch (error) {
+      console.error('Error checking email existence:', error);
+      return false; // Fail closed for safety
+    }
+  };
 
   const {
     register,
@@ -196,7 +254,7 @@ export default function Dashboard() {
       const error = resp.error;
       setTeamSubmissionError(error);
     } else {
-      setCurrentTeam(team_id);
+      setCurrentTeam(team_id as unknown as string);
     }
 
     setSubmittingTeamForm(false);
@@ -350,63 +408,65 @@ export default function Dashboard() {
   };
 
   const updateTeam = async () => {
-    // Validate all emails before submission (this is currently being done before this function is called)
-    
-    // const team_member_1= userData.team_member_1 && !DBvalidateEmail(userData.team_member_1) ? "Please enter a valid email address" : "";
-    // const team_member_2 = userData.team_member_2 && !DBvalidateEmail(userData.team_member_2) ? "Please enter a valid email address" : "";
-    // const team_member_3 =  userData.team_member_3 && !DBvalidateEmail(userData.team_member_3) ? "Please enter a valid email address" : "";
-    
-    
-    // setTeamMember1Errors(team_member_1);
-    // setTeamMember2Errors(team_member_2);
-    // setTeamMember3Errors(team_member_3);
-    
-    // // Check if there are any validation errors
-    // if (team_member_1 || team_member_2 || team_member_3) {
-    //   setSubmittingPreEventTeamForm("Invalid emails");
-    //   return;
-    // }
-    
-    const resp = await UpdateSelf({ 
-      team_member_1: userData.team_member_1, 
-      team_member_2: userData.team_member_2, 
-      team_member_3: userData.team_member_3 
-    });
-    
-    console.log(resp);
-    if (resp === "User updated successfully") {
-      setSubmittingPreEventTeamForm("Saved!");
+    let memberstoadd: string[] = [];
+    if (teamFormData.team_member_1)
+      memberstoadd.push(teamFormData.team_member_1);
+    if (teamFormData.team_member_2)
+      memberstoadd.push(teamFormData.team_member_2);
+    if (teamFormData.team_member_3)
+      memberstoadd.push(teamFormData.team_member_3);
+
+    let resp;
+
+    if (!teamInfo?.team_id) {
+      console.log('CREATING');
+      console.log(memberstoadd);
+      resp = await CreateTeam('team_name', memberstoadd);
+      console.log(resp);
     } else {
-      setSubmittingPreEventTeamForm("Failed");
+      resp = await InviteMember(teamInfo.team_id, memberstoadd);
     }
-  }
 
-  const RegexvalidateEmail =  (email: string) => {
-    console.log(email)
-    if (!email) return true; // Empty is valid as it's optional
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return false;
+    if (resp.response === 'User updated successfully') {
+      // Only update the display data after successful submission
+      setUserData({
+        ...userData,
+        team_member_1: teamFormData.team_member_1,
+        team_member_2: teamFormData.team_member_2,
+        team_member_3: teamFormData.team_member_3,
+      });
+      setSubmittingPreEventTeamForm('Saved!');
+    } else {
+      setSubmittingPreEventTeamForm('Failed');
     }
-    return true
-  
-  }
+  };
 
+  const removeMember = async (email: string) => {
+    if (email) {
+      console.log(teamInfo.team_id);
+      const resp = await RemoveMember([email], teamInfo.team_id);
+      console.log(resp);
+    }
+  };
 
-   const DBvalidateEmail = async (email: string) => {
-    console.log(email)
-    if (!email) return true;
-    try {
-      // Use an existing API function to check if the email exists
-      // You need to either find an existing API call or add a new one
-      const response = await UserExists(email);
-      console.log(response)
-      return response.response != '';
-    } catch (error) {
-      console.error("Error checking email existence:", error);
-      return false; // Fail closed for safety
+  useEffect(() => {
+    async function fetchTeam() {
+      try {
+        setpendingteam(userData?.team_info?.pending_invites[0]?.team_id);
+        const resp = await ReadConfirmed();
+        console.log('TEAM');
+        setTeamInfo(resp.response);
+        console.log(teamInfo);
+        setTeamStatus({
+          ...teamStatus,
+          isLeader: isLeaderCheck(teamInfo?.leader_email),
+        });
+      } catch (error) {
+        console.error('Error fetching or parsing schools data:', error);
+      }
     }
-    }
+    fetchTeam();
+  }, [userData]);
 
   // First useEffect to fetch and set schools data
   useEffect(() => {
@@ -443,6 +503,42 @@ export default function Dashboard() {
     }
   }, []);
 
+  // update useEffect that loads user data
+  useEffect(() => {
+    setTeamFormData({
+      ...teamFormData,
+      team_member_1: '',
+      team_member_2: '',
+      team_member_3: '',
+    });
+    setTeamStatus({
+      ...teamStatus,
+      team_member_1: '',
+      team_member_2: '',
+      team_member_3: '',
+      team_id: teamInfo?.team_id || '',
+    });
+    if (
+      teamInfo?.members &&
+      (teamInfo?.members[0] || teamInfo?.members[1] || teamInfo?.members[2])
+    ) {
+      // Initialize form data with existing team member data
+      setTeamFormData({
+        ...teamFormData,
+        team_member_1: teamInfo.members[0] || '',
+        team_member_2: teamInfo.members[1] || '',
+        team_member_3: teamInfo.members[2] || '',
+      });
+      setTeamStatus({
+        ...teamStatus,
+        team_member_1: teamInfo.members[0] || '',
+        team_member_2: teamInfo.members[1] || '',
+        team_member_3: teamInfo.members[2] || '',
+        team_id: teamInfo?.team_id || '',
+      });
+    }
+  }, [teamInfo]);
+
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -464,6 +560,7 @@ export default function Dashboard() {
         }
 
         setUserData(data.response);
+        console.log(data.response);
         const resumeInfo = await GetResume();
         setResumeExists(resumeInfo.response.hasUploaded);
 
@@ -480,10 +577,10 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (userData && userData.team_id) {
-      setCurrentTeam(userData.team_id);
+    if (teamInfo && teamInfo?.team_id) {
+      setCurrentTeam(teamInfo?.team_id);
     }
-  }, [userData]);
+  }, [teamInfo]);
 
   if (!userData || !userData.role) {
     return <HackerDashboardSkeleton />;
@@ -569,23 +666,25 @@ export default function Dashboard() {
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
           />
-          <Card className="w-full max-w-2xl">
-            <CardHeader>
-              <div className="flex flex-col ">
-                <div className="flex flex-col">
-                  <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
-                  <CardDescription>
-                    Use this QR code to check-in or scan-in for events!
-                  </CardDescription>
+          {!(userData?.registration_status === 'unregistered') && (
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <div className="flex flex-col ">
+                  <div className="flex flex-col">
+                    <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
+                    <CardDescription>
+                      Use this QR code to check-in or scan-in for events!
+                    </CardDescription>
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
-                <QRCode value={userData?.email} size={256} />
-              </div>
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
+                  <QRCode value={userData?.email} size={256} />
+                </div>
+              </CardContent>
+            </Card>
+          )}
           {/*Getting ride of house info as well */}
           {userData?.registration_status === 'checked_in' && false && (
             <Card className="w-full max-w-2xl">
@@ -604,7 +703,7 @@ export default function Dashboard() {
               </CardHeader>
             </Card>
           )}
-          {userData?.transportation_method == null && (
+          {false && userData?.transportation_method == null && (
             <Card className="mt-32 w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>How did you get to hackRU?</CardTitle>
@@ -695,132 +794,212 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           )}
-          {
+          {!pendingteam ? (
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <CardTitle>Pre Event Team</CardTitle>
                 <CardDescription>
-                  <strong>READ CLOSELY</strong>: Only ONE person needs to submit
-                  their team. The team leader (the person who fills out this
-                  form) will type in the emails of their team members they used
-                  to register. Incorrect emails will lead to incomplete team
-                  acceptances. This is only so we can admit people as a team, you will still need to create a team on the submission platform
+                  <strong>READ CLOSELY</strong>: Team creation must be done
+                  after registration.
+                  <br></br>Only ONE person needs to create the team. The team
+                  leader (the person who created the team) will type in the
+                  emails of their team members they used to register. Those team
+                  members then need to accept the team invite. This is only so
+                  we can admit people as a team, you will still need to create a
+                  team on the submission platform during the hackathon
                   <br />
                   <br />
-                  NO ONE else BUT the team leader of the team needs to submit
-                  this form. 
                   <br />
                   <br />
-                  All team members must be registered by Sep 30th
-                  Failure to do so may lead to incomplete team acceptances.
+                  All team members must be registered and accept their invite by
+                  Sep 30th Failure to do so may lead to incomplete team
+                  acceptances.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-              {/* Team members display section */}
-              {(userData?.team_member_1 || userData?.team_member_2 || userData?.team_member_3) && (
-                <div className="mb-6 p-4 bg-gray-800 rounded-md">
-                  <h3 className="text-lg font-semibold mb-2">Your Team Members</h3>
-                  <ul className="space-y-2">
-                    {userData?.team_member_1 && (
-                      <li className="flex items-center">
-                        <span className="text-green-400 mr-2">✓</span>
-                        {userData.team_member_1}
-                      </li>
-                    )}
-                    {userData?.team_member_2 && (
-                      <li className="flex items-center">
-                        <span className="text-green-400 mr-2">✓</span>
-                        {userData.team_member_2}
-                      </li>
-                    )}
-                    {userData?.team_member_3 && (
-                      <li className="flex items-center">
-                        <span className="text-green-400 mr-2">✓</span>
-                        {userData.team_member_3}
-                      </li>
-                    )}
-                  </ul>
+                {teamStatus.team_id && teamStatus.isLeader && (
+                  <Button
+                    onClick={() => {
+                      TeamDisband(teamStatus.team_id);
+                    }}
+                    type="button"
+                    className="text-red-400"
+                  >
+                    Disband Team
+                  </Button>
+                )}
+                {teamStatus.team_id && !teamStatus.isLeader && (
+                  <Button
+                    onClick={() => {
+                      LeaveTeam(teamInfo.team_id);
+                    }}
+                    type="button"
+                    className="text-red-400"
+                  >
+                    Leave Team
+                  </Button>
+                )}
+
+                {/* Team members display section */}
+                {teamInfo?.members &&
+                  (teamInfo.members[0] ||
+                    teamInfo.members[1] ||
+                    teamInfo.members[2]) && (
+                    <div className="mb-6 rounded-md bg-gray-800 p-4">
+                      <h3 className="mb-2 text-lg font-semibold">
+                        Your Team Members
+                      </h3>
+                      <ul className="space-y-2">
+                        {teamInfo.leader_email && (
+                          <li className="flex items-center">
+                            <span className="mr-2 text-green-400">✓</span>
+                            {teamInfo.leader_email}
+                          </li>
+                        )}
+                        {teamInfo.members[0] && (
+                          <li className="flex items-center">
+                            <span className="mr-2 text-green-400">✓</span>
+                            {teamStatus.isLeader && (
+                              <Button
+                                onClick={() => {
+                                  removeMember(teamInfo.members[0]);
+                                }}
+                                type="button"
+                                className="text-red-400"
+                              >
+                                X
+                              </Button>
+                            )}
+                            {teamInfo.members[0]}
+                          </li>
+                        )}
+                        {teamInfo.members[1] && (
+                          <li className="flex items-center">
+                            <span className="mr-2 text-green-400">✓</span>
+                            {teamStatus.isLeader && (
+                              <Button
+                                onClick={() => {
+                                  removeMember(teamInfo.members[1]);
+                                }}
+                                type="button"
+                                className="text-red-400"
+                              >
+                                X
+                              </Button>
+                            )}
+                            {teamInfo.members[1]}
+                          </li>
+                        )}
+                        {teamInfo.members[2] && (
+                          <li className="flex items-center">
+                            <span className="mr-2 text-green-400">✓</span>
+                            {teamStatus.isLeader && (
+                              <Button
+                                onClick={() => {
+                                  removeMember(teamInfo.members[2]);
+                                }}
+                                type="button"
+                                className="text-red-400"
+                              >
+                                X
+                              </Button>
+                            )}
+                            {teamInfo.members[2]}
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                <div className="m-4">
+                  <Label htmlFor="team_member_1">Team Member 1</Label>
+                  <Input
+                    id="team_member_1"
+                    value={teamFormData.team_member_1}
+                    className={teamMember1Errors ? 'border-red-500' : ''}
+                    disabled={!teamStatus.isLeader}
+                    onChange={(e) => {
+                      const email = e.target.value;
+                      setTeamFormData({
+                        ...teamFormData,
+                        team_member_1: email,
+                      });
+
+                      // Validate email
+                      if (email != '' && !RegexvalidateEmail(email)) {
+                        setTeamMember1Errors(
+                          'Please enter a valid email address',
+                        );
+                      } else {
+                        setTeamMember1Errors('');
+                      }
+                    }}
+                  />
+                  {teamMember1Errors && (
+                    <p className="mt-2 text-sm font-medium text-red-500">
+                      {teamMember1Errors}
+                    </p>
+                  )}
                 </div>
-              )}
-              <div className="m-4">
-                <Label htmlFor="team_member_1">Team Member 1</Label>
-                <Input
-                  id="team_member_1"
-                  value={userData?.team_member_1}
-                  className={teamMember1Errors ? "border-red-500" : ""}
-                  onChange={(e) => {
-                    const email = e.target.value;
-                    setUserData({ ...userData, team_member_1: email });
-                    
-                    // Validate email
-                    if (email != "" && !RegexvalidateEmail(email)) {
+                <div className="m-4">
+                  <Label htmlFor="team_member_2">Team Member 2</Label>
+                  <Input
+                    id="team_member_2"
+                    value={teamFormData.team_member_2}
+                    className={teamMember2Errors ? 'border-red-500' : ''}
+                    disabled={!teamStatus.isLeader}
+                    onChange={(e) => {
+                      const email = e.target.value;
+                      setTeamFormData({
+                        ...teamFormData,
+                        team_member_2: email,
+                      });
 
-                      setTeamMember1Errors("Please enter a valid email address"
-                      );
-                    } else {
+                      // Validate email
+                      if (email != '' && !RegexvalidateEmail(email)) {
+                        setTeamMember2Errors(
+                          'Please enter a valid email address',
+                        );
+                      } else {
+                        setTeamMember2Errors('');
+                      }
+                    }}
+                  />
+                  {teamMember2Errors && (
+                    <p className="mt-2 text-sm font-medium text-red-500">
+                      {teamMember2Errors}
+                    </p>
+                  )}
+                </div>
+                <div className="m-4">
+                  <Label htmlFor="team_member_3">Team Member 3</Label>
+                  <Input
+                    id="team_member_3"
+                    value={teamFormData.team_member_3}
+                    className={teamMember3Errors ? 'border-red-500' : ''}
+                    disabled={!teamStatus.isLeader}
+                    onChange={(e) => {
+                      const email = e.target.value;
+                      setTeamFormData({
+                        ...teamFormData,
+                        team_member_3: email,
+                      });
 
-                      setTeamMember1Errors("");
-                    }
-                  }}
-                />
-                {teamMember1Errors && (
-                  <p className="text-sm font-medium text-red-500 mt-2">
-                     {teamMember1Errors}
-                  </p>
-                )}
-              </div>
-              <div className="m-4">
-                <Label htmlFor="team_member_2">Team Member 2</Label>
-                <Input
-                  id="team_member_2"
-                  value={userData?.team_member_2}
-                  className={teamMember2Errors ? "border-red-500" : ""}
-                  onChange={(e) => {
-                    const email = e.target.value;
-                    setUserData({ ...userData, team_member_2: email });
-                    
-                    // Validate email
-                    if (email && !RegexvalidateEmail(email)) {
-                      setTeamMember2Errors("Please enter a valid email address"
-                      );
-                    } else {
-                      console.log(teamMember2Errors)
-                      setTeamMember2Errors( "");
-                    }
-                  }}
-                />
-                {teamMember2Errors && (
-                  <p className="text-sm font-medium text-red-500 mt-2">
-                     {teamMember2Errors}
-                  </p>
-                )}
-              </div>
-              <div className="m-4">
-                <Label htmlFor="team_member_3">Team Member 3</Label>
-                <Input
-                  id="team_member_3"
-                  value={userData?.team_member_3}
-                  className={teamMember3Errors ? "border-red-500" : ""}
-                  onChange={(e) => {
-                    const email = e.target.value;
-                    setUserData({ ...userData, team_member_3: email });
-                    
-                    // Validate email
-                    if (email && !RegexvalidateEmail(email)) {
-                      setTeamMember3Errors("Please enter a valid email address"
-                      );
-                    } else {
-                      console.log(teamMember3Errors)
-                      setTeamMember3Errors( "");
-                    }
-                  }}
-                />
-                {teamMember3Errors && (
-                  <p className="text-sm font-medium text-red-500 mt-2">
-                     {teamMember3Errors}
-                  </p>
-                )}
-              </div>
+                      // Validate email
+                      if (email != '' && !RegexvalidateEmail(email)) {
+                        setTeamMember3Errors(
+                          'Please enter a valid email address',
+                        );
+                      } else {
+                        setTeamMember3Errors('');
+                      }
+                    }}
+                  />
+                  {teamMember3Errors && (
+                    <p className="mt-2 text-sm font-medium text-red-500">
+                      {teamMember3Errors}
+                    </p>
+                  )}
+                </div>
                 <Button
                   onClick={() => {
                     setTeamConfimWarning(true);
@@ -836,35 +1015,76 @@ export default function Dashboard() {
                   onYes={async () => {
                     // Validate emails before showing confirmation
 
-                    const team_member_1= userData.team_member_1 && !(await DBvalidateEmail(userData.team_member_1)) ? "Make sure the person with this email has created an account" : "";
-                    const team_member_2 = userData.team_member_2 && !(await DBvalidateEmail(userData.team_member_2)) ? "Make sure the person with this email has created an account" : "";
-                    const team_member_3 =  userData.team_member_3 && !(await DBvalidateEmail(userData.team_member_3)) ? "Make sure the person with this email has created an account" : "";
-                    
-                    
+                    const team_member_1 =
+                      teamFormData.team_member_1 &&
+                      !(await DBvalidateEmail(teamFormData.team_member_1))
+                        ? 'Make sure the person with this email has created an account and is registered'
+                        : '';
+                    const team_member_2 =
+                      teamFormData.team_member_2 &&
+                      !(await DBvalidateEmail(teamFormData.team_member_2))
+                        ? 'Make sure the person with this email has created an account and is registered'
+                        : '';
+                    const team_member_3 =
+                      teamFormData.team_member_3 &&
+                      !(await DBvalidateEmail(teamFormData.team_member_3))
+                        ? 'Make sure the person with this email has created an account and is registered'
+                        : '';
+
                     setTeamMember1Errors(team_member_1);
                     setTeamMember2Errors(team_member_2);
                     setTeamMember3Errors(team_member_3);
-                    
+
                     // If there are errors, don't proceed
                     if (team_member_1 || team_member_2 || team_member_3) {
                       setTeamConfimWarning(false);
                       return;
                     }
-                    
-                    setSubmittingPreEventTeamForm('Submitting...')
-                    updateTeam()
 
+                    setSubmittingPreEventTeamForm('Submitting...');
+                    updateTeam();
                   }}
                   onNo={() => {}}
                   title="Submission Warning"
-                  content={"Are you sure you want the following emails on your team: " + 
-                    [userData?.team_member_1, userData?.team_member_2, userData?.team_member_3]
-                    .filter(Boolean)
-                    .join(", ")}
+                  content={
+                    'Are you sure you want the following emails on your team: ' +
+                    [
+                      teamFormData?.team_member_1,
+                      teamFormData?.team_member_2,
+                      teamFormData?.team_member_3,
+                    ]
+                      .filter(Boolean)
+                      .join(', ')
+                  }
                 />
               </CardContent>
             </Card>
-          }
+          ) : (
+            <div>
+              {' '}
+              <p>Pending invite {pendingteam}</p>
+              <Button
+                onClick={() => {
+                  InviteAccept(pendingteam ?? '');
+                  setpendingteam('');
+                }}
+                type="button"
+                className="text-green-400"
+              >
+                Accept invite
+              </Button>
+              <Button
+                onClick={() => {
+                  InviteDecline(pendingteam ?? '');
+                  setpendingteam('');
+                }}
+                type="button"
+                className="text-red-400"
+              >
+                Decline invite
+              </Button>
+            </div>
+          )}
           {false && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
@@ -886,23 +1106,25 @@ export default function Dashboard() {
             </Card>
           )}
 
-          <Card className="w-full max-w-2xl">
-            <CardHeader>
-              <div className="flex flex-col ">
-                <div className="flex flex-col">
-                  <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
-                  <CardDescription>
-                    Use this QR code to check-in or scan-in for events!
-                  </CardDescription>
+          {!(userData?.registration_status === 'unregistered') && (
+            <Card className="w-full max-w-2xl">
+              <CardHeader>
+                <div className="flex flex-col ">
+                  <div className="flex flex-col">
+                    <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
+                    <CardDescription>
+                      Use this QR code to check-in or scan-in for events!
+                    </CardDescription>
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
-                <QRCode value={userData?.email} size={256} />
-              </div>
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
+                  <QRCode value={userData?.email} size={256} />
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           <Card className="w-full max-w-2xl">
             <CardHeader>

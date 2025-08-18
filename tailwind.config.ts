@@ -28,7 +28,28 @@ const config: Config = {
       },
       colors: {
         cyan: {
-          100: '#37888B',
+          100: '#6FBCC4',
+        },
+        brownblack: {
+          100: '#775721',
+        },
+        brown: {
+          100: '#261A16',
+        },
+        beige: {
+          100: '#CAB685',
+        },
+        gold: {
+          100: '#FEC24A',
+        },
+        brownred: {
+          100: '#B47027',
+        },
+        green: {
+          100: '#7F9901',
+        },
+        darkcyan: {
+          100: '#1A3127',
         },
         redorange: {
           100: '#AC3F00',
@@ -51,9 +72,6 @@ const config: Config = {
         tan_2: {
           100: '#DDC78B',
         },
-        green: {
-          100: '#358300',
-        },
         s2025black: {
           100: '#1E1E1E',
         },
@@ -68,10 +86,6 @@ const config: Config = {
         orange: {
           100: '#EC9655',
           200: '#1B1F23',
-        },
-        brown: {
-          100: '#9A654D',
-          200: '#482820',
         },
         pink: {
           100: '#C3557D',

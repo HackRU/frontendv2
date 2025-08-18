@@ -24,6 +24,16 @@ export const fuzzy = localFont({
   variable: '--font-fuzzy',
 });
 
+export const azeret = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Mount Hills.otf',
+      weight: '400',
+    },
+  ],
+  variable: '--font-fuzzy',
+});
+
 export const brush = localFont({
   src: [
     {

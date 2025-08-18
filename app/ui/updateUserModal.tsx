@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -17,8 +17,6 @@ export default function UpdateUserModal({
   onClose,
   onUpdated,
 }: UpdateUserModalProps) {
- 
-
   const [formData, setFormData] = useState({
     first_name: user?.first_name || '',
     last_name: user?.last_name || '',
@@ -28,7 +26,7 @@ export default function UpdateUserModal({
     school: user?.school || '',
     grad_year: user?.grad_year || '',
     shirt_size: user?.shirt_size || '',
-    short_answer: user?.short_answer || '',    
+    short_answer: user?.short_answer || '',
     dietary_restrictions: user?.dietary_restrictions || '',
     special_needs: user?.special_needs || '',
     date_of_birth: user?.date_of_birth || '',
@@ -52,7 +50,7 @@ export default function UpdateUserModal({
       school: user?.school || '',
       grad_year: user?.grad_year || '',
       shirt_size: user?.shirt_size || '',
-      short_answer: user?.short_answer || '',    
+      short_answer: user?.short_answer || '',
       dietary_restrictions: user?.dietary_restrictions || '',
       special_needs: user?.special_needs || '',
       date_of_birth: user?.date_of_birth || '',
@@ -67,48 +65,48 @@ export default function UpdateUserModal({
 
   if (!isOpen) return null;
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((fd) => ({ ...fd, [name]: value }));
   };
 
-const handleSubmit = async () => {
-  setLoading(true);
-  setError('');
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError('');
 
-  // Gather only the changed fields:
-  const changed: Record<string, any> = {};
-  Object.keys(formData).forEach((key) => {
-    // @ts-ignore
-    if (formData[key] !== user?.[key]) {
+    // Gather only the changed fields:
+    const changed: Record<string, any> = {};
+    Object.keys(formData).forEach((key) => {
       // @ts-ignore
-      changed[key] = formData[key];
-    }
-  });
+      if (formData[key] !== user?.[key]) {
+        // @ts-ignore
+        changed[key] = formData[key];
+      }
+    });
 
-  // If nothing changed, just close the modal:
-  if (Object.keys(changed).length === 0) {
-    onClose();
-    setLoading(false);
-    return;
-  }
-
-  try {
-    const resp = await SetUser(changed, user.email);
-    if (resp.error) {
-      setError(resp.error);
-    } else {
-      onUpdated();
+    // If nothing changed, just close the modal:
+    if (Object.keys(changed).length === 0) {
       onClose();
+      setLoading(false);
+      return;
     }
-  } catch (e) {
-    console.error(e);
-    setError('Failed to update user');
-  }
 
-  setLoading(false);
-};
+    try {
+      const resp = await SetUser(changed, user.email);
+      if (resp.error) {
+        setError(resp.error);
+      } else {
+        onUpdated();
+        onClose();
+      }
+    } catch (e) {
+      console.error(e);
+      setError('Failed to update user');
+    }
+
+    setLoading(false);
+  };
 
   return createPortal(
     <div className="fixed inset-0 z-40 flex items-center justify-center">
@@ -116,8 +114,8 @@ const handleSubmit = async () => {
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
       {/* Modal Content */}
-      <div className="relative z-50 w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">Update User Profile</h2>
+      <div className="relative z-50 w-full max-w-lg rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-xl font-semibold">Update User Profile</h2>
         {error && <p className="mb-2 text-red-600">{error}</p>}
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -126,7 +124,7 @@ const handleSubmit = async () => {
               name="first_name"
               value={formData.first_name}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -135,7 +133,7 @@ const handleSubmit = async () => {
               name="last_name"
               value={formData.last_name}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -144,7 +142,7 @@ const handleSubmit = async () => {
               name="email"
               value={formData.email}
               readOnly
-              className="mt-1 block w-full border rounded bg-gray-100 px-2 py-1"
+              className="mt-1 block w-full rounded border bg-gray-100 px-2 py-1"
             />
           </div>
           <div>
@@ -153,7 +151,7 @@ const handleSubmit = async () => {
               name="github"
               value={formData.github}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -162,7 +160,7 @@ const handleSubmit = async () => {
               name="major"
               value={formData.major}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -171,7 +169,7 @@ const handleSubmit = async () => {
               name="school"
               value={formData.school}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -181,7 +179,7 @@ const handleSubmit = async () => {
               value={formData.grad_year}
               onChange={handleChange}
               type="number"
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -190,7 +188,7 @@ const handleSubmit = async () => {
               name="shirt_size"
               value={formData.shirt_size}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -199,7 +197,7 @@ const handleSubmit = async () => {
               name="dietary_restrictions"
               value={formData.dietary_restrictions}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -208,7 +206,7 @@ const handleSubmit = async () => {
               name="special_needs"
               value={formData.special_needs}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -218,7 +216,7 @@ const handleSubmit = async () => {
               value={formData.date_of_birth}
               onChange={handleChange}
               type="date"
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -227,7 +225,7 @@ const handleSubmit = async () => {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             >
               <option value="">Select</option>
               <option value="Female">Female</option>
@@ -241,7 +239,7 @@ const handleSubmit = async () => {
               name="registration_status"
               value={formData.registration_status}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             >
               <option value="unregistered">Unregistered</option>
               <option value="confirmation">Confirmation</option>
@@ -255,7 +253,7 @@ const handleSubmit = async () => {
               name="level_of_study"
               value={formData.level_of_study}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             >
               <option value="University (Undergraduate)">Undergraduate</option>
               <option value="University (Graduate)">Graduate</option>
@@ -268,7 +266,7 @@ const handleSubmit = async () => {
               name="ethnicity"
               value={formData.ethnicity}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div>
@@ -278,7 +276,7 @@ const handleSubmit = async () => {
               value={formData.hackathon_count}
               onChange={handleChange}
               type="number"
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
           <div className="col-span-2">
@@ -287,20 +285,19 @@ const handleSubmit = async () => {
               name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
 
           <div>
             <label className="block text-sm">Short Answer</label>
             <input
-              name="short_answer"                           
+              name="short_answer"
               value={formData.short_answer}
               onChange={handleChange}
-              className="mt-1 block w-full border rounded px-2 py-1"
+              className="mt-1 block w-full rounded border px-2 py-1"
             />
           </div>
-
         </div>
 
         <div className="mt-6 flex justify-end gap-3">
@@ -320,6 +317,6 @@ const handleSubmit = async () => {
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

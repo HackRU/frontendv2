@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { createPortal } from 'react-dom';
@@ -21,16 +21,14 @@ export default function ConfirmDeleteModal({
   return createPortal(
     <div className="fixed inset-0 z-40 flex items-center justify-center">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={onCancel}
-      />
+      <div className="absolute inset-0 bg-black/50" onClick={onCancel} />
 
       {/* Modal Box */}
       <div className="relative z-50 w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
         <h2 className="mb-4 text-xl font-semibold">Confirm Deletion</h2>
         <p className="mb-6">
-          Are you sure you want to delete user <strong>{email}</strong>? This action cannot be undone.
+          Are you sure you want to delete user <strong>{email}</strong>? This
+          action cannot be undone.
         </p>
         <div className="flex justify-end gap-3">
           <button
@@ -48,6 +46,6 @@ export default function ConfirmDeleteModal({
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

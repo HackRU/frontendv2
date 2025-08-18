@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getLeaderboard } from '@/app/lib/data';
 import GenericSection from '../(landing)/sections/GenericSection';
 import Image from 'next/image';
-import { brush } from '@/app/ui/fonts';
+import { azeret } from '@/app/ui/fonts';
 
 interface LeaderboardEntry {
   id: string;
@@ -78,7 +78,7 @@ const Leaderboard = () => {
 
   return (
     <main
-      className={`flex h-[100vh] w-[100vw] flex-col items-center justify-center overflow-hidden md:flex ${brush.className}`}
+      className={`flex h-[100vh] w-[100vw] flex-col items-center justify-center overflow-hidden md:flex ${azeret.className}`}
     >
       <div className="z-10 flex justify-center text-[var(--text-color)]">
         <div className="h-[60vh] w-[90vw] overflow-y-auto">

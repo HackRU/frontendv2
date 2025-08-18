@@ -77,7 +77,7 @@ const ENDPOINTS = {
    */
   verify: BASE + '/verify-email',
 
-    /**
+  /**
    * verify email after being given a code
    */
   userExists: BASE + '/user-exists',
@@ -85,8 +85,7 @@ const ENDPOINTS = {
   /**
    * Deletes a user
    */
-  deleteUser : BASE + '/delete'
-
+  deleteUser: BASE + '/delete',
 };
 
 export async function authenticate(email: string, password: string) {
@@ -1020,7 +1019,7 @@ export async function GetAllUsers() {
         auth_email: session.user.email,
         email: session.user.email,
         auth_token: session.user.name,
-        all: true
+        all: true,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
@@ -1071,7 +1070,7 @@ export async function DeleteUser(email: string) {
   return resp;
 }
 
-export async function submitInterestForm(data: InterestFormData){
+export async function submitInterestForm(data: InterestFormData) {
   const response = await fetch(`${BASE}/interest-form`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
