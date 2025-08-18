@@ -19,7 +19,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           } as React.CSSProperties
         }
       >
-
         {children}
 
         <div id="entry-radial" className="absolute top-0 -z-10 h-full w-full" />

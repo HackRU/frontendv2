@@ -49,7 +49,7 @@ export default async function Sponsors() {
                         alt="Sponsor Logo"
                         layout="fill"
                         objectFit="contain"
-                        className='z-50'
+                        className="z-50"
                       />
                     </Link>
                   </div>

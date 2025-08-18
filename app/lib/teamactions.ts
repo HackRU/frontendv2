@@ -19,10 +19,7 @@ const ENDPOINTS = {
   leaveTeam: BASEteam + '/leave',
 };
 
-export async function CreateTeam(
-  team_name: string,
-  members: string[],
-) {
+export async function CreateTeam(team_name: string, members: string[]) {
   noStore();
   let resp = {
     error: '',
@@ -332,9 +329,9 @@ export async function ReadPending() {
   return resp;
 }
 
-export async function isLeaderCheck(leader_email: string){
-    const session = await auth();
+export async function isLeaderCheck(leader_email: string) {
+  const session = await auth();
   if (session?.user) {
-    return leader_email === session.user.email
+    return leader_email === session.user.email;
   }
 }

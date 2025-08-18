@@ -72,7 +72,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 #entry-radial {
-  background-image: radial-gradient(circle, #F9F3E9, #F9F3E9);
+  background-image: radial-gradient(circle, #f9f3e9, #f9f3e9);
 }
 
 @keyframes twinkling {
