@@ -133,13 +133,22 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <div className="flex">
+        {/* FIXED: Mobile-responsive dragon */}
+        <div className="flex justify-center items-center">
           <Image
             src={'/landing/F2025/dragon.png'}
             alt="Dragon"
             width="1500"
             height="1500"
             priority
+            className="
+              w-full max-w-[300px] h-auto
+              xs:max-w-[250px] 
+              sm:max-w-[400px] 
+              md:max-w-[500px] 
+              lg:max-w-[600px] 
+              xl:max-w-[700px]
+            "
           />
         </div>
       </div>
