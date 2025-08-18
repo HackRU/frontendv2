@@ -803,10 +803,10 @@ export default function Dashboard() {
                   after registration.
                   <br></br>Only ONE person needs to create the team. The team
                   leader (the person who created the team) will type in the
-                  emails of their team members they used to register. Those team
+                  emails that their team members used to register. Those team
                   members then need to accept the team invite. This is only so
-                  we can admit people as a team, you will still need to create a
-                  team on the submission platform during the hackathon
+                  we can admit people as a team. You will still need to create a
+                  team on the submission platform during the hackathon.
                   <br />
                   <br />
                   <br />

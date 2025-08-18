@@ -100,7 +100,7 @@ export default function Hero() {
                 {/* <span className="text-[#ADD8E6]">ON!</span> */}
               </p>
               <p className={`${azeret.className} text-2xl`}>
-                <span className="text-black">October 4th - 5th, TBD </span>
+                <span className="text-black">October 4th - 5th, College Ave Student Center </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
                 <button
