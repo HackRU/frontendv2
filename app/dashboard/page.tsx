@@ -930,7 +930,7 @@ export default function Dashboard() {
                     id="team_member_1"
                     value={teamFormData.team_member_1}
                     className={teamMember1Errors ? 'border-red-500' : ''}
-                    disabled={!teamStatus.isLeader}
+                    disabled={!teamStatus.isLeader && teamInfo?.team_id}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -960,7 +960,7 @@ export default function Dashboard() {
                     id="team_member_2"
                     value={teamFormData.team_member_2}
                     className={teamMember2Errors ? 'border-red-500' : ''}
-                    disabled={!teamStatus.isLeader}
+                    disabled={!teamStatus.isLeader  && teamInfo?.team_id}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -990,7 +990,7 @@ export default function Dashboard() {
                     id="team_member_3"
                     value={teamFormData.team_member_3}
                     className={teamMember3Errors ? 'border-red-500' : ''}
-                    disabled={!teamStatus.isLeader}
+                    disabled={!teamStatus.isLeader  && teamInfo?.team_id}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
