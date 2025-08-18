@@ -1,26 +1,27 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+
 export default async function Sponsors() {
-  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png'];
+  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.jpeg'];
 
   const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/'];
 
   return (
     <div
-      className="relative z-10 mb-20 flex w-[100vw] justify-center"
+      className="relative z-10 mb-24 flex w-[100vw] justify-center"
       id="Sponsors"
     >
       <div className="flex h-fit w-[100vw] flex-col items-center">
-        <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl md:flex-row md:items-start">
-          <div className="mx-2">
+        <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl py-8 px-4 md:flex-row md:items-start z-50">
+          <div className="mx-4">
             {sponsors
               .filter((_, index) => index % 2 != 0)
               .map((sponsorURL, index) => {
                 return (
                   <div
                     key={index}
-                    className="relative mb-4 h-[30vh] w-[80vw] md:w-[40vw]"
+                    className="relative mb-6 h-[30vh] w-[80vw] md:w-[40vw] z-50"
                   >
                     <Link href={sponsorsLinks[index * 2 + 1]}>
                       <Image
@@ -28,20 +29,21 @@ export default async function Sponsors() {
                         alt="Sponsor Logo"
                         layout="fill"
                         objectFit="contain"
+                        className="z-50"
                       />
                     </Link>
                   </div>
                 );
               })}
           </div>
-          <div className="mx-2">
+          <div className="mx-4">
             {sponsors
               .filter((_, index) => index % 2 == 0)
               .map((sponsorURL, index) => {
                 return (
                   <div
                     key={index}
-                    className="relative mb-4 h-[30vh] w-[70vw] md:w-[30vw]"
+                    className="relative mb-6 h-[30vh] w-[70vw] md:w-[30vw] z-50"
                   >
                     <Link href={sponsorsLinks[index * 2]}>
                       <Image
@@ -58,6 +60,7 @@ export default async function Sponsors() {
           </div>
         </div>
       </div>
+      
       {/* <Image
         src={"/landing/S2025/foodplaceholder.png"}
         width="300"
@@ -71,7 +74,7 @@ export default async function Sponsors() {
         src={'/landing/F2025/mini dragons/mini 3.png'}
         width="500"
         height="500"
-        className="absolute -bottom-[300px] w-[500px] md:right-[150px] md:w-[500px] lg:-bottom-[50px]"
+        className="absolute -bottom-[300px] w-[500px] md:right-[150px] md:w-[500px] lg:-bottom-[50px] z-10"
         alt={'cool'}
         quality={50}
       />
