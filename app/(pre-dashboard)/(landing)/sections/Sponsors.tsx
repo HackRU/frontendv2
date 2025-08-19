@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 export default async function Sponsors() {
-  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png'];
+  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.jpeg'];
 
   const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/'];
 
