@@ -13,7 +13,8 @@ export default async function Sponsors() {
       id="Sponsors"
     >
       <div className="flex h-fit w-[100vw] flex-col items-center">
-        <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl py-8 px-4 md:flex-row md:items-start z-50">
+        {/* Added more top padding/margin to create space between heading and images */}
+        <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl py-8 px-4 mt-16 md:mt-20 lg:mt-24 md:flex-row md:items-start z-50">
           <div className="mx-4">
             {sponsors
               .filter((_, index) => index % 2 != 0)
