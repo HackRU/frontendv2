@@ -91,6 +91,64 @@ input[type='number']::-webkit-outer-spin-button {
   animation: twinkling 1s infinite;
 }
 
+/* NEW: Cloud floating animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(10px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(5px);
+  }
+}
+
+@keyframes float-medium {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  33% {
+    transform: translateY(-12px) translateX(-8px);
+  }
+  66% {
+    transform: translateY(-8px) translateX(-15px);
+  }
+}
+
+@keyframes float-fast {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  20% {
+    transform: translateY(-8px) translateX(12px);
+  }
+  40% {
+    transform: translateY(-15px) translateX(8px);
+  }
+  60% {
+    transform: translateY(-5px) translateX(-10px);
+  }
+  80% {
+    transform: translateY(-12px) translateX(-5px);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 6s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
 .sections::after {
   content: '';
   position: absolute;
