@@ -2,9 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 export default async function Sponsors() {
-  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.jpeg'];
+  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.jpeg', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png"];
 
-  const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/'];
+  const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 'https://www.purebuttons.com/'];
 
   return (
     <div
@@ -67,14 +67,14 @@ export default async function Sponsors() {
         quality={50}
       /> */}
 
-      <Image
+      {/* <Image
         src={'/landing/F2025/mini dragons/mini 3.png'}
         width="500"
         height="500"
         className="absolute -bottom-[300px] w-[500px] md:right-[150px] md:w-[500px] lg:-bottom-[50px]"
         alt={'cool'}
         quality={50}
-      />
+      /> */}
     </div>
   );
 }
