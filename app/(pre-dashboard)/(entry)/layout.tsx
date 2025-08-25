@@ -1,10 +1,11 @@
 import Image from 'next/image';
+import { inter } from '@/app/ui/fonts';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <main
-        className="h-fit w-fit bg-off_white-100"
+        className={`h-fit w-fit bg-off_white-100 ${inter.className}`}
         style={
           {
             '--bg-color': '#FFFFFF',

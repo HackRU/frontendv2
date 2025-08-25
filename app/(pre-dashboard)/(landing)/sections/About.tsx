@@ -29,19 +29,35 @@ function AboutInfo({
     return (
       <div
         className={clsx(
-          'z-10 h-fit w-full p-5 md:w-1/2 md:grow md:justify-end md:p-20',
+          'relative z-10 h-fit w-full p-5 md:w-1/2 md:grow md:justify-end md:p-20',
           {
             'text-end': reverse,
           },
         )}
       >
+        {/* Background block behind the text content */}
+        <div 
+          className={clsx(
+            'absolute inset-4 bg-gray-800/20 border-2 border-gray-600/30 backdrop-blur-sm',
+            'md:inset-8 rounded-lg',
+            {
+              'bg-gray-900/30': title === 'WHAT',
+              'bg-blue-900/20': title === 'TRACKS', 
+              'bg-green-900/20': title === 'JOIN US',
+            }
+          )}
+          style={{
+            clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))'
+          }}
+        />
+        
         <h1
-          className={clsx('text-3xl md:text-5xl', azeret.className)}
+          className={clsx('relative z-20 text-3xl md:text-5xl', azeret.className)}
           style={{ color: titleColor }}
         >
           {title}
         </h1>
-        <div className={clsx('text-2xl', azeret.className)}>{children}</div>
+        <div className={clsx('relative z-20 text-2xl', azeret.className)}>{children}</div>
       </div>
     );
   }
@@ -130,9 +146,9 @@ export default function About() {
             <p className="inline">HackRU is a</p>
             <p className="inline "> 24-hour hackathon </p>
             <p className="inline">at Rutgers University. We welcome</p>
-            <p className="inline"> hundreds of students </p>
+            <p className="inline "> hundreds of students </p>
             <p className="inline">to join us in building</p>
-            <p className="inline"> awesome tech projects.</p>
+            <p className="inline "> awesome tech projects.</p>
             <p className="inline"> Industry experts</p>
             <p className="inline"> and</p>
             <p className="inline"> mentors</p>
