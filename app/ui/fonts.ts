@@ -34,6 +34,16 @@ export const azeret = localFont({
   variable: '--font-fuzzy',
 });
 
+export const azeretMono = localFont({
+  src: [
+    {
+      path: '../../public/fonts/AzeretMono-VariableFont_wght.ttf',
+      weight: '400',
+    },
+  ],
+  variable: '--font-fuzzy',
+});
+
 export const brush = localFont({
   src: [
     {

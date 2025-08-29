@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
-import { longCang, azeret } from '@/app/ui/fonts';
+import { azeretMono , azeret } from '@/app/ui/fonts';
 
 const animalQuality = 100;
 
@@ -57,7 +57,7 @@ function AboutInfo({
         >
           {title}
         </h1>
-        <div className={clsx('relative z-20 text-2xl', azeret.className)}>{children}</div>
+        <div className={clsx('relative z-20 text-2xl', azeretMono.className)}>{children}</div>
       </div>
     );
   }
