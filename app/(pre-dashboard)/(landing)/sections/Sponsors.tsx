@@ -2,9 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 export default async function Sponsors() {
-  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.jpeg', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png"];
+  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png", "/sponsors/RNBCES_H_RED_BLACK_RGB.png"];
 
-  const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 'https://www.purebuttons.com/'];
+  const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 'https://www.purebuttons.com/', "https://careers.rutgers.edu/"];
 
   return (
     <div
@@ -13,7 +13,7 @@ export default async function Sponsors() {
     >
       <div className="flex h-fit w-[100vw] flex-col items-center">
         <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl md:flex-row md:items-start">
-          <div className="mx-2">
+          <div className="mx-2 mt-16">
             {sponsors
               .filter((_, index) => index % 2 != 0)
               .map((sponsorURL, index) => {
