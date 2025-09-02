@@ -2,9 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 export default async function Sponsors() {
-  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png", "/sponsors/RNBCES_H_RED_BLACK_RGB.png"];
+  const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png", 
+    "/sponsors/RNBCES_H_RED_BLACK_RGB.png", "/sponsors/GoogleCloud.png", "/sponsors/nexos-ai-logo-MAIN-black-horizontal.png"];
 
-  const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 'https://www.purebuttons.com/', "https://careers.rutgers.edu/"];
+  const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 
+    'https://www.purebuttons.com/', "https://careers.rutgers.edu/", "https://cloud.google.com/", "https://nexos.ai/"];
 
   return (
     <div
