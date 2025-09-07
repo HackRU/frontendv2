@@ -139,7 +139,7 @@ p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-700/50 md:flex-row md:item
         src={'/landing/F2025/mini dragons/mini 5.png'}
         width="500"
         height="500"
-        className="absolute -bottom-[100px] right-[10px] w-[250px] md:right-[100] md:w-[400px] lg:-bottom-[150px]"
+        className="absolute -bottom-[100px] right-[10px] w-[250px] md:right-[50px] md:w-[400px] lg:-bottom-[150px]"
         alt={'cool'}
         quality={50}
       />
