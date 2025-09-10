@@ -104,7 +104,7 @@ export default function Schedule() {
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
           className="text-text relative flex w-full flex-col items-center bg-gray-900
-p-20  md:flex-row md:items-start "
+p-4  md:flex-row md:items-start "
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />

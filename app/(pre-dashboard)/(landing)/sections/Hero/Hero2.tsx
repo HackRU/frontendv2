@@ -53,7 +53,7 @@ export default function Hero() {
   return (
     <>
       <div className="grid w-full items-center gap-0 lg:grid-cols-2">
-        <div className="z-200 justify-top flex h-auto flex-col items-center lg:-mt-[600px]">
+        <div className="z-200 mt-[100px] justify-top flex h-auto flex-col items-center lg:-mt-[600px]">
           <div
             className="relative left-0 top-0 h-auto w-[790px]
             xs:max-w-[320px] sm:max-w-[576px]
@@ -82,7 +82,7 @@ export default function Hero() {
                 className="relative z-30 items-center justify-center
                 bg-transparent text-sm text-[#C3557D]
                 transition-all duration-100 hover:drop-shadow-[0_0_20px_#7F9901]
-                xs:h-[26px] xs:w-[99px]
+                h-[45px] w-[120px]
                 sm:h-[45px] sm:w-[179px]
                 sm:text-lg md:h-[37px]
                 md:w-[145px] lg:h-[42px]
@@ -97,7 +97,7 @@ export default function Hero() {
                   className="absolute top-0"
                 />
                 <div className="relative h-full w-full">
-                  <p className="text-l relative pt-6 text-white sm:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
+                  <p className="relative pt-4 text-m text-white md:text-2xl sm:pt-0 md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
                     SIGN UP
                   </p>
                 </div>
@@ -106,7 +106,7 @@ export default function Hero() {
                 className="relative z-30 items-center justify-center
                 bg-transparent text-sm text-[#EC9655]
                 transition-all duration-100 hover:drop-shadow-[0_0px_20px_#1A3127]
-                xs:h-[26px] xs:w-[99px]
+                h-[45px] w-[120px]
                 sm:h-[45px] sm:w-[179px]
                 sm:text-lg md:h-[37px]
                 md:w-[145px] lg:h-[42px]
@@ -126,7 +126,7 @@ export default function Hero() {
                   height={400}
                   className="absolute top-0"
                 />
-                <p className="text-l relative pt-6 text-white sm:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
+                <p className="relative pt-2 text-xs text-white md:text-2xl md:pt-4 md:text-xl lg:pt-16 lg:text-4xl">
                   {!isLogged ? 'LOG IN' : 'DASHBOARD'}
                 </p>
               </button>
