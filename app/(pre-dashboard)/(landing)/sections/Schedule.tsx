@@ -15,15 +15,15 @@ function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
       <div className="w-full">
         {times.map((timeInfo, index) => (
           <div
-            className="mt-2 flex w-full flex-row pr-4 text-xl md:my-5 md:px-3"
+            className="mt-4 flex w-full flex-row pr-4 text-xl md:my-6 md:px-3"
             key={`${day}-${index}`}
           >
-            <div className="text-white-100 h-fit w-2/5 pr-2 text-right font-black">
+            <div className="text-white-100 h-fit w-1/3 pr-4 text-right font-black">
               {timeInfo.time}
             </div>
-            <div className="flex w-3/5 flex-col pl-20">
-              <div className="text-md w-3/5">{timeInfo.event}</div>
-              <div className="w-3/5 text-sm">{timeInfo.location}</div>
+            <div className="flex w-2/3 flex-col pl-6 border-l border-gray-600">
+              <div className="text-lg font-semibold">{timeInfo.event}</div>
+              <div className="text-sm text-gray-300">{timeInfo.location}</div>
             </div>
           </div>
         ))}
@@ -103,8 +103,8 @@ export default function Schedule() {
     >
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
         <div
-          className="text-text relative flex w-full flex-col items-center bg-gray-900
-p-4  md:flex-row md:items-start "
+          className="text-text relative flex w-full flex-col items-center bg-gray-900/80 backdrop-blur-sm
+p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-700/50 md:flex-row md:items-start "
         >
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
           <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
@@ -139,7 +139,7 @@ p-4  md:flex-row md:items-start "
         src={'/landing/F2025/mini dragons/mini 5.png'}
         width="500"
         height="500"
-        className="absolute -bottom-[200px] w-[200px] md:right-[150px] md:w-[500px] lg:-bottom-[150px]"
+        className="absolute -bottom-[100px] right-[10px] w-[250px] md:right-[50px] md:w-[400px] lg:-bottom-[150px]"
         alt={'cool'}
         quality={50}
       />
