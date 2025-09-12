@@ -46,7 +46,7 @@ export default async function Page() {
         { <GenericSection title="Past Team Members"> 
           <PastTeam />
         </GenericSection> } */}
-        <div className="-mt-[1000px]">
+        <div className="mt-[-200px] md:mt-[-500px] lg:mt-[-1000px]">
           <Image
             src="/landing/F2025/bottom.png"
             alt="bottom image"
