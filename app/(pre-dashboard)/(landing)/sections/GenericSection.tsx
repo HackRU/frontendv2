@@ -67,7 +67,7 @@ export default function GenericSection(props: GenericSectionProps) {
           ) : (
             <div>
               {props.title == 'FAQ' ? (
-                <div className="flex  items-center justify-center p-4">
+                <div className="flex  items-center justify-center p-4 pb-32">
                   <p className="absolute z-50 text-lg text-gold-100 text-white sm:text-4xl md:pl-8 md:pt-2 md:text-2xl lg:text-4xl">
                     FAQ
                   </p>
