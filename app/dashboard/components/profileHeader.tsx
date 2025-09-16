@@ -284,7 +284,7 @@ export default function ProfileHeader(props: {
                             first-served basis. If your teammates haven&apos;t
                             registered yet, tell them to do so ASAP! We admit
                             individual hackers based on FCFS priority and use
-                            team formations for waitlist priority.
+                            team formations to keep your friends with you!
                           </CardTitle>
                           <Button
                             className="ml-auto"
