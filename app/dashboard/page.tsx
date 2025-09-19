@@ -359,7 +359,7 @@ export default function Dashboard() {
           'phone number',
         ];
         for (let i = 0; i < requiredFields.length; i++) {
-          if (!userData[requiredFields[i]]) {
+          if (!userData[requiredFields[i]] || !resumeExists) {
             if (requiredFields[i] == 'resume' && resumeExists) {
             } else {
               console.log('THIS FIELD IS FAIL' + requiredFields[i]);
