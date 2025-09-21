@@ -170,6 +170,7 @@ export default function Dashboard() {
   const [teamMember1Errors, setTeamMember1Errors] = useState<string>();
   const [teamMember2Errors, setTeamMember2Errors] = useState<string>();
   const [teamMember3Errors, setTeamMember3Errors] = useState<string>();
+  const [teamMemberErrors, setTeamMemberErrors] = useState<string>();
   const [pendingteam, setpendingteam] = useState<string>();
 
   const [
@@ -359,7 +360,7 @@ export default function Dashboard() {
           'phone number',
         ];
         for (let i = 0; i < requiredFields.length; i++) {
-          if (!userData[requiredFields[i]] || !resumeExists) {
+          if (!userData[requiredFields[i]]) {
             if (requiredFields[i] == 'resume' && resumeExists) {
             } else {
               console.log('THIS FIELD IS FAIL' + requiredFields[i]);
@@ -452,8 +453,10 @@ export default function Dashboard() {
       // Only update the display data after successful submission
       fetchTeam()
       setSubmittingPreEventTeamForm('Saved!');
+      setTeamMemberErrors("")
     } else {
       setSubmittingPreEventTeamForm('Failed');
+      setTeamMemberErrors(resp.error)
     }
   };
 
@@ -1014,6 +1017,9 @@ export default function Dashboard() {
                     </p>
                   )}
                 </div>
+                <p className="mt-2 text-sm font-medium text-red-500">
+                  {teamMemberErrors}
+                </p>
                 <Button
                   onClick={() => {
                     setTeamConfimWarning(true);
