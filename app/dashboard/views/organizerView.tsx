@@ -11,6 +11,7 @@ import { getSelf } from '@/app/lib/data';
 import PopupDialog from '../components/dialog';
 import { set } from 'zod';
 import Page from '@/app/(pre-dashboard)/(landing)/page';
+import { specialEmails } from '@/app/lib/data';
 
 type STATUS =
   | 'SUCCESSFUL'
@@ -22,57 +23,59 @@ type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const eventPoints = {
-  "breakfast-sunday-real": 0,
-  "lunch-sunday-real": 0,
-  "github-copilot": 25,
-  "figma-workshop": 25,
-  "wakefern-coffee-chat": 15,
-  "wakefern-cafe": 15,
-  "midnight-surprise": 15,
-  "icims-tech-talk": 25,
-  "lunch-saturday": 0,
-  "dinner-saturday": 0,
-  "breakfast-sunday": 0,
-  "lunch-sunday": 0,
-  "meal-placeholder": 0,
-  "overcookd-4person-3-stars": 30,
-  "overcookd-4person-2-stars": 20,
-  "overcookd-4person-1-star": 15,
-  "overcookd-2v2-winner": 15,
-  "food-texture-guess": 10,
-  "tea-tasting-guess": 20,
+  'breakfast-sunday-real': 0,
+  'lunch-sunday-real': 0,
+  'github-copilot': 25,
+  'figma-workshop': 25,
+  'wakefern-coffee-chat': 15,
+  'wakefern-cafe': 15,
+  'midnight-surprise': 15,
+  'icims-tech-talk': 25,
+  'lunch-saturday': 0,
+  'dinner-saturday': 0,
+  'breakfast-sunday': 0,
+  'lunch-sunday': 0,
+  'meal-placeholder': 0,
+  'overcookd-4person-3-stars': 30,
+  'overcookd-4person-2-stars': 20,
+  'overcookd-4person-1-star': 15,
+  'overcookd-2v2-winner': 15,
+  'food-texture-guess': 10,
+  'tea-tasting-guess': 20,
 
-  "chess": 5,
+  chess: 5,
 
-  "cup-stack-large-shorter-time": 15,
-  "cup-stack-large-longer-time": 10,
-  "cup-stack-small-shorter-time": 15,
-  "cup-stack-small-longer-time": 10,
-  "stack-cup-game-win": 25,
+  'cup-stack-large-shorter-time': 15,
+  'cup-stack-large-longer-time': 10,
+  'cup-stack-small-shorter-time': 15,
+  'cup-stack-small-longer-time': 10,
+  'stack-cup-game-win': 25,
 
-  "jellybean-first-place": 75,
-  "jellybean-second-place": 50,
-  "jellybean-third-place": 30,
+  'jellybean-first-place': 75,
+  'jellybean-second-place': 50,
+  'jellybean-third-place': 30,
 
-  "shop-food-keychains": -15,
-  "shop-small-squishmallows": -70,
-  "shop-boba-keychain": -50,
-  "shop-scented-candles": -60,
-  "shop-hackru-mugs": -75,
-  "shop-dumpling-night-light": -80,
-  "shop-toast-plushie": -80,
-  "shop-tea-house-set": -90,
-  "shop-avocado-rug": -120,
-  "shop-boba": 0,
-  "shop-giant-baguette": -150,
+  'shop-food-keychains': -15,
+  'shop-small-squishmallows': -70,
+  'shop-boba-keychain': -50,
+  'shop-scented-candles': -60,
+  'shop-hackru-mugs': -75,
+  'shop-dumpling-night-light': -80,
+  'shop-toast-plushie': -80,
+  'shop-tea-house-set': -90,
+  'shop-avocado-rug': -120,
+  'shop-boba': 0,
+  'shop-giant-baguette': -150,
 };
 
+// MODIFICATION: Added 'isSpecialUser' prop to display the indicator
 function ScanStatus(props: {
   status: STATUS;
   scanType: ScannerTab;
   fullName: string;
+  isSpecialUser: boolean; // New prop
 }) {
-  const { status, scanType, fullName } = props;
+  const { status, scanType, fullName, isSpecialUser } = props;
 
   return (
     <div className="w-full text-center">
@@ -80,7 +83,18 @@ function ScanStatus(props: {
         Scan QR to {scanType === 'CHECK IN' ? 'check in' : 'scan for an event'}
       </p>
       <p className="">Status: </p>
-      <p>{fullName && <p className="text-white">Found User: {fullName}</p>}</p>
+      {/* MODIFICATION: Added a flex container and the orange dot indicator */}
+      {fullName && (
+        <div className="flex items-center justify-center gap-2 text-white">
+          <p>Found User: {fullName}</p>
+          {isSpecialUser && (
+            <span
+              className="h-3 w-3 rounded-full bg-orange-500"
+              title="This user is on the special list."
+            ></span>
+          )}
+        </div>
+      )}
       <p className="">
         {status === 'SUCCESSFUL' && (
           <p className="text-green-500">Successful.</p>
@@ -125,11 +139,15 @@ function OrganizerView() {
   );
   const [isSponsor, setIsSponsor] = useState<boolean>(false);
 
+  // MODIFICATION: Add new state to track if the user is on the special list
+  const [isSpecialUser, setIsSpecialUser] = useState<boolean>(false);
+
   const resetScanLog = () => {
     setScannedName('');
     setLatestScannedEmail('');
     setScanResponse('');
     setStatus('AWAITING SCAN');
+    setIsSpecialUser(false); // MODIFICATION: Reset the special user status
   };
 
   const handleOnScan = async (
@@ -140,6 +158,13 @@ function OrganizerView() {
     setScannedName('');
     setStatus('AWAITING RESPONSE');
     setLatestScannedEmail(result);
+
+    // MODIFICATION: Check if the scanned email is in the special list
+    if (specialEmails.includes(result)) {
+      setIsSpecialUser(true);
+    } else {
+      setIsSpecialUser(false);
+    }
 
     const resp = await GetUser(result);
     if (typeof resp.response === 'string') {
@@ -308,8 +333,9 @@ function OrganizerView() {
             <div className="grid justify-center space-x-4 md:grid-cols-5">
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
-                  } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'CHECK IN' ? 'bg-blue-700' : ''
+                } ${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('CHECK IN');
                   resetScanLog();
@@ -319,8 +345,9 @@ function OrganizerView() {
               </button>
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'EVENT' ? 'bg-blue-700' : ''
-                  }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'EVENT' ? 'bg-blue-700' : ''
+                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('EVENT');
                   resetScanLog();
@@ -330,8 +357,9 @@ function OrganizerView() {
               </button>
               <button
                 disabled={isSponsor}
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
-                  }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'MANUAL' ? 'bg-blue-700' : ''
+                }${isSponsor ? 'bg-blue-500 hover:bg-blue-500' : ''}`}
                 onClick={() => {
                   setScannerTab('MANUAL');
                   resetScanLog();
@@ -340,8 +368,9 @@ function OrganizerView() {
                 Manual
               </button>
               <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
-                  }`}
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'SPONSOR' ? 'bg-blue-700' : ''
+                }`}
                 onClick={() => {
                   setScannerTab('SPONSOR');
                   resetScanLog();
@@ -391,10 +420,12 @@ function OrganizerView() {
             />
           )}
           <div className="my-10 flex flex-col items-center">
+            {/* MODIFICATION: Pass the new isSpecialUser state to the component */}
             <ScanStatus
               status={status}
               scanType={scannerTab}
               fullName={scannedName}
+              isSpecialUser={isSpecialUser}
             />
             {scannerTab === 'CHECK IN' ? (
               <CheckInScan status={status} />
@@ -407,8 +438,9 @@ function OrganizerView() {
             ) : scannerTab === 'SPONSOR' ? (
               <div>
                 <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${selectedABList ? 'bg-blue-700' : ''
-                    }`}
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    selectedABList ? 'bg-blue-700' : ''
+                  }`}
                   onClick={() => {
                     setSelectedABList(true);
                     resetScanLog();
@@ -417,8 +449,9 @@ function OrganizerView() {
                   A
                 </button>
                 <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${!selectedABList ? 'bg-blue-700' : ''
-                    }`}
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    !selectedABList ? 'bg-blue-700' : ''
+                  }`}
                   onClick={() => {
                     setSelectedABList(false);
                     resetScanLog();
@@ -439,17 +472,19 @@ function OrganizerView() {
                 />
                 <div className="mt-2 flex justify-center">
                   <button
-                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
-                      }`}
+                    className={`mr-2 rounded px-4 py-2 font-bold text-white ${
+                      pointOperation === 'add' ? 'bg-green-500' : 'bg-gray-500'
+                    }`}
                     onClick={() => setPointOperation('add')}
                   >
                     +
                   </button>
                   <button
-                    className={`rounded px-4 py-2 font-bold text-white ${pointOperation === 'subtract'
-                      ? 'bg-red-500'
-                      : 'bg-gray-500'
-                      }`}
+                    className={`rounded px-4 py-2 font-bold text-white ${
+                      pointOperation === 'subtract'
+                        ? 'bg-red-500'
+                        : 'bg-gray-500'
+                    }`}
                     onClick={() => setPointOperation('subtract')}
                   >
                     -
