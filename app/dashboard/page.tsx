@@ -1128,6 +1128,7 @@ export default function Dashboard() {
           )}
 
           {!(userData?.registration_status === 'unregistered') && (
+          <>
             <Card className="w-full max-w-2xl">
               <CardHeader>
                 <div className="flex flex-col ">
@@ -1145,6 +1146,23 @@ export default function Dashboard() {
                 </div>
               </CardContent>
             </Card>
+
+             {/* Clue Counter Card */}
+              <Card className="w-full max-w-2xl mt-6">
+              <CardHeader>
+                <CardTitle>Clue Progress</CardTitle>
+                <CardDescription>
+                  Your current clue count and stage progress
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-between text-lg font-semibold">
+                  <span>Clue Count: {userData?.clueCount ?? 0}</span>
+                  <span>Stage: {userData?.stage ?? 0}</span>
+                </div>
+              </CardContent>
+            </Card>
+          </>
           )}
 
           <Card className="w-full max-w-2xl">

@@ -18,7 +18,7 @@ type STATUS =
   | 'PENDING'
   | 'AWAITING SCAN'
   | 'AWAITING RESPONSE';
-type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR';
+type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR' | 'CLUE';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const eventPoints = {
@@ -77,7 +77,9 @@ function ScanStatus(props: {
   return (
     <div className="w-full text-center">
       <p className="">
-        Scan QR to {scanType === 'CHECK IN' ? 'check in' : 'scan for an event'}
+        Scan QR to {scanType === 'CHECK IN' ? 'check in' 
+        : scanType === 'CLUE' ? 'scan for a clue' 
+        : 'scan for an event'}
       </p>
       <p className="">Status: </p>
       <p>{fullName && <p className="text-white">Found User: {fullName}</p>}</p>
@@ -200,7 +202,30 @@ function OrganizerView() {
 
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
-    } else if (scannerTab === 'SPONSOR') {
+    } else if (scannerTab === 'CLUE') {
+      try {
+        const resp = await fetch('/api/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_email: result, clue_scan: true }),
+        });
+        const json = await resp.json();
+    
+        if (resp.status === 200) {
+          setScanResponse(
+            `Clue count updated! New count: ${json.user.clueCount}, Stage: ${json.user.stage}`
+          );
+          setStatus('SUCCESSFUL');
+        } else {
+          setScanResponse(json.message || 'Error updating clue count');
+          setStatus('FAILED');
+        }
+      } catch (err) {
+        setScanResponse('Error updating clue count');
+        setStatus('FAILED');
+      }
+    }
+    else if (scannerTab === 'SPONSOR') {
       const eventName = selectedABList ? 'SponsorA' : 'SponsorB';
 
       const resp = await AttendEventScan(
@@ -305,7 +330,7 @@ function OrganizerView() {
             <h1 className="text-center text-3xl">Organizer View</h1>
 
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
-            <div className="grid justify-center space-x-4 md:grid-cols-5">
+            <div className="grid justify-center space-x-4 md:grid-cols-6">
               <button
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
@@ -353,6 +378,17 @@ function OrganizerView() {
               >
                 Sponsor
               </button>
+              <button
+              className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                scannerTab === 'CLUE' ? 'bg-blue-700' : ''
+              }`}
+              onClick={() => {
+                setScannerTab('CLUE');
+                resetScanLog();
+              }}
+            >
+              Clue
+            </button>
               <button
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                 onClick={async () => {
@@ -433,7 +469,7 @@ function OrganizerView() {
                   B
                 </button>
               </div>
-            ) : (
+            ) : scannerTab === 'MANUAL' ? (
               <div className="mt-4">
                 Manual Points:
                 <input
@@ -463,6 +499,9 @@ function OrganizerView() {
                     -
                   </button>
                 </div>
+              </div>
+            ): (
+              <div className="mt-4">
               </div>
             )}
             <p className="text-center">{scanResponse}</p>
