@@ -172,10 +172,7 @@ export default function Dashboard() {
   const [teamMember3Errors, setTeamMember3Errors] = useState<string>();
   const [pendingteam, setpendingteam] = useState<string>();
   const [showStagePopup, setShowStagePopup] = useState(false);
-  const [prevStage, setPrevStage] = useState<number>(() => {
-    const saved = localStorage.getItem('stagePopup');
-    return saved ? parseInt(saved) : 0;
-  });
+  const [prevStage, setPrevStage] = useState<number>(0);
 
   const [
     displayTeamFormFinalSubmissionWarning,
@@ -589,14 +586,23 @@ export default function Dashboard() {
   }, [teamInfo]);
 
   useEffect(() => {
-    if (userData?.stage != null) {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('stagePopup');
+      if (saved) {
+        setPrevStage(parseInt(saved));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && userData?.stage != null) {
       if (userData.stage > prevStage) {
         setShowStagePopup(true);
         localStorage.setItem('stagePopup', userData.stage.toString());
       }
       setPrevStage(userData.stage);
     }
-  }, [userData?.stage]);
+  }, [userData?.stage, prevStage]);
 
   if (!userData || !userData.role) {
     return <HackerDashboardSkeleton />;
