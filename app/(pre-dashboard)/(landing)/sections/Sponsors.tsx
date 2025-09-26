@@ -4,11 +4,12 @@ import Link from 'next/link';
 export default async function Sponsors() {
   const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png", 
     "/sponsors/RNBCES_H_RED_BLACK_RGB.png", "/sponsors/GoogleCloud.png", "/sponsors/nexos-ai-logo-MAIN-black-horizontal.png", 
-    "/sponsors/RHNIC_RED_WHITE_RBG.png", "/sponsors/saily-logo-yellow_2.png", "/sponsors/NordVPN_Logo_RGB_Primary_Blue_Black.png"];
+    "/sponsors/RHNIC_RED_WHITE_RBG.png", "/sponsors/saily-logo-yellow_2.png", "/sponsors/NordVPN_Logo_RGB_Primary_Blue_Black.png",
+    "/sponsors/Bloomberg_Engineering_black.png"];
 
   const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 
     'https://www.purebuttons.com/', "https://careers.rutgers.edu/", "https://cloud.google.com/", "https://nexos.ai/", 
-    "https://brainhealthinstitute.rutgers.edu/", "https://saily.com/", "https://nordvpn.com/"];
+    "https://brainhealthinstitute.rutgers.edu/", "https://saily.com/", "https://nordvpn.com/", "https://www.bloomberg.com/company/what-we-do/engineering-cto/"];
 
   return (
     <div
