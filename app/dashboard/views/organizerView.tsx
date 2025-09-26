@@ -77,9 +77,12 @@ function ScanStatus(props: {
   return (
     <div className="w-full text-center">
       <p className="">
-        Scan QR to {scanType === 'CHECK IN' ? 'check in' 
-        : scanType === 'CLUE' ? 'scan for a clue' 
-        : 'scan for an event'}
+        Scan QR to{' '}
+        {scanType === 'CHECK IN'
+          ? 'check in'
+          : scanType === 'CLUE'
+            ? 'scan for a clue'
+            : 'scan for an event'}
       </p>
       <p className="">Status: </p>
       <p>{fullName && <p className="text-white">Found User: {fullName}</p>}</p>
@@ -203,29 +206,27 @@ function OrganizerView() {
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
     } else if (scannerTab === 'CLUE') {
-      try {
-        const resp = await fetch('/api/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_email: result, clue_scan: true }),
-        });
-        const json = await resp.json();
-    
-        if (resp.status === 200) {
-          setScanResponse(
-            `Clue count updated! New count: ${json.user.clueCount}, Stage: ${json.user.stage}`
-          );
-          setStatus('SUCCESSFUL');
-        } else {
-          setScanResponse(json.message || 'Error updating clue count');
-          setStatus('FAILED');
-        }
-      } catch (err) {
-        setScanResponse('Error updating clue count');
+      const updatedCount = (userData?.clue_count || 0) + 1;
+      const updatedStage = (userData?.stage || 0) + 1;
+
+      const resp = await SetUser(
+        {
+          clue_count: updatedCount,
+          stage: updatedStage,
+        },
+        userData.email,
+      );
+
+      if (!resp.error) {
+        setScanResponse(
+          `Clue count updated! New count: ${updatedCount}, Stage: ${updatedStage}`,
+        );
+        setStatus('SUCCESSFUL');
+      } else {
+        setScanResponse(resp.response || 'Error updating clue count');
         setStatus('FAILED');
       }
-    }
-    else if (scannerTab === 'SPONSOR') {
+    } else if (scannerTab === 'SPONSOR') {
       const eventName = selectedABList ? 'SponsorA' : 'SponsorB';
 
       const resp = await AttendEventScan(
@@ -379,16 +380,16 @@ function OrganizerView() {
                 Sponsor
               </button>
               <button
-              className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                scannerTab === 'CLUE' ? 'bg-blue-700' : ''
-              }`}
-              onClick={() => {
-                setScannerTab('CLUE');
-                resetScanLog();
-              }}
-            >
-              Clue
-            </button>
+                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                  scannerTab === 'CLUE' ? 'bg-blue-700' : ''
+                }`}
+                onClick={() => {
+                  setScannerTab('CLUE');
+                  resetScanLog();
+                }}
+              >
+                Clue
+              </button>
               <button
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                 onClick={async () => {
@@ -500,9 +501,8 @@ function OrganizerView() {
                   </button>
                 </div>
               </div>
-            ): (
-              <div className="mt-4">
-              </div>
+            ) : (
+              <div className="mt-4"></div>
             )}
             <p className="text-center">{scanResponse}</p>
             <button

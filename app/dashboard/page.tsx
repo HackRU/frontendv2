@@ -154,7 +154,7 @@ export default function Dashboard() {
     team_id: '',
     isLeader: false,
   });
-  const [pendingTeamInvites, setpendingTeamInvites] = useState<any>()  
+  const [pendingTeamInvites, setpendingTeamInvites] = useState<any>();
   const [pointsData, setPointsData] = useState<{
     balance: number;
     total_points: number;
@@ -171,6 +171,11 @@ export default function Dashboard() {
   const [teamMember2Errors, setTeamMember2Errors] = useState<string>();
   const [teamMember3Errors, setTeamMember3Errors] = useState<string>();
   const [pendingteam, setpendingteam] = useState<string>();
+  const [showStagePopup, setShowStagePopup] = useState(false);
+  const [prevStage, setPrevStage] = useState<number>(() => {
+    const saved = localStorage.getItem('stagePopup');
+    return saved ? parseInt(saved) : 0;
+  });
 
   const [
     displayTeamFormFinalSubmissionWarning,
@@ -410,23 +415,23 @@ export default function Dashboard() {
   };
 
   async function fetchTeam() {
-      try {
-        setpendingteam(userData?.team_info?.pending_invites[0]?.team_id);
-        const resp = await ReadConfirmed();
-        console.log('TEAM');
-        setTeamInfo(resp.response);
-        console.log(teamInfo);
-        const l = await isLeaderCheck(teamInfo?.leader_email)
-        setTeamStatus({
-          ...teamStatus,
-          isLeader: l,
-        });
-        const resp2 = await ReadPendingOnTeam();
-        setpendingTeamInvites(resp2.response)
-      } catch (error) {
-        console.error('Error fetching or parsing schools data:', error);
-      }
+    try {
+      setpendingteam(userData?.team_info?.pending_invites[0]?.team_id);
+      const resp = await ReadConfirmed();
+      console.log('TEAM');
+      setTeamInfo(resp.response);
+      console.log(teamInfo);
+      const l = await isLeaderCheck(teamInfo?.leader_email);
+      setTeamStatus({
+        ...teamStatus,
+        isLeader: l,
+      });
+      const resp2 = await ReadPendingOnTeam();
+      setpendingTeamInvites(resp2.response);
+    } catch (error) {
+      console.error('Error fetching or parsing schools data:', error);
     }
+  }
 
   const updateTeam = async () => {
     let memberstoadd: string[] = [];
@@ -450,7 +455,7 @@ export default function Dashboard() {
 
     if (resp.response != '') {
       // Only update the display data after successful submission
-      fetchTeam()
+      fetchTeam();
       setSubmittingPreEventTeamForm('Saved!');
     } else {
       setSubmittingPreEventTeamForm('Failed');
@@ -464,8 +469,6 @@ export default function Dashboard() {
       console.log(resp);
     }
   };
-
-
 
   useEffect(() => {
     fetchTeam();
@@ -584,6 +587,16 @@ export default function Dashboard() {
       setCurrentTeam(teamInfo?.team_id);
     }
   }, [teamInfo]);
+
+  useEffect(() => {
+    if (userData?.stage != null) {
+      if (userData.stage > prevStage) {
+        setShowStagePopup(true);
+        localStorage.setItem('stagePopup', userData.stage.toString());
+      }
+      setPrevStage(userData.stage);
+    }
+  }, [userData?.stage]);
 
   if (!userData || !userData.role) {
     return <HackerDashboardSkeleton />;
@@ -824,7 +837,7 @@ export default function Dashboard() {
                   <Button
                     onClick={() => {
                       TeamDisband(teamInfo?.team_id);
-                      fetchTeam()
+                      fetchTeam();
                     }}
                     type="button"
                     className="text-red-400"
@@ -832,11 +845,13 @@ export default function Dashboard() {
                     Disband Team
                   </Button>
                 )}
-                {
-                  pendingTeamInvites && <p>Pending invites sent to 
-                    {" " + pendingTeamInvites} </p>
-                }
-                {false && teamInfo?.team_id && !(teamStatus.isLeader) && (
+                {pendingTeamInvites && (
+                  <p>
+                    Pending invites sent to
+                    {' ' + pendingTeamInvites}{' '}
+                  </p>
+                )}
+                {false && teamInfo?.team_id && !teamStatus.isLeader && (
                   <Button
                     onClick={() => {
                       LeaveTeam(teamInfo.team_id);
@@ -871,8 +886,7 @@ export default function Dashboard() {
                               <Button
                                 onClick={() => {
                                   removeMember(teamInfo.members[0]);
-                                  fetchTeam()
-
+                                  fetchTeam();
                                 }}
                                 type="button"
                                 className="text-red-400"
@@ -890,8 +904,7 @@ export default function Dashboard() {
                               <Button
                                 onClick={() => {
                                   removeMember(teamInfo.members[1]);
-                                  fetchTeam()
-                                  
+                                  fetchTeam();
                                 }}
                                 type="button"
                                 className="text-red-400"
@@ -909,8 +922,7 @@ export default function Dashboard() {
                               <Button
                                 onClick={() => {
                                   removeMember(teamInfo.members[2]);
-                                  fetchTeam()
-                                  
+                                  fetchTeam();
                                 }}
                                 type="button"
                                 className="text-red-400"
@@ -960,7 +972,7 @@ export default function Dashboard() {
                     id="team_member_2"
                     value={teamFormData.team_member_2}
                     className={teamMember2Errors ? 'border-red-500' : ''}
-                    disabled={!teamStatus.isLeader  && teamInfo?.team_id}
+                    disabled={!teamStatus.isLeader && teamInfo?.team_id}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -990,7 +1002,7 @@ export default function Dashboard() {
                     id="team_member_3"
                     value={teamFormData.team_member_3}
                     className={teamMember3Errors ? 'border-red-500' : ''}
-                    disabled={!teamStatus.isLeader  && teamInfo?.team_id}
+                    disabled={!teamStatus.isLeader && teamInfo?.team_id}
                     onChange={(e) => {
                       const email = e.target.value;
                       setTeamFormData({
@@ -1075,34 +1087,35 @@ export default function Dashboard() {
             </Card>
           ) : (
             <Card>
-                    <CardHeader>
-                <CardTitle>Pending invite {userData?.team_info?.pending_invites[0]?.invited_by}</CardTitle>
+              <CardHeader>
+                <CardTitle>
+                  Pending invite{' '}
+                  {userData?.team_info?.pending_invites[0]?.invited_by}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-              <Button
-                onClick={() => {
-                  InviteAccept(pendingteam ?? '');
-                  setpendingteam('');
-                  fetchTeam()
-
-                }}
-                type="button"
-                className="text-green-400"
-              >
-                Accept invite
-              </Button>
-              <Button
-                onClick={() => {
-                  InviteDecline(pendingteam ?? '');
-                  setpendingteam('');
-                  fetchTeam()
-
-                }}
-                type="button"
-                className="text-red-400"
-              >
-                Decline invite
-              </Button>
+                <Button
+                  onClick={() => {
+                    InviteAccept(pendingteam ?? '');
+                    setpendingteam('');
+                    fetchTeam();
+                  }}
+                  type="button"
+                  className="text-green-400"
+                >
+                  Accept invite
+                </Button>
+                <Button
+                  onClick={() => {
+                    InviteDecline(pendingteam ?? '');
+                    setpendingteam('');
+                    fetchTeam();
+                  }}
+                  type="button"
+                  className="text-red-400"
+                >
+                  Decline invite
+                </Button>
               </CardContent>
             </Card>
           )}
@@ -1128,41 +1141,41 @@ export default function Dashboard() {
           )}
 
           {!(userData?.registration_status === 'unregistered') && (
-          <>
-            <Card className="w-full max-w-2xl">
-              <CardHeader>
-                <div className="flex flex-col ">
-                  <div className="flex flex-col">
-                    <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
-                    <CardDescription>
-                      Use this QR code to check-in or scan-in for events!
-                    </CardDescription>
+            <>
+              <Card className="w-full max-w-2xl">
+                <CardHeader>
+                  <div className="flex flex-col ">
+                    <div className="flex flex-col">
+                      <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
+                      <CardDescription>
+                        Use this QR code to check-in or scan-in for events!
+                      </CardDescription>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
-                  <QRCode value={userData?.email} size={256} />
-                </div>
-              </CardContent>
-            </Card>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
+                    <QRCode value={userData?.email} size={256} />
+                  </div>
+                </CardContent>
+              </Card>
 
-             {/* Clue Counter Card */}
-              <Card className="w-full max-w-2xl mt-6">
-              <CardHeader>
-                <CardTitle>Clue Progress</CardTitle>
-                <CardDescription>
-                  Your current clue count and stage progress
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Clue Count: {userData?.clueCount ?? 0}</span>
-                  <span>Stage: {userData?.stage ?? 0}</span>
-                </div>
-              </CardContent>
-            </Card>
-          </>
+              {/* Clue Counter Card */}
+              <Card className="mt-6 w-full max-w-2xl">
+                <CardHeader>
+                  <CardTitle>Clue Progress</CardTitle>
+                  <CardDescription>
+                    Your current clue count and stage progress
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between text-lg font-semibold">
+                    <span>Clue Count: {userData?.clue_count ?? 0}</span>
+                    <span>Stage: {userData?.stage ?? 0}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
           )}
 
           <Card className="w-full max-w-2xl">
@@ -1738,6 +1751,22 @@ export default function Dashboard() {
               )}
             </form>
           </Card>
+          {showStagePopup && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+              <div className="max-w-sm rounded-xl bg-white p-6 text-center shadow-xl">
+                <h2 className="mb-2 text-xl font-bold">Stage Updated!</h2>
+                <p className="mb-4">
+                  You’ve advanced to stage {userData?.stage}.
+                </p>
+                <button
+                  className="rounded-md bg-blue-600 px-4 py-2 text-white"
+                  onClick={() => setShowStagePopup(false)}
+                >
+                  Got it
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     );
