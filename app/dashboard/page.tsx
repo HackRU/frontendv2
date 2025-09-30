@@ -599,7 +599,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && userData?.stage != null) {
-      if (userData.stage > prevStage) {
+      if (userData.stage) {
         setShowStagePopup(true);
         localStorage.setItem('stagePopup', userData.stage.toString());
       }

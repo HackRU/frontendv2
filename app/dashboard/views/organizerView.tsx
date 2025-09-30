@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import './organizerView.css';
 import QrReaderWrapper from '../components/QRreader';
 import CheckInScan from './checkInScan';
@@ -22,49 +22,34 @@ type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR' | 'CLUE';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const eventPoints = {
-  'breakfast-sunday-real': 0,
-  'lunch-sunday-real': 0,
-  'github-copilot': 25,
-  'figma-workshop': 25,
+  'SELECT AN EVENT': 0,
+  'f-25 breakfast-sunday': 0,
+  'f-25 lunch-sunday-real': 0,
+  'rad-workshop': 15,
+  'idea-workshop': 15,
   'wakefern-coffee-chat': 15,
   'wakefern-cafe': 15,
   'midnight-surprise': 15,
-  'icims-tech-talk': 25,
-  'lunch-saturday': 0,
-  'dinner-saturday': 0,
-  'breakfast-sunday': 0,
-  'lunch-sunday': 0,
+  'mlh-workshops': 15,
+  'f-25 lunch-saturday': 0,
+  'f-25 dinner-saturday': 0,
   'meal-placeholder': 0,
-  'overcookd-4person-3-stars': 30,
-  'overcookd-4person-2-stars': 20,
-  'overcookd-4person-1-star': 15,
-  'overcookd-2v2-winner': 15,
-  'food-texture-guess': 10,
-  'tea-tasting-guess': 20,
-
-  chess: 5,
-
-  'cup-stack-large-shorter-time': 15,
-  'cup-stack-large-longer-time': 10,
-  'cup-stack-small-shorter-time': 15,
-  'cup-stack-small-longer-time': 10,
-  'stack-cup-game-win': 25,
-
-  'jellybean-first-place': 75,
-  'jellybean-second-place': 50,
-  'jellybean-third-place': 30,
-
-  'shop-food-keychains': -15,
-  'shop-small-squishmallows': -70,
-  'shop-boba-keychain': -50,
-  'shop-scented-candles': -60,
-  'shop-hackru-mugs': -75,
-  'shop-dumpling-night-light': -80,
-  'shop-toast-plushie': -80,
-  'shop-tea-house-set': -90,
-  'shop-avocado-rug': -120,
-  'shop-boba': 0,
-  'shop-giant-baguette': -150,
+  'Cipher': 20,
+  'Gear game': 20,
+  'Switch game': 10,
+  'Ring toss - middle': 15, 
+  'Ring toss - side': 10, 
+  'Cup stacking': 15,
+  'Workshop': 15,
+  'shop - Lego flowers' : -15,
+  'shop - LotFancy Deck of Cards': -30,
+  'shop - Mochi squish toys':  -15,
+  'shop - Vaseline cocoa glow lotion':  -40,
+  'shop - Magnifying glass key chains': -30,
+  'shop - Laptop Adjustable Stand': -80,
+  'shop - Squishmallow Octopus': -110,
+  'shop - Fall Squishmallows': -65,
+  'shop - steampunk plush': -40,
 };
 
 function ScanStatus(props: {
@@ -120,6 +105,8 @@ function OrganizerView() {
     useState<boolean>(false);
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>('');
   const [scannedName, setScannedName] = useState<string>('');
+  const [selectedClue, setSelectedClue] = useState<string>('CLUE 1');
+  const [clueWin, setClueWin] = useState<boolean>(false);
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -129,6 +116,8 @@ function OrganizerView() {
     'add',
   );
   const [isSponsor, setIsSponsor] = useState<boolean>(false);
+
+  const clues = ['CLUE 1', 'CLUE 2', 'CLUE 3', 'CLUE 4', 'CLUE 5', 'CLUE 6']
 
   const resetScanLog = () => {
     setScannedName('');
@@ -206,8 +195,10 @@ function OrganizerView() {
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
     } else if (scannerTab === 'CLUE') {
+
+      const updatedStage = selectedClue;
       const updatedCount = (userData?.clue_count || 0) + 1;
-      const updatedStage = (userData?.stage || 0) + 1;
+      //const updatedStage = (userData?.stage || 0) + 1;
 
       const resp = await SetUser(
         {
@@ -216,6 +207,18 @@ function OrganizerView() {
         },
         userData.email,
       );
+
+      if ( clueWin ){
+      const resp2 = await AttendEventScan(
+        userData.email,
+        updatedStage,
+        10,
+        true,
+        1,
+      );
+      }
+
+
 
       if (!resp.error) {
         setScanResponse(
@@ -437,7 +440,44 @@ function OrganizerView() {
               scanType={scannerTab}
               fullName={scannedName}
             />
-            {scannerTab === 'CHECK IN' ? (
+            {scannerTab === 'CLUE' ? (<div>
+              <select
+                value={selectedEvent}
+                onChange={(e) => {setSelectedClue(e.target.value);}}
+                className="w-full text-black"
+              >
+        {clues.map((event, index) => (
+          <option key={index} value={event}>
+            {event}
+          </option>
+        ))}
+        </select>
+                  <button
+                    className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                      !clueWin ? 'bg-blue-700' : ''
+                    }`}
+                    onClick={() => {
+                      setClueWin(false);
+                      resetScanLog();
+                    }}
+                  >
+                  No points
+                </button>
+                <button
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    clueWin ? 'bg-blue-700' : ''
+                  }`}
+                  onClick={() => {
+                    setClueWin(true);
+                    resetScanLog();
+                  }}
+                >
+                  points
+                </button>
+                </div>
+      ) : 
+            scannerTab ===
+            'CHECK IN' ? (
               <CheckInScan status={status} />
             ) : scannerTab === 'EVENT' ? (
               <EventScan
