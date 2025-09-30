@@ -70,6 +70,11 @@ const schedule = {
         location: '108',
       },
       {
+        time: '4: 00 PM',
+        event: 'game room',
+        location: '109',
+      },
+      {
         time: '5: 00 PM',
         event: 'MLH workshops',
         location: '108',

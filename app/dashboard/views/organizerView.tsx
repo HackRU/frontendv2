@@ -442,12 +442,10 @@ function OrganizerView() {
             />
             {scannerTab === 'CLUE' ? (<div>
               <select
-          value={selectedEvent}
-          onChange={(e) => {
-            setSelectedClue(e.target.value);
-          }}
-          className="w-full text-black"
-        >
+                value={selectedEvent}
+                onChange={(e) => {setSelectedClue(e.target.value);}}
+                className="w-full text-black"
+              >
         {clues.map((event, index) => (
           <option key={index} value={event}>
             {event}
@@ -455,14 +453,14 @@ function OrganizerView() {
         ))}
         </select>
                   <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    !clueWin ? 'bg-blue-700' : ''
-                  }`}
-                  onClick={() => {
-                    setClueWin(false);
-                    resetScanLog();
-                  }}
-                >
+                    className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                      !clueWin ? 'bg-blue-700' : ''
+                    }`}
+                    onClick={() => {
+                      setClueWin(false);
+                      resetScanLog();
+                    }}
+                  >
                   No points
                 </button>
                 <button
