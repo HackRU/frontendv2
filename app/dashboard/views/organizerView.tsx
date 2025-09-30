@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import './organizerView.css';
 import QrReaderWrapper from '../components/QRreader';
 import CheckInScan from './checkInScan';
@@ -22,14 +22,15 @@ type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR' | 'CLUE';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const eventPoints = {
+  'SELECT AN EVENT': 0,
   'f-25 breakfast-sunday': 0,
   'f-25 lunch-sunday-real': 0,
-  'rad-workshop': 25,
-  'idea-workshop': 25,
+  'rad-workshop': 15,
+  'idea-workshop': 15,
   'wakefern-coffee-chat': 15,
   'wakefern-cafe': 15,
   'midnight-surprise': 15,
-  'icims-tech-talk': 25,
+  'mlh-workshops': 15,
   'f-25 lunch-saturday': 0,
   'f-25 dinner-saturday': 0,
   'meal-placeholder': 0,
@@ -48,6 +49,7 @@ const eventPoints = {
   'shop - Laptop Adjustable Stand': -80,
   'shop - Squishmallow Octopus': -110,
   'shop - Fall Squishmallows': -65,
+  'shop - steampunk plush': -40,
 };
 
 function ScanStatus(props: {
@@ -103,6 +105,8 @@ function OrganizerView() {
     useState<boolean>(false);
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>('');
   const [scannedName, setScannedName] = useState<string>('');
+  const [selectedClue, setSelectedClue] = useState<string>('CLUE 1');
+  const [clueWin, setClueWin] = useState<boolean>(false);
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -112,6 +116,8 @@ function OrganizerView() {
     'add',
   );
   const [isSponsor, setIsSponsor] = useState<boolean>(false);
+
+  const clues = ['CLUE 1', 'CLUE 2', 'CLUE 3', 'CLUE 4', 'CLUE 5', 'CLUE 6']
 
   const resetScanLog = () => {
     setScannedName('');
@@ -189,8 +195,10 @@ function OrganizerView() {
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
     } else if (scannerTab === 'CLUE') {
+
+      const updatedStage = selectedClue;
       const updatedCount = (userData?.clue_count || 0) + 1;
-      const updatedStage = (userData?.stage || 0) + 1;
+      //const updatedStage = (userData?.stage || 0) + 1;
 
       const resp = await SetUser(
         {
@@ -199,6 +207,18 @@ function OrganizerView() {
         },
         userData.email,
       );
+
+      if ( clueWin ){
+      const resp2 = await AttendEventScan(
+        userData.email,
+        updatedStage,
+        10,
+        true,
+        1,
+      );
+      }
+
+
 
       if (!resp.error) {
         setScanResponse(
@@ -420,7 +440,46 @@ function OrganizerView() {
               scanType={scannerTab}
               fullName={scannedName}
             />
-            {scannerTab === 'CHECK IN' ? (
+            {scannerTab === 'CLUE' ? (<div>
+              <select
+          value={selectedEvent}
+          onChange={(e) => {
+            setSelectedClue(e.target.value);
+          }}
+          className="w-full text-black"
+        >
+        {clues.map((event, index) => (
+          <option key={index} value={event}>
+            {event}
+          </option>
+        ))}
+        </select>
+                  <button
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    !clueWin ? 'bg-blue-700' : ''
+                  }`}
+                  onClick={() => {
+                    setClueWin(false);
+                    resetScanLog();
+                  }}
+                >
+                  No points
+                </button>
+                <button
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    clueWin ? 'bg-blue-700' : ''
+                  }`}
+                  onClick={() => {
+                    setClueWin(true);
+                    resetScanLog();
+                  }}
+                >
+                  points
+                </button>
+                </div>
+      ) : 
+            scannerTab ===
+            'CHECK IN' ? (
               <CheckInScan status={status} />
             ) : scannerTab === 'EVENT' ? (
               <EventScan
