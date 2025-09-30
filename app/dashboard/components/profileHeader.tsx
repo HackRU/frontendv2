@@ -237,10 +237,9 @@ export default function ProfileHeader(props: {
                   <div>
                     <CardDescription>
                       Unfortunately, we&apos;ve had to place you on our
-                      waitlist. Show up closer to our delayed check-in phase
+                      waitlist. Show up closer to our delayed check-in phase at 10:45
                       where hackers will be checked in based on remaining
-                      availability! In the meantime, any confirmed teammates can
-                      wait in the venue.
+                      availability! 
                     </CardDescription>
                   </div>
                 </div>
