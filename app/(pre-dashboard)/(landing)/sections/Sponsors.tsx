@@ -20,7 +20,7 @@ export default async function Sponsors() {
         <div className="transparent-black-background text-text relative flex w-full flex-col items-center justify-evenly rounded-3xl md:flex-row md:items-start">
           <div className="mx-2 mt-16">
             {sponsors
-              .filter((_, index) => index % 2 != 0)
+              .filter((_, index) => index % 2 == 0)
               .map((sponsorURL, index) => {
                 return (
                   <div
@@ -41,7 +41,7 @@ export default async function Sponsors() {
           </div>
           <div className="mx-2">
             {sponsors
-              .filter((_, index) => index % 2 == 0)
+              .filter((_, index) => index % 2 != 0)
               .map((sponsorURL, index) => {
                 return (
                   <div
