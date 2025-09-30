@@ -123,7 +123,7 @@ export default function StatusBar({ status }: { status: Status }) {
                   : 'text-white/60'
               }`}
             >
-              {STAGE_LABELS[stage]}
+              {isWaitlist && STAGE_LABELS[stage] == "Confirmed"  ? "Waitlist" : STAGE_LABELS[stage]}
             </div>
           </div>
         );
