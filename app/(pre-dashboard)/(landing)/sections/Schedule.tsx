@@ -53,7 +53,7 @@ const schedule = {
       },
       { time: '12:00 PM', event: 'Team Building', location: '411' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
-      { time: '12:30 PM', event: 'Lunch', location: 'Hacking Area' },
+      { time: '12:30 PM', event: 'Lunch', location: 'MPR' },
       {
         time: '2:00 PM',
         event: 'Wakefern Coffee Chats',
@@ -69,7 +69,13 @@ const schedule = {
         event: 'IDEA workshop',
         location: '108',
       },
-      { time: '8:00 PM', event: 'Dinner', location: 'Hacking Area' },
+      {
+        time: '5: 00 PM',
+        event: 'MLH workshops',
+        location: '108',
+      },
+      
+      { time: '8:00 PM', event: 'Dinner', location: 'MPR' },
       { time: '11:45 PM', event: 'STUDENT CENTER DOORS LOCK', location: 'Hacking Area' },
     ],
   },
@@ -83,8 +89,8 @@ const schedule = {
         location: 'Hacking Area',
       },
       { time: '8:00 AM', event: 'STUDENT CENTER DOORS UNLOCK', location: 'Hacking Area' },
-      { time: '8:15 AM', event: 'Breakfast', location: 'Hacking Area' },
-      { time: '11:00 AM', event: 'Lunch', location: 'Hacking Area' },
+      { time: '8:15 AM', event: 'Breakfast', location: 'MPR' },
+      { time: '11:00 AM', event: 'Lunch', location: 'MPR' },
       {
         time: '12:00 PM',
         event: 'Submissions Due',
