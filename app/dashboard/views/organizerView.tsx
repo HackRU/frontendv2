@@ -199,7 +199,11 @@ function OrganizerView() {
       const updatedStage = selectedClue;
       let updatedCount = (userData?.clue_count || 0) + 1;
       //const updatedStage = (userData?.stage || 0) + 1;
-      const cipherDone = userData?.cipher_done || updatedStage == 'CLUE 2'
+      const clue1Done = userData?.clue1Done || updatedStage == 'CLUE 1'
+      const clue2Done = userData?.clue2Done || updatedStage == 'CLUE 2'
+      const clue3Done = userData?.clue3Done || updatedStage == 'CLUE 3'
+      const clue4Done = userData?.clue4Done || updatedStage == 'CLUE 4'
+      const clue5Done = userData?.clue5Done || updatedStage == 'CLUE 5'
 
       if (updatedStage === "") {
         updatedCount = updatedCount - 1;
@@ -209,7 +213,11 @@ function OrganizerView() {
         {
           clue_count: updatedCount,
           stage: updatedStage,
-          cipher_done: cipherDone,
+          clue1 : clue1Done,
+          clue2 : clue2Done,
+          clue3 : clue3Done,
+          clue4 : clue4Done,
+          clue5 : clue5Done,
 
         },
         userData.email,
@@ -229,7 +237,7 @@ function OrganizerView() {
 
       if (!resp.error) {
         setScanResponse(
-          `Clue count updated! New count: ${updatedCount}, Stage: ${updatedStage}, Cipher: ${cipherDone}`,
+          `Clue count updated! New count: ${updatedCount}, Stage: ${updatedStage}, Clue 1: ${clue1Done}, Clue 2: ${clue2Done}, Clue 3: ${clue3Done}, Clue 4: ${clue4Done}, Clue 5: ${clue5Done}`,
         );
         setStatus('SUCCESSFUL');
       } else {
