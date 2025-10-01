@@ -95,12 +95,12 @@ const schedule = {
       },
       { time: '8:00 AM', event: 'STUDENT CENTER DOORS UNLOCK', location: 'Hacking Area' },
       { time: '8:15 AM', event: 'Breakfast', location: 'MPR' },
-      { time: '11:00 AM', event: 'Lunch', location: 'MPR' },
       {
         time: '12:00 PM',
         event: 'Submissions Due',
         location: 'Hacking Area',
       },
+      { time: '12:15 AM', event: 'Lunch', location: 'MPR' },
       { time: '1:00 PM', event: 'Judging Begins', location: 'Hacking Area' },
       {
         time: '3:30 PM',
