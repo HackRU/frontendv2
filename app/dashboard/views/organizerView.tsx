@@ -36,7 +36,7 @@ const eventPoints = {
   'meal-placeholder': 0,
   'Cipher': 20,
   'Gear game 20': 20,
-  'Gear game 10': 10,
+  'Gear game 15': 15,
   'Switch game': 10,
   'Ring toss - middle': 15, 
   'Ring toss - side10': 10, 

@@ -1801,7 +1801,7 @@ export default function Dashboard() {
                 {
                   userData?.stage == "Ring Toss" && (
                     <p className="mb-4">
-                       "Just Kevin and I went looking for Austin a few minutes after his speech was supposed to start. Security stopped us at the door, telling us not to step any closer..."
+                       &quot Just Kevin and I went looking for Austin a few minutes after his speech was supposed to start. Security stopped us at the door, telling us not to step any closer...&quot
                     </p>
                   )
                 }
