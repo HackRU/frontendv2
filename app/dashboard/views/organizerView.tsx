@@ -35,6 +35,7 @@ const eventPoints = {
   'f-25 dinner-saturday': 0,
   'meal-placeholder': 0,
   'Cipher': 20,
+  'Card Game': 10,
   'Gear game 20': 20,
   'Gear game 15': 15,
   'Switch game': 10,

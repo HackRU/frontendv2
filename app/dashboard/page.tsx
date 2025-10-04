@@ -1787,6 +1787,13 @@ export default function Dashboard() {
                 {
                   userData?.stage == "Gear Game" && (
                     <p className="mb-4">
+                                <Image
+                                  src="/Archibald_20251004_102459_0000.png"
+                                  alt="image"
+                                  layout="responsive"
+                                  width={400}
+                                  height={300}
+                                />
                       Photo of Obsidian, Archibald, Horacio, and Austin all sharing a drink dated as 7:55pm (horacio next to austin). Obsidian looks annoyed at Austin, while Archibald and Horacio excitedly cheer with him
                     </p>
                   )
