@@ -1172,7 +1172,8 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              {/* Clue Counter Card */}
+              {/* Clue Counter Card */} 
+              {false && (
               <Card className="mt-6 w-full max-w-2xl">
                 <CardHeader>
                   <CardTitle>Clue Progress</CardTitle>
@@ -1187,6 +1188,8 @@ export default function Dashboard() {
                   </div>
                 </CardContent>
               </Card>
+              )
+              }
             </>
           )}
 
@@ -1767,6 +1770,41 @@ export default function Dashboard() {
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
               <div className="max-w-sm rounded-xl bg-white p-6 text-center shadow-xl">
                 <h2 className="mb-2 text-xl font-bold">Stage Updated!</h2>
+                {
+                  userData?.stage == "Cipher" && (
+                    <p className="mb-4">
+                      Autopsy reported intoxication, multiple lacerations, and burn marks found on his body. Cause of death: not yet known.
+                    </p>
+                  )
+                }
+                {
+                  userData?.stage == "Nemo" && (
+                    <p className="mb-4">
+                      In order to not startle guests, an announcement was made. “Unfortunately, Austin was not able to make his speech tonight. Instead, his close peer and CEO of (company name), Horacio will be presenting in his place. Horacio takes the stage prepared.
+                    </p>
+                  )
+                }
+                {
+                  userData?.stage == "Gear Game" && (
+                    <p className="mb-4">
+                      Photo of Obsidian, Archibald, Horacio, and Austin all sharing a drink dated as 7:55pm (horacio next to austin). Obsidian looks annoyed at Austin, while Archibald and Horacio excitedly cheer with him
+                    </p>
+                  )
+                }
+                {
+                  userData?.stage == "Cup stacking" && (
+                    <p className="mb-4">
+                       Aurelia had to leave shortly before Austin’s speech due to her increased workload at his company. Shortly after his body was discovered, she appeared like she never left, biting her nails and repeatedly running her fingers through her hair.
+                    </p>
+                  )
+                }
+                {
+                  userData?.stage == "Ring Toss" && (
+                    <p className="mb-4">
+                       "Just Kevin and I went looking for Austin a few minutes after his speech was supposed to start. Security stopped us at the door, telling us not to step any closer..."
+                    </p>
+                  )
+                }
                 <p className="mb-4">
                   You’ve advanced to stage {userData?.stage}.
                 </p>
