@@ -42,7 +42,7 @@ const eventPoints = {
   'Ring toss - middle': 15, 
   'Ring toss - side10': 10, 
   'Ring toss - side5': 5, 
-  'Cup stacking - 10': 10,
+  'Cup stacking - 15': 15,
   'Cup stacking - 20': 20,
   'Workshop': 15,
   'shop - Lego flowers' : -15,
