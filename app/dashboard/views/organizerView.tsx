@@ -35,11 +35,14 @@ const eventPoints = {
   'f-25 dinner-saturday': 0,
   'meal-placeholder': 0,
   'Cipher': 20,
-  'Gear game': 20,
+  'Gear game 20': 20,
+  'Gear game 15': 15,
   'Switch game': 10,
   'Ring toss - middle': 15, 
-  'Ring toss - side': 10, 
-  'Cup stacking': 15,
+  'Ring toss - side10': 10, 
+  'Ring toss - side5': 5, 
+  'Cup stacking - 10': 10,
+  'Cup stacking - 20': 20,
   'Workshop': 15,
   'shop - Lego flowers' : -15,
   'shop - LotFancy Deck of Cards': -30,
@@ -50,14 +53,16 @@ const eventPoints = {
   'shop - Squishmallow Octopus': -110,
   'shop - Fall Squishmallows': -65,
   'shop - steampunk plush': -40,
+  'shop - google waterbottle': -120,
 };
 
 function ScanStatus(props: {
   status: STATUS;
   scanType: ScannerTab;
   fullName: string;
+  scannedEmail: string;
 }) {
-  const { status, scanType, fullName } = props;
+  const { status, scanType, fullName, scannedEmail } = props;
 
   return (
     <div className="w-full text-center">
@@ -71,6 +76,7 @@ function ScanStatus(props: {
       </p>
       <p className="">Status: </p>
       <p>{fullName && <p className="text-white">Found User: {fullName}</p>}</p>
+      <p>{fullName && <p className="text-white">Email: {scannedEmail}</p>}</p>
       <p className="">
         {status === 'SUCCESSFUL' && (
           <p className="text-green-500">Successful.</p>
@@ -117,7 +123,7 @@ function OrganizerView() {
   );
   const [isSponsor, setIsSponsor] = useState<boolean>(false);
 
-  const clues = ['', 'CLUE 1', 'CLUE 2', 'CLUE 3', 'CLUE 4', 'CLUE 5', 'CLUE 6']
+  const clues = ['', 'Cipher', 'Nemo', 'Gear Game', 'Cup stacking', 'Ring Toss']
 
   const resetScanLog = () => {
     setScannedName('');
@@ -197,16 +203,16 @@ function OrganizerView() {
     } else if (scannerTab === 'CLUE') {
 
       const updatedStage = selectedClue;
-      let updatedCount = (userData?.clue_count || 0) + 1;
+      let updatedCount = (userData?.clue_count || 0);
       //const updatedStage = (userData?.stage || 0) + 1;
-      const clue1Done = userData?.clue1Done || updatedStage == 'CLUE 1'
-      const clue2Done = userData?.clue2Done || updatedStage == 'CLUE 2'
-      const clue3Done = userData?.clue3Done || updatedStage == 'CLUE 3'
-      const clue4Done = userData?.clue4Done || updatedStage == 'CLUE 4'
-      const clue5Done = userData?.clue5Done || updatedStage == 'CLUE 5'
+      const clue1Done = userData?.clue1 || updatedStage == 'Cipher'
+      const clue2Done = userData?.clue2 || updatedStage == 'Nemo'
+      const clue3Done = userData?.clue3 || updatedStage == 'Gear Game'
+      const clue4Done = userData?.clue4 || updatedStage == 'Cup stacking'
+      const clue5Done = userData?.clue5 || updatedStage == 'Ring Toss'
 
-      if (updatedStage === "") {
-        updatedCount = updatedCount - 1;
+      if (updatedStage != "") {
+        updatedCount = updatedCount + 1;
       }
 
       const resp = await SetUser(
@@ -237,7 +243,12 @@ function OrganizerView() {
 
       if (!resp.error) {
         setScanResponse(
-          `Clue count updated! New count: ${updatedCount}, Stage: ${updatedStage}, Clue 1: ${clue1Done}, Clue 2: ${clue2Done}, Clue 3: ${clue3Done}, Clue 4: ${clue4Done}, Clue 5: ${clue5Done}`,
+          `Clue count updated! New count: ${updatedCount}, Stage: ${updatedStage}, 
+${clues[1]}: ${clue1Done}, 
+${clues[2]}: ${clue2Done}, 
+${clues[3]}: ${clue3Done},
+${clues[4]}: ${clue4Done},
+${clues[5]}: ${clue5Done}`,
         );
         setStatus('SUCCESSFUL');
       } else {
@@ -454,6 +465,7 @@ function OrganizerView() {
               status={status}
               scanType={scannerTab}
               fullName={scannedName}
+              scannedEmail={latestScannedEmail}
             />
             {scannerTab === 'CLUE' ? (<div>
               <select
@@ -559,7 +571,7 @@ function OrganizerView() {
             ) : (
               <div className="mt-4"></div>
             )}
-            <p className="text-center">{scanResponse}</p>
+            <pre className="text-center">{scanResponse}</pre>
             <button
               className="mt-10 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
               onClick={() => setOpenScanner(!openScanner)}
