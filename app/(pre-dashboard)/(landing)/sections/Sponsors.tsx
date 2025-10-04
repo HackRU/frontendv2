@@ -5,11 +5,12 @@ export default async function Sponsors() {
   const sponsors = ['/sponsors/wakefern2.png', '/sponsors/cloudflare.png', "/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png", 
     "/sponsors/RNBCES_H_RED_BLACK_RGB.png", "/sponsors/GoogleCloud.png", "/sponsors/nexos-ai-logo-MAIN-black-horizontal.png", 
     "/sponsors/RHNIC_RED_WHITE_RBG.png", "/sponsors/saily-logo-yellow_2.png", "/sponsors/NordVPN_Logo_RGB_Primary_Blue_Black.png",
-    "/sponsors/Bloomberg_Engineering_black.png"];
+    "/sponsors/Bloomberg_Engineering_black.png", "/sponsors/nord1.png", "/sponsors/nord2.png", "/sponsors/nord3.png"];
 
   const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 
     'https://www.purebuttons.com/', "https://careers.rutgers.edu/", "https://cloud.google.com/", "https://nexos.ai/", 
-    "https://brainhealthinstitute.rutgers.edu/", "https://saily.com/", "https://nordvpn.com/", "https://www.bloomberg.com/company/what-we-do/engineering-cto/"];
+    "https://brainhealthinstitute.rutgers.edu/", "https://saily.com/", "https://nordvpn.com/", "https://www.bloomberg.com/company/what-we-do/engineering-cto/",
+  "https://www.linkedin.com/company/nord-vpn/", "https://www.linkedin.com/company/nordpass/", "https://incogni.com/", ""];
 
   return (
     <div
@@ -27,7 +28,7 @@ export default async function Sponsors() {
                     key={index}
                     className="relative mb-4 h-[30vh] w-[80vw] md:w-[40vw]"
                   >
-                    <Link href={sponsorsLinks[index * 2 + 1]}>
+                    <Link href={sponsorsLinks[index * 2]}>
                       <Image
                         src={sponsorURL}
                         alt="Sponsor Logo"
@@ -48,7 +49,7 @@ export default async function Sponsors() {
                     key={index}
                     className="relative mb-4 h-[30vh] w-[70vw] md:w-[30vw]"
                   >
-                    <Link href={sponsorsLinks[index * 2]}>
+                    <Link href={sponsorsLinks[index * 2 + 1]}>
                       <Image
                         src={sponsorURL}
                         alt="Sponsor Logo"
