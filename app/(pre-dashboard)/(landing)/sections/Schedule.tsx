@@ -94,7 +94,7 @@ const schedule = {
         location: 'Hacking Area',
       },
       { time: '8:15 AM', event: 'Breakfast', location: 'MPR' },
-      { time: '9:00 AM', event: 'STUDENT CENTER DOORS UNLOCK', location: 'Hacking Area' },
+      { time: '9:00 AM', event: 'STUDENT CENTER DOORS UNLOCK', location: 'Hacking Area ' },
       {
         time: '11:00 AM',
         event: 'Submissions Due',
