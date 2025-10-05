@@ -10,7 +10,7 @@ export default async function Sponsors() {
   const sponsorsLinks = ['https://www2.wakefern.com/', 'https://www.cloudflare.com/', 
     'https://www.purebuttons.com/', "https://careers.rutgers.edu/", "https://cloud.google.com/", "https://nexos.ai/", 
     "https://brainhealthinstitute.rutgers.edu/", "https://saily.com/", "https://nordvpn.com/", "https://www.bloomberg.com/company/what-we-do/engineering-cto/",
-  "https://www.linkedin.com/company/nord-vpn/", "https://nordprotect.com/", "https://incogni.com/", ""];
+  "https://nordprotect.com/", "https://nordpass.com/", "https://incogni.com/", ""];
 
   return (
     <div
