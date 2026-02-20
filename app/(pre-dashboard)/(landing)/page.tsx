@@ -18,6 +18,9 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
+
+  redirect("/offseason")
+
   return (
     <main
       className={`relative flex h-fit flex-col ${azeret.className} bg-gradient-to-b from-[#DBF5F8] to-[#54A0A8] text-s2025black-100`}

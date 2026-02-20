@@ -7,13 +7,13 @@ import InterestForm from '@/app/ui/interestForm';
 
 export default function ComingSoonPage() {
   return (
-    <main className="relative flex min-h-screen w-screen flex-col items-center overflow-y-auto bg-gray-900 pt-28 text-white">
+    <main className="relative flex min-h-screen w-screen flex-col items-center overflow-y-auto bg-blue-200 pt-28 text-white">
       <h1 className="mt-4 text-center text-6xl font-bold">
         HackRU Coming Soon
       </h1>
       <p className="mt-4 px-4 text-center text-lg">
-        HackRU is back on{' '}
-        <span className="font-bold text-teal-400">October 4th - 5th</span>!
+        {/* HackRU is back on{' '}
+        <span className="font-bold text-teal-400">October 4th - 5th</span>! */}
         Registration will open in the Fall, so stay tuned for more information.
       </p>
 
@@ -52,9 +52,9 @@ export default function ComingSoonPage() {
       </div>
 
       {/* Interest Form Section */}
-      <div className="mt-12 w-full max-w-4xl px-4">
+      {/* <div className="mt-12 w-full max-w-4xl px-4">
         <InterestForm />
-      </div>
+      </div> */}
 
       <div className="mt-12 px-4 text-center">
         <Button
