@@ -17,8 +17,6 @@ import React from 'react';
 
 export default async function Page() {
 
-  redirect("/offseason")
-
   return (
     <main
       className={`f2026-landing-page relative flex h-fit flex-col ${fredoka.className} text-s2025black-100`}
