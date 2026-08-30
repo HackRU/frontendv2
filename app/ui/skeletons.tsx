@@ -65,27 +65,26 @@ export function InvoiceSkeleton() {
 
 export function HackerDashboardSkeleton() {
   return (
-    <div className={`h-screen w-screen  ${shimmer} relative`}>
-      <div className="flex flex-col items-center pt-[10rem] ">
-        <div className="text-white">Experiencing issues?</div>
+    <div className={`relative h-screen w-screen overflow-hidden bg-[#040b16] text-white ${shimmer}`}>
+      <div className="flex flex-col items-center pt-[10rem]">
+        <div className="text-lg font-semibold tracking-wide text-slate-200">
+          Experiencing issues?
+        </div>
         <Button
-          className="my-3 h-fit w-fit border border-white text-black hover:bg-black hover:text-white"
+          className="my-4 h-fit w-fit border border-sky-400/40 bg-slate-900 text-white hover:bg-slate-800"
           onClick={async () => {
             await handleSignOut();
-            window.location.href = '/';
+            window.location.replace('/');
           }}
         >
           Click Here to Log Out
         </Button>
-        <div className="h-[10rem] w-[10rem] rounded-full bg-gray-600 opacity-40" />
+        <div className="h-[10rem] w-[10rem] rounded-full bg-slate-700/60 opacity-80" />
         <div className="mt-20 flex h-fit w-full flex-col items-center gap-3">
-          <div className="h-[10rem] w-[25rem] rounded bg-gray-600 opacity-40" />
-          <div className="h-[30rem] w-[25rem] rounded bg-gray-600 opacity-40" />
+          <div className="h-[10rem] w-[min(90vw,25rem)] rounded-xl bg-slate-700/60 opacity-80" />
+          <div className="h-[30rem] w-[min(90vw,25rem)] rounded-xl bg-slate-700/60 opacity-80" />
         </div>
       </div>
-      {/* <CardSkeleton />
-      <CardSkeleton />
-      <CardSkeleton /> */}
     </div>
   );
 }

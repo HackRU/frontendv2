@@ -91,13 +91,17 @@ const ENDPOINTS = {
 export async function authenticate(email: string, password: string) {
   noStore();
   try {
-    const session = await auth();
-    await signIn('credentials', {
-      email: email,
-      password: password,
-      redirectTo: '/dashboard',
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
     });
-    return 'Login';
+
+    if (result?.error) {
+      return 'Invalid credentials.';
+    }
+
+    return 'success';
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -107,15 +111,15 @@ export async function authenticate(email: string, password: string) {
           return error.message;
       }
     }
-    redirect('/dashboard');
-    return 'Something went wrong. ';
+    return 'Something went wrong.';
   }
 }
 
 export async function handleSignOut() {
   noStore();
   try {
-    await signOut();
+    await signOut({ redirect: false });
+    return 'success';
   } catch (error) {
     console.log(error);
     return 'Something went wrong';
@@ -193,54 +197,59 @@ export async function SignUp(
     resp.error = "Passwords don't match";
     return resp;
   } else {
-    await fetch(ENDPOINTS.signup, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        registration_status: 'unregistered', //"waitlist" is one of them
-        first_name: firstname,
-        last_name: lastname,
-      }),
-    })
-      .then(async (res) => {
-        let res_json = await res.json();
-        if (res_json.statusCode === 200) {
-          resp.response = '200';
-          try {
-            await signIn('credentials', {
-              email: email,
-              password: password,
-              redirectTo: '/dashboard',
-            });
-          } catch (error) {
-            if (error instanceof AuthError) {
-              switch (error.type) {
-                case 'CredentialsSignin':
-                  resp.error = 'Invalid credentials.';
-                default:
-                  resp.error = error.message;
-              }
-            }
+    try {
+      const res = await fetch(ENDPOINTS.signup, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          registration_status: 'unregistered',
+          first_name: firstname,
+          last_name: lastname,
+        }),
+      });
+
+      const res_json = await res.json();
+      if (res_json.statusCode === 200) {
+        resp.response = '200';
+        try {
+          const signInResult = await signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+          });
+
+          if (signInResult?.error) {
+            resp.error = 'Invalid credentials.';
+            resp.response = '';
           }
-        } else {
-          if (res_json.body) {
-            resp.error = res_json.body;
-          } else {
-            resp.error = 'Unexpected Error';
+        } catch (error) {
+          if (error instanceof AuthError) {
+            switch (error.type) {
+              case 'CredentialsSignin':
+                resp.error = 'Invalid credentials.';
+                break;
+              default:
+                resp.error = error.message;
+                break;
+            }
+            resp.response = '';
           }
         }
-      })
-      .catch((error) => {
-        resp.error =
-          error + '; An error occured when attempting signup. Failed at 1/2';
-      });
-  }
-  if (resp.response === '200') {
-    redirect('/dashboard');
+      } else {
+        if (res_json.body) {
+          resp.error = res_json.body;
+        } else {
+          resp.error = 'Unexpected Error';
+        }
+      }
+    } catch (error) {
+      resp.error =
+        String(error) + '; An error occured when attempting signup. Failed at 1/2';
+    }
   }
 
   return resp;

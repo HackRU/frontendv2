@@ -57,77 +57,77 @@ export default function StatusBar({ status }: { status: Status }) {
   }
 
   return (
-    <div className="mx-auto mt-6 flex w-full max-w-4xl items-center justify-between px-4">
-      {STAGES.map((stage, index) => {
-        const isCompleted = index <= currentIndex;
-        const isCurrent = index === currentIndex;
-        const isFuture = index > currentIndex;
-        const isWaitlistMarker = isWaitlist && stage === 'confirmed';
+    <div className="mx-auto mt-6 w-full max-w-4xl px-2 sm:px-4">
+      <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm sm:p-4">
+        <div className="flex items-start justify-between gap-1 sm:gap-2">
+          {STAGES.map((stage, index) => {
+            const isCompleted = index <= currentIndex;
+            const isCurrent = index === currentIndex;
+            const isWaitlistMarker = isWaitlist && stage === 'confirmed';
 
-        return (
-          <div
-            key={stage}
-            className="relative flex w-full flex-col items-center"
-          >
-            {/* Connector Line */}
-            {/* Left Line */}
-            {index !== 0 && (
+            return (
               <div
-                className={`absolute left-0 top-2 z-0 h-1 w-1/2 ${
-                  index <= currentIndex
-                    ? 'animate-pulse bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]'
-                    : isWaitlist && stage === 'confirmed'
-                      ? 'border-2 border-dashed border-yellow-400 bg-yellow-300'
-                      : 'bg-blue-500/30'
-                }`}
-              />
-            )}
+                key={stage}
+                className="relative flex min-w-0 flex-1 flex-col items-center"
+              >
+                {index !== 0 && (
+                  <div
+                    className={`absolute left-0 top-2 z-0 h-1 w-1/2 rounded-full ${
+                      index <= currentIndex
+                        ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
+                        : isWaitlist && stage === 'confirmed'
+                          ? 'border-2 border-dashed border-amber-300 bg-amber-400/50'
+                          : 'bg-slate-700'
+                    }`}
+                  />
+                )}
 
-            {/* Right Line */}
-            {index !== STAGES.length - 1 && (
-              <div
-                className={`absolute left-1/2 top-2 z-0 h-1 w-1/2 ${
-                  index < currentIndex
-                    ? 'animate-pulse bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]'
-                    : isWaitlist && STAGES[index + 1] === 'confirmed'
-                      ? 'border-2 border-dashed border-yellow-400 bg-yellow-300'
-                      : 'bg-blue-500/30'
-                }`}
-              />
-            )}
+                {index !== STAGES.length - 1 && (
+                  <div
+                    className={`absolute left-1/2 top-2 z-0 h-1 w-1/2 rounded-full ${
+                      index < currentIndex
+                        ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
+                        : isWaitlist && STAGES[index + 1] === 'confirmed'
+                          ? 'border-2 border-dashed border-amber-300 bg-amber-400/50'
+                          : 'bg-slate-700'
+                    }`}
+                  />
+                )}
 
-            {/* Status Dot */}
-            <div
-              className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 transition-all duration-300
-                ${
-                  isCompleted
-                    ? 'border-white bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]'
-                    : isCurrent
-                      ? 'animate-pulse border-blue-500 bg-white ring-2 ring-blue-400'
-                      : isWaitlistMarker
-                        ? 'animate-pulse border-yellow-500 bg-yellow-300'
-                        : 'border-blue-300 bg-transparent'
-                }
-              `}
-            >
-              {isWaitlistMarker && (
-                <div className="absolute h-2 w-2 rounded-full bg-yellow-500" />
-              )}
-            </div>
+                <div
+                  className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 transition-all duration-300 sm:h-6 sm:w-6
+                    ${
+                      isCompleted
+                        ? 'border-emerald-300 bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.7)]'
+                        : isCurrent
+                          ? 'animate-pulse border-sky-300 bg-sky-400 ring-4 ring-sky-300/30'
+                          : isWaitlistMarker
+                            ? 'animate-pulse border-amber-300 bg-amber-400'
+                            : 'border-slate-600 bg-slate-800'
+                    }
+                  `}
+                >
+                  {isWaitlistMarker && (
+                    <div className="absolute h-2 w-2 rounded-full bg-amber-900" />
+                  )}
+                </div>
 
-            {/* Label */}
-            <div
-              className={`mt-1 text-center text-xs capitalize ${
-                isCompleted || isCurrent || isWaitlistMarker
-                  ? 'font-medium text-white'
-                  : 'text-white/60'
-              }`}
-            >
-              {isWaitlist && STAGE_LABELS[stage] == "Confirmed"  ? "Waitlist" : STAGE_LABELS[stage]}
-            </div>
-          </div>
-        );
-      })}
+                <div
+                  className={`mt-1.5 text-center text-[9px] capitalize leading-tight sm:text-[10px] ${
+                    isCompleted || isCurrent || isWaitlistMarker
+                      ? 'font-semibold text-white'
+                      : 'text-slate-400'
+                  }`}
+                >
+                  {isWaitlist && STAGE_LABELS[stage] == 'Confirmed'
+                    ? 'Waitlist'
+                    : STAGE_LABELS[stage]}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

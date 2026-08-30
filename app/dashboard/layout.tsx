@@ -7,7 +7,10 @@ import { inter } from '@/app/ui/fonts';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <main className={`relative h-screen w-screen ${inter.className}`} id="entry-radial">
+      <main
+        className={`relative min-h-screen w-full overflow-x-hidden bg-[#040b16] text-white ${inter.className}`}
+        id="entry-radial"
+      >
         <Navbar />
         <Suspense>
           <Cursor />

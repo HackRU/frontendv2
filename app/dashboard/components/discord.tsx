@@ -1,14 +1,9 @@
 'use client';
 
-import { Button } from '@/app/ui/button';
-
+import { Button } from '@/app/dashboard/components/button';
 import { getOAuthUrl, setDiscord } from '@/app/lib/actions';
-
-import { UpdateSelf } from '@/app/lib/data';
-
 import { useState, useEffect } from 'react';
 import { redirect } from 'next/navigation';
-
 import { useRouter } from 'next/navigation';
 
 export default function DiscordAuth(props: {
@@ -36,7 +31,6 @@ export default function DiscordAuth(props: {
   const setHackRU = async () => {
     if (code != null) {
       console.log('SEND REQUEST');
-      //setdiscordAuth(true);
       const resp = await setDiscord(code);
       if (resp != null) {
         setErrors(resp.error);
@@ -53,21 +47,27 @@ export default function DiscordAuth(props: {
   }, []);
 
   return (
-    <div className="grid w-full items-center gap-0">
-      {<p className="text-xs italic text-red-500">{submit_errors}</p>}
-      {
-        <p className="text-xs italic">
-          {userData.discord != undefined ? userData.discord.username : ''}
+    <div className="grid w-full items-center gap-4">
+      {submit_errors && (
+        <p className="text-xs italic text-red-400">{submit_errors}</p>
+      )}
+      {userData.discord != undefined && userData.discord.username && (
+        <p className="text-sm text-slate-200 italic">
+          Connected as {userData.discord.username}
         </p>
-      }
+      )}
       <a
         href="https://discord.gg/yt65RGgN4x"
-        className="text-s hover:underline"
+        className="text-sm text-sky-300 underline-offset-4 hover:text-sky-200 hover:underline sm:text-base"
       >
         Join Here! https://discord.gg/yt65RGgN4x
       </a>
       <Button
-        className={`mt-4 justify-center ${discordAuth ? 'bg-green-400' : 'bg-red-400 disabled:bg-slate-400'} `}
+        className={`mt-1 w-full justify-center rounded-xl font-semibold ${
+          discordAuth
+            ? 'bg-emerald-400 text-slate-900 hover:bg-emerald-300'
+            : 'bg-[#f7a9a4] text-slate-900 hover:bg-[#f8b7b2]'
+        }`}
         onClick={() => getOAuth()}
       >
         Verify Discord Account

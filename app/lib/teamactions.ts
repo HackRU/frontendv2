@@ -52,7 +52,6 @@ export async function CreateTeam(team_name: string, members: string[]) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -87,7 +86,6 @@ export async function InviteMember(team_id: string, invites: string[]) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -121,7 +119,6 @@ export async function InviteAccept(team_id: string) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -155,7 +152,6 @@ export async function InviteDecline(team_id: string) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -189,7 +185,6 @@ export async function LeaveTeam(team_id: string) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -223,7 +218,6 @@ export async function TeamDisband(team_id: string) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -258,7 +252,6 @@ export async function RemoveMember(emails: string[], team_id: string) {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -292,7 +285,6 @@ export async function ReadConfirmed() {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -326,7 +318,6 @@ export async function ReadPendingOnTeam() {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
@@ -359,14 +350,13 @@ export async function ReadPending() {
   } else {
     resp.error = 'Unknown error';
   }
-  console.log(resp);
   return resp;
 }
 
 export async function isLeaderCheck(leader_email: string) {
   const session = await auth();
   if (session?.user) {
-    console.log(leader_email === session.user.email)
     return leader_email === session.user.email;
   }
+  return false;
 }

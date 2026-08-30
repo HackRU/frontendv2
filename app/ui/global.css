@@ -113,7 +113,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 #entry-radial {
-  background-image: radial-gradient(circle, #f9f3e9, #f9f3e9);
+  display: block;
 }
 
 @keyframes twinkling {
@@ -126,6 +126,20 @@ input[type='number']::-webkit-outer-spin-button {
   100% {
     opacity: 0.5;
   }
+}
+
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
+.brand-float {
+  animation: logoFloat 4s ease-in-out infinite;
 }
 
 .twinkling-star {

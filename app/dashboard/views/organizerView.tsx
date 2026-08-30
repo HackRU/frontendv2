@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
 import './organizerView.css';
 import QrReaderWrapper from '../components/QRreader';
 import CheckInScan from './checkInScan';
@@ -102,6 +103,7 @@ function ScanStatus(props: {
 }
 
 function OrganizerView() {
+  const router = useRouter();
   const [status, setStatus] = useState<STATUS>('AWAITING SCAN');
   const [openScanner, setOpenScanner] = useState<boolean>(false);
   const [scannerTab, setScannerTab] = useState<ScannerTab>('CHECK IN');
@@ -424,7 +426,7 @@ ${clues[5]}: ${clue5Done}`,
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                 onClick={async () => {
                   await handleSignOut();
-                  window.location.href = '/';
+                  router.replace('/');
                 }}
               >
                 Logout

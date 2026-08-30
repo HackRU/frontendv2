@@ -252,7 +252,6 @@ export default function Dashboard() {
     }
 
     const resp = await UploadTeamSubmission(current_email, data);
-    console.log(resp);
     const team_id = resp.team_id;
 
     if (resp.error.length > 0 || team_id === undefined || team_id === 0) {
@@ -413,21 +412,35 @@ export default function Dashboard() {
   };
 
   async function fetchTeam() {
+    if (!userData?.email) {
+      return;
+    }
+
     try {
       setpendingteam(userData?.team_info?.pending_invites[0]?.team_id);
+
       const resp = await ReadConfirmed();
-      console.log('TEAM');
-      setTeamInfo(resp.response);
-      console.log(teamInfo);
-      const l = await isLeaderCheck(teamInfo?.leader_email);
-      setTeamStatus({
-        ...teamStatus,
-        isLeader: l,
-      });
+      if (resp?.error && String(resp.error).includes('not in an active team')) {
+        setTeamInfo(null);
+        setpendingTeamInvites(null);
+        setTeamStatus((prev: any) => ({ ...prev, isLeader: false, team_id: '' }));
+        return;
+      }
+
+      const teamInfoResponse = (resp?.response as any) || null;
+      setTeamInfo(teamInfoResponse);
+      const leaderEmail = teamInfoResponse?.leader_email;
+      const l = leaderEmail ? await isLeaderCheck(leaderEmail) : false;
+      setTeamStatus((prev: any) => ({ ...prev, isLeader: !!l }));
+
       const resp2 = await ReadPendingOnTeam();
-      setpendingTeamInvites(resp2.response);
+      if (resp2?.error && String(resp2.error).includes('not in an active team')) {
+        setpendingTeamInvites(null);
+        return;
+      }
+      setpendingTeamInvites(resp2.response || null);
     } catch (error) {
-      console.error('Error fetching or parsing schools data:', error);
+      console.error('Error fetching team data:', error);
     }
   }
 
@@ -471,8 +484,10 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchTeam();
-  }, [userData]);
+    if (userData?.email) {
+      fetchTeam();
+    }
+  }, [userData?.email]);
 
   // First useEffect to fetch and set schools data
   useEffect(() => {
@@ -549,6 +564,18 @@ export default function Dashboard() {
     async function fetchUser() {
       try {
         const data = await getSelf();
+
+        if (data?.error && typeof data.error === 'string') {
+          if (
+            data.error.includes('Something went wrong') ||
+            data.error.includes('not authenticated') ||
+            data.error.includes('Unauthorized')
+          ) {
+            window.location.href = '/login';
+            return;
+          }
+        }
+
         const points = await GetPoints();
 
         const pointsResponseBody =
@@ -634,82 +661,65 @@ export default function Dashboard() {
     //REMOVE ONCE OPTIN WORKING AS EXPECTED
     if (userData?.opt_in == null) {
       return (
-        <div className="flex flex-col items-center justify-center space-y-8 p-4">
-          <ProfileHeader
-            userData={userData}
-            waiverState={waiverState}
-            handleChangingFile={handleChangingFile}
-            onWaiverSubmit={onWaiverSubmit}
-          />
-          <Card className="mt-32 w-full max-w-2xl">
-            <CardHeader>
-              <CardTitle>
-                Would you like to opt-in to Major League Hacking emails? You
-                must choose before you can proceed to registration profile.
-              </CardTitle>
-              <CardDescription>
-                <Button
-                  onClick={async () => {
-                    const resp = await OptInSelf(true);
-                    if (resp == 'GOOD') {
-                      setUserData({ ...userData, opt_in: true });
-                    }
-                  }}
-                  type="button"
-                  className="mt-10"
-                >
-                  OPT IN
-                </Button>
-                <Button
-                  onClick={async () => {
-                    const resp = await OptInSelf(false);
-                    if (resp == 'GOOD') {
-                      setUserData({ ...userData, opt_in: false });
-                    }
-                  }}
-                  type="button"
-                  className="mx-10"
-                >
-                  OPT OUT
-                </Button>
-              </CardDescription>
-            </CardHeader>
-          </Card>
+        <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[#040b16] px-4 py-10 text-white">
+          <div className="w-full max-w-2xl rounded-[28px] border border-sky-500/30 bg-slate-950/80 p-6 shadow-[0_24px_80px_rgba(2,6,23,0.8)] backdrop-blur-xl sm:p-8">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-300">
+              Before you continue
+            </p>
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              MLH communications preference
+            </h1>
+            <p className="mt-4 text-base text-slate-300">
+              Please choose whether you&apos;d like to receive occasional MLH
+              emails about events, career opportunities, and community updates.
+              This must be answered before you can continue to your HackRU
+              profile and registration.
+            </p>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <Button
+                onClick={async () => {
+                  const resp = await OptInSelf(true);
+                  if (resp == 'GOOD') {
+                    setUserData({ ...userData, opt_in: true });
+                  }
+                }}
+                type="button"
+                className="h-12 rounded-xl bg-sky-400 text-slate-950 hover:bg-sky-300"
+              >
+                I want MLH emails
+              </Button>
+              <Button
+                onClick={async () => {
+                  const resp = await OptInSelf(false);
+                  if (resp == 'GOOD') {
+                    setUserData({ ...userData, opt_in: false });
+                  }
+                }}
+                type="button"
+                variant="outline"
+                className="h-12 rounded-xl border-slate-600 bg-slate-900 text-white hover:bg-slate-800"
+              >
+                No MLH emails
+              </Button>
+            </div>
+          </div>
         </div>
       );
     }
     return (
-      <main>
+      <main className="relative min-h-screen w-full overflow-x-hidden bg-[#040b16] text-white">
         <Navbar />
         {/* <Suspense>
           <Cursor />
         </Suspense> */}
-        <div className="flex flex-col items-center justify-center space-y-8 p-4">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-6 px-3 pb-16 pt-2 sm:px-6">
           <ProfileHeader
             userData={userData}
             waiverState={waiverState}
             handleChangingFile={handleChangingFile}
             onWaiverSubmit={onWaiverSubmit}
           />
-          {!(userData?.registration_status === 'unregistered') && (
-            <Card className="w-full max-w-2xl">
-              <CardHeader>
-                <div className="flex flex-col ">
-                  <div className="flex flex-col">
-                    <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
-                    <CardDescription>
-                      Use this QR code to check-in or scan-in for events!
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
-                  <QRCode value={userData?.email} size={256} />
-                </div>
-              </CardContent>
-            </Card>
-          )}
           {/*Getting ride of house info as well */}
           {userData?.registration_status === 'checked_in' && false && (
             <Card className="w-full max-w-2xl">
@@ -1214,25 +1224,34 @@ export default function Dashboard() {
               />
             </CardContent>
           </Card>
-          <Card className="w-full max-w-2xl">
+          <Card
+            id="profile-form-card"
+            className="w-full max-w-2xl border border-white/10 bg-slate-900/80"
+          >
             <form onSubmit={handleSubmit(onSubmit)}>
               <CardHeader>
-                <div className="flex flex-row items-center justify-center">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex flex-col">
                     <CardTitle>Profile</CardTitle>
                     <CardDescription>
                       Update your profile information. * fields are required
                     </CardDescription>
                   </div>
-                  <Button type="submit" className="ml-auto">
+                  <Button
+                    type="submit"
+                    className="w-full rounded-xl bg-slate-200 text-slate-900 hover:bg-white sm:ml-auto sm:w-auto"
+                  >
                     {savingUserProfile ? 'Saving...' : userProfileSubmitText}
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="first_name">First Name *</Label>
+                  <Label htmlFor="first_name" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                    First Name *
+                  </Label>
                   <Input
+                    className="rounded-xl border border-white/10 bg-slate-950/60 text-white placeholder:text-slate-400 focus-visible:ring-sky-400"
                     id="first_name"
                     value={userData?.first_name}
                     {...register('first_name')}
@@ -1247,8 +1266,11 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="last_name">Last Name *</Label>
+                  <Label htmlFor="last_name" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                    Last Name *
+                  </Label>
                   <Input
+                    className="rounded-xl border border-white/10 bg-slate-950/60 text-white placeholder:text-slate-400 focus-visible:ring-sky-400"
                     id="last_name"
                     value={userData?.last_name}
                     {...register('last_name')}
@@ -1291,8 +1313,11 @@ export default function Dashboard() {
               </div> */}
 
                 <div className="space-y-2">
-                  <Label htmlFor="github">Github *</Label>
+                  <Label htmlFor="github" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                    Github *
+                  </Label>
                   <Input
+                    className="rounded-xl border border-white/10 bg-slate-950/60 text-white placeholder:text-slate-400 focus-visible:ring-sky-400"
                     id="github"
                     value={userData?.github}
                     {...register('github')}
@@ -1320,7 +1345,7 @@ export default function Dashboard() {
                         setUserData({ ...userData, major: selected });
                       }
                     }}
-                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    className="flex h-11 w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white ring-offset-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {majors.map((major, index) => (
                       <option key={index} value={major}>
@@ -1332,6 +1357,7 @@ export default function Dashboard() {
 
                   {selectedMajor === 'Other' && (
                     <Input
+                      className="rounded-xl border border-white/10 bg-slate-950/60 text-white placeholder:text-slate-400 focus-visible:ring-sky-400"
                       placeholder="Enter major here"
                       id="otherMajor"
                       value={otherMajor}
@@ -1349,11 +1375,11 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="short-answer">
+                  <Label htmlFor="short-answer" className="text-sm font-medium uppercase tracking-wide text-slate-200">
                     What are you hoping to experience at HackRU? *
                   </Label>
                   <textarea
-                    className="flex h-24 w-full resize-none rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
+                    className="flex h-24 w-full resize-none rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
                     id="short-answer"
                     value={userData?.short_answer}
                     {...register('short_answer')}
