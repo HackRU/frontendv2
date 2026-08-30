@@ -57,9 +57,9 @@ export default function StatusBar({ status }: { status: Status }) {
   }
 
   return (
-    <div className="mx-auto mt-6 w-full max-w-4xl px-2 sm:px-4">
-      <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm sm:p-4">
-        <div className="flex items-start justify-between gap-1 sm:gap-2">
+    <div className="mx-auto mt-4 w-full max-w-4xl px-1 sm:mt-6 sm:px-4">
+      <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm sm:p-4">
+        <div className="flex items-start justify-between gap-[3px] sm:gap-2">
           {STAGES.map((stage, index) => {
             const isCompleted = index <= currentIndex;
             const isCurrent = index === currentIndex;
@@ -68,15 +68,15 @@ export default function StatusBar({ status }: { status: Status }) {
             return (
               <div
                 key={stage}
-                className="relative flex min-w-0 flex-1 flex-col items-center"
+                className="relative flex min-w-0 flex-1 flex-col items-center justify-start"
               >
                 {index !== 0 && (
                   <div
-                    className={`absolute left-0 top-2 z-0 h-1 w-1/2 rounded-full ${
+                    className={`absolute left-0 top-2.5 z-0 h-[2px] w-1/2 rounded-full ${
                       index <= currentIndex
                         ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
                         : isWaitlist && stage === 'confirmed'
-                          ? 'border-2 border-dashed border-amber-300 bg-amber-400/50'
+                          ? 'border border-dashed border-amber-300 bg-amber-400/50'
                           : 'bg-slate-700'
                     }`}
                   />
@@ -84,18 +84,18 @@ export default function StatusBar({ status }: { status: Status }) {
 
                 {index !== STAGES.length - 1 && (
                   <div
-                    className={`absolute left-1/2 top-2 z-0 h-1 w-1/2 rounded-full ${
+                    className={`absolute left-1/2 top-2.5 z-0 h-[2px] w-1/2 rounded-full ${
                       index < currentIndex
                         ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
                         : isWaitlist && STAGES[index + 1] === 'confirmed'
-                          ? 'border-2 border-dashed border-amber-300 bg-amber-400/50'
+                          ? 'border border-dashed border-amber-300 bg-amber-400/50'
                           : 'bg-slate-700'
                     }`}
                   />
                 )}
 
                 <div
-                  className={`relative z-10 flex h-5 w-5 items-center justify-center rounded-full border-2 transition-all duration-300 sm:h-6 sm:w-6
+                  className={`relative z-10 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all duration-300 sm:h-6 sm:w-6
                     ${
                       isCompleted
                         ? 'border-emerald-300 bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.7)]'
@@ -108,12 +108,12 @@ export default function StatusBar({ status }: { status: Status }) {
                   `}
                 >
                   {isWaitlistMarker && (
-                    <div className="absolute h-2 w-2 rounded-full bg-amber-900" />
+                    <div className="absolute h-1.5 w-1.5 rounded-full bg-amber-900" />
                   )}
                 </div>
 
                 <div
-                  className={`mt-1.5 text-center text-[9px] capitalize leading-tight sm:text-[10px] ${
+                  className={`mt-1.5 max-w-[58px] text-center text-[7px] capitalize leading-[1.15] sm:max-w-[74px] sm:text-[10px] ${
                     isCompleted || isCurrent || isWaitlistMarker
                       ? 'font-semibold text-white'
                       : 'text-slate-400'

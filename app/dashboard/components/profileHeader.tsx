@@ -151,7 +151,7 @@ export default function ProfileHeader(props: {
                       </h3>
                     </div>
                     <span
-                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+                      className={`inline-flex w-fit shrink-0 self-start rounded-full px-2.5 py-1 text-xs font-semibold ${
                         profileReady
                           ? 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/30'
                           : 'bg-amber-500/15 text-amber-200 ring-1 ring-amber-400/30'
@@ -200,7 +200,7 @@ export default function ProfileHeader(props: {
                       </h3>
                     </div>
                     <span
-                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+                      className={`inline-flex w-fit shrink-0 self-start rounded-full px-2.5 py-1 text-xs font-semibold ${
                         waiverState
                           ? 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/30'
                           : profileReady
