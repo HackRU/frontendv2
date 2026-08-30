@@ -9,6 +9,7 @@ export const hackRUFAQ = {
   'What is the application process like?': `We will be accepting anywhere between 300-500 hackers based on when you register for the event. After you register, you'll get a notification 1-2 weeks before the hackathon whether we have accepted you or not to the hackathon. You will then have to let us know if you plan on coming or not and then you're all set!
 
   Here are the Hacker Stages:
+
   Unregistered: You haven't finished your profile! Register now for this semester's hackathon.
 
   Registered: Thank you for completing your profile! We'll respond shortly with your status. In the meantime, make sure your teammates are registered! We admit individual hackers on a first-come, first-served basis and use team formations for waitlist priority.

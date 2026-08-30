@@ -1,3 +1,44 @@
+/* The F2026 artwork is sized in vw, so the rem scale has to follow it or the
+   type drifts against the art. 1.11vw is 16px at 1440. Scoped with :has() -
+   unscoped it shrank every other route to a 13px root on a phone. */
+html:has(.f2026-landing-page) {
+  font-size: clamp(13px, 1.11vw, 22px);
+}
+
+/* Safari overscroll exposes the canvas behind <main>, so match it here */
+html:has(.f2026-landing-page),
+body:has(.f2026-landing-page) {
+  background-color: #c4d4a2;
+}
+
+/* half the stroke on a phone - 16px swamps the letters at that size */
+.f2026-wordmark {
+  -webkit-text-stroke: 8px #a9c23f;
+  filter: drop-shadow(0 5px 0 rgba(24, 46, 24, 0.45));
+}
+
+@media (min-width: 768px) {
+  .f2026-wordmark {
+    -webkit-text-stroke: 16px #a9c23f;
+    filter: drop-shadow(0 10px 0 rgba(24, 46, 24, 0.45));
+  }
+}
+
+/* Stands in for the vine frame below md, which is a fixed-aspect landscape
+   border and cannot wrap the tall stacked card. Real CSS, not an arbitrary
+   Tailwind colour - the JIT has dropped one of those here twice. */
+.f2026-schedule-card {
+  background-color: rgba(247, 243, 215, 0.95);
+  border-radius: 1rem;
+}
+
+@media (min-width: 768px) {
+  .f2026-schedule-card {
+    background-color: transparent;
+    border-radius: 0;
+  }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

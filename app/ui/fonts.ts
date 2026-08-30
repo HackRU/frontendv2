@@ -4,6 +4,8 @@ import {
   Bigelow_Rules,
   BIZ_UDGothic,
   Long_Cang,
+  Poppins,
+  Fredoka,
 } from 'next/font/google';
 
 import localFont from 'next/font/local';
@@ -73,5 +75,16 @@ export const lusitana = Lusitana({
 
 export const longCang = Long_Cang({
   weight: ['400'],
+  subsets: ['latin'],
+});
+
+export const poppins = Poppins({
+  weight: ['600', '800', '900'],
+  subsets: ['latin'],
+});
+
+// the only face the F2026 landing uses - rounded terminals to match the artwork
+export const fredoka = Fredoka({
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
 });

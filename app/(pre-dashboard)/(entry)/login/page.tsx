@@ -55,7 +55,7 @@ export default function LoginPage() {
           }
           <div>
             <p className="text-s italic  text-[var(--mainText-color)]">
-              Press Login or Press Enter to Login
+              Login to your HackRU account below
             </p>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-[var(--mainText-color)]"

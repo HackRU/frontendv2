@@ -645,7 +645,7 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle>
                 Would you like to opt-in to Major League Hacking emails? You
-                must choose before you can proceed.
+                must choose before you can proceed to registration profile.
               </CardTitle>
               <CardDescription>
                 <Button
@@ -1199,10 +1199,10 @@ export default function Dashboard() {
                 <div className="flex flex-col">
                   <CardTitle>Discord</CardTitle>
                   <CardDescription>
-                    Use this to validate your HACKRU account with your Discord
-                    Account! If you do not validate with discord by the time of
-                    hackathon, you will not have write access to the server and
-                    can only view things that are happening
+                    Use this to verify your HackRU account with your Discord
+                    Account! If you do not connect with Discord by the time of
+                    hackathon, you may not have write access to the server and
+                    can only read announcements.
                   </CardDescription>
                 </div>
               </div>
@@ -1555,7 +1555,7 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="level-of-study">Level of Study *</Label>
+                  <Label htmlFor="level-of-study">Current Level of Study *</Label>
                   <select
                     id="level-of-study"
                     value={userData?.level_of_study}
@@ -1761,7 +1761,7 @@ export default function Dashboard() {
               </CardFooter>
               {userData.registration_status == 'unregistered' && (
                 <p className="p-3">
-                  Make to register at the top after saving your profile!
+                  Click register at the top after saving your profile!
                 </p>
               )}
             </form>

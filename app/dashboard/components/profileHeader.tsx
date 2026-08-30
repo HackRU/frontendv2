@@ -115,7 +115,7 @@ export default function ProfileHeader(props: {
                     Click
                     <a
                       className="hover:underline"
-                      href="https://docs.google.com/document/d/1ih5iTAA4JkMaGj90sZPBOXErpq2_IKFCQ3tcy4Pmypw/copy"
+                      href="https://docs.google.com/document/d/1B0k_l3S6rDiGmM6d6-3T5Cs6dkpKo9hiA8B5235vkYE/copy"
                       rel="noopener noreferrer"
                       target="_blank"
                     >

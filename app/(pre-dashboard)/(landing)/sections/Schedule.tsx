@@ -3,27 +3,41 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import Image from 'next/image';
+import { fredoka } from '@/app/ui/fonts';
 
 function ScheduleOfTheDay(props: { dayInfo: DayInfo }) {
   const { dayInfo } = props;
   const { day, times } = dayInfo;
   return (
-    <div className="my-5 flex w-full flex-col text-white">
-      <div className="glow-subtitles text-textSubtitle mb-4 w-full text-center text-xl font-semibold md:text-5xl">
-        {dayInfo.day}
+    /* plain two-column list - F2025's serif day name and vertical rule are gone */
+    <div
+      className="relative z-[2] my-1 flex w-full flex-col md:my-2"
+      style={{ fontFamily: fredoka.style.fontFamily }}
+    >
+      <div className="mb-2 text-left text-[15px] font-extrabold uppercase tracking-wide text-[#5E8C1F] md:text-xl">
+        {day}
       </div>
+
       <div className="w-full">
         {times.map((timeInfo, index) => (
           <div
-            className="mt-4 flex w-full flex-row pr-4 text-xl md:my-6 md:px-3"
+            className="mb-3 flex w-full flex-row gap-3 md:mb-4 md:gap-4"
             key={`${day}-${index}`}
           >
-            <div className="text-white-100 h-fit w-1/3 pr-4 text-right font-black">
+            {/* px below md: the root font-size is vw-tied and bottoms out at
+                13px on a phone, where rem sizes came out at 8px */}
+            <div className="w-[38%] shrink-0 text-[14px] font-bold leading-tight text-[#15170F] md:text-base">
               {timeInfo.time}
             </div>
-            <div className="flex w-2/3 flex-col pl-6 border-l border-gray-600">
-              <div className="text-lg font-semibold">{timeInfo.event}</div>
-              <div className="text-sm text-gray-300">{timeInfo.location}</div>
+            <div className="flex flex-col">
+              <span className="text-[14px] font-bold leading-tight text-[#15170F] md:text-base">
+                {timeInfo.event}
+              </span>
+              {timeInfo.location ? (
+                <span className="text-[13px] font-normal leading-tight text-[#15170F] md:text-base">
+                  {timeInfo.location}
+                </span>
+              ) : null}
             </div>
           </div>
         ))}
@@ -36,55 +50,16 @@ const schedule = {
   Saturday: {
     day: 'Saturday',
     times: [
-      {
-        time: '9:00 AM',
-        event: 'Check-in Starts',
-        location: 'Center Lobby',
-      },
-      {
-        time: '10:45 AM',
-        event: 'Delayed Check-in',
-        location: 'Center Lobby',
-      },
-      {
-        time: '11:00 AM',
-        event: 'Opening Ceremony',
-        location: 'Hacking Area',
-      },
-      { time: '12:00 PM', event: 'Team Building', location: '411' },
+      { time: '10:00 AM', event: 'Check-In Starts', location: 'Center Lobby' },
+      { time: '11:00 AM', event: 'Opening Ceremony', location: 'Hacking Area' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
-      { time: '12:30 PM', event: 'Lunch', location: 'MPR' },
-      {
-        time: '2:00 PM',
-        event: 'Wakefern Coffee Chats',
-        location: '108',
-      },
-      {
-        time: '3:00 PM',
-        event: 'RAD workshop',
-        location: '108',
-      },
-      {
-        time: '4: 00 PM',
-        event: 'IDEA workshop',
-        location: '108',
-      },
-      {
-        time: '4: 00 PM',
-        event: 'game room',
-        location: '109',
-      },
-      {
-        time: '5: 00 PM',
-        event: 'MLH workshops',
-        location: '108',
-      },
-      
-      { time: '8:00 PM', event: 'Dinner', location: 'MPR' },
-      { time: '11:45 PM', event: 'STUDENT CENTER DOORS LOCK', location: 'Hacking Area' },
+      { time: '1:00 PM', event: 'Lunch', location: 'In Front of MPR' },
+      { time: '2:00 PM', event: 'Workshop #1', location: 'Room TBA' },
+      { time: '2:30 PM', event: 'Workshop #2', location: 'Room TBA' },
+      { time: '3:00 PM', event: 'Workshop #3', location: 'Room TBA' },
+      { time: '7:00 PM', event: 'Dinner', location: 'In Front of MPR' },
     ],
   },
-
   Sunday: {
     day: 'Sunday',
     times: [
@@ -93,20 +68,12 @@ const schedule = {
         event: 'Midnight Surprise',
         location: 'Hacking Area',
       },
-      { time: '8:15 AM', event: 'Breakfast', location: 'MPR' },
-      { time: '9:00 AM', event: 'STUDENT CENTER DOORS UNLOCK', location: 'Hacking Area ' },
-      {
-        time: '11:00 AM',
-        event: 'Submissions Due',
-        location: 'Hacking Area',
-      },
-      { time: '12:15 AM', event: 'Lunch', location: 'MPR' },
+      { time: '8:00 AM', event: 'Breakfast', location: 'In front of MPR' },
+      { time: '12:00 PM', event: 'Submissions Due', location: 'Hacking Area' },
+      { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
       { time: '1:00 PM', event: 'Judging Begins', location: 'Hacking Area' },
-      {
-        time: '3:30 PM',
-        event: 'Closing Ceremony',
-        location: 'Hacking Area',
-      },
+      { time: '3:00 PM', event: 'Judging Ends', location: '' },
+      { time: '3:30 PM', event: 'Closing Ceremony', location: 'Hacking Area' },
     ],
   },
 };
@@ -114,17 +81,40 @@ const schedule = {
 export default function Schedule() {
   const [mapOpen, setMapOpen] = useState(false);
   return (
-    <div
-      className="relative z-10 mx-auto mb-20 flex w-full max-w-7xl justify-center"
-      id="Schedule"
-    >
+    <div className="relative z-10 mx-auto mb-20 flex w-full max-w-7xl justify-center px-4 md:px-0">
       <div className="flex h-fit w-full max-w-7xl flex-col items-center ">
-        <div
-          className="text-text relative flex w-full flex-col items-center bg-gray-900/80 backdrop-blur-sm
-p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-700/50 md:flex-row md:items-start "
-        >
+        {/* below md the days stack and the card supplies its own surface -
+            the % insets only exist to sit inside the vine frame */}
+        <div className="f2026-schedule-card text-text relative flex w-full flex-col items-stretch gap-6 px-6 py-8 md:flex-row md:items-start md:gap-2 md:px-0 md:py-0 md:pb-[14%] md:pl-[15%] md:pr-[14%] md:pt-[19%]">
+          {/* The frame PNG has ~200px of transparent margin on every side, so
+              it is scaled and offset to land its painted box on the card edges.
+              border-image can't do it: the frame is hand-drawn and skewed. */}
+          {/* cream interior, bounded to the frame's measured inner rectangle
+              so it can never spill outside the vines */}
+          <div
+            className="pointer-events-none absolute hidden md:block"
+            style={{
+              top: '14.2%',
+              bottom: '11.4%',
+              left: '10.5%',
+              right: '9.3%',
+              backgroundColor: 'rgba(247,243,215,0.95)',
+            }}
+          />
+          <img
+            src="/landing/F2026/schedule-frame.png"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute z-[1] hidden select-none md:block"
+            style={{
+              width: '144.9%',
+              height: '150.3%',
+              left: '-20.4%',
+              top: '-22.8%',
+              maxWidth: 'none',
+            }}
+          />
           <ScheduleOfTheDay dayInfo={schedule['Saturday']} />
-          <div className="bg-text h-2 w-20 rounded-sm md:invisible md:absolute" />
           <div className="flex w-full flex-col items-center">
             <ScheduleOfTheDay dayInfo={schedule['Sunday']} />
             <button
@@ -151,15 +141,6 @@ p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-700/50 md:flex-row md:item
           alt={'cool'}
           quality={50}
         /> */}
-
-      <Image
-        src={'/landing/F2025/mini dragons/mini 5.png'}
-        width="500"
-        height="500"
-        className="absolute -bottom-[100px] right-[10px] w-[250px] md:right-[50px] md:w-[400px] lg:-bottom-[150px]"
-        alt={'cool'}
-        quality={50}
-      />
 
       <Transition appear show={mapOpen} as={Fragment}>
         <Dialog

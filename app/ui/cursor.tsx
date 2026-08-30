@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
-import Image from 'next/image';
 import LugeReact from './luge';
+
+// the visible pointer is a native CSS cursor, not this component
+import './cursor.css';
 
 /**
  *
@@ -19,7 +20,8 @@ const TrailEffect = () => {
   return (
     <>
       <LugeReact />
-      <div data-lg-cursor data-lg-cursor-hide>
+      {/* no data-lg-cursor-hide - it would hide the mushroom too */}
+      <div data-lg-cursor>
         <div
           data-lg-cursor-trail
           data-lg-cursor-trail-length="20"
@@ -30,70 +32,8 @@ const TrailEffect = () => {
   );
 };
 
-function detectIfTouchDevice() {
-  return (
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0 ||
-    navigator.maxTouchPoints > 0
-  );
-}
-
 const Cursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isTouchDevice, setIsTouchDevice] = useState(true);
-
-  const [isPointer, setIsPointer] = useState(false);
-
-  const handleMouseMove = (e: any) => {
-    setPosition({ x: e.clientX, y: e.clientY });
-
-    const target = e.target;
-
-    setIsPointer(
-      window.getComputedStyle(target).getPropertyValue('cursor') === 'pointer',
-    );
-    // target.style.cursor = "none";
-
-    e.stopPropagation();
-  };
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-
-    setIsTouchDevice(detectIfTouchDevice());
-
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const YSize = isPointer ? -150 : 480;
-  const XSize = isPointer ? -150 : 120;
-  const rotationAngle = isPointer ? 0 : 315;
-  const topPos = position.y - YSize / 4 + 100;
-  const leftPos = position.x - XSize / 4 ;
-
-  const hasNotMoved = position.x === 0 && position.y === 0;
-
-  return (
-    <>
-      <TrailEffect />
-      <Image
-        src={'/landing/cursor.png'}
-        alt="Custom Cursor"
-        width={XSize}
-        height={YSize}
-        className="select-none"
-        style={{
-          display: hasNotMoved || isTouchDevice ? 'none' : 'block',
-          transform: `rotate(${rotationAngle}deg)`,
-          position: 'fixed',
-          left: `${leftPos}px`,
-          top: `${topPos}px`,
-          pointerEvents: 'none',
-          zIndex: 10000,
-        }}
-      />
-    </>
-  );
+  return <TrailEffect />;
 };
 
 export default Cursor;

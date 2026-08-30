@@ -1,0 +1,15 @@
+/* F2026 mushroom cursor. Native CSS so React never repaints on mousemove -
+   <Cursor /> only mounts the Luge trail behind it.
+
+   The art is baked down to 48x48: browsers silently ignore a cursor image
+   over 128px. `5 0` is the hotspot, the tip of the cap.
+
+   The descendant selector is needed because the UA stylesheet sets
+   cursor: default on <button>. The :has() guard keeps that off /login and
+   /signup, which share this layout and still want a real I-beam and hand. */
+.f2026-cursor:has(.f2026-landing-page),
+.f2026-cursor:has(.f2026-landing-page) * {
+  cursor:
+    url('/landing/F2026/cursor-mushroom.png') 5 0,
+    auto;
+}

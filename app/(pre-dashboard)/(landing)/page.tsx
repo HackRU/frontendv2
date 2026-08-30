@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { azeret } from '@/app/ui/fonts';
+import { fredoka } from '@/app/ui/fonts';
 import Image from 'next/image';
 import Hero from './sections/Hero/Hero';
 import Hero2 from './sections/Hero/Hero2';
@@ -15,20 +15,32 @@ import GenericSection from './sections/GenericSection';
 import { getSponsors } from '@/app/lib/data';
 import React from 'react';
 
-import { redirect } from 'next/navigation';
-
 export default async function Page() {
 
   redirect("/offseason")
 
   return (
     <main
-      className={`relative flex h-fit flex-col ${azeret.className} bg-gradient-to-b from-[#DBF5F8] to-[#54A0A8] text-s2025black-100`}
+      className={`f2026-landing-page relative flex h-fit flex-col ${fredoka.className} text-s2025black-100`}
+      /* flat ground plus a glow tiled per viewport. Inline because the JIT
+         drops these stops, and a partial Tailwind gradient would inherit
+         someone else's. The page is far too tall for one page-sized glow. */
+      style={{
+        backgroundColor: '#C4D4A2',
+        backgroundImage:
+          'radial-gradient(75% 45% at 50% 38%, rgba(247,250,178,0.95) 0%, rgba(233,240,164,0.35) 45%, rgba(233,240,164,0) 75%)',
+        backgroundSize: '100% 100vh',
+        backgroundRepeat: 'repeat-y',
+      }}
     >
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero2 />
 
-        <About />
+        {/* pulls About up into the transparent centre channel of frog.png.
+            vw because the artwork's height scales with viewport width. */}
+        <div className="relative z-10 mt-[-153vw]">
+          <About />
+        </div>
         {/**
          * We are using Suspense because Schedule and Sponsors will eventually
          * pull from the backend. Also, we will need to replace the fallback
@@ -49,13 +61,15 @@ export default async function Page() {
         { <GenericSection title="Past Team Members"> 
           <PastTeam />
         </GenericSection> } */}
-        <div className="mt-[-200px] md:mt-[-500px] lg:mt-[-1000px]">
+        <div className="relative w-full">
           <Image
-            src="/landing/F2025/bottom.png"
-            alt="bottom image"
-            layout="responsive"
-            width={400}
-            height={300}
+            src="/landing/F2026/fairy-bottom.png"
+            alt="Fairy at the bottom of the page"
+            // the asset's real size - the old 400x300 was from bottom.png
+            width={1440}
+            height={1471}
+            // h-auto instead of the deprecated layout="responsive"
+            className="h-auto w-full"
             loading="lazy"
           />
         </div>

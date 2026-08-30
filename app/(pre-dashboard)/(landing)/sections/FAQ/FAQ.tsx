@@ -3,13 +3,13 @@ import React from 'react';
 import { hackRUFAQ } from '@/app/lib/constants';
 import Accordian from './Accordion';
 import { useState } from 'react';
-import { inter } from '@/app/ui/fonts';
+import { fredoka } from '@/app/ui/fonts';
 
 function QuestionContainer() {
   const [activeAccordion, setActiveAccordion] = useState(-1);
 
   return (
-    <div className="w-full whitespace-pre-line  bg-gray-900/20">
+    <div className="w-full">
       {Object.keys(hackRUFAQ).map((question: string, i: number) => (
         <Accordian
           key={i}
@@ -28,10 +28,9 @@ function QuestionContainer() {
 export default function FAQ() {
   return (
     <div
-      id="FAQ"
-      className={`relative z-10 flex h-[67rem] w-full flex-col   items-center justify-start overflow-visible sm:h-[50rem] md:h-[43rem] ${inter.className}`}
+      className={`relative z-10 -mt-4 flex h-auto w-full flex-col items-center justify-start overflow-visible pb-10 ${fredoka.className}`}
     >
-      <div className="relative flex w-full flex-col items-center px-[10vw] pb-[10rem] xl:px-[15vw]">
+      <div className="relative flex w-full flex-col items-center px-[6vw] xl:px-[10vw]">
         <QuestionContainer />
       </div>
     </div>

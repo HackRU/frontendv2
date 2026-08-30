@@ -86,7 +86,7 @@ export default function SignupPage() {
             </p>
           )}
           <p className="text-s italic text-[var(--mainText-color)]">
-            Press Sign up Button or Enter to Sign up
+            Create a HackRU Account by signing up below
           </p>
           <div>
             <label
