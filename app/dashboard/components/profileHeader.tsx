@@ -413,11 +413,11 @@ export default function ProfileHeader(props: {
               <>
                 <CardTitle>
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on October 4th.
+                  show up on October 10th.
                 </CardTitle>
                 <CardDescription>
                   Get ready to code! You&apos;re fully signed up and ready to
-                  show up on October 4th. You are guarenteed entry if you show
+                  show up on October 10th. You are guarenteed entry if you show
                   up before 10:30am, at which point it will be first come first
                   served.
                 </CardDescription>
