@@ -31,6 +31,22 @@ export default async function Page() {
         backgroundRepeat: 'repeat-y',
       }}
     >
+      <a
+        id="mlh-trust-badge"
+        href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=white"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed right-[50px] top-0 z-[10000] block w-[10%] min-w-[60px] max-w-[100px]"
+      >
+        <Image
+          src="https://logged-assets.s3.amazonaws.com/trust-badge/2027/mlh-trust-badge-2027-white.svg"
+          alt="Major League Hacking 2026 Hackathon Season"
+          width={100}
+          height={100}
+          unoptimized
+          className="h-auto w-full"
+        />
+      </a>
       <div className="overflow-x-hidden overflow-y-hidden">
         <Hero2 />
 
