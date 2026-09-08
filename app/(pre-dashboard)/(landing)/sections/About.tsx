@@ -191,10 +191,6 @@ export default function About() {
             {[
               ['Social Good', 'Hacks that better the community.'],
               [
-                'Health',
-                'Hacks that improve the mind or body, aid with health, wellness, and fitness.',
-              ],
-              [
                 'Education',
                 'Hacks that focus on building an educated community.',
               ],
