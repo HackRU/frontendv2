@@ -6,7 +6,7 @@ import { fredoka } from '@/app/ui/fonts';
 // F26 needs three different section headers, so the old nested ternaries
 // became a lookup table. Adding a section is one entry now.
 type HeaderStyle =
-  | { kind: 'ribbon'; src: string; labelPb: string }
+  | { kind: 'ribbon'; src: string; labelPb: string; labelTextClass: string }
   | { kind: 'pill' }
   | { kind: 'default' };
 
@@ -19,11 +19,16 @@ const HEADER_BY_TITLE: Record<string, HeaderStyle> = {
     kind: 'ribbon',
     src: '/landing/F2026/ribbon-blue.png',
     labelPb: '7.3%',
+    // The landing page scales its root font with the viewport. A rem-based
+    // desktop size therefore kept growing after the ribbon hit its 480px cap,
+    // eventually pushing both ends of SCHEDULE off the painted banner.
+    labelTextClass: 'text-[clamp(28px,4vw,56px)]',
   },
   FAQ: {
     kind: 'ribbon',
     src: '/landing/F2026/ribbon-pink.png',
     labelPb: '13.0%',
+    labelTextClass: 'text-[2rem] md:text-[4rem]',
   },
   Sponsors: { kind: 'pill' },
 };
@@ -53,7 +58,7 @@ function SectionHeader({ title }: { title: string }) {
             paddingBottom is inline because the JIT won't emit a built class. */}
         <p
           style={{ paddingBottom: style.labelPb }}
-          className={`${fredoka.className} absolute inset-0 z-10 flex items-center justify-center pl-[16.4%] pr-[14.9%] text-[2rem] font-bold leading-none tracking-[-0.02em] text-[#FBE8E9] md:text-[4rem]`}
+          className={`${fredoka.className} ${style.labelTextClass} absolute inset-0 z-10 flex items-center justify-center pl-[16.4%] pr-[14.9%] font-bold leading-none tracking-[-0.02em] text-[#FBE8E9]`}
         >
           {title.toUpperCase()}
         </p>
