@@ -60,7 +60,7 @@ function Navbar() {
         }}
       />
 
-      <div className="relative mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 pt-4 sm:px-6 sm:pt-5 lg:px-8 lg:pt-6">
+      <div className="relative mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 pt-4 sm:px-6 sm:pt-5 lg:px-8 lg:pr-[180px] lg:pt-6">
         <button
           type="button"
           onClick={() => router.push('/')}
