@@ -160,6 +160,28 @@ export async function authUser(email: string, password: string) {
   return resp;
 }
 
+// /create replies with { statusCode, message }. Map the messages we know about to copy a user
+// can act on, and pass anything else through rather than swallowing it.
+function signupErrorMessage(statusCode: number, message: unknown): string {
+  const raw = typeof message === 'string' ? message.trim() : '';
+  const lowered = raw.toLowerCase();
+
+  if (lowered.includes('duplicate user')) {
+    return 'An account with this email already exists. Try logging in instead.';
+  }
+  if (lowered.includes('registration is closed')) {
+    return 'Registration is closed right now.';
+  }
+  if (lowered.includes('improper email format')) {
+    return 'Please enter a valid email address.';
+  }
+  if (statusCode >= 500 || lowered.includes('internal server error')) {
+    return 'Something went wrong on our end. Please try again in a moment.';
+  }
+
+  return raw || 'Unexpected Error';
+}
+
 export async function SignUp(
   firstname: string,
   lastname: string,
@@ -240,11 +262,10 @@ export async function SignUp(
           }
         }
       } else {
-        if (res_json.body) {
-          resp.error = res_json.body;
-        } else {
-          resp.error = 'Unexpected Error';
-        }
+        resp.error = signupErrorMessage(
+          res_json.statusCode ?? res.status,
+          res_json.message,
+        );
       }
     } catch (error) {
       resp.error =
