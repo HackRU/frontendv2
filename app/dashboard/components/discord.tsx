@@ -21,11 +21,9 @@ export default function DiscordAuth(props: {
   const router = useRouter();
 
   const getOAuth = async () => {
-    if (!discordAuth) {
-      console.log('REDIRECT TO AUTH');
-      const Oauth = await getOAuthUrl();
-      router.push(Oauth.url);
-    }
+    console.log('REDIRECT TO AUTH');
+    const Oauth = await getOAuthUrl();
+    router.push(Oauth.url);
   };
 
   const setHackRU = async () => {
