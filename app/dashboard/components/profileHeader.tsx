@@ -41,7 +41,7 @@ export default function ProfileHeader(props: {
     'shirt_size',
     'hackathon_count',
     'dietary_restrictions',
-    'special_needs',
+//    'special_needs',
     'age',
     'school',
     'grad_year',
