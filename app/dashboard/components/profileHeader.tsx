@@ -400,10 +400,10 @@ export default function ProfileHeader(props: {
                   <CardTitle>Delayed Entry</CardTitle>
                   <div>
                     <CardDescription>
-                      Unfortunately, we&apos;ve had to place you on our
-                      waitlist. Show up closer to our delayed check-in phase at 10:45
-                      where hackers will be checked in based on remaining
-                      availability! 
+                      Unfortunately, we have had to place you on our waitlist.
+                      Show up closer to our delayed check-in phase at 10:45 AM.
+                      Waitlisted hackers may be checked in based on the remaining availability.
+                      Check-In will close once we have reached capacity.
                     </CardDescription>
                   </div>
                 </div>
@@ -412,14 +412,13 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'confirmed' && (
               <>
                 <CardTitle>
-                  Get ready to code! You&apos;re fully signed up and ready to
-                  show up on October 10th.
+                  Confirmed: Get ready to code!
                 </CardTitle>
                 <CardDescription>
-                  Get ready to code! You&apos;re fully signed up and ready to
-                  show up on October 10th. You are guarenteed entry if you show
-                  up before 10:30am, at which point it will be first come first
-                  served.
+                  You are fully signed up and ready to show up on October 10th.
+                  You are guarenteed entry if you are in line by 10:30 AM. After 10:30 AM,
+                  the waitlist line will begin on a first-come-first-served basis
+                  and you may lose your spot.
                 </CardDescription>
               </>
             )}
@@ -440,15 +439,15 @@ export default function ProfileHeader(props: {
                       {userData.registration_status == 'confirmation' && (
                         <>
                           <CardTitle className="text-lg sm:text-xl">
-                            RSVP: We&apos;re ready to begin moving hackers to
-                            acceptance! Please confirm your availability and let
-                            us know if you&apos;re &quot;Coming.&quot; We will
-                            begin moving hackers to acceptance on a first-come,
-                            first-served basis. If your teammates haven&apos;t
-                            registered yet, tell them to do so ASAP! We admit
-                            individual hackers based on FCFS priority and use
-                            team formations to keep your friends with you!
+                            RSVP: Confirm your attendance!
                           </CardTitle>
+                          <CardDescription>
+                            We are ready to begin moving hackers to acceptance! Please confirm your
+                            availability and let us know if you are Coming. We will begin confirming hackers
+                            on a first-come-first-served basis. If your teammates have not registered, let them know ASAP.
+                            You cannot modify your pre-event team for registration purposes after confirmation.
+                            You may change your team for the final submission during the hackathon.
+                          </CardDescription>
                           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
                             <Button onClick={() => onConfirmationChange(true)}>
                               Coming
@@ -461,28 +460,36 @@ export default function ProfileHeader(props: {
                       )}
                       {userData.registration_status == 'coming' && (
                         <>
-                          <CardTitle className="text-lg sm:text-xl">
-                            Thanks for letting us know you can make it!
-                            We&apos;re slowly moving hackers into the final
-                            confirmation stage based on first-come first-serve
-                            responses.
-                          </CardTitle>
-                          <div className="flex justify-end">
-                            <Button variant="outline" onClick={() => onConfirmationChange(false)}>
-                              Not Coming
-                            </Button>
+                          <div className="rounded-xl border border-white/10 bg-slate-950/40 p-4">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                              <p className="text-sm text-slate-300 sm:text-base">
+                                Need to change your plans?
+                              </p>
+                              <Button
+                                variant="outline"
+                                className="w-full sm:w-auto"
+                                onClick={() => onConfirmationChange(false)}
+                              >
+                                Update to Not Coming
+                              </Button>
+                            </div>
                           </div>
                         </>
                       )}
                       {userData.registration_status == 'not_coming' && (
                         <>
-                          <CardTitle className="text-lg sm:text-xl">
-                            You are not coming. Thanks for letting us know.
-                          </CardTitle>
-                          <div className="flex justify-end">
-                            <Button onClick={() => onConfirmationChange(true)}>
-                              Coming
-                            </Button>
+                          <div className="rounded-xl border border-white/10 bg-slate-950/40 p-4">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                              <p className="text-sm text-slate-300 sm:text-base">
+                                Plans changed?
+                              </p>
+                              <Button
+                                className="w-full sm:w-auto"
+                                onClick={() => onConfirmationChange(true)}
+                              >
+                                Update to Coming
+                              </Button>
+                            </div>
                           </div>
                         </>
                       )}
