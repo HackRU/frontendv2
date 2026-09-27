@@ -17,6 +17,7 @@ import { getSelf, getUsers } from '@/app/lib/data';
 import { generatePagination } from '@/app/lib/utils';
 import { useState, useEffect } from 'react';
 import { GetAllUsers } from '@/app/lib/actions';
+import { redirectIfUnauthorized } from '@/app/lib/authGuard';
 import { DeleteUser } from '@/app/lib/actions';
 import { set } from 'zod';
 import ConfirmDeleteModal from '@/app/ui/confirmDeleteModal';
@@ -36,6 +37,9 @@ function DirectorView(userData: any) {
   const fetchUsers = async () => {
     try {
       const data = await GetAllUsers();
+
+      if (await redirectIfUnauthorized(data.statusCode)) return;
+
       const users = data.response;
       console.log(users);
       setAllUsers(users);
