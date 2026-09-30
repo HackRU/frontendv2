@@ -162,9 +162,9 @@ export default function About() {
       </div>
 
       <div
-        className="2xl:text-2xl relative flex  h-fit w-full
+        className="2xl:text-2xl relative flex h-fit w-full
         flex-col flex-wrap
-         from-dark_blue_figma pb-20
+        from-dark_blue_figma pb-20
         text-base md:flex-row md:px-4 md:text-lg xl:text-xl"
       >
         <AboutInfo title="WHAT" alt="Python" reverse titleColor="s2025black">
@@ -218,7 +218,8 @@ export default function About() {
               <Link href="/signup" className={LINK}>
                 Fall 2026 HackRU!
               </Link>{' '}
-              The hackathon will be held on October 10-11 at the Busch Student Center.
+              The hackathon will be held on October 10-11 at the Busch Student
+              Center.
             </p>
             <p>
               Want to help?{' '}
@@ -249,6 +250,16 @@ export default function About() {
             </p>
           </div>
         </AboutInfo>
+      </div>
+
+      {/* Link to the separate current Team page */}
+      <div className="flex justify-center pb-10">
+        <Link
+          href="/team"
+          className={`${fredoka.className} rounded-full bg-[#C0392B] px-8 py-3 text-lg font-bold text-[#FBE8D7] shadow-[0_4px_0_#7B241C,0_8px_18px_rgba(0,0,0,0.25)] transition-transform duration-200 hover:-translate-y-1`}
+        >
+          Meet the Team →
+        </Link>
       </div>
     </section>
   );

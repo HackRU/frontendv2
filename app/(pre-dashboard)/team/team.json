@@ -1,0 +1,124 @@
+{
+  "teams": {
+    "Day Of": {
+      "director": {
+        "name": "Day Of Director",
+        "image": "/icon.png",
+        "link": "https://linkedin.com"
+      },
+      "organizers": [
+        {
+          "name": "Day Of Organizer 1",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Day Of Organizer 2",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Day Of Organizer 3",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        }
+      ]
+    },
+    "Finance": {
+      "director": {
+        "name": "Finance Director",
+        "image": "/icon.png",
+        "link": "https://linkedin.com"
+      },
+      "organizers": [
+        {
+          "name": "Finance Organizer 1",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Finance Organizer 2",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Finance Organizer 3",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        }
+      ]
+    },
+    "R&D": {
+      "director": {
+        "name": "R&D Director",
+        "image": "/icon.png",
+        "link": "https://linkedin.com"
+      },
+      "organizers": [
+        {
+          "name": "R&D Organizer 1",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "R&D Organizer 2",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "R&D Organizer 3",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        }
+      ]
+    },
+    "Design": {
+      "director": {
+        "name": "Design Director",
+        "image": "/icon.png",
+        "link": "https://linkedin.com"
+      },
+      "organizers": [
+        {
+          "name": "Design Organizer 1",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Design Organizer 2",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Design Organizer 3",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        }
+      ]
+    },
+    "Marketing": {
+      "director": {
+        "name": "Marketing Director",
+        "image": "/icon.png",
+        "link": "https://linkedin.com"
+      },
+      "organizers": [
+        {
+          "name": "Marketing Organizer 1",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Marketing Organizer 2",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        },
+        {
+          "name": "Marketing Organizer 3",
+          "image": "/icon.png",
+          "link": "https://linkedin.com"
+        }
+      ]
+    }
+  }
+}
