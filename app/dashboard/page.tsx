@@ -217,6 +217,7 @@ export default function Dashboard() {
     register,
     handleSubmit,
     reset,
+    setValue,
     trigger,
     formState: { errors },
   } = useForm<UserUpdate>({
@@ -289,10 +290,11 @@ export default function Dashboard() {
       }
     }
 
-    const resp = await UpdateSelf(otherData);
+    const major = selectedMajor === 'Other' ? otherMajor.trim() : data.major;
+    const resp = await UpdateSelf({ ...otherData, major });
     setUserData({
       ...userData,
-      major: data.major,
+      major,
       shirt_size: data.shirt_size,
       hackathon_count: data.hackathon_count,
       dietary_restrictions: data.dietary_restrictions,
@@ -505,6 +507,22 @@ export default function Dashboard() {
       console.error('Error fetching or parsing major data:', error);
     }
   }, []);
+
+  useEffect(() => {
+    const savedMajor = userData?.major;
+    if (typeof savedMajor !== 'string' || !savedMajor || majors.length === 0) {
+      return;
+    }
+
+    if (majors.includes(savedMajor)) {
+      setSelectedMajor(savedMajor);
+      setOtherMajor('');
+    } else {
+      setSelectedMajor('Other');
+      setOtherMajor(savedMajor);
+    }
+    setValue('major', savedMajor);
+  }, [userData?.major, majors, setValue]);
 
   useEffect(() => {
     try {
@@ -1345,9 +1363,12 @@ export default function Dashboard() {
                     onChange={(e) => {
                       const selected = e.target.value;
                       setSelectedMajor(selected);
-                      if (selected != 'Other') {
-                        setUserData({ ...userData, major: selected });
-                      }
+                      const major = selected === 'Other' ? otherMajor : selected;
+                      setValue('major', major, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      });
+                      setUserData({ ...userData, major });
                     }}
                     className="flex h-11 w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white ring-offset-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
@@ -1369,6 +1390,10 @@ export default function Dashboard() {
                         const newMajor = e.target.value;
                         setUserData({ ...userData, major: newMajor });
                         setOtherMajor(newMajor);
+                        setValue('major', newMajor, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        });
                       }}
                     />
                   )}
