@@ -89,7 +89,11 @@ const UserUpdateSchema = z.object({
   hackathon_count: z.string().min(1, 'Field cannot be empty'),
   dietary_restrictions: z.string().min(1, 'Field cannot be empty'),
   special_needs: z.string(),
-  age: z.string().min(1, 'Field cannot be empty'),
+  age: z
+    .string()
+    .min(1, 'Field cannot be empty')
+    .regex(/^\d+$/, 'Enter a valid whole number')
+    .refine((age) => Number(age) >= 18, 'Must be at least 18 years old'),
   school: z.string().min(1, 'Field cannot be empty'),
   grad_year: z.string().min(1, 'Field cannot be empty'),
   gender: z.string().min(1, 'Field cannot be empty'),
@@ -213,6 +217,7 @@ export default function Dashboard() {
     register,
     handleSubmit,
     reset,
+    setValue,
     trigger,
     formState: { errors },
   } = useForm<UserUpdate>({
@@ -285,10 +290,11 @@ export default function Dashboard() {
       }
     }
 
-    const resp = await UpdateSelf(otherData);
+    const major = selectedMajor === 'Other' ? otherMajor.trim() : data.major;
+    const resp = await UpdateSelf({ ...otherData, major });
     setUserData({
       ...userData,
-      major: data.major,
+      major,
       shirt_size: data.shirt_size,
       hackathon_count: data.hackathon_count,
       dietary_restrictions: data.dietary_restrictions,
@@ -501,6 +507,22 @@ export default function Dashboard() {
       console.error('Error fetching or parsing major data:', error);
     }
   }, []);
+
+  useEffect(() => {
+    const savedMajor = userData?.major;
+    if (typeof savedMajor !== 'string' || !savedMajor || majors.length === 0) {
+      return;
+    }
+
+    if (majors.includes(savedMajor)) {
+      setSelectedMajor(savedMajor);
+      setOtherMajor('');
+    } else {
+      setSelectedMajor('Other');
+      setOtherMajor(savedMajor);
+    }
+    setValue('major', savedMajor);
+  }, [userData?.major, majors, setValue]);
 
   useEffect(() => {
     try {
@@ -1341,9 +1363,12 @@ export default function Dashboard() {
                     onChange={(e) => {
                       const selected = e.target.value;
                       setSelectedMajor(selected);
-                      if (selected != 'Other') {
-                        setUserData({ ...userData, major: selected });
-                      }
+                      const major = selected === 'Other' ? otherMajor : selected;
+                      setValue('major', major, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      });
+                      setUserData({ ...userData, major });
                     }}
                     className="flex h-11 w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white ring-offset-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
@@ -1365,6 +1390,10 @@ export default function Dashboard() {
                         const newMajor = e.target.value;
                         setUserData({ ...userData, major: newMajor });
                         setOtherMajor(newMajor);
+                        setValue('major', newMajor, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        });
                       }}
                     />
                   )}
@@ -1468,30 +1497,18 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dob">Age *</Label>
-                  <select
-                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
-                    id="shirt-size"
+                  <Label htmlFor="dob">Age (18+) *</Label>
+                  <Input
+                    type="number"
+                    min={18}
+                    step={1}
+                    id="dob"
                     value={userData?.age}
                     {...register('age')}
                     onChange={(e) =>
                       setUserData({ ...userData, age: e.target.value })
                     }
-                  >
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                  </select>
+                  />
                   {errors.age && (
                     <p className="mt-2 text-xs italic text-red-500">
                       {errors.age?.message}
