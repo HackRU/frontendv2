@@ -269,7 +269,8 @@ export async function SignUp(
       }
     } catch (error) {
       resp.error =
-        String(error) + '; An error occured when attempting signup. Failed at 1/2';
+        String(error) +
+        '; An error occured when attempting signup. Failed at 1/2';
     }
   }
 

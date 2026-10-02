@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useWindowSize } from '@/app/lib/useWindowSize';
 import { fredoka } from '@/app/ui/fonts';
 
-const animalQuality = 100;
+const animalQuality = 60;
 
 const NEWSLETTER =
   'https://hackru.us3.list-manage.com/subscribe?u=457c42db47ebf530a0fc733fb&id=fb01885829';
@@ -134,7 +134,10 @@ function AboutInfo({
 
 export default function About() {
   return (
-    <section id="About" className="scroll-mt-28">
+    <section
+      id="About"
+      className="scroll-mt-28"
+    >
       {/* the PNG is 28% transparent margin top and bottom - these margins
           cancel it so WHAT sits against the ribbon */}
       <div className="pointer-events-none relative -mt-[68px] mb-[-56px] flex items-center justify-center p-4 pt-16 md:-mt-16 md:mb-[-112px] md:pt-24">
@@ -148,7 +151,8 @@ export default function About() {
             height="700"
             className="w-[58vw] max-w-[240px] md:w-[480px] md:max-w-none"
             alt={'about'}
-            quality={50}
+            loading="eager"
+            quality={60}
           />
           <p
             /* the banner sits at 44% of the box, not 50%, and slightly right
@@ -167,7 +171,12 @@ export default function About() {
          from-dark_blue_figma pb-20
         text-base md:flex-row md:px-4 md:text-lg xl:text-xl"
       >
-        <AboutInfo title="WHAT" alt="Python" reverse titleColor="s2025black">
+        <AboutInfo
+          title="WHAT"
+          alt="Python"
+          reverse
+          titleColor="s2025black"
+        >
           <div className="space-y-6 text-white/90">
             <p>
               HackRU is a 24-hour hackathon at Rutgers University. We welcome
@@ -183,7 +192,11 @@ export default function About() {
           </div>
         </AboutInfo>
 
-        <AboutInfo title="TRACKS" alt="Python" titleColor="s2025black">
+        <AboutInfo
+          title="TRACKS"
+          alt="Python"
+          titleColor="s2025black"
+        >
           {/* rendered from a list - the old hand-built markup styled each
               label separately and they drifted apart. NeuroTech is a sponsor
               track and is not in the F2026 design. */}
@@ -209,16 +222,25 @@ export default function About() {
           </p>
         </AboutInfo>
 
-        <AboutInfo title="JOIN US" alt="Python" reverse titleColor="s2025black">
+        <AboutInfo
+          title="JOIN US"
+          alt="Python"
+          reverse
+          titleColor="s2025black"
+        >
           {/* Only real links get the underline. Bold on its own is emphasis -
               styling both the same made three of these look clickable. */}
           <div className="space-y-6 text-white/90">
             <p>
               Register to attend our{' '}
-              <Link href="/signup" className={LINK}>
+              <Link
+                href="/signup"
+                className={LINK}
+              >
                 Fall 2026 HackRU!
               </Link>{' '}
-              The hackathon will be held on October 10-11 at the Busch Student Center.
+              The hackathon will be held on October 10-11 at the Busch Student
+              Center.
             </p>
             <p>
               Want to help?{' '}

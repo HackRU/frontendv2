@@ -65,7 +65,9 @@ export function InvoiceSkeleton() {
 
 export function HackerDashboardSkeleton() {
   return (
-    <div className={`relative h-screen w-screen overflow-hidden bg-[#040b16] text-white ${shimmer}`}>
+    <div
+      className={`relative h-screen w-screen overflow-hidden bg-[#040b16] text-white ${shimmer}`}
+    >
       <div className="flex flex-col items-center pt-[10rem]">
         <div className="text-lg font-semibold tracking-wide text-slate-200">
           Experiencing issues?
@@ -209,19 +211,34 @@ export function InvoicesTableSkeleton() {
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                <th
+                  scope="col"
+                  className="px-4 py-5 font-medium sm:pl-6"
+                >
                   Customer
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th
+                  scope="col"
+                  className="px-3 py-5 font-medium"
+                >
                   Email
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th
+                  scope="col"
+                  className="px-3 py-5 font-medium"
+                >
                   Amount
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th
+                  scope="col"
+                  className="px-3 py-5 font-medium"
+                >
                   Date
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th
+                  scope="col"
+                  className="px-3 py-5 font-medium"
+                >
                   Status
                 </th>
                 <th

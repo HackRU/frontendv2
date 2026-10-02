@@ -10,7 +10,7 @@ const FIRE_IMG = ['/landing/F2025/title.png'];
 const POKER_IMG = ['/landing/F2025/dragon.png'];
 
 const animationTime = 800;
-const fireImageQuality = 10;
+const fireImageQuality = 60;
 const initialWaitTime = 1500;
 
 async function fetchUser(cb: (isLogged: boolean) => void) {
@@ -100,7 +100,9 @@ export default function Hero() {
                 {/* <span className="text-[#ADD8E6]">ON!</span> */}
               </p>
               <p className={`${azeret.className} text-2xl`}>
-                <span className="text-black">October 4th - 5th, College Ave Student Center </span>
+                <span className="text-black">
+                  October 4th - 5th, College Ave Student Center{' '}
+                </span>
               </p>
               <div className="mt-10 flex justify-center space-x-4">
                 <button

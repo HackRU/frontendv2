@@ -78,7 +78,11 @@ const Button = styled.button`
 
 const LoseGame = ({ status, portrait, pixelSize, theme3d, restartClick }) => (
   <CenterOverlay>
-    <LoseContainer portrait={portrait} pixelSize={pixelSize} theme3d={theme3d}>
+    <LoseContainer
+      portrait={portrait}
+      pixelSize={pixelSize}
+      theme3d={theme3d}
+    >
       <Title portrait={portrait}>Game Over</Title>
       <ContainerStatus>
         <StatusRow>SCORE: {status.score}</StatusRow>
@@ -86,7 +90,10 @@ const LoseGame = ({ status, portrait, pixelSize, theme3d, restartClick }) => (
         <StatusRow>LINES: {status.lines}</StatusRow>
       </ContainerStatus>
       <ContainerButton portrait={portrait}>
-        <Button pixelSize={pixelSize} onClick={() => restartClick()}>
+        <Button
+          pixelSize={pixelSize}
+          onClick={() => restartClick()}
+        >
           Restart
         </Button>
       </ContainerButton>

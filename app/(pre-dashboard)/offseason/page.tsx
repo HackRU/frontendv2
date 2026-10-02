@@ -43,8 +43,9 @@ export default function ComingSoonPage() {
               <Image
                 src={`/offseason/offseason${i}.jpg`}
                 alt={`Photo ${i}`}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, 33vw"
               />
             </div>
           ))}

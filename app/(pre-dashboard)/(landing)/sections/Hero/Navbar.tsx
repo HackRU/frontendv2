@@ -31,7 +31,8 @@ function Navbar() {
   const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.9);
+    const onScroll = () =>
+      setPastHero(window.scrollY > window.innerHeight * 0.9);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -47,7 +48,10 @@ function Navbar() {
   };
 
   return (
-    <header className={clsx('fixed inset-x-0 top-0 z-50', fredoka.className)} id="navbar">
+    <header
+      className={clsx('fixed inset-x-0 top-0 z-50', fredoka.className)}
+      id="navbar"
+    >
       <div
         aria-hidden="true"
         className={clsx(
@@ -79,13 +83,13 @@ function Navbar() {
 
         <div className="hidden items-center lg:flex">
           {isHomePage && (
-            <div className="relative flex items-center justify-end gap-7 rounded-full border border-white/15 bg-[#0f2d1e]/30 px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.22)] backdrop-blur-md md:gap-10 lg:gap-12">
+            <div className="border-white/15 relative flex items-center justify-end gap-7 rounded-full border bg-[#0f2d1e]/30 px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.22)] backdrop-blur-md md:gap-10 lg:gap-12">
               {sections.map((section) => (
                 <button
                   key={section}
                   type="button"
                   onClick={() => handleSectionClick(section)}
-                  className="glow-center whitespace-nowrap text-sm font-semibold tracking-wide text-white transition-all duration-200 hover:-translate-y-0.5 hover:text-f23-lightGreen md:text-base lg:text-lg"
+                  className="glow-center hover:text-f23-lightGreen whitespace-nowrap text-sm font-semibold tracking-wide text-white transition-all duration-200 hover:-translate-y-0.5 md:text-base lg:text-lg"
                   style={{ textTransform: 'none' }}
                 >
                   {section}
@@ -95,7 +99,7 @@ function Navbar() {
                 href="https://linktr.ee/thehackru"
                 target="_blank"
                 rel="noreferrer"
-                className="glow-center whitespace-nowrap text-sm font-semibold tracking-wide text-white transition-all duration-200 hover:-translate-y-0.5 hover:text-f23-lightGreen md:text-base lg:text-lg"
+                className="glow-center hover:text-f23-lightGreen whitespace-nowrap text-sm font-semibold tracking-wide text-white transition-all duration-200 hover:-translate-y-0.5 md:text-base lg:text-lg"
               >
                 Contact
               </Link>
@@ -105,7 +109,10 @@ function Navbar() {
 
         {isHomePage && (
           <div className="relative z-50 lg:hidden">
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu
+              as="div"
+              className="relative inline-block text-left"
+            >
               <Menu.Button className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-[#123d2d]/80 text-white shadow-[0_12px_24px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-200 hover:bg-[#184b39] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#123d2d]">
                 {({ open }) => (
                   <span className="flex items-center justify-center">
@@ -133,7 +140,9 @@ function Navbar() {
                             onClick={() => handleSectionClick(section)}
                             className={clsx(
                               'flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-base font-medium tracking-wide transition-colors duration-150',
-                              active ? 'bg-white/10 text-white' : 'text-white/90',
+                              active
+                                ? 'bg-white/10 text-white'
+                                : 'text-white/90',
                             )}
                           >
                             <span>{section}</span>

@@ -39,13 +39,19 @@ const Team = () => {
       <div className="mx-auto max-w-7xl space-y-5">
         <div className="flex flex-wrap justify-center sm:space-x-20">
           {teamMembers.slice(0, 2).map((member, index) => (
-            <TeamProfile {...member} key={index} />
+            <TeamProfile
+              {...member}
+              key={index}
+            />
           ))}
         </div>
 
         <div className="flex flex-wrap justify-center sm:space-x-20">
           {teamMembers.slice(2).map((member, index) => (
-            <TeamProfile {...member} key={index} />
+            <TeamProfile
+              {...member}
+              key={index}
+            />
           ))}
         </div>
       </div>

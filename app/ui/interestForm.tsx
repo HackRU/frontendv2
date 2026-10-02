@@ -90,7 +90,10 @@ export default function InterestForm() {
           {submitMessage.text}
         </div>
       )}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6"
+      >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label
@@ -180,7 +183,10 @@ export default function InterestForm() {
           </div>
         </div>
         <div>
-          <label htmlFor="age" className="block text-sm font-medium text-white">
+          <label
+            htmlFor="age"
+            className="block text-sm font-medium text-white"
+          >
             Age *
           </label>
           <select
@@ -192,7 +198,10 @@ export default function InterestForm() {
             <option value="">Select your age</option>
 
             {Array.from({ length: 13 }, (_, i) => i + 18).map((age) => (
-              <option key={age} value={age}>
+              <option
+                key={age}
+                value={age}
+              >
                 {age}
               </option>
             ))}
@@ -216,7 +225,10 @@ export default function InterestForm() {
           >
             <option value="">Select your school</option>
             {schools.map((school, index) => (
-              <option key={index} value={school}>
+              <option
+                key={index}
+                value={school}
+              >
                 {school}
               </option>
             ))}
@@ -289,7 +301,10 @@ export default function InterestForm() {
             >
               <option value="">Select your country</option>
               {countries.map((country, index) => (
-                <option key={index} value={country}>
+                <option
+                  key={index}
+                  value={country}
+                >
                   {country}
                 </option>
               ))}
@@ -332,7 +347,10 @@ export default function InterestForm() {
             id="mlh_code_of_conduct"
             className="mt-1 h-4 w-4 rounded border-gray-600 bg-gray-700 text-teal-500 focus:ring-teal-500"
           />
-          <label htmlFor="mlh_code_of_conduct" className="text-sm text-white">
+          <label
+            htmlFor="mlh_code_of_conduct"
+            className="text-sm text-white"
+          >
             I have read and agree to the MLH Code of Conduct (
             <a
               href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
@@ -357,7 +375,10 @@ export default function InterestForm() {
             id="mlh_privacy_policy"
             className="mt-1 h-4 w-4 rounded border-gray-600 bg-gray-700 text-teal-500 focus:ring-teal-500"
           />
-          <label htmlFor="mlh_privacy_policy" className="text-sm text-white">
+          <label
+            htmlFor="mlh_privacy_policy"
+            className="text-sm text-white"
+          >
             I authorize you to share my application/registration information
             with Major League Hacking for event administration, ranking, and MLH
             administration in-line with the MLH Privacy Policy (

@@ -14,7 +14,9 @@ export default function SignupPage() {
 
   type SignUp = z.infer<typeof SignUpSchema>;
 
-  const { handleSubmit } = useForm<SignUp>({ resolver: zodResolver(SignUpSchema) });
+  const { handleSubmit } = useForm<SignUp>({
+    resolver: zodResolver(SignUpSchema),
+  });
 
   const [submit_errors, setErrors] = useState('');
   const [success, setSuccess] = useState('');
@@ -69,7 +71,10 @@ export default function SignupPage() {
           </h1>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+        >
           {submit_errors && (
             <p className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
               {submit_errors}
@@ -81,7 +86,10 @@ export default function SignupPage() {
             </p>
           )}
 
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+          >
             Verify Email
           </Button>
         </form>

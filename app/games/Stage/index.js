@@ -257,10 +257,20 @@ const Stage = ({
     <div>
       <Game portrait={portrait}>
         {nextRender && (
-          <ContainerNext portrait={portrait} pixelSize={pixelSize}>
-            <Next portrait={portrait} theme3d={theme3d} pixelSize={pixelSize}>
+          <ContainerNext
+            portrait={portrait}
+            pixelSize={pixelSize}
+          >
+            <Next
+              portrait={portrait}
+              theme3d={theme3d}
+              pixelSize={pixelSize}
+            >
               {nextRender.map((row, y) => (
-                <Row pixelSize={pixelSize} key={`row-${y}`}>
+                <Row
+                  pixelSize={pixelSize}
+                  key={`row-${y}`}
+                >
                   {row.map((pixel, x) => {
                     let topBloco =
                       pixel && (!nextRender[y - 1] || !nextRender[y - 1][x]);
@@ -290,7 +300,11 @@ const Stage = ({
             pixelSize={pixelSize}
           >
             {map.map((row, y) => (
-              <Row stage="true" pixelSize={pixelSize} key={`row-${y}`}>
+              <Row
+                stage="true"
+                pixelSize={pixelSize}
+                key={`row-${y}`}
+              >
                 {row.map((pixel, x) => {
                   let playerFill =
                     player.bloco.bloco[y - player.pos[0]] &&
@@ -350,7 +364,10 @@ const Stage = ({
           </StyledStage>
         )}
         {status && (
-          <ContainerStatus portrait={portrait} pixelSize={pixelSize}>
+          <ContainerStatus
+            portrait={portrait}
+            pixelSize={pixelSize}
+          >
             <StatusRow
               backgroundColor={theme3d ? '#444' : 'black'}
               portrait={portrait}

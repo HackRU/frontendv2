@@ -1,5 +1,4 @@
 import { Scanner } from '@yudiel/react-qr-scanner';
-import { useRef } from 'react';
 
 const defaultConstraints = {
   facingMode: 'environment',
@@ -14,14 +13,6 @@ const styles = {
   },
 };
 
-const args = {
-  scanDelay: 1500,
-  tracker: true,
-  hideCount: true,
-  constraints: defaultConstraints,
-  deviceId: '',
-};
-
 function QrScannerWrapper(props) {
   const { onScan, qrScanEnabled } = props;
 
@@ -30,11 +21,11 @@ function QrScannerWrapper(props) {
       <Scanner
         // allowMultiple={false}
         paused={!qrScanEnabled}
-        options={{
-          delayBetweenScanAttempts: 1000,
-        }}
-        onScan={(result) => {
-          onScan(result[0].rawValue);
+        constraints={defaultConstraints}
+        retryDelay={1000}
+        onScan={(results) => {
+          const value = results[0]?.rawValue;
+          if (value) onScan(value);
         }}
       />
     </div>

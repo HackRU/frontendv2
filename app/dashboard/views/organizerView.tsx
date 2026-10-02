@@ -35,21 +35,21 @@ const eventPoints = {
   'f-25 lunch-saturday': 0,
   'f-25 dinner-saturday': 0,
   'meal-placeholder': 0,
-  'Cipher': 20,
+  Cipher: 20,
   'Card Game': 10,
   'Gear game 20': 20,
   'Gear game 15': 15,
   'Switch game': 10,
-  'Ring toss - middle': 15, 
-  'Ring toss - side10': 10, 
-  'Ring toss - side5': 5, 
+  'Ring toss - middle': 15,
+  'Ring toss - side10': 10,
+  'Ring toss - side5': 5,
   'Cup stacking - 15': 15,
   'Cup stacking - 20': 20,
-  'Workshop': 15,
-  'shop - Lego flowers' : -15,
+  Workshop: 15,
+  'shop - Lego flowers': -15,
   'shop - LotFancy Deck of Cards': -30,
-  'shop - Mochi squish toys':  -15,
-  'shop - Vaseline cocoa glow lotion':  -40,
+  'shop - Mochi squish toys': -15,
+  'shop - Vaseline cocoa glow lotion': -40,
   'shop - Magnifying glass key chains': -30,
   'shop - Laptop Adjustable Stand': -80,
   'shop - Squishmallow Octopus': -110,
@@ -126,7 +126,14 @@ function OrganizerView() {
   );
   const [isSponsor, setIsSponsor] = useState<boolean>(false);
 
-  const clues = ['', 'Cipher', 'Nemo', 'Gear Game', 'Cup stacking', 'Ring Toss']
+  const clues = [
+    '',
+    'Cipher',
+    'Nemo',
+    'Gear Game',
+    'Cup stacking',
+    'Ring Toss',
+  ];
 
   const resetScanLog = () => {
     setScannedName('');
@@ -204,17 +211,16 @@ function OrganizerView() {
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
     } else if (scannerTab === 'CLUE') {
-
       const updatedStage = selectedClue;
-      let updatedCount = (userData?.clue_count || 0);
+      let updatedCount = userData?.clue_count || 0;
       //const updatedStage = (userData?.stage || 0) + 1;
-      const clue1Done = userData?.clue1 || updatedStage == 'Cipher'
-      const clue2Done = userData?.clue2 || updatedStage == 'Nemo'
-      const clue3Done = userData?.clue3 || updatedStage == 'Gear Game'
-      const clue4Done = userData?.clue4 || updatedStage == 'Cup stacking'
-      const clue5Done = userData?.clue5 || updatedStage == 'Ring Toss'
+      const clue1Done = userData?.clue1 || updatedStage == 'Cipher';
+      const clue2Done = userData?.clue2 || updatedStage == 'Nemo';
+      const clue3Done = userData?.clue3 || updatedStage == 'Gear Game';
+      const clue4Done = userData?.clue4 || updatedStage == 'Cup stacking';
+      const clue5Done = userData?.clue5 || updatedStage == 'Ring Toss';
 
-      if (updatedStage != "") {
+      if (updatedStage != '') {
         updatedCount = updatedCount + 1;
       }
 
@@ -222,27 +228,24 @@ function OrganizerView() {
         {
           clue_count: updatedCount,
           stage: updatedStage,
-          clue1 : clue1Done,
-          clue2 : clue2Done,
-          clue3 : clue3Done,
-          clue4 : clue4Done,
-          clue5 : clue5Done,
-
+          clue1: clue1Done,
+          clue2: clue2Done,
+          clue3: clue3Done,
+          clue4: clue4Done,
+          clue5: clue5Done,
         },
         userData.email,
       );
 
-      if ( clueWin ){
-      const resp2 = await AttendEventScan(
-        userData.email,
-        updatedStage,
-        10,
-        true,
-        1,
-      );
+      if (clueWin) {
+        const resp2 = await AttendEventScan(
+          userData.email,
+          updatedStage,
+          10,
+          true,
+          1,
+        );
       }
-
-
 
       if (!resp.error) {
         setScanResponse(
@@ -470,27 +473,33 @@ ${clues[5]}: ${clue5Done}`,
               fullName={scannedName}
               scannedEmail={latestScannedEmail}
             />
-            {scannerTab === 'CLUE' ? (<div>
-              <select
-                value={selectedClue}
-                onChange={(e) => {setSelectedClue(e.target.value);}}
-                className="w-full text-black"
-              >
-        {clues.map((event, index) => (
-          <option key={index} value={event}>
-            {event}
-          </option>
-        ))}
-        </select>
-                  <button
-                    className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                      !clueWin ? 'bg-blue-700' : ''
-                    }`}
-                    onClick={() => {
-                      setClueWin(false);
-                      resetScanLog();
-                    }}
-                  >
+            {scannerTab === 'CLUE' ? (
+              <div>
+                <select
+                  value={selectedClue}
+                  onChange={(e) => {
+                    setSelectedClue(e.target.value);
+                  }}
+                  className="w-full text-black"
+                >
+                  {clues.map((event, index) => (
+                    <option
+                      key={index}
+                      value={event}
+                    >
+                      {event}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
+                    !clueWin ? 'bg-blue-700' : ''
+                  }`}
+                  onClick={() => {
+                    setClueWin(false);
+                    resetScanLog();
+                  }}
+                >
                   No points
                 </button>
                 <button
@@ -504,10 +513,8 @@ ${clues[5]}: ${clue5Done}`,
                 >
                   points
                 </button>
-                </div>
-      ) : 
-            scannerTab ===
-            'CHECK IN' ? (
+              </div>
+            ) : scannerTab === 'CHECK IN' ? (
               <CheckInScan status={status} />
             ) : scannerTab === 'EVENT' ? (
               <EventScan
