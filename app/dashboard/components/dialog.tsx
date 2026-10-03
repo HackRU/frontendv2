@@ -14,7 +14,10 @@ export default function PopupDialog(props: {
 
   const cancelButtonRef = useRef(null);
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root
+      show={open}
+      as={Fragment}
+    >
       <Dialog
         as="div"
         className="relative z-10"

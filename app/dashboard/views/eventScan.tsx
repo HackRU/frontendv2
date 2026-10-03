@@ -16,7 +16,10 @@ export default function EventScan(props: {
       >
         <option value="">Select an event</option>
         {events.map((event, index) => (
-          <option key={index} value={event}>
+          <option
+            key={index}
+            value={event}
+          >
             {event}
           </option>
         ))}

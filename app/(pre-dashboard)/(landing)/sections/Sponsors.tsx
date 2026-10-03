@@ -25,7 +25,10 @@ export default async function Sponsors() {
       >
         <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-x-8 gap-y-4">
           {sponsorSlots.map((sponsor, index) => (
-            <div key={index} className="relative min-h-0 min-w-0">
+            <div
+              key={index}
+              className="relative min-h-0 min-w-0"
+            >
               {sponsor && (
                 <a
                   href={sponsor.href}

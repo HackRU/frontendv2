@@ -48,6 +48,7 @@ export default function Hero() {
         width={BG_W}
         height={BG_H}
         priority
+        sizes="100vw"
         className="h-auto w-full select-none"
       />
 
@@ -58,6 +59,7 @@ export default function Hero() {
         width={BG_W}
         height={BG_H}
         priority
+        sizes="100vw"
         className="pointer-events-none absolute inset-0 h-auto w-full select-none"
       />
 

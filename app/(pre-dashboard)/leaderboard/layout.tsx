@@ -14,7 +14,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         }
       >
         {children}
-        <div id="entry-radial" className="absolute top-0 -z-10 h-full w-full" />
+        <div
+          id="entry-radial"
+          className="absolute top-0 -z-10 h-full w-full"
+        />
       </main>
     </>
   );

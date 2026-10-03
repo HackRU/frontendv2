@@ -139,10 +139,14 @@ export default function Schedule() {
           height="300"
           className="w-[300px] lg:w-[400px] absolute right-0 -bottom-[200px] lg:-bottom-[300px] z-30"
           alt={'cool'}
-          quality={50}
+          quality={60}
         /> */}
 
-      <Transition appear show={mapOpen} as={Fragment}>
+      <Transition
+        appear
+        show={mapOpen}
+        as={Fragment}
+      >
         <Dialog
           as="div"
           className="relative z-10"
@@ -176,15 +180,17 @@ export default function Schedule() {
                     <Image
                       src="/map.png"
                       alt="bottom image"
-                      layout="fill"
-                      objectFit="contain"
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      sizes="90vw"
                     ></Image>
 
                     <Image
                       src="/map.png"
                       alt="bottom image"
-                      layout="fill"
-                      objectFit="contain"
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      sizes="90vw"
                     ></Image>
                   </button>
                   <div className="mt-4"></div>
