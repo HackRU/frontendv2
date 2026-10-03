@@ -3,11 +3,6 @@ import Image from 'next/image';
 export default async function Sponsors() {
   const sponsorSlots = [
     {
-      name: 'Pure Buttons',
-      image: '/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png',
-      href: 'https://www.purebuttons.com/',
-    },
-    {
       name: 'Google',
       image: '/sponsors/google.png',
       href: 'https://www.google.com/',
@@ -31,6 +26,11 @@ export default async function Sponsors() {
       name: 'Adobe',
       image: '/sponsors/adobe.png',
       href: 'https://www.adobe.com/',
+    },
+    {
+      name: 'Pure Buttons',
+      image: '/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png',
+      href: 'https://www.purebuttons.com/',
     },
   ];
 
