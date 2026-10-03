@@ -7,11 +7,31 @@ export default async function Sponsors() {
       image: '/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png',
       href: 'https://www.purebuttons.com/',
     },
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      name: 'Google',
+      image: '/sponsors/google.png',
+      href: 'https://www.google.com/',
+    },
+    {
+      name: 'Lucera',
+      image: '/sponsors/lucera.png',
+      href: 'https://lucera.com/',
+    },
+    {
+      name: 'Rutgers New Brunswick Career Exploration and Success',
+      image: '/sponsors/RNBCES_H_RED_BLACK_RGB.png',
+      href: 'https://careers.rutgers.edu/',
+    },
+    {
+      name: 'Gemini',
+      image: '/sponsors/gemini.png',
+      href: 'https://gemini.google.com/',
+    },
+    {
+      name: 'Adobe',
+      image: '/sponsors/adobe.png',
+      href: 'https://www.adobe.com/',
+    },
   ];
 
   return (
