@@ -127,6 +127,7 @@ export async function getLeaderboard() {
 export async function getSelf(): Promise<{
   error: any;
   response: Record<string, any>;
+  statusCode?: number;
 }> {
   const session = await auth();
 
@@ -144,6 +145,7 @@ export async function getSelf(): Promise<{
       return {
         error: resp.error,
         response: {},
+        statusCode: resp.statusCode,
       };
     }
   }
@@ -151,6 +153,7 @@ export async function getSelf(): Promise<{
   return {
     error: 'Something went wrong',
     response: {},
+    statusCode: 401,
   };
 }
 

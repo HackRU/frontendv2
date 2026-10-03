@@ -278,7 +278,7 @@ export async function SignUp(
 }
 
 export async function GetUser(email: string) {
-  let resp = {
+  let resp: { error: string; response: string; statusCode?: number } = {
     error: '',
     response: '',
   };
@@ -302,7 +302,8 @@ export async function GetUser(email: string) {
         if (res.status == 200) {
           resp.response = res_json;
         } else {
-          resp.error = res_json;
+          resp.error = res_json?.message || 'Unexpected Error';
+          resp.statusCode = res.status;
         }
       })
       .catch((error) => {
@@ -310,6 +311,7 @@ export async function GetUser(email: string) {
       });
   } else {
     resp.error = 'Please log in';
+    resp.statusCode = 401;
   }
   return resp;
 }
@@ -1034,7 +1036,7 @@ export async function UserExists(email: string) {
 }
 export async function GetAllUsers() {
   noStore();
-  let resp = {
+  let resp: { error: string; response: string; statusCode?: number } = {
     error: '',
     response: '',
   };
@@ -1056,12 +1058,14 @@ export async function GetAllUsers() {
       let resJSON = await res.json();
       if (res.status !== 200) {
         resp.error = 'Error Getting All Users';
+        resp.statusCode = res.status;
       } else {
         resp.response = resJSON;
       }
     });
   } else {
     resp.error = 'User not authenticated';
+    resp.statusCode = 401;
   }
   return resp;
 }
