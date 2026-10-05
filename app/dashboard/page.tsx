@@ -1,6 +1,7 @@
 'use client';
 
 import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
+import { redirectIfUnauthorized } from '@/app/lib/authGuard';
 import {
   RemoveMember,
   InviteMember,
@@ -602,16 +603,7 @@ function DashboardContent() {
       try {
         const data = await getSelf();
 
-        if (data?.error && typeof data.error === 'string') {
-          if (
-            data.error.includes('Something went wrong') ||
-            data.error.includes('not authenticated') ||
-            data.error.includes('Unauthorized')
-          ) {
-            window.location.href = '/login';
-            return;
-          }
-        }
+        if (await redirectIfUnauthorized(data.statusCode)) return;
 
         const points = await GetPoints();
 
@@ -626,7 +618,7 @@ function DashboardContent() {
         });
 
         if (data.error != '') {
-          alert(data.error.message);
+          alert(data.error);
         }
 
         setUserData(data.response);

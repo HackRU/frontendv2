@@ -9,6 +9,7 @@ import EventScan from './eventScan';
 import { AttendEventScan, GetUser, SetUser } from '@/app/lib/actions';
 import { handleSignOut } from '@/app/lib/actions';
 import { getSelf } from '@/app/lib/data';
+import { redirectIfUnauthorized } from '@/app/lib/authGuard';
 import PopupDialog from '../components/dialog';
 import { set } from 'zod';
 import Page from '@/app/(pre-dashboard)/(landing)/page';
@@ -343,6 +344,8 @@ ${clues[5]}: ${clue5Done}`,
     async function fetchUser() {
       try {
         const data = await getSelf();
+
+        if (await redirectIfUnauthorized(data.statusCode)) return;
 
         const domain = data.response.email.slice(-11);
         setIsSponsor(domain == 'sponsor.com');
