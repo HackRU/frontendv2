@@ -63,7 +63,9 @@ export default function SignupPage() {
     }
 
     if (resp) {
-      setErrors(resp.error || 'Something went wrong while creating your account.');
+      setErrors(
+        resp.error || 'Something went wrong while creating your account.',
+      );
     }
   };
 
@@ -96,7 +98,10 @@ export default function SignupPage() {
           </h1>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+        >
           {submit_errors && (
             <p className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
               {submit_errors}
@@ -223,7 +228,10 @@ export default function SignupPage() {
             )}
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+          >
             {loading ? 'Loading...' : 'Sign Up'}
           </Button>
         </form>

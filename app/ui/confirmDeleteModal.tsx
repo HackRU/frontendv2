@@ -21,7 +21,10 @@ export default function ConfirmDeleteModal({
   return createPortal(
     <div className="fixed inset-0 z-40 flex items-center justify-center">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onCancel} />
+      <div
+        className="absolute inset-0 bg-black/50"
+        onClick={onCancel}
+      />
 
       {/* Modal Box */}
       <div className="relative z-50 w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">

@@ -238,7 +238,10 @@ export default function RafflePage() {
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {raffleItems.map((item) => (
-          <Card key={item.id} className="w-full">
+          <Card
+            key={item.id}
+            className="w-full"
+          >
             <CardHeader>
               <CardTitle>
                 {prizeMapping[item.id]?.name || `Prize ${item.id}`}

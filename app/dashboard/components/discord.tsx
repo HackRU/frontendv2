@@ -50,7 +50,7 @@ export default function DiscordAuth(props: {
         <p className="text-xs italic text-red-400">{submit_errors}</p>
       )}
       {userData.discord != undefined && userData.discord.username && (
-        <p className="text-sm text-slate-200 italic">
+        <p className="text-sm italic text-slate-200">
           Connected as {userData.discord.username}
         </p>
       )}

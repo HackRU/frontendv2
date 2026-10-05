@@ -17,6 +17,7 @@ import { getSelf, getUsers } from '@/app/lib/data';
 import { generatePagination } from '@/app/lib/utils';
 import { useState, useEffect } from 'react';
 import { GetAllUsers } from '@/app/lib/actions';
+import { redirectIfUnauthorized } from '@/app/lib/authGuard';
 import { DeleteUser } from '@/app/lib/actions';
 import { set } from 'zod';
 import ConfirmDeleteModal from '@/app/ui/confirmDeleteModal';
@@ -36,6 +37,9 @@ function DirectorView(userData: any) {
   const fetchUsers = async () => {
     try {
       const data = await GetAllUsers();
+
+      if (await redirectIfUnauthorized(data.statusCode)) return;
+
       const users = data.response;
       console.log(users);
       setAllUsers(users);
@@ -123,7 +127,10 @@ function DirectorView(userData: any) {
         </div>
         <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
           <div className="relative flex flex-1 flex-shrink-0">
-            <label htmlFor="search" className="sr-only">
+            <label
+              htmlFor="search"
+              className="sr-only"
+            >
               Search
             </label>
             <input
@@ -201,10 +208,16 @@ function DirectorView(userData: any) {
               <table className="hidden min-w-full text-gray-900 md:table">
                 <thead className="rounded-lg text-left text-sm font-normal">
                   <tr>
-                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                    <th
+                      scope="col"
+                      className="px-4 py-5 font-medium sm:pl-6"
+                    >
                       Hacker
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th
+                      scope="col"
+                      className="px-3 py-5 font-medium"
+                    >
                       Email
                     </th>
                     {/* <th scope="col" className="px-3 py-5 font-medium">
@@ -213,10 +226,16 @@ function DirectorView(userData: any) {
                   <th scope="col" className="px-3 py-5 font-medium">
                   Date
                   </th> */}
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th
+                      scope="col"
+                      className="px-3 py-5 font-medium"
+                    >
                       Registration Status
                     </th>
-                    <th scope="col" className="relative py-3 pl-6 pr-3">
+                    <th
+                      scope="col"
+                      className="relative py-3 pl-6 pr-3"
+                    >
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
@@ -305,7 +324,10 @@ function DirectorView(userData: any) {
                     <p className="py-4 text-xl">This action cannot be undone</p>
                   </div>
 
-                  <form method="dialog" className="modal-backdrop">
+                  <form
+                    method="dialog"
+                    className="modal-backdrop"
+                  >
                     <button className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground mr-2 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                       Cancel
                     </button>

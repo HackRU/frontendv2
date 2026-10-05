@@ -104,7 +104,7 @@ export const PrintPlayerInMap = (player: any, map: any) => {
 import { useEffect, useRef, useState } from 'react';
 
 export function useInterval(callback: any, delay: any) {
-  const savedCallback = useRef<any>();
+  const savedCallback = useRef<any>(undefined);
 
   // Remember the latest callback.
   useEffect(() => {

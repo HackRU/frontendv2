@@ -2,10 +2,9 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { fredoka } from '@/app/ui/fonts';
 import Image from 'next/image';
-import Hero from './sections/Hero/Hero';
 import Hero2 from './sections/Hero/Hero2';
 import Schedule from './sections/Schedule';
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import Sponsors from './sections/Sponsors';
 import About from './sections/About';
 import FAQ from './sections/FAQ/FAQ';
@@ -43,7 +42,7 @@ export default async function Page() {
           width={100}
           height={100}
           unoptimized
-          className="h-auto w-full"
+          style={{ width: '100%', height: 'auto' }}
         />
       </a>
       <div className="overflow-x-hidden overflow-y-hidden">
@@ -65,7 +64,10 @@ export default async function Page() {
           </Suspense>
         </GenericSection>
         <GenericSection title="Sponsors">{<Sponsors />}</GenericSection>
-        <GenericSection title="FAQ" color="from-blue-500">
+        <GenericSection
+          title="FAQ"
+          color="from-blue-500"
+        >
           <FAQ />
         </GenericSection>
         {/* { <GenericSection title="Meet the Team"> 
@@ -82,6 +84,7 @@ export default async function Page() {
             width={1440}
             height={1471}
             // h-auto instead of the deprecated layout="responsive"
+            sizes="100vw"
             className="h-auto w-full"
             loading="lazy"
           />

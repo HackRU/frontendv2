@@ -39,7 +39,8 @@ export default function StatusBar({ status }: { status: Status }) {
   const statusNotice = {
     coming: {
       title: 'RSVP recorded: Coming',
-      description: 'We will slowly start moving hackers to the Confirmed status on a first-come-first-served basis. Your registered team members will be moved to the Confirmed status with you unless they RSVP not coming.',
+      description:
+        'We will slowly start moving hackers to the Confirmed status on a first-come-first-served basis. Your registered team members will be moved to the Confirmed status with you unless they RSVP not coming.',
       icon: '✓',
       style: 'border-emerald-300/20 bg-emerald-300/[0.06] text-emerald-100',
       iconStyle: 'border-emerald-200/30 bg-emerald-200/10 text-emerald-200',
@@ -53,22 +54,28 @@ export default function StatusBar({ status }: { status: Status }) {
     },
     rejected: {
       title: 'Application status: Rejected',
-      description: 'You will not be attending HackRU. Contact us if you have questions.',
+      description:
+        'You will not be attending HackRU. Contact us if you have questions.',
       icon: '!',
       style: 'border-rose-300/20 bg-rose-300/[0.06] text-rose-100',
       iconStyle: 'border-rose-200/30 bg-rose-200/10 text-rose-200',
     },
   } as const;
 
-  const notice = status in statusNotice
-    ? statusNotice[status as keyof typeof statusNotice]
-    : null;
+  const notice =
+    status in statusNotice
+      ? statusNotice[status as keyof typeof statusNotice]
+      : null;
 
   return (
     <div className="mx-auto mt-4 w-full max-w-4xl px-1 sm:mt-6 sm:px-4">
       {notice && (
-        <div className={`mb-3 flex items-start gap-3 rounded-2xl border p-4 sm:items-center sm:p-5 ${notice.style}`}>
-          <div className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-lg font-semibold sm:mt-0 ${notice.iconStyle}`}>
+        <div
+          className={`mb-3 flex items-start gap-3 rounded-2xl border p-4 sm:items-center sm:p-5 ${notice.style}`}
+        >
+          <div
+            className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-lg font-semibold sm:mt-0 ${notice.iconStyle}`}
+          >
             {notice.icon}
           </div>
           <div className="min-w-0">

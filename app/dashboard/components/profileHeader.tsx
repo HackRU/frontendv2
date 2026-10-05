@@ -41,7 +41,7 @@ export default function ProfileHeader(props: {
     'shirt_size',
     'hackathon_count',
     'dietary_restrictions',
-//    'special_needs',
+    //    'special_needs',
     'age',
     'school',
     'grad_year',
@@ -174,7 +174,10 @@ export default function ProfileHeader(props: {
                         onClick={() =>
                           document
                             .getElementById('profile-form-card')
-                            ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                            ?.scrollIntoView({
+                              behavior: 'smooth',
+                              block: 'start',
+                            })
                         }
                       >
                         Go to profile form
@@ -220,8 +223,8 @@ export default function ProfileHeader(props: {
                     <div className="mt-4 space-y-4">
                       {!profileReady && (
                         <p className="text-sm text-amber-200 sm:text-base">
-                          Complete and save your profile first before uploading a
-                          waiver.
+                          Complete and save your profile first before uploading
+                          a waiver.
                         </p>
                       )}
 
@@ -255,7 +258,11 @@ export default function ProfileHeader(props: {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               setSelectedWaiverName(file ? file.name : '');
-                              handleChangingFile(e, 'application/pdf', 'WAIVER');
+                              handleChangingFile(
+                                e,
+                                'application/pdf',
+                                'WAIVER',
+                              );
                             }}
                             required
                           ></input>
@@ -369,12 +376,15 @@ export default function ProfileHeader(props: {
                       disabled={!registrationReady}
                       onClick={() => console.log('register button clicked')}
                     >
-                      {registrationReady ? 'Register' : 'Complete profile + waiver'}
+                      {registrationReady
+                        ? 'Register'
+                        : 'Complete profile + waiver'}
                     </Button>
                   </div>
                   {!registrationReady && (
                     <p className="mt-3 text-sm text-amber-200">
-                      Finish your profile and upload the waiver before registering.
+                      Finish your profile and upload the waiver before
+                      registering.
                     </p>
                   )}
                 </div>
@@ -402,8 +412,9 @@ export default function ProfileHeader(props: {
                     <CardDescription>
                       Unfortunately, we have had to place you on our waitlist.
                       Show up closer to our delayed check-in phase at 10:45 AM.
-                      Waitlisted hackers may be checked in based on the remaining availability.
-                      Check-In will close once we have reached capacity.
+                      Waitlisted hackers may be checked in based on the
+                      remaining availability. Check-In will close once we have
+                      reached capacity.
                     </CardDescription>
                   </div>
                 </div>
@@ -411,14 +422,12 @@ export default function ProfileHeader(props: {
             )}
             {userData.registration_status == 'confirmed' && (
               <>
-                <CardTitle>
-                  Confirmed: Get ready to code!
-                </CardTitle>
+                <CardTitle>Confirmed: Get ready to code!</CardTitle>
                 <CardDescription>
                   You are fully signed up and ready to show up on October 10th.
-                  You are guarenteed entry if you are in line by 10:30 AM. After 10:30 AM,
-                  the waitlist line will begin on a first-come-first-served basis
-                  and you may lose your spot.
+                  You are guarenteed entry if you are in line by 10:30 AM. After
+                  10:30 AM, the waitlist line will begin on a
+                  first-come-first-served basis and you may lose your spot.
                 </CardDescription>
               </>
             )}
@@ -428,10 +437,14 @@ export default function ProfileHeader(props: {
               <>
                 <div className="flex flex-col gap-4">
                   {uploadingNewConfirmationStatus && (
-                    <p className="text-sm sm:text-base">Loading confirmation status...</p>
+                    <p className="text-sm sm:text-base">
+                      Loading confirmation status...
+                    </p>
                   )}
                   {errorMessage && (
-                    <p className="text-sm text-red-500 sm:text-base">{errorMessage}</p>
+                    <p className="text-sm text-red-500 sm:text-base">
+                      {errorMessage}
+                    </p>
                   )}
 
                   {!uploadingNewConfirmationStatus && (
@@ -442,17 +455,23 @@ export default function ProfileHeader(props: {
                             RSVP: Confirm your attendance!
                           </CardTitle>
                           <CardDescription>
-                            We are ready to begin moving hackers to acceptance! Please confirm your
-                            availability and let us know if you are Coming. We will begin confirming hackers
-                            on a first-come-first-served basis. If your teammates have not registered, let them know ASAP.
-                            You cannot modify your pre-event team for registration purposes after confirmation.
-                            You may change your team for the final submission during the hackathon.
+                            We are ready to begin moving hackers to acceptance!
+                            Please confirm your availability and let us know if
+                            you are Coming. We will begin confirming hackers on
+                            a first-come-first-served basis. If your teammates
+                            have not registered, let them know ASAP. You cannot
+                            modify your pre-event team for registration purposes
+                            after confirmation. You may change your team for the
+                            final submission during the hackathon.
                           </CardDescription>
                           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
                             <Button onClick={() => onConfirmationChange(true)}>
                               Coming
                             </Button>
-                            <Button variant="outline" onClick={() => onConfirmationChange(false)}>
+                            <Button
+                              variant="outline"
+                              onClick={() => onConfirmationChange(false)}
+                            >
                               Not Coming
                             </Button>
                           </div>

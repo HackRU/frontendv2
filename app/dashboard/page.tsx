@@ -1,6 +1,7 @@
 'use client';
 
 import { UpdateSelf, getSelf, getUsers, RegisterSelf } from '@/app/lib/data';
+import { redirectIfUnauthorized } from '@/app/lib/authGuard';
 import {
   RemoveMember,
   InviteMember,
@@ -89,7 +90,11 @@ const UserUpdateSchema = z.object({
   hackathon_count: z.string().min(1, 'Field cannot be empty'),
   dietary_restrictions: z.string().min(1, 'Field cannot be empty'),
   special_needs: z.string(),
-  age: z.string().min(1, 'Field cannot be empty'),
+  age: z
+    .string()
+    .min(1, 'Field cannot be empty')
+    .regex(/^\d+$/, 'Enter a valid whole number')
+    .refine((age) => Number(age) >= 18, 'Must be at least 18 years old'),
   school: z.string().min(1, 'Field cannot be empty'),
   grad_year: z.string().min(1, 'Field cannot be empty'),
   gender: z.string().min(1, 'Field cannot be empty'),
@@ -133,6 +138,14 @@ const logoImage = {
 export type TeamSubmit = z.infer<typeof TeamSubmitSchema>;
 
 export default function Dashboard() {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      <DashboardContent />
+    </Suspense>
+  );
+}
+
+function DashboardContent() {
   const [selectedMajor, setSelectedMajor] =
     useState<string>('No major selected');
   const [otherMajor, setOtherMajor] = useState<string>('');
@@ -213,6 +226,7 @@ export default function Dashboard() {
     register,
     handleSubmit,
     reset,
+    setValue,
     trigger,
     formState: { errors },
   } = useForm<UserUpdate>({
@@ -285,10 +299,11 @@ export default function Dashboard() {
       }
     }
 
-    const resp = await UpdateSelf(otherData);
+    const major = selectedMajor === 'Other' ? otherMajor.trim() : data.major;
+    const resp = await UpdateSelf({ ...otherData, major });
     setUserData({
       ...userData,
-      major: data.major,
+      major,
       shirt_size: data.shirt_size,
       hackathon_count: data.hackathon_count,
       dietary_restrictions: data.dietary_restrictions,
@@ -423,7 +438,11 @@ export default function Dashboard() {
       if (resp?.error && String(resp.error).includes('not in an active team')) {
         setTeamInfo(null);
         setpendingTeamInvites(null);
-        setTeamStatus((prev: any) => ({ ...prev, isLeader: false, team_id: '' }));
+        setTeamStatus((prev: any) => ({
+          ...prev,
+          isLeader: false,
+          team_id: '',
+        }));
         return;
       }
 
@@ -434,7 +453,10 @@ export default function Dashboard() {
       setTeamStatus((prev: any) => ({ ...prev, isLeader: !!l }));
 
       const resp2 = await ReadPendingOnTeam();
-      if (resp2?.error && String(resp2.error).includes('not in an active team')) {
+      if (
+        resp2?.error &&
+        String(resp2.error).includes('not in an active team')
+      ) {
         setpendingTeamInvites(null);
         return;
       }
@@ -468,10 +490,10 @@ export default function Dashboard() {
       // Only update the display data after successful submission
       fetchTeam();
       setSubmittingPreEventTeamForm('Saved!');
-      setTeamMemberErrors("")
+      setTeamMemberErrors('');
     } else {
       setSubmittingPreEventTeamForm('Failed');
-      setTeamMemberErrors(resp.error)
+      setTeamMemberErrors(resp.error);
     }
   };
 
@@ -501,6 +523,22 @@ export default function Dashboard() {
       console.error('Error fetching or parsing major data:', error);
     }
   }, []);
+
+  useEffect(() => {
+    const savedMajor = userData?.major;
+    if (typeof savedMajor !== 'string' || !savedMajor || majors.length === 0) {
+      return;
+    }
+
+    if (majors.includes(savedMajor)) {
+      setSelectedMajor(savedMajor);
+      setOtherMajor('');
+    } else {
+      setSelectedMajor('Other');
+      setOtherMajor(savedMajor);
+    }
+    setValue('major', savedMajor);
+  }, [userData?.major, majors, setValue]);
 
   useEffect(() => {
     try {
@@ -565,16 +603,7 @@ export default function Dashboard() {
       try {
         const data = await getSelf();
 
-        if (data?.error && typeof data.error === 'string') {
-          if (
-            data.error.includes('Something went wrong') ||
-            data.error.includes('not authenticated') ||
-            data.error.includes('Unauthorized')
-          ) {
-            window.location.href = '/login';
-            return;
-          }
-        }
+        if (await redirectIfUnauthorized(data.statusCode)) return;
 
         const points = await GetPoints();
 
@@ -589,7 +618,7 @@ export default function Dashboard() {
         });
 
         if (data.error != '') {
-          alert(data.error.message);
+          alert(data.error);
         }
 
         setUserData(data.response);
@@ -1177,29 +1206,31 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
-                    <QRCode value={userData?.email} size={256} />
+                    <QRCode
+                      value={userData?.email}
+                      size={256}
+                    />
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Clue Counter Card */} 
+              {/* Clue Counter Card */}
               {false && (
-              <Card className="mt-6 w-full max-w-2xl">
-                <CardHeader>
-                  <CardTitle>Clue Progress</CardTitle>
-                  <CardDescription>
-                    Your current clue count and stage progress
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between text-lg font-semibold">
-                    <span>Clue Count: {userData?.clue_count ?? 0}</span>
-                    <span>Stage: {userData?.stage ?? 0}</span>
-                  </div>
-                </CardContent>
-              </Card>
-              )
-              }
+                <Card className="mt-6 w-full max-w-2xl">
+                  <CardHeader>
+                    <CardTitle>Clue Progress</CardTitle>
+                    <CardDescription>
+                      Your current clue count and stage progress
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between text-lg font-semibold">
+                      <span>Clue Count: {userData?.clue_count ?? 0}</span>
+                      <span>Stage: {userData?.stage ?? 0}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </>
           )}
 
@@ -1247,7 +1278,10 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="first_name" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                  <Label
+                    htmlFor="first_name"
+                    className="text-sm font-medium uppercase tracking-wide text-slate-200"
+                  >
                     First Name *
                   </Label>
                   <Input
@@ -1266,7 +1300,10 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="last_name" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                  <Label
+                    htmlFor="last_name"
+                    className="text-sm font-medium uppercase tracking-wide text-slate-200"
+                  >
                     Last Name *
                   </Label>
                   <Input
@@ -1313,7 +1350,10 @@ export default function Dashboard() {
               </div> */}
 
                 <div className="space-y-2">
-                  <Label htmlFor="github" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                  <Label
+                    htmlFor="github"
+                    className="text-sm font-medium uppercase tracking-wide text-slate-200"
+                  >
                     Github *
                   </Label>
                   <Input
@@ -1341,14 +1381,21 @@ export default function Dashboard() {
                     onChange={(e) => {
                       const selected = e.target.value;
                       setSelectedMajor(selected);
-                      if (selected != 'Other') {
-                        setUserData({ ...userData, major: selected });
-                      }
+                      const major =
+                        selected === 'Other' ? otherMajor : selected;
+                      setValue('major', major, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      });
+                      setUserData({ ...userData, major });
                     }}
                     className="flex h-11 w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white ring-offset-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {majors.map((major, index) => (
-                      <option key={index} value={major}>
+                      <option
+                        key={index}
+                        value={major}
+                      >
                         {major}
                       </option>
                     ))}
@@ -1365,6 +1412,10 @@ export default function Dashboard() {
                         const newMajor = e.target.value;
                         setUserData({ ...userData, major: newMajor });
                         setOtherMajor(newMajor);
+                        setValue('major', newMajor, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        });
                       }}
                     />
                   )}
@@ -1375,7 +1426,10 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="short-answer" className="text-sm font-medium uppercase tracking-wide text-slate-200">
+                  <Label
+                    htmlFor="short-answer"
+                    className="text-sm font-medium uppercase tracking-wide text-slate-200"
+                  >
                     What are you hoping to experience at HackRU? *
                   </Label>
                   <textarea
@@ -1468,30 +1522,18 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dob">Age *</Label>
-                  <select
-                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
-                    id="shirt-size"
+                  <Label htmlFor="dob">Age (18+) *</Label>
+                  <Input
+                    type="number"
+                    min={18}
+                    step={1}
+                    id="dob"
                     value={userData?.age}
                     {...register('age')}
                     onChange={(e) =>
                       setUserData({ ...userData, age: e.target.value })
                     }
-                  >
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                  </select>
+                  />
                   {errors.age && (
                     <p className="mt-2 text-xs italic text-red-500">
                       {errors.age?.message}
@@ -1511,7 +1553,10 @@ export default function Dashboard() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                   >
                     {schools.map((school, index) => (
-                      <option key={index} value={school}>
+                      <option
+                        key={index}
+                        value={school}
+                      >
                         {school}
                       </option>
                     ))}
@@ -1581,7 +1626,9 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="level-of-study">Current Level of Study *</Label>
+                  <Label htmlFor="level-of-study">
+                    Current Level of Study *
+                  </Label>
                   <select
                     id="level-of-study"
                     value={userData?.level_of_study}
@@ -1648,7 +1695,10 @@ export default function Dashboard() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                   >
                     {countries.map((country, index) => (
-                      <option key={index} value={country}>
+                      <option
+                        key={index}
+                        value={country}
+                      >
                         {country}
                       </option>
                     ))}
@@ -1781,7 +1831,10 @@ export default function Dashboard() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="ml-auto">
+                <Button
+                  type="submit"
+                  className="ml-auto"
+                >
                   {savingUserProfile ? 'Saving...' : userProfileSubmitText}
                 </Button>
               </CardFooter>
@@ -1796,48 +1849,51 @@ export default function Dashboard() {
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
               <div className="max-w-sm rounded-xl bg-white p-6 text-center shadow-xl">
                 <h2 className="mb-2 text-xl font-bold">Stage Updated!</h2>
-                {
-                  userData?.stage == "Cipher" && (
-                    <p className="mb-4">
-                      Autopsy reported intoxication, multiple lacerations, and burn marks found on his body. Cause of death: not yet known.
-                    </p>
-                  )
-                }
-                {
-                  userData?.stage == "Nemo" && (
-                    <p className="mb-4">
-                      In order to not startle guests, an announcement was made. “Unfortunately, Austin was not able to make his speech tonight. Instead, his close peer and CEO of (company name), Horacio will be presenting in his place. Horacio takes the stage prepared.
-                    </p>
-                  )
-                }
-                {
-                  userData?.stage == "Gear Game" && (
-                    <p className="mb-4">
-                                <Image
-                                  src="/Archibald_20251004_102459_0000.png"
-                                  alt="image"
-                                  layout="responsive"
-                                  width={400}
-                                  height={300}
-                                />
-                      Photo of Obsidian, Archibald, Horacio, and Austin all sharing a drink dated as 7:55pm (horacio next to austin). Obsidian looks annoyed at Austin, while Archibald and Horacio excitedly cheer with him
-                    </p>
-                  )
-                }
-                {
-                  userData?.stage == "Cup stacking" && (
-                    <p className="mb-4">
-                       Aurelia had to leave shortly before Austin’s speech due to her increased workload at his company. Shortly after his body was discovered, she appeared like she never left, biting her nails and repeatedly running her fingers through her hair.
-                    </p>
-                  )
-                }
-                {
-                  userData?.stage == "Ring Toss" && (
-                    <p className="mb-4">
-                       &quot Just Kevin and I went looking for Austin a few minutes after his speech was supposed to start. Security stopped us at the door, telling us not to step any closer...&quot
-                    </p>
-                  )
-                }
+                {userData?.stage == 'Cipher' && (
+                  <p className="mb-4">
+                    Autopsy reported intoxication, multiple lacerations, and
+                    burn marks found on his body. Cause of death: not yet known.
+                  </p>
+                )}
+                {userData?.stage == 'Nemo' && (
+                  <p className="mb-4">
+                    In order to not startle guests, an announcement was made.
+                    “Unfortunately, Austin was not able to make his speech
+                    tonight. Instead, his close peer and CEO of (company name),
+                    Horacio will be presenting in his place. Horacio takes the
+                    stage prepared.
+                  </p>
+                )}
+                {userData?.stage == 'Gear Game' && (
+                  <p className="mb-4">
+                    <Image
+                      src="/Archibald_20251004_102459_0000.png"
+                      alt="image"
+                      width={400}
+                      height={300}
+                    />
+                    Photo of Obsidian, Archibald, Horacio, and Austin all
+                    sharing a drink dated as 7:55pm (horacio next to austin).
+                    Obsidian looks annoyed at Austin, while Archibald and
+                    Horacio excitedly cheer with him
+                  </p>
+                )}
+                {userData?.stage == 'Cup stacking' && (
+                  <p className="mb-4">
+                    Aurelia had to leave shortly before Austin’s speech due to
+                    her increased workload at his company. Shortly after his
+                    body was discovered, she appeared like she never left,
+                    biting her nails and repeatedly running her fingers through
+                    her hair.
+                  </p>
+                )}
+                {userData?.stage == 'Ring Toss' && (
+                  <p className="mb-4">
+                    &quot Just Kevin and I went looking for Austin a few minutes
+                    after his speech was supposed to start. Security stopped us
+                    at the door, telling us not to step any closer...&quot
+                  </p>
+                )}
                 <p className="mb-4">
                   You’ve advanced to stage {userData?.stage}.
                 </p>

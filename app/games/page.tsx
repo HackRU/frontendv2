@@ -23,9 +23,9 @@ export default function GamePage() {
       </div>
       <Image
         src="/games/background.png"
-        layout="fill"
-        quality={100}
+        fill
         alt=""
+        sizes="100vw"
         priority
         style={{
           objectFit: 'cover',
