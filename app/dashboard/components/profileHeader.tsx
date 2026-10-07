@@ -407,7 +407,7 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'waitlist' && (
               <>
                 <div className="flex flex-col">
-                  <CardTitle>Delayed Entry</CardTitle>
+                  <CardTitle>Waitlisted: Delayed Entry</CardTitle>
                   <div>
                     <CardDescription>
                       Unfortunately, we have had to place you on our waitlist.
@@ -425,9 +425,10 @@ export default function ProfileHeader(props: {
                 <CardTitle>Confirmed: Get ready to code!</CardTitle>
                 <CardDescription>
                   You are fully signed up and ready to show up on October 10th.
-                  You are guarenteed entry if you are in line by 10:30 AM. After
-                  10:30 AM, the waitlist line will begin on a
-                  first-come-first-served basis and you may lose your spot.
+                  You are guarenteed entry if you are in line between 9 AM to
+                  10:30 AM. After 10:30 AM, the waitlist line will begin on a
+                  first-come-first-served basis and you may lose your spot. You
+                  MUST be checked in to participate in the hackathon.
                 </CardDescription>
               </>
             )}
