@@ -11,7 +11,7 @@ export async function getSchedule() {
       day: 'Saturday',
       times: [
         {
-          time: '10:00 AM',
+          time: '9:00 AM',
           event: 'Check-in Starts',
           location: 'Center Lobby',
         },
