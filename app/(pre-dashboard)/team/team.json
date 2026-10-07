@@ -1,122 +1,164 @@
 {
+  "executiveDirectors": [
+    {
+      "name": "Mehaer Chhabda",
+      "image": "",
+      "major": "Computer Science",
+      "link": "https://www.linkedin.com/in/mehaer-chhabda/",
+      "grad": "May 2027"
+    },
+    {
+      "name": "Preston",
+      "image": "",
+      "major": "",
+      "link": "",
+      "grad": ""
+    },
+    {
+      "name": "Austin Zhang",
+      "image": "",
+      "major": "Computer Science",
+      "link": "https://www.linkedin.com/in/austin-s-zhang/",
+      "grad": "May 2027"
+    }
+  ],
   "teams": {
-    "Day Of": {
-      "director": {
-        "name": "Day Of Director",
-        "image": "/icon.png",
-        "link": "https://linkedin.com"
-      },
+    "Research & Development": {
+      "directors": [
+        {
+          "name": "Eshaan Ali",
+          "image": "eshaan.jpeg",
+          "major": "Computer Science & Political Science",
+          "link": "https://www.linkedin.com/in/syed-eshaan-ali",
+          "grad": "May 2027"
+        }
+      ],
       "organizers": [
         {
-          "name": "Day Of Organizer 1",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Pooja Kedia",
+          "image": "poojakedia.jpeg",
+          "major": "Computer Science",
+          "link": "https://www.linkedin.com/in/pooja-kedia-69a125292",
+          "grad": "May 2027"
         },
         {
-          "name": "Day Of Organizer 2",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Siya Goyal",
+          "image": "siyagoyal.jpeg",
+          "major": "Computer Science & Cognitive Science",
+          "link": "https://www.linkedin.com/in/siyagoyal629",
+          "grad": "May 2028"
         },
         {
-          "name": "Day Of Organizer 3",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Hassan Ibrahim",
+          "image": "hassanibrahim.jpg",
+          "major": "Computer Science",
+          "link": "https://www.linkedin.com/in/hassan1brahim",
+          "grad": "May 2028"
+        }
+      ]
+    },
+    "Logistics": {
+      "directors": [
+        {
+          "name": "Chitra Kumar",
+          "image": "chitrakumar.jpg",
+          "major": "Computer Science and Data Science",
+          "link": "www.linkedin.com/in/chitra-kumar1",
+          "grad": "May 2028"
+        }
+      ],
+      "organizers": [
+        {
+          "name": "Bryan Quizado",
+          "image": "bryanquizado.jpeg",
+          "major": "Computer Science",
+          "link": "https://www.linkedin.com/in/bryan-quizado-11b1a32a3",
+          "grad": "May 2027"
+        }
+      ]
+    },
+    "Day Of": {
+      "directors": [
+        {
+          "name": "Zene Sangoi",
+          "image": "zenesangoi.jpg",
+          "major": "Computer Science + Data Science",
+          "link": "https://www.linkedin.com/in/zene-sangoi",
+          "grad": "May 2028"
+        }
+      ],
+      "organizers": [
+        {
+          "name": "Brayden Uglione",
+          "image": "braydenuglione.jpg",
+          "major": "Computer Science & Data Science",
+          "link": "https://www.linkedin.com/in/brayden-uglione",
+          "grad": "May 2029"
+        },
+        {
+          "name": "Edward Koh",
+          "image": "",
+          "major": "Computer Science",
+          "link": "www.linkedin.com/in/edward-koh-944348270",
+          "grad": "May 2027"
         }
       ]
     },
     "Finance": {
-      "director": {
-        "name": "Finance Director",
-        "image": "/icon.png",
-        "link": "https://linkedin.com"
-      },
+      "directors": [],
       "organizers": [
         {
-          "name": "Finance Organizer 1",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Rohan Sharma",
+          "image": "rohansharma.jpeg",
+          "major": "Computer Science, Cognitive Science",
+          "link": "https://www.linkedin.com/in/rohansh2017",
+          "grad": "May 2027"
         },
         {
-          "name": "Finance Organizer 2",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        },
-        {
-          "name": "Finance Organizer 3",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        }
-      ]
-    },
-    "R&D": {
-      "director": {
-        "name": "R&D Director",
-        "image": "/icon.png",
-        "link": "https://linkedin.com"
-      },
-      "organizers": [
-        {
-          "name": "R&D Organizer 1",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        },
-        {
-          "name": "R&D Organizer 2",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        },
-        {
-          "name": "R&D Organizer 3",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Jay Boghawala",
+          "image": "jayboghawala.jpeg",
+          "major": "Computer Science",
+          "link": "https://www.linkedin.com/in/jayboghawala",
+          "grad": "May 2028"
         }
       ]
     },
     "Design": {
-      "director": {
-        "name": "Design Director",
-        "image": "/icon.png",
-        "link": "https://linkedin.com"
-      },
-      "organizers": [
+      "directors": [
         {
-          "name": "Design Organizer 1",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        },
-        {
-          "name": "Design Organizer 2",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        },
-        {
-          "name": "Design Organizer 3",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Maggie Lu",
+          "image": "maggielu.jpeg",
+          "major": "Plant Science",
+          "link": "",
+          "grad": "May 2027"
         }
-      ]
+      ],
+      "organizers": []
     },
     "Marketing": {
-      "director": {
-        "name": "Marketing Director",
-        "image": "/icon.png",
-        "link": "https://linkedin.com"
-      },
+      "directors": [
+        {
+          "name": "Luke Holmes",
+          "image": "lukeholmes.jpg",
+          "major": "Data Science and Linguistics",
+          "link": "",
+          "grad": "May 2028"
+        }
+      ],
       "organizers": [
         {
-          "name": "Marketing Organizer 1",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Anmol Hazari",
+          "image": "anmolhazari.png",
+          "major": "Computer Science and Mathematics",
+          "link": "https://www.linkedin.com/in/anmol-hazari",
+          "grad": "May 2028"
         },
         {
-          "name": "Marketing Organizer 2",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
-        },
-        {
-          "name": "Marketing Organizer 3",
-          "image": "/icon.png",
-          "link": "https://linkedin.com"
+          "name": "Kyle Napp",
+          "image": "kylenapp.jpg",
+          "major": "Computer Science",
+          "link": "https://www.linkedin.com/in/kyle-napp1102",
+          "grad": "May 2027"
         }
       ]
     }
