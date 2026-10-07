@@ -80,22 +80,22 @@ const TeamCard = ({
       <p className="mt-3 w-full min-w-0 whitespace-normal break-words text-sm font-medium leading-snug text-[#3F5140]">
         {member.major}, {member.grad}
       </p>
-
-      <a
-        href={member.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="min-h-11 mt-auto inline-flex items-center pt-4 text-sm font-bold text-[#A44737] underline decoration-[#A44737]/50 underline-offset-4 opacity-100 transition duration-200 hover:decoration-[#A44737] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#315E3E] [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-hover:opacity-100"
-        aria-label={`${member.name} on LinkedIn (opens in a new tab)`}
-      >
-        LinkedIn{' '}
-        <span
-          aria-hidden="true"
-          className="ml-1"
+      {member.link ? (
+        <a
+          href={member.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="min-h-11 mt-auto inline-flex items-center pt-4 text-sm font-bold text-[#A44737] underline decoration-[#A44737]/50 underline-offset-4 opacity-100 transition duration-200 hover:decoration-[#A44737] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#315E3E] [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-hover:opacity-100"
+          aria-label={`${member.name} on LinkedIn (opens in a new tab)`}
         >
-          ↗
-        </span>
-      </a>
+          LinkedIn{' '}
+          <span aria-hidden="true" className="ml-1">
+            ↗
+          </span>
+        </a>
+      ) : (
+        ''
+      )}
     </article>
   );
 };
@@ -138,15 +138,9 @@ const TeamSectionHeader = () => {
   return (
     <header className="flex flex-col items-center px-5 pb-2 pt-32 text-center sm:pt-36">
       <div className="mb-5 flex items-center gap-3 text-xs font-bold uppercase text-[#A44737] sm:text-sm">
-        <span
-          aria-hidden="true"
-          className="h-px w-8 bg-[#A44737]/60 sm:w-12"
-        />
+        <span aria-hidden="true" className="h-px w-8 bg-[#A44737]/60 sm:w-12" />
         Our Team
-        <span
-          aria-hidden="true"
-          className="h-px w-8 bg-[#A44737]/60 sm:w-12"
-        />
+        <span aria-hidden="true" className="h-px w-8 bg-[#A44737]/60 sm:w-12" />
       </div>
 
       <h1
@@ -209,10 +203,7 @@ export default function TeamPage() {
           </p>
         )}
 
-        <section
-          aria-labelledby="directors-heading"
-          className="mb-24"
-        >
+        <section aria-labelledby="directors-heading" className="mb-24">
           <h2
             id="directors-heading"
             className="mb-10 text-center text-3xl font-bold text-[#213B2C] sm:text-4xl"
