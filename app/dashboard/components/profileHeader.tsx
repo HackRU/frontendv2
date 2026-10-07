@@ -14,6 +14,7 @@ import { redirect } from 'next/dist/server/api-utils';
 import { useState } from 'react';
 import { ConfirmComingOrNot } from '@/app/lib/data';
 import Link from 'next/link';
+import PopupDialog from './dialog';
 import { useRouter } from 'next/navigation';
 
 //TODO: coming and not-coming should be ENUMS!!!!
@@ -30,6 +31,7 @@ export default function ProfileHeader(props: {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedWaiverName, setSelectedWaiverName] = useState('');
+  const [confirmNotComingOpen, setConfirmNotComingOpen] = useState(false);
   const router = useRouter();
 
   const requiredProfileFields = [
@@ -407,7 +409,7 @@ export default function ProfileHeader(props: {
             {userData.registration_status == 'waitlist' && (
               <>
                 <div className="flex flex-col">
-                  <CardTitle>Delayed Entry</CardTitle>
+                  <CardTitle>Waitlisted: Delayed Entry</CardTitle>
                   <div>
                     <CardDescription>
                       Unfortunately, we have had to place you on our waitlist.
@@ -425,10 +427,46 @@ export default function ProfileHeader(props: {
                 <CardTitle>Confirmed: Get ready to code!</CardTitle>
                 <CardDescription>
                   You are fully signed up and ready to show up on October 10th.
-                  You are guarenteed entry if you are in line by 10:30 AM. After
-                  10:30 AM, the waitlist line will begin on a
-                  first-come-first-served basis and you may lose your spot.
+                  You are guarenteed entry if you are in line between 9 AM to
+                  10:30 AM. After 10:30 AM, the waitlist line will begin on a
+                  first-come-first-served basis and you may lose your spot. You
+                  MUST be checked in to participate in the hackathon.
                 </CardDescription>
+                {uploadingNewConfirmationStatus && (
+                  <p className="text-sm sm:text-base">
+                    Loading confirmation status...
+                  </p>
+                )}
+                {errorMessage && (
+                  <p className="text-sm text-red-500 sm:text-base">
+                    {errorMessage}
+                  </p>
+                )}
+                {!uploadingNewConfirmationStatus && (
+                  <div className="rounded-xl border border-white/10 bg-slate-950/40 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="text-sm text-slate-300 sm:text-base">
+                        Can no longer make it?
+                      </p>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full sm:w-auto"
+                        onClick={() => setConfirmNotComingOpen(true)}
+                      >
+                        Update to Not Coming
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                <PopupDialog
+                  open={confirmNotComingOpen}
+                  setOpen={setConfirmNotComingOpen}
+                  title="Give up your confirmed spot?"
+                  content="You will lose your confirmed spot. If you change your mind later, you will not be guaranteed entry."
+                  onYes={() => onConfirmationChange(false)}
+                  onNo={() => {}}
+                />
               </>
             )}
             {(userData.registration_status == 'confirmation' ||

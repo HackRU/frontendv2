@@ -829,10 +829,7 @@ function DashboardContent() {
                   Points Information
                 </CardTitle>
                 <CardDescription>
-                  Your current points balance and total earned points. At the
-                  end of the hackathon, there will be a grand raffle for prizes
-                  based on the total number of points you have ever earned. Stay
-                  tuned until the end.
+                  Your current points balance and total earned points.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -849,11 +846,6 @@ function DashboardContent() {
                       {pointsData.total_points} points
                     </span>
                   </p>
-                </div>
-                <div className="mt-4">
-                  <Button asChild>
-                    <a href="/dashboard/raffle">Go to Raffle</a>
-                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -1213,24 +1205,6 @@ function DashboardContent() {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Clue Counter Card */}
-              {false && (
-                <Card className="mt-6 w-full max-w-2xl">
-                  <CardHeader>
-                    <CardTitle>Clue Progress</CardTitle>
-                    <CardDescription>
-                      Your current clue count and stage progress
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex justify-between text-lg font-semibold">
-                      <span>Clue Count: {userData?.clue_count ?? 0}</span>
-                      <span>Stage: {userData?.stage ?? 0}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
             </>
           )}
 

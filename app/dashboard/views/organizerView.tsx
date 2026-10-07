@@ -20,7 +20,7 @@ type STATUS =
   | 'PENDING'
   | 'AWAITING SCAN'
   | 'AWAITING RESPONSE';
-type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR' | 'CLUE';
+type ScannerTab = 'CHECK IN' | 'EVENT' | 'MANUAL' | 'SPONSOR';
 const timeWhenAllHackersCanComeThrough = new Date(2024, 2, 23, 12, 0); // March 23rd, 12PM
 
 const eventPoints = {
@@ -70,12 +70,7 @@ function ScanStatus(props: {
   return (
     <div className="w-full text-center">
       <p className="">
-        Scan QR to{' '}
-        {scanType === 'CHECK IN'
-          ? 'check in'
-          : scanType === 'CLUE'
-            ? 'scan for a clue'
-            : 'scan for an event'}
+        Scan QR to {scanType === 'CHECK IN' ? 'check in' : 'scan for an event'}
       </p>
       <p className="">Status: </p>
       <p>{fullName && <p className="text-white">Found User: {fullName}</p>}</p>
@@ -115,8 +110,6 @@ function OrganizerView() {
     useState<boolean>(false);
   const [latestScannedEmail, setLatestScannedEmail] = useState<string>('');
   const [scannedName, setScannedName] = useState<string>('');
-  const [selectedClue, setSelectedClue] = useState<string>('');
-  const [clueWin, setClueWin] = useState<boolean>(false);
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -126,15 +119,6 @@ function OrganizerView() {
     'add',
   );
   const [isSponsor, setIsSponsor] = useState<boolean>(false);
-
-  const clues = [
-    '',
-    'Cipher',
-    'Nemo',
-    'Gear Game',
-    'Cup stacking',
-    'Ring Toss',
-  ];
 
   const resetScanLog = () => {
     setScannedName('');
@@ -211,57 +195,6 @@ function OrganizerView() {
 
       setScanResponse(resp.response + ' Attendance Count: ' + resp.count);
       setStatus('SUCCESSFUL');
-    } else if (scannerTab === 'CLUE') {
-      const updatedStage = selectedClue;
-      let updatedCount = userData?.clue_count || 0;
-      //const updatedStage = (userData?.stage || 0) + 1;
-      const clue1Done = userData?.clue1 || updatedStage == 'Cipher';
-      const clue2Done = userData?.clue2 || updatedStage == 'Nemo';
-      const clue3Done = userData?.clue3 || updatedStage == 'Gear Game';
-      const clue4Done = userData?.clue4 || updatedStage == 'Cup stacking';
-      const clue5Done = userData?.clue5 || updatedStage == 'Ring Toss';
-
-      if (updatedStage != '') {
-        updatedCount = updatedCount + 1;
-      }
-
-      const resp = await SetUser(
-        {
-          clue_count: updatedCount,
-          stage: updatedStage,
-          clue1: clue1Done,
-          clue2: clue2Done,
-          clue3: clue3Done,
-          clue4: clue4Done,
-          clue5: clue5Done,
-        },
-        userData.email,
-      );
-
-      if (clueWin) {
-        const resp2 = await AttendEventScan(
-          userData.email,
-          updatedStage,
-          10,
-          true,
-          1,
-        );
-      }
-
-      if (!resp.error) {
-        setScanResponse(
-          `Clue count updated! New count: ${updatedCount}, Stage: ${updatedStage}, 
-${clues[1]}: ${clue1Done}, 
-${clues[2]}: ${clue2Done}, 
-${clues[3]}: ${clue3Done},
-${clues[4]}: ${clue4Done},
-${clues[5]}: ${clue5Done}`,
-        );
-        setStatus('SUCCESSFUL');
-      } else {
-        setScanResponse(resp.response || 'Error updating clue count');
-        setStatus('FAILED');
-      }
     } else if (scannerTab === 'SPONSOR') {
       const eventName = selectedABList ? 'SponsorA' : 'SponsorB';
 
@@ -369,7 +302,7 @@ ${clues[5]}: ${clue5Done}`,
             <h1 className="text-center text-3xl">Organizer View</h1>
 
             {/* Two buttons, semi-radio where one button is for the "tab". If active, darken the button */}
-            <div className="grid justify-center space-x-4 md:grid-cols-6">
+            <div className="grid justify-center space-x-4 md:grid-cols-5">
               <button
                 disabled={isSponsor}
                 className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
@@ -416,17 +349,6 @@ ${clues[5]}: ${clue5Done}`,
                 }}
               >
                 Sponsor
-              </button>
-              <button
-                className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                  scannerTab === 'CLUE' ? 'bg-blue-700' : ''
-                }`}
-                onClick={() => {
-                  setScannerTab('CLUE');
-                  resetScanLog();
-                }}
-              >
-                Clue
               </button>
               <button
                 className="mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
@@ -476,48 +398,7 @@ ${clues[5]}: ${clue5Done}`,
               fullName={scannedName}
               scannedEmail={latestScannedEmail}
             />
-            {scannerTab === 'CLUE' ? (
-              <div>
-                <select
-                  value={selectedClue}
-                  onChange={(e) => {
-                    setSelectedClue(e.target.value);
-                  }}
-                  className="w-full text-black"
-                >
-                  {clues.map((event, index) => (
-                    <option
-                      key={index}
-                      value={event}
-                    >
-                      {event}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    !clueWin ? 'bg-blue-700' : ''
-                  }`}
-                  onClick={() => {
-                    setClueWin(false);
-                    resetScanLog();
-                  }}
-                >
-                  No points
-                </button>
-                <button
-                  className={`rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 ${
-                    clueWin ? 'bg-blue-700' : ''
-                  }`}
-                  onClick={() => {
-                    setClueWin(true);
-                    resetScanLog();
-                  }}
-                >
-                  points
-                </button>
-              </div>
-            ) : scannerTab === 'CHECK IN' ? (
+            {scannerTab === 'CHECK IN' ? (
               <CheckInScan status={status} />
             ) : scannerTab === 'EVENT' ? (
               <EventScan
