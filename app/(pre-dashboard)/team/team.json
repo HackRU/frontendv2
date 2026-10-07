@@ -8,11 +8,11 @@
       "grad": "May 2027"
     },
     {
-      "name": "Preston",
-      "image": "",
-      "major": "",
+      "name": "Preston Ku",
+      "image": "prestonku.jpg",
+      "major": "CS + BAIT",
       "link": "",
-      "grad": ""
+      "grad": "May 2027"
     },
     {
       "name": "Austin Zhang",
@@ -148,7 +148,7 @@
       "organizers": [
         {
           "name": "Anmol Hazari",
-          "image": "anmolhazari.png",
+          "image": "anmolhazari.jpg",
           "major": "Computer Science and Mathematics",
           "link": "https://www.linkedin.com/in/anmol-hazari",
           "grad": "May 2028"
