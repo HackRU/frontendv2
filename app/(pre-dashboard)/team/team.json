@@ -2,8 +2,8 @@
   "executiveDirectors": [
     {
       "name": "Mehaer Chhabda",
-      "image": "",
-      "major": "Computer Science",
+      "image": "mehaerchhabda.jpeg",
+      "major": "Computer Science and Data Science",
       "link": "https://www.linkedin.com/in/mehaer-chhabda/",
       "grad": "May 2027"
     },
@@ -159,6 +159,13 @@
           "major": "Computer Science",
           "link": "https://www.linkedin.com/in/kyle-napp1102",
           "grad": "May 2027"
+        },
+        {
+          "name": "Michael Samayoa",
+          "image": "",
+          "major": "Computer Engineering + Computer Science",
+          "link": "www.linkedin.com/in/michael-samayoa-6bb8713aa",
+          "grad": "May 2029"
         }
       ]
     }
