@@ -50,7 +50,7 @@ const schedule = {
   Saturday: {
     day: 'Saturday',
     times: [
-      { time: '10:00 AM', event: 'Check-In Starts', location: 'Center Lobby' },
+      { time: '9:00 AM', event: 'Check-In Starts', location: 'Center Lobby' },
       { time: '11:00 AM', event: 'Opening Ceremony', location: 'Hacking Area' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
       { time: '1:00 PM', event: 'Lunch', location: 'In Front of MPR' },

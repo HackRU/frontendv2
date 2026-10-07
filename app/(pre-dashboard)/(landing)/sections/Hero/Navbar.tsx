@@ -27,6 +27,7 @@ function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === '/';
+  const isTeamPage = pathname === '/team';
 
   const [pastHero, setPastHero] = useState(false);
 
@@ -40,7 +41,7 @@ function Navbar() {
 
   const handleSectionClick = (sectionName: string) => {
     if (!isHomePage) {
-      router.push('/');
+      router.push(sectionName === 'Home' ? '/' : `/#${sectionName}`);
       return;
     }
 
@@ -82,7 +83,7 @@ function Navbar() {
         </button>
 
         <div className="hidden items-center lg:flex">
-          {isHomePage && (
+          {(isHomePage || isTeamPage) && (
             <div className="border-white/15 relative flex items-center justify-end gap-7 rounded-full border bg-[#0f2d1e]/30 px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.22)] backdrop-blur-md md:gap-10 lg:gap-12">
               {sections.map((section) => (
                 <button
@@ -96,6 +97,12 @@ function Navbar() {
                 </button>
               ))}
               <Link
+                href="/team"
+                className="glow-center hover:text-f23-lightGreen whitespace-nowrap text-sm font-semibold tracking-wide text-white transition-all duration-200 hover:-translate-y-0.5 md:text-base lg:text-lg"
+              >
+                Our Team
+              </Link>
+              <Link
                 href="https://linktr.ee/thehackru"
                 target="_blank"
                 rel="noreferrer"
@@ -107,7 +114,7 @@ function Navbar() {
           )}
         </div>
 
-        {isHomePage && (
+        {(isHomePage || isTeamPage) && (
           <div className="relative z-50 lg:hidden">
             <Menu
               as="div"
@@ -150,6 +157,20 @@ function Navbar() {
                         )}
                       </Menu.Item>
                     ))}
+
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          href="/team"
+                          className={clsx(
+                            'flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-base font-medium tracking-wide transition-colors duration-150',
+                            active ? 'bg-white/10 text-white' : 'text-white/90',
+                          )}
+                        >
+                          Our Team
+                        </Link>
+                      )}
+                    </Menu.Item>
 
                     <Menu.Item>
                       {({ active }) => (
