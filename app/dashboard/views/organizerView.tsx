@@ -68,17 +68,11 @@ type EventOption = {
 };
 
 const eventCatalog: EventOption[] = [
-  { name: 'f-25 breakfast-sunday', points: 0, limit: 1, category: 'event' },
-  { name: 'f-25 lunch-sunday-real', points: 0, limit: 1, category: 'event' },
-  { name: 'rad-workshop', points: 15, limit: 1, category: 'event' },
-  { name: 'idea-workshop', points: 15, limit: 1, category: 'event' },
-  { name: 'wakefern-coffee-chat', points: 15, limit: 1, category: 'event' },
-  { name: 'wakefern-cafe', points: 15, limit: 1, category: 'event' },
+  { name: 'lunch-saturday', points: 0, limit: 1, category: 'event' },
+  { name: 'dinner-saturday', points: 0, limit: 1, category: 'event' },
+  { name: 'breakfast-sunday', points: 0, limit: 1, category: 'event' },
+  { name: 'lunch-sunday', points: 0, limit: 1, category: 'event' },
   { name: 'midnight-surprise', points: 15, limit: 1, category: 'event' },
-  { name: 'mlh-workshops', points: 15, limit: 1, category: 'event' },
-  { name: 'f-25 lunch-saturday', points: 0, limit: 1, category: 'event' },
-  { name: 'f-25 dinner-saturday', points: 0, limit: 1, category: 'event' },
-  { name: 'meal-placeholder', points: 0, limit: 1, category: 'event' },
   {
     name: "Who's that pokemon - easy",
     points: 5,
@@ -151,7 +145,6 @@ const eventCatalog: EventOption[] = [
     limit: REPEATABLE_LIMIT,
     category: 'event',
   },
-  { name: 'Workshop', points: 15, limit: 1, category: 'event' },
   {
     name: 'shop - Lego flowers',
     points: -15,
@@ -660,7 +653,8 @@ function OrganizerView() {
                 return {
                   name: [firstName, lastName].join(' '),
                   email: memberEmail as string,
-                  registrationStatus: memberProfile?.registration_status as string,
+                  registrationStatus:
+                    memberProfile?.registration_status as string,
                 };
               }),
             );
@@ -844,7 +838,8 @@ function OrganizerView() {
               Organizer dashboard
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-slate-300">
-              Check in attendees, record events, manage points, and get user info.
+              Check in attendees, record events, manage points, and get user
+              info.
             </p>
           </div>
           <button
