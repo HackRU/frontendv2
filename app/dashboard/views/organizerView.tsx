@@ -36,28 +36,54 @@ const eventPoints = {
   'f-25 lunch-saturday': 0,
   'f-25 dinner-saturday': 0,
   'meal-placeholder': 0,
-  Cipher: 20,
-  'Card Game': 10,
-  'Gear game 20': 20,
-  'Gear game 15': 15,
-  'Switch game': 10,
+  "Who's that pokemon - easy": 5,
+  "Who's that pokemon - medium": 10,
+  "Who's that pokemon - hard": 15,
   'Ring toss - middle': 15,
   'Ring toss - side10': 10,
   'Ring toss - side5': 5,
+  'Gear game 20': 20,
+  'Gear game 15': 15,
+  'Nintendo game': 10,
   'Cup stacking - 15': 15,
   'Cup stacking - 20': 20,
+  'Minecraft PvP': 10,
   Workshop: 15,
   'shop - Lego flowers': -15,
-  'shop - LotFancy Deck of Cards': -30,
-  'shop - Mochi squish toys': -15,
-  'shop - Vaseline cocoa glow lotion': -40,
-  'shop - Magnifying glass key chains': -30,
-  'shop - Laptop Adjustable Stand': -80,
-  'shop - Squishmallow Octopus': -110,
-  'shop - Fall Squishmallows': -65,
-  'shop - steampunk plush': -40,
-  'shop - google waterbottle': -120,
+  'shop - Mochi squish toys': -10,
+  'shop - Crystals': -10,
+  'shop - Fairy lights': -15,
+  'shop - Mushroom fairy lights': -25,
+  'shop - Baby capy plush': -30,
+  'shop - Bulk mini plush': -30,
+  'shop - Laptop stand': -45,
+  'shop - Fairy wings': -45,
+  'shop - Squishmallow moth': -60,
+  'shop - Turtle plush': -60,
+  'shop - Snail plush': -60,
+  'shop - Capy plush': -65,
+  'shop - Lego set': -90,
 };
+
+/** Arcade games and shop items can be scanned repeatedly; other events once. */
+const arcadeEvents = new Set([
+  "Who's that pokemon - easy",
+  "Who's that pokemon - medium",
+  "Who's that pokemon - hard",
+  'Ring toss - middle',
+  'Ring toss - side10',
+  'Ring toss - side5',
+  'Gear game 20',
+  'Gear game 15',
+  'Nintendo game',
+  'Cup stacking - 15',
+  'Cup stacking - 20',
+  'Minecraft PvP',
+]);
+const REPEATABLE_LIMIT = 999;
+
+const eventLimit = (event: string) =>
+  arcadeEvents.has(event) || event.startsWith('shop - ') ? REPEATABLE_LIMIT : 1;
 
 function ScanStatus(props: {
   status: STATUS;
@@ -166,6 +192,8 @@ function OrganizerView() {
     } else if (scannerTab === 'EVENT') {
       if (selectedEvent == '') {
         alert('Please select an event first!');
+        setStatus('AWAITING SCAN');
+        return;
       }
 
       const resp = await AttendEventScan(
@@ -173,7 +201,7 @@ function OrganizerView() {
         selectedEvent,
         eventPoints[selectedEvent as keyof typeof eventPoints],
         forceAttendance,
-        1,
+        eventLimit(selectedEvent),
       );
 
       /**
