@@ -28,6 +28,7 @@ function Navbar() {
   const router = useRouter();
   const isHomePage = pathname === '/';
   const isTeamPage = pathname === '/team';
+  const isLandingNavigation = isHomePage || isTeamPage;
 
   const [pastHero, setPastHero] = useState(false);
 
@@ -50,7 +51,11 @@ function Navbar() {
 
   return (
     <header
-      className={clsx('fixed inset-x-0 top-0 z-50', fredoka.className)}
+      className={clsx(
+        'inset-x-0 top-0 z-50',
+        isLandingNavigation ? 'fixed' : 'absolute',
+        fredoka.className,
+      )}
       id="navbar"
     >
       <div

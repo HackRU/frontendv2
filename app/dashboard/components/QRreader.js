@@ -8,7 +8,8 @@ const defaultConstraints = {
 
 const styles = {
   container: {
-    width: 400,
+    width: '100%',
+    maxWidth: 400,
     margin: 'auto',
   },
 };

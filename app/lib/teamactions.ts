@@ -255,11 +255,11 @@ export async function RemoveMember(emails: string[], team_id: string) {
   return resp;
 }
 
-export async function ReadConfirmed() {
+export async function ReadConfirmed(memberEmail?: string) {
   noStore();
-  let resp = {
+  let resp: { error: string; response: unknown } = {
     error: '',
-    response: '',
+    response: null,
   };
 
   const session = await auth();
@@ -272,7 +272,7 @@ export async function ReadConfirmed() {
       body: JSON.stringify({
         auth_email: session.user.email,
         auth_token: session.user.name,
-        member_email: session.user.email,
+        member_email: memberEmail ?? session.user.email,
       }),
     }).then(async (res) => {
       let resJSON = await res.json();
