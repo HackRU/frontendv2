@@ -427,7 +427,7 @@ export default function ProfileHeader(props: {
                 <CardTitle>Confirmed: Get ready to code!</CardTitle>
                 <CardDescription>
                   You are fully signed up and ready to show up on October 10th.
-                  You are guarenteed entry if you are in line between 9 AM to
+                  You are prioritized entry if you are in line between 9 AM to
                   10:30 AM. After 10:30 AM, the waitlist line will begin on a
                   first-come-first-served basis and you may lose your spot. You
                   MUST be checked in to participate in the hackathon.
