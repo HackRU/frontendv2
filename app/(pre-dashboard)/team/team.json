@@ -16,7 +16,7 @@
     },
     {
       "name": "Austin Zhang",
-      "image": "",
+      "image": "austinzhang.jpg",
       "major": "Computer Science",
       "link": "https://www.linkedin.com/in/austin-s-zhang/",
       "grad": "May 2027"
@@ -73,6 +73,13 @@
           "image": "bryanquizado.jpeg",
           "major": "Computer Science",
           "link": "https://www.linkedin.com/in/bryan-quizado-11b1a32a3",
+          "grad": "May 2027"
+        },
+        {
+          "name": "Serene Siu",
+          "image": "serenesiu.jpg",
+          "major": "Computer Science/Data Science",
+          "link": "",
           "grad": "May 2027"
         }
       ]

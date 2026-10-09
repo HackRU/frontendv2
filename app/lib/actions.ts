@@ -638,14 +638,14 @@ export async function AttendEventScan(
   error: string;
   response: string;
   status: number;
-  count: number;
+  count: number | null;
 }> {
   noStore();
   const session = await auth();
   let response_message = '';
   let error_message = '';
   let response_status = 0;
-  let count = 0;
+  let count: number | null = null;
 
   let limitChange = limit;
   let eventChange = event;
@@ -659,7 +659,8 @@ export async function AttendEventScan(
     }
 
     if (sponsor) {
-      eventChange = email + event;
+      // mongo treats a dot in a key as a nested path, so swap the email's dots out
+      eventChange = `${event} ${(email ?? '').replaceAll('.', '_')}`;
     }
 
     let body = {
@@ -694,7 +695,8 @@ export async function AttendEventScan(
     const { statusCode, body: jsonBody } = json as AttendEventResponse;
 
     if (typeof jsonBody !== 'string') {
-      count = json?.attendance;
+      const attendance = jsonBody?.attendance ?? json?.attendance;
+      count = typeof attendance === 'number' ? attendance : null;
     }
     //console.log(jsonBody);
     response_status = statusCode;
@@ -933,7 +935,7 @@ export async function UpdateBuyIns(
   return resp;
 }
 
-export async function GetPoints() {
+export async function GetPoints(userEmail?: string) {
   noStore();
   let resp = {
     error: '',
@@ -948,7 +950,8 @@ export async function GetPoints() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: session.user.email,
+        auth_email: session.user.email,
+        email: userEmail ?? session.user.email,
         auth_token: session.user.name,
       }),
     }).then(async (res) => {
