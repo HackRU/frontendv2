@@ -164,6 +164,18 @@ const eventCatalog: EventOption[] = [
     category: 'shop',
   },
   {
+    name: 'shop - Wood painting',
+    points: -15,
+    limit: REPEATABLE_LIMIT,
+    category: 'shop',
+  },
+  {
+    name: 'shop - Flower pot',
+    points: -25,
+    limit: REPEATABLE_LIMIT,
+    category: 'shop',
+  },
+  {
     name: 'shop - Fairy lights',
     points: -15,
     limit: REPEATABLE_LIMIT,
@@ -176,12 +188,6 @@ const eventCatalog: EventOption[] = [
     category: 'shop',
   },
   {
-    name: 'shop - Baby capy plush',
-    points: -30,
-    limit: REPEATABLE_LIMIT,
-    category: 'shop',
-  },
-  {
     name: 'shop - Bulk mini plush',
     points: -30,
     limit: REPEATABLE_LIMIT,
@@ -189,12 +195,6 @@ const eventCatalog: EventOption[] = [
   },
   {
     name: 'shop - Laptop stand',
-    points: -45,
-    limit: REPEATABLE_LIMIT,
-    category: 'shop',
-  },
-  {
-    name: 'shop - Fairy wings',
     points: -45,
     limit: REPEATABLE_LIMIT,
     category: 'shop',
@@ -400,8 +400,7 @@ function UserInfoPanel({ snapshot }: { snapshot: UserInfoSnapshot }) {
         {team ? (
           <div className="mt-3">
             <p className="mb-3 text-sm font-semibold text-white">
-              The following team members were confirmed during pre-event
-              registration.
+              Team members from pre-event registration.
             </p>
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {team.members.map((member) => (
@@ -720,12 +719,12 @@ function OrganizerView() {
         points = selectedOption?.points ?? 0;
         limit = selectedOption?.limit ?? 1;
       } else if (scannerTab === 'SPONSOR') {
-        eventName = selectedABList ? 'SponsorA' : 'SponsorB';
+        eventName = toApiEventName(selectedABList ? 'SponsorA' : 'SponsorB');
         points = 0;
         limit = 1;
         sponsor = true;
       } else {
-        eventName = 'Manual';
+        eventName = toApiEventName('Manual');
         points = manualPoints * (pointOperation === 'add' ? 1 : -1);
         limit = 999;
         allowRepeat = true;
@@ -740,6 +739,12 @@ function OrganizerView() {
         sponsor,
       );
 
+      // only an attendance-limit 409 carries a count; forcing can't fix a low balance or a missing check-in
+      if (response.status === 409 && response.count === null) {
+        completeWithError('Attendance was rejected', response.error);
+        return;
+      }
+
       if (response.status === 409 && !forceAttendance) {
         const apiError = response.error;
         setStatus('warning');
@@ -750,10 +755,7 @@ function OrganizerView() {
           attendance: response.count ?? undefined,
         });
         setForcePrompt({
-          eventName:
-            scannerTab === 'EVENT' || scannerTab === 'SHOP'
-              ? displayEventName(selectedEvent)
-              : eventName,
+          eventName: displayEventName(eventName),
           attendance: response.count,
           limit,
           apiError,
@@ -770,8 +772,7 @@ function OrganizerView() {
       setScanResult({
         status: 'success',
         title: 'Attendance recorded',
-        message:
-          response.response || `Recorded ${displayEventName(eventName)}.`,
+        message: `Recorded ${displayEventName(eventName)} for ${fullName || email}.`,
         attendance: response.count ?? undefined,
       });
     } catch (error) {
