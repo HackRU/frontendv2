@@ -659,7 +659,8 @@ export async function AttendEventScan(
     }
 
     if (sponsor) {
-      eventChange = email + event;
+      // mongo treats a dot in a key as a nested path, so swap the email's dots out
+      eventChange = `${event} ${(email ?? '').replaceAll('.', '_')}`;
     }
 
     let body = {
