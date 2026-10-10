@@ -74,6 +74,13 @@ const eventCatalog: EventOption[] = [
   { name: 'lunch-sunday', points: 0, limit: 1, category: 'event' },
   { name: 'midnight-surprise', points: 15, limit: 1, category: 'event' },
   {
+    name: 'Rutgers CES Adobe Workshop',
+    points: 15,
+    limit: 1,
+    category: 'event',
+  },
+  { name: 'MLH Workshop', points: 15, limit: 1, category: 'event' },
+  {
     name: "Who's that pokemon - easy",
     points: 5,
     limit: REPEATABLE_LIMIT,
