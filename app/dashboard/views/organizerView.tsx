@@ -172,7 +172,7 @@ const eventCatalog: EventOption[] = [
   },
   {
     name: 'shop - Wood painting',
-    points: -15,
+    points: -5,
     limit: REPEATABLE_LIMIT,
     category: 'shop',
   },
