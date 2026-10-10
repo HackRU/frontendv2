@@ -74,7 +74,7 @@ const eventCatalog: EventOption[] = [
   { name: 'lunch-sunday', points: 0, limit: 1, category: 'event' },
   { name: 'midnight-surprise', points: 15, limit: 1, category: 'event' },
   {
-    name: 'Rutgers CES Adobe Workshop',
+    name: 'Rutgers RES Adobe Workshop',
     points: 15,
     limit: 1,
     category: 'event',
