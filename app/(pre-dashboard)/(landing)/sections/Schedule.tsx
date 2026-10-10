@@ -53,11 +53,16 @@ const schedule = {
       { time: '9:00 AM', event: 'Check-In Starts', location: 'Center Lobby' },
       { time: '11:00 AM', event: 'Opening Ceremony', location: 'Hacking Area' },
       { time: '12:00 PM', event: 'Hacking Starts', location: 'Hacking Area' },
-      { time: '1:00 PM', event: 'Lunch', location: 'In Front of MPR' },
-      { time: '2:00 PM', event: 'Workshop #1', location: 'Room TBA' },
-      { time: '2:30 PM', event: 'Workshop #2', location: 'Room TBA' },
-      { time: '3:00 PM', event: 'Workshop #3', location: 'Room TBA' },
-      { time: '7:00 PM', event: 'Dinner', location: 'In Front of MPR' },
+      { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
+      { time: '3:00 PM', event: 'Rutgers CES and Adobe', location: 'Room 116' },
+      { time: '4:00 PM', event: 'MLH Workshop', location: 'Room 116' },
+      { time: '4:00 PM', event: 'Arcade', location: 'The Cove' },
+      {
+        time: '4:30 PM',
+        event: 'MLH Tech Together',
+        location: 'MPR MLH Table',
+      },
+      { time: '8:00 PM', event: 'Dinner', location: 'In Front of MPR' },
     ],
   },
   Sunday: {
@@ -68,12 +73,13 @@ const schedule = {
         event: 'Midnight Surprise',
         location: 'Hacking Area',
       },
-      { time: '8:00 AM', event: 'Breakfast', location: 'In front of MPR' },
-      { time: '12:00 PM', event: 'Submissions Due', location: 'Hacking Area' },
-      { time: '12:30 PM', event: 'Lunch', location: 'In Front of MPR' },
-      { time: '1:00 PM', event: 'Judging Begins', location: 'Hacking Area' },
-      { time: '3:00 PM', event: 'Judging Ends', location: '' },
-      { time: '3:30 PM', event: 'Closing Ceremony', location: 'Hacking Area' },
+      { time: '8:15 AM', event: 'Breakfast', location: 'In front of MPR' },
+      { time: '10:00 PM', event: 'Submissions Due', location: 'Hacking Area' },
+      { time: '11:30 PM', event: 'Hacking Stops', location: 'Hacking Area' },
+      { time: '11:45 PM', event: 'Lunch', location: 'In Front of MPR' },
+      { time: '12:30 PM', event: 'Judging Begins', location: 'Hacking Area' },
+      { time: '2:00 PM', event: 'Judging Ends', location: 'Hacking Area' },
+      { time: '3:00 PM', event: 'Closing Ceremony', location: 'Hacking Area' },
     ],
   },
 };
@@ -142,11 +148,7 @@ export default function Schedule() {
           quality={60}
         /> */}
 
-      <Transition
-        appear
-        show={mapOpen}
-        as={Fragment}
-      >
+      <Transition appear show={mapOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
