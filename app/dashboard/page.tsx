@@ -822,6 +822,7 @@ function DashboardContent() {
               </CardHeader>
             </Card>
           )}
+
           {pointsData && userData.registration_status == 'checked_in' && (
             <Card className="w-full max-w-2xl">
               <CardHeader>
@@ -850,6 +851,29 @@ function DashboardContent() {
               </CardContent>
             </Card>
           )}
+
+          {!(userData?.registration_status === 'unregistered') && (
+            <>
+              <Card className="w-full max-w-2xl">
+                <CardHeader>
+                  <div className="flex flex-col ">
+                    <div className="flex flex-col">
+                      <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
+                      <CardDescription>
+                        Use this QR code to check-in or scan-in for events!
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
+                    <QRCode value={userData?.email} size={256} />
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
+
           {!pendingteam ? (
             <Card className="w-full max-w-2xl">
               <CardHeader>
@@ -1183,31 +1207,6 @@ function DashboardContent() {
             </Card>
           )}
 
-          {!(userData?.registration_status === 'unregistered') && (
-            <>
-              <Card className="w-full max-w-2xl">
-                <CardHeader>
-                  <div className="flex flex-col ">
-                    <div className="flex flex-col">
-                      <CardTitle>{`QR Code - Shirt Size ${userData?.shirt_size}`}</CardTitle>
-                      <CardDescription>
-                        Use this QR code to check-in or scan-in for events!
-                      </CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col items-center justify-center space-y-4 rounded-md bg-white p-4">
-                    <QRCode
-                      value={userData?.email}
-                      size={256}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </>
-          )}
-
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <div className="flex flex-col ">
@@ -1366,10 +1365,7 @@ function DashboardContent() {
                     className="flex h-11 w-full rounded-xl border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white ring-offset-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {majors.map((major, index) => (
-                      <option
-                        key={index}
-                        value={major}
-                      >
+                      <option key={index} value={major}>
                         {major}
                       </option>
                     ))}
@@ -1527,10 +1523,7 @@ function DashboardContent() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                   >
                     {schools.map((school, index) => (
-                      <option
-                        key={index}
-                        value={school}
-                      >
+                      <option key={index} value={school}>
                         {school}
                       </option>
                     ))}
@@ -1669,10 +1662,7 @@ function DashboardContent() {
                     className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-gray-300"
                   >
                     {countries.map((country, index) => (
-                      <option
-                        key={index}
-                        value={country}
-                      >
+                      <option key={index} value={country}>
                         {country}
                       </option>
                     ))}
@@ -1805,10 +1795,7 @@ function DashboardContent() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button
-                  type="submit"
-                  className="ml-auto"
-                >
+                <Button type="submit" className="ml-auto">
                   {savingUserProfile ? 'Saving...' : userProfileSubmitText}
                 </Button>
               </CardFooter>
