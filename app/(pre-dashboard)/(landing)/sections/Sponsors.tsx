@@ -28,6 +28,16 @@ export default async function Sponsors() {
       href: 'https://www.adobe.com/',
     },
     {
+      name: 'Regeneron',
+      image: '/sponsors/regeneron.png',
+      href: 'https://www.regeneron.com/',
+    },
+    {
+      name: 'ElevenLabs',
+      image: '/sponsors/elevenlabs.png',
+      href: 'https://elevenlabs.io/',
+    },
+    {
       name: 'Pure Buttons',
       image: '/sponsors/Pure-Buttons-Blue-Gradient-Logo-RGB.png',
       href: 'https://www.purebuttons.com/',
@@ -39,11 +49,11 @@ export default async function Sponsors() {
       <div
         className="w-full max-w-3xl rounded-3xl p-8"
         style={{
-          aspectRatio: '4 / 3',
+          aspectRatio: '1 / 1',
           backgroundColor: 'rgba(91,102,96,0.85)',
         }}
       >
-        <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-x-8 gap-y-4">
+        <div className="grid h-full w-full grid-cols-2 grid-rows-4 gap-x-8 gap-y-4">
           {sponsorSlots.map((sponsor, index) => (
             <div
               key={index}
